@@ -1,0 +1,35 @@
+{
+  "id": "normalize",
+  "order": 2,
+  "title": "Нормализация яркости и контраста",
+  "topic": "Предобработка",
+  "difficulty": "базовый",
+  "spec": "normalize",
+  "function": "normalize",
+  "theory": "Нормализация выравнивает яркость и контраст разных снимков, чтобы дальнейшие алгоритмы работали с похожими данными.",
+  "description": "Реализуйте функцию normalize(gray, m0=128.0, s0=50.0).\n\nПриведите изображение к среднему m0 и стандартному отклонению s0:\n    (gray - mean) / std * s0 + m0\n\nВерните массив float без округления и обрезки значений. Если std равно 0 (все пиксели одинаковы), верните массив той же формы, целиком заполненный значением m0.",
+  "starter_code": "import numpy as np\n\n\ndef normalize(gray, m0=128.0, s0=50.0):\n    # TODO: верните нормализованный массив float\n    pass\n",
+  "hints": [
+    "Какие две статистики изображения вам нужны? И что произойдёт при делении, если все пиксели одинаковы?",
+    "Сначала вычтите среднее, затем поделите на стандартное отклонение (получится среднее 0 и std 1), потом умножьте на s0 и прибавьте m0. Деление на ноль обработайте отдельно.",
+    "Используйте gray.mean() и gray.std() (лучше после astype(float)). Проверьте условие std == 0 до деления и верните np.full(...).",
+    "Полное решение:\n\nimport numpy as np\n\ndef normalize(gray, m0=128.0, s0=50.0):\n    g = np.asarray(gray, dtype=float)\n    std = g.std()\n    if std == 0:\n        return np.full(g.shape, m0, dtype=float)\n    return (g - g.mean()) / std * s0 + m0"
+  ],
+  "solution": "import numpy as np\n\n\ndef normalize(gray, m0=128.0, s0=50.0):\n    g = np.asarray(gray, dtype=float)\n    std = g.std()\n    if std == 0:\n        return np.full(g.shape, m0, dtype=float)\n    return (g - g.mean()) / std * s0 + m0\n",
+  "question": {
+    "text": "Зачем нормализовать изображение перед выделением признаков?",
+    "options": [
+      "Чтобы уменьшить влияние освещения и контраста",
+      "Чтобы увеличить размер изображения",
+      "Чтобы удалить фон",
+      "Чтобы изменить цветовую модель"
+    ],
+    "correct": 0
+  },
+  "rubric": {
+    "run": 2,
+    "basic": 4,
+    "edge": 3,
+    "question": 1
+  }
+}

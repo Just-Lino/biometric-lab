@@ -1,0 +1,35 @@
+{
+  "id": "far_frr",
+  "order": 5,
+  "title": "Метрики: FAR и FRR при заданном пороге",
+  "topic": "Сравнение и решение",
+  "difficulty": "средний",
+  "spec": "far_frr",
+  "function": "far_frr",
+  "theory": "FAR (False Acceptance Rate) - доля пар разных людей, ошибочно принятых как совпадение. FRR (False Rejection Rate) - доля пар одного человека, ошибочно отвергнутых.",
+  "description": "Реализуйте функцию far_frr(genuine, impostor, threshold).\n\n• genuine - список оценок сходства пар одного человека («свои»);\n• impostor - список оценок сходства пар разных людей («чужие»);\n• threshold - порог.\n\nВерните кортеж (far, frr):\n• far - доля оценок из impostor, которые >= threshold;\n• frr - доля оценок из genuine, которые < threshold.\nЕсли соответствующий список пуст, его доля равна 0.0.",
+  "starter_code": "def far_frr(genuine, impostor, threshold):\n    # TODO: верните (far, frr)\n    pass\n",
+  "hints": [
+    "Какие оценки считаются «ошибочным допуском», а какие «ошибочным отказом»? Для какого списка нужно знак >=, а для какого <?",
+    "FAR считается по списку impostor: сколько оценок не ниже порога, делённое на длину списка. FRR - по списку genuine: сколько оценок ниже порога, делённое на длину списка.",
+    "Подсчитать можно так: sum(s >= threshold for s in impostor). Делить нужно только если список не пуст: ... / len(impostor) if len(impostor) else 0.0.",
+    "Полное решение:\n\ndef far_frr(genuine, impostor, threshold):\n    far = sum(s >= threshold for s in impostor) / len(impostor) if len(impostor) else 0.0\n    frr = sum(s < threshold for s in genuine) / len(genuine) if len(genuine) else 0.0\n    return far, frr"
+  ],
+  "solution": "def far_frr(genuine, impostor, threshold):\n    far = sum(s >= threshold for s in impostor) / len(impostor) if len(impostor) else 0.0\n    frr = sum(s < threshold for s in genuine) / len(genuine) if len(genuine) else 0.0\n    return far, frr\n",
+  "question": {
+    "text": "Что такое EER?",
+    "options": [
+      "Порог, при котором точность максимальна",
+      "Значение ошибки, при котором FAR равен FRR",
+      "Доля ошибочных допусков",
+      "Число эпох обучения"
+    ],
+    "correct": 1
+  },
+  "rubric": {
+    "run": 2,
+    "basic": 4,
+    "edge": 3,
+    "question": 1
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "id": "verify",
+  "order": 4,
+  "title": "Сравнение шаблонов: косинусное сходство и порог",
+  "topic": "Сравнение и решение",
+  "difficulty": "средний",
+  "spec": "verify",
+  "function": "verify",
+  "theory": "Лица и другие образы сравнивают по embedding-векторам. Косинусное сходство cos = (a·b) / (|a|·|b|) показывает, насколько совпадают направления векторов. Решение принимается по порогу threshold.",
+  "description": "Реализуйте функцию verify(a, b, threshold).\n\n• a, b - числовые векторы (списки или массивы);\n• threshold - порог.\n\nВерните кортеж (score, decision): score - косинусное сходство, decision - строка 'MATCH', если score >= threshold, иначе 'NO MATCH'. Если длина хотя бы одного вектора равна нулю, score = 0.0.",
+  "starter_code": "import numpy as np\n\n\ndef verify(a, b, threshold):\n    # TODO: верните (score, decision)\n    pass\n",
+  "hints": [
+    "Что означает косинус угла между векторами и как его выразить через скалярное произведение и длины? А что, если длина вектора равна нулю?",
+    "score = (a · b) / (|a| · |b|). Длину вектора даёт np.linalg.norm. Деление на ноль нужно предотвратить: при нулевой длине score равен 0.0.",
+    "Приведите входы к массивам: np.asarray(a, dtype=float). Затем na, nb = нормы; score = 0.0 if na == 0 or nb == 0 else float(a @ b / (na * nb)). Решение: 'MATCH' if score >= threshold else 'NO MATCH'.",
+    "Полное решение:\n\nimport numpy as np\n\ndef verify(a, b, threshold):\n    a = np.asarray(a, dtype=float)\n    b = np.asarray(b, dtype=float)\n    na, nb = np.linalg.norm(a), np.linalg.norm(b)\n    score = 0.0 if na == 0 or nb == 0 else float(a @ b / (na * nb))\n    return score, ('MATCH' if score >= threshold else 'NO MATCH')"
+  ],
+  "solution": "import numpy as np\n\n\ndef verify(a, b, threshold):\n    a = np.asarray(a, dtype=float)\n    b = np.asarray(b, dtype=float)\n    na, nb = np.linalg.norm(a), np.linalg.norm(b)\n    score = 0.0 if na == 0 or nb == 0 else float(a @ b / (na * nb))\n    return score, ('MATCH' if score >= threshold else 'NO MATCH')\n",
+  "question": {
+    "text": "Что произойдёт с FAR и FRR при повышении порога threshold?",
+    "options": [
+      "FAR растёт, FRR падает",
+      "FAR падает, FRR растёт",
+      "Оба падают",
+      "Оба растут"
+    ],
+    "correct": 1
+  },
+  "rubric": {
+    "run": 2,
+    "basic": 4,
+    "edge": 3,
+    "question": 1
+  }
+}

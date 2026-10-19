@@ -1,0 +1,35 @@
+{
+  "id": "binarize",
+  "order": 1,
+  "title": "Бинаризация изображения отпечатка",
+  "topic": "Предобработка",
+  "difficulty": "базовый",
+  "spec": "binarize",
+  "function": "binarize",
+  "theory": "Бинаризация превращает полутоновое изображение в чёрно-белое. На отпечатках гребни тёмные, поэтому пиксели темнее порога считаем гребнем (значение 0), остальные фоном (255).",
+  "description": "Реализуйте функцию binarize(gray, threshold).\n\n• gray - двумерный массив numpy типа uint8 (оттенки серого);\n• threshold - число (порог).\n\nВерните массив той же формы типа uint8: 0, если пиксель строго меньше порога (гребень), иначе 255 (фон). Циклы по пикселям не нужны.",
+  "starter_code": "import numpy as np\n\n\ndef binarize(gray, threshold):\n    # TODO: верните массив uint8 из значений 0 и 255\n    pass\n",
+  "hints": [
+    "Сравнение массива с числом (gray < threshold) работает сразу для всех пикселей. Что должно получиться для пикселя, который в точности равен порогу?",
+    "Результат сравнения - булев массив. Нужно превратить True в 0 (гребень), а False в 255 (фон) и привести тип данных к uint8.",
+    "Посмотрите на np.where(условие, значение_если_True, значение_если_False). В конце не забудьте .astype(np.uint8).",
+    "Полное решение:\n\nimport numpy as np\n\ndef binarize(gray, threshold):\n    return np.where(gray < threshold, 0, 255).astype(np.uint8)"
+  ],
+  "solution": "import numpy as np\n\n\ndef binarize(gray, threshold):\n    return np.where(gray < threshold, 0, 255).astype(np.uint8)\n",
+  "question": {
+    "text": "Какой подход лучше при очень неравномерном освещении снимка?",
+    "options": [
+      "Один глобальный порог для всего изображения",
+      "Адаптивный (локальный) порог по окрестности пикселя",
+      "Порог, равный 255",
+      "Порог, равный 0"
+    ],
+    "correct": 1
+  },
+  "rubric": {
+    "run": 2,
+    "basic": 4,
+    "edge": 3,
+    "question": 1
+  }
+}

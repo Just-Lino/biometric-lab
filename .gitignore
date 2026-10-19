@@ -1,0 +1,11 @@
+.venv/
+__pycache__/
+.env
+data/*.db
+.idea/
+.pytest_cache/
+
+data/*.tgz
+data/*.zip
+datasets/faces/*
+!datasets/faces/README.txt

@@ -1,0 +1,71 @@
+"""Статическая проверка кода студента и урезанные builtins.
+
+ВАЖНО: это учебная защита «по мере сил», а не промышленная изоляция. Для боевого сервера запускайте
+выполнение в Docker (--network none, --memory, --read-only, пользователь без прав)."""
+import ast
+import builtins
+
+ALLOWED_IMPORTS = {"math", "numpy", "cv2", "skimage", "itertools", "functools", "collections", "statistics",
+                   "typing", "operator", "random", "fractions", "decimal"}
+BANNED_SUBMODULES = {"ctypeslib", "f2py", "testing", "distutils", "_core", "core", "lib"}
+BANNED_NAMES = {"eval", "exec", "compile", "open", "input", "__import__", "globals", "locals", "vars", "getattr",
+                "setattr", "delattr", "breakpoint", "exit", "quit", "help", "memoryview", "dir"}
+BANNED_ATTRS = {"load", "loadtxt", "genfromtxt", "fromfile", "save", "savez", "savez_compressed", "savetxt",
+                "tofile", "dump", "dumps", "imread", "imwrite", "VideoCapture", "system", "popen", "ctypeslib",
+                "f2py", "testing", "distutils", "fromregex", "memmap"}
+
+
+class SafetyError(Exception):
+    def __init__(self, message: str, line: int | None = None):
+        super().__init__(message)
+        self.line = line
+
+
+def check_code(code: str) -> None:
+    """Бросает SyntaxError или SafetyError, если код нельзя выполнять."""
+    tree = ast.parse(code, "<student>")
+    for node in ast.walk(tree):
+        line = getattr(node, "lineno", None)
+        if isinstance(node, ast.Import):
+            for a in node.names:
+                _check_module(a.name, line)
+        elif isinstance(node, ast.ImportFrom):
+            if node.level:
+                raise SafetyError("Относительные импорты запрещены.", line)
+            _check_module(node.module or "", line)
+        elif isinstance(node, ast.Name) and node.id in BANNED_NAMES:
+            raise SafetyError(f"Использование «{node.id}» запрещено в учебной песочнице.", line)
+        elif isinstance(node, ast.Attribute):
+            if node.attr.startswith("__"):
+                raise SafetyError("Обращение к служебным атрибутам (__...__) запрещено.", line)
+            if node.attr in BANNED_ATTRS:
+                raise SafetyError(f"Атрибут «{node.attr}» запрещён (доступ к файлам и системе).", line)
+        elif isinstance(node, ast.Constant) and isinstance(node.value, str) and "__" in node.value:
+            raise SafetyError("Строки с двойным подчёркиванием (__) запрещены.", line)
+
+
+def _check_module(name: str, line):
+    parts = name.split(".")
+    if parts[0] not in ALLOWED_IMPORTS:
+        raise SafetyError(f"Импорт модуля «{parts[0]}» запрещён. Разрешены: {', '.join(sorted(ALLOWED_IMPORTS))}.", line)
+    if any(p in BANNED_SUBMODULES for p in parts[1:]):
+        raise SafetyError(f"Импорт «{name}» запрещён.", line)
+
+
+def safe_builtins() -> dict:
+    names = ["abs", "all", "any", "bool", "dict", "divmod", "enumerate", "filter", "float", "int", "isinstance",
+             "iter", "len", "list", "map", "max", "min", "next", "pow", "print", "range", "reversed", "round",
+             "set", "slice", "sorted", "str", "sum", "tuple", "zip", "repr", "chr", "ord", "format", "hash",
+             "frozenset", "complex", "bytes", "object", "type", "callable", "hex", "bin", "oct", "ascii",
+             "ValueError", "TypeError", "Exception", "ZeroDivisionError", "IndexError", "KeyError",
+             "StopIteration", "AssertionError", "NotImplementedError", "ArithmeticError", "OverflowError",
+             "RuntimeError", "AttributeError", "NameError", "True", "False", "None", "__build_class__"]
+    b = {n: getattr(builtins, n) for n in names if hasattr(builtins, n)}
+
+    def _import(name, globals=None, locals=None, fromlist=(), level=0):
+        _check_module(name, None)
+        return builtins.__import__(name, globals, locals, fromlist, level)
+
+    b["__import__"] = _import
+    b["__name__"] = "student"
+    return b

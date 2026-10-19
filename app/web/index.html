@@ -1,0 +1,1448 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Виртуальная лаборатория «Биометрия»</title>
+<script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<style>
+:root{--bg:#f4f6fa;--card:#fff;--ink:#1c2333;--mut:#6b7488;--acc:#2f5bea;--ok:#12a150;--bad:#d93a3a;--line:#e1e5ee}
+*{box-sizing:border-box}
+body{margin:0;font:14px/1.45 system-ui,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--ink)}
+header{background:#14213d;color:#fff;padding:12px 20px;display:flex;align-items:center;gap:20px}
+header h1{font-size:17px;margin:0;font-weight:600}
+.tabs{display:flex;gap:6px}
+.tab{padding:5px 12px;border-radius:6px;background:#26365c;color:#cfd8f3;font-size:13px}
+.tab.on{background:var(--acc);color:#fff}.tab.off{opacity:.45}
+main{display:grid;grid-template-columns:300px 1fr 320px;gap:14px;padding:14px;align-items:start}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px}
+.card h2{font-size:14px;margin:0 0 10px}
+label{display:block;font-size:12px;color:var(--mut);margin:8px 0 2px}
+select,input[type=text],button{font:inherit}
+select,input[type=text]{width:100%;padding:6px;border:1px solid var(--line);border-radius:6px;background:#fff}
+input[type=range]{width:100%}
+.row{display:flex;justify-content:space-between;align-items:center;font-size:12px}
+.row b{color:var(--ink)}
+button{background:var(--acc);color:#fff;border:0;border-radius:6px;padding:8px 12px;cursor:pointer;margin-top:8px}
+button.sec{background:#e9edf8;color:var(--ink)}
+button:disabled{opacity:.5;cursor:wait}
+.btns{display:flex;gap:6px;flex-wrap:wrap}
+.steps{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.step{padding:4px 9px;border-radius:14px;border:1px solid var(--line);background:#fff;cursor:pointer;font-size:12px}
+.step.on{background:var(--acc);color:#fff;border-color:var(--acc)}
+.view{display:grid;grid-template-columns:minmax(0,300px) 1fr;gap:14px}
+.view img{width:100%;border:1px solid var(--line);border-radius:6px;image-rendering:auto}
+.desc{color:var(--mut)}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th,td{padding:4px 6px;border-bottom:1px solid var(--line);text-align:left}
+th{color:var(--mut);font-weight:500}
+.res{display:flex;gap:18px;align-items:center;flex-wrap:wrap;margin:6px 0 10px}
+.big{font-size:26px;font-weight:700}
+.badge{padding:4px 12px;border-radius:6px;color:#fff;font-weight:700}
+.badge.m{background:var(--ok)}.badge.n{background:var(--bad)}
+.stack{display:flex;flex-direction:column;gap:14px}
+#chat{height:300px;overflow:auto;border:1px solid var(--line);border-radius:6px;padding:8px;background:#fafbfd;margin-bottom:8px}
+.msg{margin-bottom:8px}.msg.u{color:var(--acc)}.msg .t{color:var(--mut);font-size:11px}
+.leg{font-size:12px;color:var(--mut)}
+#view3d,#viewP3{position:relative;height:430px;border-radius:8px;overflow:hidden;background:linear-gradient(#1d2740,#0e1424);cursor:grab;touch-action:none}
+#view3d canvas,#viewP3 canvas{display:block;width:100%;height:100%}
+#view3d .ph,#viewP3 .ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#8fa0c8;text-align:center;padding:20px}
+.ctl3{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:4px 14px;margin-top:8px}
+.ctl3 label{margin:4px 0 0}
+@media(max-width:1100px){main{grid-template-columns:1fr}}
+
+.tab{cursor:pointer}.tab.on{cursor:default}
+.banner{background:#fff6e0;border:1px solid #f0d58a;color:#7a5a00;border-radius:6px;padding:8px;font-size:12px;margin-top:8px;display:none}
+.facts td:first-child{color:var(--mut);width:42%}
+
+.nnbar{display:flex;flex-wrap:wrap;gap:10px 14px;align-items:flex-end;margin-bottom:12px}
+.nnbar label{margin:0;font-size:11px}.nnbar select{width:auto;min-width:90px}
+.nnbar button{margin:0}
+.nngrid{display:grid;grid-template-columns:230px minmax(0,1fr) 330px;gap:16px;align-items:start}
+.nncol h3{font-size:12px;margin:0 0 6px;color:var(--mut);text-transform:uppercase;letter-spacing:.04em}
+#nnNetWrap{overflow:auto;border:1px solid var(--line);border-radius:8px;background:#fafbfd}
+#nnNet{position:relative;margin:0 auto}
+.nnbox{position:absolute;border:2px solid #555;border-radius:3px;overflow:hidden;background:#fff}
+.nnbox canvas{width:100%;height:100%;display:block}
+.nnfeat{cursor:pointer}.nnfeat.off{opacity:.3;border-color:#bbb}
+.nnfeat span{position:absolute;left:2px;top:1px;font-size:10px;font-weight:700;color:#222;text-shadow:0 0 3px #fff,0 0 3px #fff}
+.nnbox.out{border-color:#14213d;border-width:3px}
+.nnhead{position:absolute;top:6px;font-size:12px;white-space:nowrap}
+.nnhead button{padding:0 7px;margin:0;line-height:18px}
+.nnlayers{margin-bottom:8px;font-size:13px}.nnlayers button{padding:0 9px;margin:0 4px}
+#nnOut{width:100%;max-width:300px;border:1px solid var(--line);border-radius:6px;display:block;margin:8px 0}
+#nnChart{width:100%;max-width:300px;display:block;margin-top:8px}
+.nnnums{font-size:13px;line-height:1.7}
+.nnnums b{font-variant-numeric:tabular-nums}
+#nnMsg{color:var(--bad);font-size:12px;margin-top:4px}
+.task li{margin:4px 0}
+@media(max-width:1100px){.nngrid{grid-template-columns:1fr}}
+
+.trgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:14px}
+.trgrid .wide{grid-column:1/-1}
+.trmaps{display:flex;flex-wrap:wrap;gap:3px;margin:4px 0 10px}
+.trmaps canvas{image-rendering:pixelated;border:1px solid #ccd3e3;background:#000}
+.trfilt{display:flex;flex-wrap:wrap;gap:6px}
+.trfilt canvas{image-rendering:pixelated;border:1px solid #888;width:44px;height:44px}
+.trin{width:96px;height:96px;border:1px solid var(--line);border-radius:6px;image-rendering:auto}
+.trtests{display:flex;flex-wrap:wrap;gap:8px}
+.trtest{width:96px;font-size:11px;text-align:center}
+.trtest img{width:96px;height:96px;border-radius:6px;border:3px solid #ccc;display:block}
+.trtest.ok img{border-color:var(--ok)}.trtest.bad img{border-color:var(--bad)}
+@media(max-width:1100px){.trgrid{grid-template-columns:1fr}}
+
+.cdgrid{display:grid;grid-template-columns:250px minmax(0,1fr) 330px;gap:14px;align-items:start}
+.cdtask{padding:8px 10px;border:1px solid var(--line);border-radius:8px;margin-bottom:6px;cursor:pointer;background:#fff}
+.cdtask.on{border-color:var(--acc);background:#eef2ff}
+.cdtask b{font-size:13px}.cdtask div{font-size:11px;color:var(--mut)}
+.cdpre{white-space:pre-wrap;font:13px/1.5 ui-monospace,Consolas,monospace;background:#f7f8fb;border:1px solid var(--line);border-radius:6px;padding:10px;margin:8px 0 0;max-height:300px;overflow:auto}
+#cdTextarea{width:100%;height:100%;border:0;padding:10px;font:14px/1.5 ui-monospace,Consolas,monospace;resize:none;outline:none;tab-size:4}
+.cdscore{display:flex;gap:20px;align-items:center;flex-wrap:wrap;margin-bottom:8px}
+.cdscore .big{font-size:34px}
+.cdparts{font-size:12px;color:var(--mut);line-height:1.6}
+.cdq label{display:block;margin:4px 0;font-size:13px;color:var(--ink)}
+.cdok{color:var(--ok);font-weight:700}.cdbad{color:var(--bad);font-weight:700}
+.cdhint{margin-bottom:8px;padding:8px;border-radius:6px;background:#f0f3fb;font-size:13px;white-space:pre-wrap}
+.cdhint.lock{background:#fff6e0;color:#7a5a00}
+.cdhint .t{font-size:11px;color:var(--mut)}
+#cdChat{max-height:420px;overflow:auto;margin-top:8px}
+@media(max-width:1100px){.cdgrid{grid-template-columns:1fr}}
+
+#trNetWrap{overflow:auto;border:1px solid var(--line);border-radius:8px;background:#fafbfd}
+#trNet{position:relative;margin:0 auto}
+#trNet .nnbox{border-width:3px}
+#trNet .trhd{position:absolute;top:6px;font-size:11px;line-height:1.3;text-align:center;color:var(--ink);transform:translateX(-50%);width:150px}
+#trNet .trhd small{color:var(--mut)}
+#trNet .tro{position:absolute;width:128px;height:30px;border:3px solid #aab;border-radius:5px;background:#fff;overflow:hidden;font-size:11px}
+#trNet .tro .bar{position:absolute;left:0;top:0;bottom:0;background:#cfe0f5}
+#trNet .tro span{position:relative;display:block;padding:1px 4px;white-space:nowrap}
+#trNet .tro.true{border-color:var(--ok)}#trNet .tro.pred{font-weight:700}
+</style>
+</head>
+<body>
+<header>
+  <h1>Виртуальная лаборатория «Биометрия»</h1>
+  <div class="tabs">
+    <span class="tab on" data-mod="fingerprint">Отпечатки пальцев</span>
+    <span class="tab" data-mod="face">Лицо</span>
+    <span class="tab" data-mod="code">Практикум: код</span>
+    <span class="tab" data-mod="train">Обучение распознаванию</span>
+    <span class="tab" data-mod="nn">Площадка нейросети</span>
+    <span class="tab off" title="Следующая итерация">Радужка (скоро)</span>
+  </div>
+</header>
+
+<main id="bioMain">
+  <!-- ЛЕВО: управление -->
+  <div class="stack">
+    <div class="card">
+      <h2>1. Образцы</h2>
+      <label>Образец A (эталон)</label><select id="sa"></select>
+      <label>Образец B (проверяемый)</label><select id="sb"></select>
+      <label>Загрузить своё изображение в A / в B</label>
+      <div class="btns" style="margin-top:2px">
+        <label class="step" style="margin:0">в A <input type="file" id="fileA" accept="image/*" hidden></label>
+        <label class="step" style="margin:0">в B <input type="file" id="fileB" accept="image/*" hidden></label>
+      </div>
+      <div class="banner" id="banner"></div>
+      <div class="leg" style="margin-top:6px" id="dataNote"></div>
+    </div>
+    <div class="card">
+      <h2>2. Параметры алгоритма</h2>
+      <div id="params"></div>
+      <button class="sec" id="reset">Сбросить параметры</button>
+    </div>
+    <div class="card">
+      <h2>3. Решение</h2>
+      <div class="row"><span>Threshold</span><b id="thv">0.50</b></div>
+      <input type="range" id="th" min="0.05" max="0.95" step="0.01" value="0.50">
+      <div class="btns">
+        <button id="bproc">Показать этапы для A</button>
+        <button id="bcmp">Сравнить A и B</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ЦЕНТР -->
+  <div class="stack">
+    <div class="card">
+      <h2>Пошаговая обработка образца <span id="procName" class="leg"></span></h2>
+      <div class="steps" id="steps"></div>
+      <div class="view"><div><img id="stepImg" alt=""></div><div><b id="stepTitle"></b><p class="desc" id="stepDesc">Нажмите «Показать этапы для A».</p></div></div>
+      <div id="minTable"></div>
+    </div>
+    <div class="card">
+      <h2>3D-конвейер: как изображение превращается в решение <span id="p3name" class="leg"></span></h2>
+      <div class="btns">
+        <button id="bp3">Построить 3D-конвейер для образца A</button>
+        <button class="sec" id="p3prev" title="Предыдущий этап">◀</button>
+        <button class="sec" id="p3play">▶ Воспроизвести</button>
+        <button class="sec" id="p3next" title="Следующий этап">▶|</button>
+        <button class="sec" id="p3all">Показать все этапы</button>
+      </div>
+      <div id="viewP3"><div class="ph" id="p3ph">Нажмите «Построить 3D-конвейер». Каждый слой - результат одного этапа алгоритма. Вращение: мышь, масштаб: колесо.</div></div>
+      <div class="ctl3">
+        <div><label>Раскладка</label><select id="p3layout"><option value="row">Лента (слева направо)</option><option value="stack">Стопка слоёв (снизу вверх)</option></select></div>
+        <div><label>Расстояние между этапами: <b id="p3gv">1.0</b></label><input type="range" id="p3gap" min="0.4" max="2.5" step="0.1" value="1"></div>
+        <div><label>Этап: <b id="p3sv">все</b></label><input type="range" id="p3slider" min="0" max="0" step="1" value="0"></div>
+      </div>
+      <div id="p3desc" class="desc" style="margin-top:8px"></div>
+      <div class="leg" style="margin-top:6px">Желтая рамка - текущий этап, остальные притемнены. Нейросеть SFace в лаборатории не обучается: используется готовая модель, а здесь показан путь данных через алгоритм.</div>
+    </div>
+    <div class="card" data-only="fingerprint">
+      <h2>3D-визуализация отпечатка <span id="v3name" class="leg"></span></h2>
+      <div class="btns"><button id="b3d">Построить 3D для образца A</button><button class="sec" id="b3reset">Сбросить вид</button></div>
+      <div id="view3d"><div class="ph" id="v3ph">Нажмите «Построить 3D». Вращение: перетаскивание мышью, масштаб: колесо.</div></div>
+      <div class="ctl3">
+        <div><label>Текстура</label><select id="v3tex"><option value="original">Исходное изображение</option><option value="enhanced">После Gabor</option><option value="binary">Бинаризация</option><option value="skeleton">Скелет</option><option value="none">Без текстуры (рельеф)</option></select></div>
+        <div><label>Высота гребней: <b id="v3hv">12</b></label><input type="range" id="v3h" min="0" max="30" step="1" value="12"></div>
+        <div><label>Кривизна пальца: <b id="v3cv">14</b></label><input type="range" id="v3c" min="0" max="40" step="1" value="14"></div>
+        <div style="padding-top:18px"><label style="display:inline"><input type="checkbox" id="v3m" checked> minutiae</label> &nbsp;
+          <label style="display:inline"><input type="checkbox" id="v3w"> сетка</label> &nbsp;
+          <label style="display:inline"><input type="checkbox" id="v3r" checked> вращение</label></div>
+      </div>
+      <div class="leg" style="margin-top:6px">Высота поверхности - выраженность гребня (из этапа Gabor). Красные шары - окончания, синие конусы - разветвления.</div>
+    </div>
+    <div class="card">
+      <h2>Сравнение двух образцов</h2>
+      <div class="res" id="cmpRes"><span class="desc">Нажмите «Сравнить A и B».</span></div>
+      <img id="cmpImg" style="width:100%;max-width:640px;display:none;border:1px solid var(--line);border-radius:6px">
+      <div class="leg" id="cmpLeg"></div>
+    </div>
+    <div class="card">
+      <h2>Оценка качества: FAR / FRR / EER</h2>
+      <div class="btns"><button id="beval">Рассчитать на наборе пар</button><span class="leg" id="evalInfo" style="align-self:center"></span></div>
+      <div id="chart" style="height:320px"></div>
+      <div class="leg" id="evalNow"></div>
+    </div>
+    <div class="card">
+      <h2>Журнал экспериментов</h2>
+      <div class="btns"><a href="/api/v1/experiments/export.csv"><button class="sec">Скачать CSV</button></a><button class="sec" id="clear">Очистить</button></div>
+      <div id="log"></div>
+    </div>
+  </div>
+
+  <!-- ПРАВО: ИИ-наставник -->
+  <div class="card">
+    <h2>ИИ-наставник</h2>
+    <div id="chat"><div class="msg"><span class="t">Наставник</span><br>Выполните сравнение, затем выберите режим: подсказка, объяснение понятия или разбор результата.</div></div>
+    <label>Режим</label>
+    <select id="mode"><option value="hint">Hint - подсказка</option><option value="explain">Explain - объяснить понятие</option><option value="diagnose">Diagnose - разобрать результат</option></select>
+    <label>Вопрос (для режима Explain)</label>
+    <input type="text" id="q" placeholder="Например: зачем нужно выравнивание лица?">
+    <button id="ask">Спросить</button>
+  </div>
+</main>
+
+
+
+<section id="cdMain" style="display:none;padding:14px">
+  <div class="cdgrid">
+    <div class="card">
+      <h2>Задания</h2><div id="cdTasks"></div>
+      <h2 style="margin-top:14px">Мои попытки</h2><div id="cdHist" style="font-size:12px"></div>
+    </div>
+    <div class="stack">
+      <div class="card">
+        <h2 id="cdTitle">Выберите задание</h2>
+        <div class="leg" id="cdTheory"></div>
+        <pre class="cdpre" id="cdDesc" style="display:none"></pre>
+      </div>
+      <div class="card">
+        <h2>Редактор кода (Python)</h2>
+        <div id="cdEditorBox" style="height:340px;border:1px solid var(--line);border-radius:6px;overflow:hidden"><textarea id="cdTextarea" spellcheck="false"></textarea></div>
+        <div class="btns">
+          <button id="cdRun">▶ Запустить на примере</button>
+          <button id="cdSubmit">✔ Проверить решение</button>
+          <button class="sec" id="cdReset">↺ Начальный код</button>
+        </div>
+        <div class="leg" id="cdEdNote" style="margin-top:6px"></div>
+        <div class="leg" style="margin-top:4px">Разрешены импорты: numpy, cv2, skimage, math и др. Доступ к файлам и системе заблокирован. Время выполнения ограничено.</div>
+      </div>
+      <div class="card"><h2>Контрольный вопрос</h2><div id="cdQuestion" class="cdq"></div></div>
+      <div class="card">
+        <h2>Результат</h2>
+        <div id="cdScore"></div>
+        <div id="cdFeedback" style="font-size:13px;margin:6px 0"></div>
+        <pre class="cdpre" id="cdOut" style="display:none"></pre>
+        <div id="cdTests"></div>
+      </div>
+    </div>
+    <div class="card">
+      <h2>ИИ-наставник по коду</h2>
+      <div class="leg">Подсказки идут по уровням и не выдают решение сразу. Полное решение открывается после 3 попыток проверки.</div>
+      <div class="btns" id="cdHintBtns">
+        <button class="sec" data-lv="1">1 Направление</button><button class="sec" data-lv="2">2 Объяснение</button>
+        <button class="sec" data-lv="3">3 Фрагмент кода</button><button class="sec" data-lv="4" id="cdH4">4 Решение</button>
+      </div>
+      <div class="btns"><button class="sec" id="cdExplain">Объяснить последний результат</button></div>
+      <div id="cdChat"></div>
+    </div>
+  </div>
+</section>
+<section id="trMain" style="display:none;padding:14px">
+  <div class="card">
+    <h2>Обучение нейросети распознаванию <span class="leg">- маленькая CNN учится на сервере, а здесь виден каждый этап</span></h2>
+    <div class="nnbar">
+      <label>Что распознаём<br><select id="trMod"><option value="fingerprint">Отпечатки пальцев</option><option value="face">Лица (галерея datasets/faces)</option></select></label>
+      <label>Эпох<br><select id="trEpochs"></select></label>
+      <label>Learning rate<br><select id="trLr"></select></label>
+      <label>Размер батча<br><select id="trBatch"></select></label>
+      <label>Объектов (пальцев / людей)<br><select id="trSubj"></select></label>
+      <label>Аугментация: <b id="trAugV">1.0</b><br><input type="range" id="trAug" min="0" max="1.5" step="0.25" value="1" style="width:130px"></label>
+      <button id="trStart">▶ Начать обучение</button>
+      <button class="sec" id="trStop">■ Остановить</button>
+    </div>
+    <div id="trStatus" style="font-size:13px;margin-bottom:6px"></div>
+    <div class="leg">Сеть из трёх свёрточных слоёв учится отличать объекты друг от друга. Каждую эпоху она видит искажённые копии образцов (поворот, сдвиг, шум), а проверяется на образце, которого не видела. Ползунком эпох можно вернуться к любому моменту обучения. Это обучение с нуля маленькой сети, а не готовая модель SFace из раздела «Лицо».</div>
+  </div>
+  <div class="trgrid">
+    <div class="card"><h2>Loss (ошибка обучения)</h2><div id="trLoss" style="height:230px"></div></div>
+    <div class="card"><h2>Точность и EER</h2><div id="trAcc" style="height:230px"></div></div>
+    <div class="card wide">
+      <h2>Эпоха <span id="trEpochInfo" class="leg"></span></h2>
+      <div class="btns" style="align-items:center">
+        <button class="sec" id="trPrev">◀</button><button class="sec" id="trNext">▶|</button>
+        <button class="sec" id="trReplay">⟲ Показать обучение с начала</button>
+        <input type="range" id="trSlider" min="0" max="0" value="0" style="flex:1;min-width:200px">
+      </div>
+    </div>
+    <div class="card wide">
+      <h2>Структура сети: как слои обучаются <span class="leg" id="trNetInfo"></span></h2>
+      <div id="trNetWrap"><div id="trNet"></div></div>
+      <div class="leg" style="margin-top:6px">Слева направо: изображение проходит через три свёрточных слоя, превращается в embedding и даёт ответ. В квадратах - карты признаков каждого фильтра для тестового образца. Толщина линий - сила связи (средний модуль веса). Цвет рамок и линий - насколько вес изменился с начала обучения: серый - почти не менялся, оранжевый - сильно. Двигайте ползунок эпох или нажмите «Показать обучение с начала», чтобы увидеть, как слои «нагреваются».</div>
+    </div>
+    <div class="card wide">
+      <h2>Подробно: вход, фильтры и карты признаков</h2>
+      <div style="display:flex;gap:24px;flex-wrap:wrap;align-items:flex-start">
+        <div><b style="font-size:12px">Вход (тестовый образец)</b><br><img id="trInput" class="trin" alt=""></div>
+        <div><b style="font-size:12px">Фильтры 1-го слоя (3×3)</b><div id="trFilters" class="trfilt"></div></div>
+        <div><b style="font-size:12px">Изменение фильтров с начала обучения</b><div id="trFiltD" class="trfilt"></div><div class="leg" id="trFiltInfo"></div></div>
+      </div>
+      <div style="margin-top:10px"><b style="font-size:12px">Слой 1: карты признаков (линии и края)</b><div id="trMaps1" class="trmaps"></div></div>
+      <div><b style="font-size:12px">Слой 2: более сложные узоры</b><div id="trMaps2" class="trmaps"></div></div>
+      <div><b style="font-size:12px">Слой 3: крупные признаки</b><div id="trMaps3" class="trmaps"></div></div>
+      <div class="leg">В начале веса случайные. Фильтры первого слоя меняются медленно: сеть в основном настраивает более глубокие слои и embedding, поэтому справа показано именно изменение. Карты глубоких слоёв и embedding меняются заметнее: сравните эпохи ползунком.</div>
+    </div>
+    <div class="card wide"><h2>Насколько изменились веса слоёв (относительно начала обучения)</h2><div id="trWeights" style="height:230px"></div>
+      <div class="leg">Показывает, какие слои реально учатся. Чем выше линия, тем сильнее слой отошёл от случайных начальных весов.</div></div>
+    <div class="card"><h2>Пространство признаков (embedding)</h2><div id="trEmb" style="height:340px"></div>
+      <div class="leg">Каждая точка - образец, цвет - кто это. Кружки: обучающие и искажённые копии, ромбы: тестовые образцы. Чем дальше обучение, тем плотнее кластеры одного объекта.</div></div>
+    <div class="card"><h2>«Свои» и «чужие»</h2><div id="trHist" style="height:300px"></div>
+      <div class="leg" id="trEer"></div></div>
+    <div class="card wide"><h2>Проверка на образцах, которых сеть не видела</h2><div id="trTests" class="trtests"></div>
+      <div class="leg" style="margin-top:6px">Зелёная рамка - сеть узнала объект, красная - ошиблась. Под картинкой: кто это на самом деле → что ответила сеть (уверенность).</div></div>
+  </div>
+  <div class="card" style="margin-top:14px">
+    <h2>Задания для исследования</h2>
+    <ol class="task">
+      <li>Запустите обучение отпечатков с аугментацией 0 и затем 1.0. Сравните точность на тестовых образцах и объясните разницу (переобучение).</li>
+      <li>Поставьте слишком большой learning rate (0.01). Что происходит с loss? А слишком маленький?</li>
+      <li>Следите за гистограммой «свои / чужие» и EER: как они меняются по эпохам и почему это важно для биометрической системы?</li>
+      <li>По графику изменения весов определите, какой слой меняется сильнее всего. Почему первый слой меняется меньше остальных?</li>
+      <li>Лица: положите в datasets/faces 5-8 человек по 3+ фото, обучите сеть и сравните с готовой SFace из раздела «Лицо». Почему маленькой сети с нуля данных не хватает?</li>
+    </ol>
+  </div>
+</section>
+<section id="nnMain" style="display:none;padding:14px">
+  <div class="card">
+    <h2>Нейросеть: как модель обучается <span class="leg">- интерактивная площадка, всё считается прямо в браузере</span></h2>
+    <div class="nnbar">
+      <button id="nnPlay">▶ Обучать</button>
+      <button class="sec" id="nnStep">Шаг (1 эпоха)</button>
+      <button class="sec" id="nnReset">↺ Сбросить</button>
+      <span>Эпоха: <b id="nnEpoch">0</b></span>
+      <label>Скорость обучения (learning rate)<br><select id="nnLr"></select></label>
+      <label>Функция активации<br><select id="nnAct"></select></label>
+      <label>Регуляризация<br><select id="nnReg"></select></label>
+      <label>Сила регуляризации<br><select id="nnRegRate"></select></label>
+      <label>Скорость показа<br><select id="nnSpeed"></select></label>
+    </div>
+    <div class="nngrid">
+      <div class="nncol">
+        <h3>Данные</h3>
+        <div id="nnDatasets" class="btns"></div>
+        <label>Доля обучающей выборки: <b id="nnRatioV">50%</b></label>
+        <input type="range" id="nnRatio" min="10" max="90" step="10" value="50">
+        <label>Шум: <b id="nnNoiseV">0</b></label>
+        <input type="range" id="nnNoise" min="0" max="50" step="5" value="0">
+        <label>Размер батча: <b id="nnBatchV">10</b></label>
+        <input type="range" id="nnBatch" min="1" max="30" step="1" value="10">
+        <button class="sec" id="nnRegen">Новые данные</button>
+        <div class="leg" id="nnDataNote" style="margin-top:8px"></div>
+      </div>
+      <div class="nncol">
+        <h3>Структура сети</h3>
+        <div class="nnlayers">Скрытых слоёв: <button class="sec" id="nnLm">−</button><b id="nnLn">2</b><button class="sec" id="nnLp">+</button>
+          <span class="leg">нейроны: кнопки над столбцами; признаки: клик по квадратам слева</span></div>
+        <div id="nnNetWrap"><div id="nnNet"></div></div>
+        <div class="leg" style="margin-top:6px">Цвет и толщина линий - знак и величина весов (синий положительный, оранжевый отрицательный). В квадратах - что «видит» каждый нейрон на плоскости (X₁, X₂).</div>
+      </div>
+      <div class="nncol">
+        <h3>Результат</h3>
+        <div class="nnnums">Test loss: <b id="nnTest">-</b><br>Training loss: <b id="nnTrain">-</b><br>Точность на тесте: <b id="nnAcc">-</b></div>
+        <div id="nnMsg"></div>
+        <canvas id="nnOut" width="300" height="300"></canvas>
+        <label style="display:inline"><input type="checkbox" id="nnShowTest"> Показать тестовые данные</label><br>
+        <label style="display:inline"><input type="checkbox" id="nnDiscrete"> Дискретный вывод</label>
+        <canvas id="nnChart" width="300" height="110"></canvas>
+        <div class="leg">Кривые loss: синяя - обучение, оранжевая пунктирная - тест. Если тест растёт, а обучение падает, это переобучение.</div>
+      </div>
+    </div>
+  </div>
+  <div class="card" style="margin-top:14px">
+    <h2>Журнал экспериментов с сетью</h2>
+    <div class="btns"><button id="nnSave">Зафиксировать текущий результат</button><button class="sec" id="nnCsv">Скачать CSV</button><button class="sec" id="nnClearLog">Очистить</button></div>
+    <div id="nnLog"></div>
+  </div>
+  <div class="card" style="margin-top:14px">
+    <h2>Задания для исследования</h2>
+    <ol class="task">
+      <li>Набор «Биометрия: свой / чужой», 0 скрытых слоёв: обучите модель и найдите границу решения. Это аналог порога threshold. Сколько ошибок остаётся и почему классы нельзя разделить идеально?</li>
+      <li>Добавьте шум и сравните кривые train и test loss. Когда сеть начинает переобучаться? Поможет ли регуляризация L2?</li>
+      <li>Наборы «Круг» и XOR: подберите минимальную структуру или признаки, при которых точность на тесте не ниже 95%.</li>
+      <li>«Спираль»: какие признаки и слои нужны? Как learning rate влияет на скорость и устойчивость обучения?</li>
+      <li>Зафиксируйте 3-5 экспериментов в журнале и сделайте вывод о влиянии гиперпараметров.</li>
+    </ol>
+  </div>
+</section>
+
+<script>
+const MODS={
+ fingerprint:{defThr:0.5,
+  note:'Датасет синтетический: реальные биометрические данные людей не используются.',
+  legend:'● окончание, ▲ разветвление; зелёные - совпавшие minutiae, серые - без пары, жёлтые линии - соответствия.',
+  def:['f01_i1','f01_i2'],
+  params:[
+   {t:'select',k:'bin_method',l:'Метод бинаризации',opts:[['adaptive','adaptive'],['otsu','otsu'],['fixed','fixed (порог ниже)']],v:'adaptive'},
+   {k:'clahe_clip',l:'CLAHE: clip limit',min:0.5,max:8,step:0.5,v:2.0},
+   {k:'orient_smooth',l:'Сглаживание поля ориентаций (σ)',min:3,max:16,step:1,v:8},
+   {k:'gabor_period',l:'Gabor: период гребней (px)',min:5,max:14,step:0.5,v:9},
+   {k:'gabor_sigma',l:'Gabor: sigma',min:2,max:8,step:0.5,v:4},
+   {k:'bin_threshold',l:'Порог бинаризации (для fixed)',min:50,max:200,step:5,v:128,int:true},
+   {k:'min_minutiae_dist',l:'Мин. расстояние между minutiae (px)',min:4,max:20,step:1,v:8,int:true},
+   {k:'dist_tol',l:'Допуск matching по расстоянию (px)',min:6,max:30,step:1,v:14},
+   {k:'extra_noise',l:'Добавочный шум (σ)',min:0,max:50,step:2,v:0}]},
+ face:{defThr:0.4,
+  note:'Используйте открытые наборы (например LFW) или фото с согласия людей. Фото студентов без необходимости не собирайте.',
+  legend:'Сверху - найденное лицо с ключевыми точками, снизу - выровненное лицо (вход для embedding).',
+  def:null,
+  params:[
+   {t:'select',k:'detector',l:'Детектор лица',opts:[['auto','авто (YuNet, если есть)'],['haar','Haar-каскад (классика)'],['yunet','YuNet (нейросеть)']],v:'auto'},
+   {t:'select',k:'embedder',l:'Признаки (embedding)',opts:[['auto','авто (SFace, если есть)'],['sface','SFace (нейросеть)'],['lbp','LBP (классика)']],v:'auto'},
+   {t:'select',k:'align',l:'Выравнивание лица',opts:[['true','включено'],['false','выключено']],v:'true',bool:true},
+   {k:'scale_factor',l:'Haar: scale factor',min:1.02,max:1.4,step:0.02,v:1.1},
+   {k:'min_neighbors',l:'Haar: min neighbors',min:1,max:12,step:1,v:5,int:true},
+   {k:'min_face',l:'Мин. размер лица (px)',min:20,max:200,step:5,v:40,int:true},
+   {k:'extra_noise',l:'Добавочный шум (σ)',min:0,max:60,step:2,v:0}]}
+};
+let MOD='fingerprint';
+const API=()=>`/api/v1/biometrics/${MOD}`;
+const $=id=>document.getElementById(id);
+let last=null, evalData=null, procData=null, curStep=0;
+
+function buildParams(){
+  $('params').innerHTML=MODS[MOD].params.map(p=>p.t==='select'
+   ? `<label>${p.l}</label><select id="p_${p.k}">${p.opts.map(o=>`<option value="${o[0]}"${o[0]===p.v?' selected':''}>${o[1]}</option>`).join('')}</select>`
+   : `<label>${p.l}: <b id="v_${p.k}">${p.v}</b></label><input type="range" id="p_${p.k}" min="${p.min}" max="${p.max}" step="${p.step}" value="${p.v}">`).join('');
+  MODS[MOD].params.filter(p=>p.t!=='select').forEach(p=>$('p_'+p.k).addEventListener('input',e=>$('v_'+p.k).textContent=e.target.value));
+}
+function params(){
+  const o={};
+  MODS[MOD].params.forEach(p=>{
+    const v=$('p_'+p.k).value;
+    o[p.k]=p.t==='select'?(p.bool?v==='true':v):(p.int?Math.round(parseFloat(v)):parseFloat(v));
+  });
+  return o;
+}
+async function api(path,body,method='POST'){
+  const r=await fetch(path,{method,headers:{'Content-Type':'application/json'},body:body?JSON.stringify(body):undefined});
+  if(!r.ok){
+    let t=await r.text();
+    try{const j=JSON.parse(t);t=typeof j.detail==='string'?j.detail:JSON.stringify(j.detail)}catch(e){}
+    throw new Error(t)
+  }
+  return r.json();
+}
+function busy(btn,on){btn.disabled=on}
+
+async function loadSamples(selA,selB){
+  const s=await (await fetch(API()+'/samples')).json();
+  const opts=s.map(x=>`<option value="${x.id}">${x.label}</option>`).join('');
+  $('sa').innerHTML=opts;$('sb').innerHTML=opts;
+  let a=selA,b=selB;
+  if(!a&&s.length){
+    const def=MODS[MOD].def;
+    if(def){a=def[0];b=def[1]}
+    else{a=s[0].id;const same=s.find((x,i)=>i>0&&x.person&&x.person===s[0].person);b=(same||s[1]||s[0]).id}
+  }
+  if(a)$('sa').value=a; if(b)$('sb').value=b;
+}
+async function loadInfo(){
+  const b=$('banner');b.style.display='none';
+  try{
+    const inf=await (await fetch(API()+'/info')).json();
+    if(inf.hint){b.textContent=inf.hint+(inf.persons!==undefined?` (в галерее: людей ${inf.persons}, фото ${inf.images})`:'');b.style.display='block'}
+  }catch(e){}
+}
+
+/* ---------- Обучение распознаванию (CNN на сервере) ---------- */
+const TR={inited:false,timer:null,busy:false,snaps:{},sel:0,live:true,status:null,replay:null};
+function trPalette(i,n){return `hsl(${Math.round(360*i/Math.max(1,n))},70%,48%)`}
+function trInit(){
+  if(TR.inited)return;TR.inited=true;
+  const fill=(id,vals,def)=>{$(id).innerHTML=vals.map(v=>`<option value="${v}"${String(v)===String(def)?' selected':''}>${v}</option>`).join('')};
+  fill('trEpochs',[10,20,30,40,60],30);fill('trLr',[0.0005,0.001,0.003,0.005,0.01],0.003);
+  fill('trBatch',[16,32,64],32);fill('trSubj',[4,6,8,12],12);
+  $('trAug').oninput=e=>{$('trAugV').textContent=parseFloat(e.target.value).toFixed(2).replace(/0$/,'')};
+  $('trStart').onclick=trStart;
+  $('trStop').onclick=()=>fetch('/api/v1/training/stop',{method:'POST'});
+  $('trSlider').oninput=e=>{trStopReplay();const n=parseInt(e.target.value);TR.live=TR.status&&n>=TR.status.snapshots-1&&TR.status.state==='training';TR.sel=n;trShowEpoch(n)};
+  $('trPrev').onclick=()=>{trStopReplay();TR.live=false;TR.sel=Math.max(0,TR.sel-1);trShowEpoch(TR.sel)};
+  $('trNext').onclick=()=>{trStopReplay();TR.live=false;TR.sel=Math.min((TR.status?TR.status.snapshots:1)-1,TR.sel+1);trShowEpoch(TR.sel)};
+  $('trReplay').onclick=()=>{
+    if(TR.replay){trStopReplay();return}
+    if(!TR.status||!TR.status.snapshots)return;
+    TR.live=false;TR.sel=0;$('trReplay').textContent='⏸ Остановить показ';
+    TR.replay=setInterval(()=>{
+      if(TR.sel>=TR.status.snapshots-1){trStopReplay();return}
+      TR.sel++;trShowEpoch(TR.sel);
+    },500);
+    trShowEpoch(0);
+  };
+}
+function trStopReplay(){if(TR.replay){clearInterval(TR.replay);TR.replay=null}$('trReplay').textContent='⟲ Показать обучение с начала'}
+function trLeave(){if(TR.timer){clearInterval(TR.timer);TR.timer=null}trStopReplay()}
+function trShow(){trInit();trPoll()}
+async function trStart(){
+  const body={modality:$('trMod').value,epochs:parseInt($('trEpochs').value),lr:parseFloat($('trLr').value),batch:parseInt($('trBatch').value),
+    n_subjects:parseInt($('trSubj').value),aug:parseFloat($('trAug').value)};
+  try{
+    TR.snaps={};TR.sel=0;TR.live=true;trStopReplay();
+    await api('/api/v1/training/start',body);
+    await trPoll();
+  }catch(err){$('trStatus').textContent='Ошибка: '+err.message}
+}
+async function trSnap(n){
+  if(!TR.snaps[n]){const r=await fetch('/api/v1/training/snapshot/'+n);if(!r.ok)return null;TR.snaps[n]=await r.json()}
+  return TR.snaps[n];
+}
+async function trPoll(){
+  if(TR.busy)return;TR.busy=true;
+  try{
+    const st=await (await fetch('/api/v1/training/status')).json();
+    TR.status=st;
+    const names={idle:'готов к запуску',preparing:'подготовка данных...',training:'идёт обучение',finished:'обучение завершено',stopped:'остановлено',error:'ошибка'};
+    $('trStatus').innerHTML=`<b>${names[st.state]||st.state}</b>`+(st.total?` - эпоха ${st.epoch} из ${st.total}`:'')+(st.message?` <span style="color:var(--bad)">${st.message}</span>`:'');
+    $('trSlider').max=Math.max(0,st.snapshots-1);
+    if(st.snapshots>0&&TR.live)TR.sel=st.snapshots-1;
+    trCurves(st);
+    if(st.snapshots>0)await trShowEpoch(TR.sel);
+    const active=st.state==='training'||st.state==='preparing';
+    if(active&&!TR.timer)TR.timer=setInterval(trPoll,900);
+    if(!active&&TR.timer){clearInterval(TR.timer);TR.timer=null}
+  }catch(e){}
+  TR.busy=false;
+}
+function trWeights(st){
+  const w=st.history.wchange||{},names={conv1:'слой 1 (свёртка)',conv2:'слой 2 (свёртка)',conv3:'слой 3 (свёртка)',embedding:'embedding',classifier:'классификатор'};
+  const x=(w.conv1||[]).map((_,i)=>i);
+  Plotly.react('trWeights',Object.keys(names).map(k=>({x,y:(w[k]||[]).map(v=>v*100),name:names[k]})),
+    {margin:{t:10,r:10,b:36,l:48},xaxis:{title:'Эпоха'},yaxis:{title:'Изменение весов, %'},legend:{orientation:'h',y:-0.3},
+     shapes:[{type:'line',x0:TR.sel,x1:TR.sel,y0:0,y1:1,yref:'paper',line:{color:'#888',dash:'dot'}}]},{displayModeBar:false});
+}
+function trCurves(st){
+  trWeights(st);
+  const h=st.history,x=h.loss.map((_,i)=>i),sel=TR.sel;
+  const shape=[{type:'line',x0:sel,x1:sel,y0:0,y1:1,yref:'paper',line:{color:'#888',dash:'dot'}}];
+  Plotly.react('trLoss',[{x,y:h.loss,name:'loss',line:{color:'#d93a3a'}}],
+    {margin:{t:10,r:10,b:36,l:42},xaxis:{title:'Эпоха'},yaxis:{title:'Loss'},shapes:shape,showlegend:false},{displayModeBar:false});
+  Plotly.react('trAcc',[
+    {x,y:h.train_acc,name:'точность (обучение)',line:{color:'#2f5bea'}},
+    {x,y:h.test_acc,name:'точность (тест)',line:{color:'#12a150'}},
+    {x,y:h.eer,name:'EER',line:{color:'#f59322',dash:'dash'}}],
+    {margin:{t:10,r:10,b:36,l:42},xaxis:{title:'Эпоха'},yaxis:{range:[0,1.02]},legend:{orientation:'h',y:-0.3},shapes:shape},{displayModeBar:false});
+}
+function trDrawGray(cv,m,i,scale){
+  const g=nnCtx(cv);if(!g)return;
+  const bin=atob(m.data),n=m.w*m.h,im=g.createImageData(m.w,m.h);
+  for(let k=0;k<n;k++){const v=bin.charCodeAt(i*n+k);im.data[k*4]=v;im.data[k*4+1]=v;im.data[k*4+2]=v;im.data[k*4+3]=255}
+  g.putImageData(im,0,0);
+}
+function trMaps(id,m,px){
+  const box=$(id);box.innerHTML='';
+  for(let c=0;c<m.c;c++){const cv=document.createElement('canvas');cv.width=m.w;cv.height=m.h;cv.style.width=cv.style.height=px+'px';box.appendChild(cv);trDrawGray(cv,m,c)}
+}
+/* --- схема сети: как слои обучаются --- */
+const TRN={key:'',nodes:{},edges:{},hd:{},out:[],emb:null};
+const TRX={inp:60,c1:215,c2:385,c3:555,emb:715,out:880},TRY=330;
+function trHeat(f,scale){const t=Math.max(0,Math.min(1,f/scale)),a=[150,160,185],b=[245,147,34];return `rgb(${a.map((v,i)=>Math.round(v+(b[i]-v)*t)).join(',')})`}
+function trNy(n,i){return TRY+(i-(n-1)/2)*Math.min(36,500/n)}
+function trBuildNet(names){
+  const root=$('trNet');root.innerHTML='';root.style.width='1020px';root.style.height='640px';
+  const NS='http://www.w3.org/2000/svg',svg=document.createElementNS(NS,'svg');
+  svg.setAttribute('width',1020);svg.setAttribute('height',640);svg.style.cssText='position:absolute;left:0;top:0';root.appendChild(svg);
+  TRN.nodes={};TRN.edges={};TRN.out=[];
+  const box=(x,y,w,h,cls)=>{const d=document.createElement('div');d.className='nnbox '+(cls||'');d.style.cssText=`left:${x-w/2}px;top:${y-h/2}px;width:${w}px;height:${h}px`;const cv=document.createElement('canvas');cv.width=8;cv.height=8;d.appendChild(cv);root.appendChild(d);return {el:d,cv}};
+  const hd=(k,x,t)=>{const d=document.createElement('div');d.className='trhd';d.style.left=x+'px';d.innerHTML=t;root.appendChild(d);TRN.hd[k]=d};
+  hd('inp',TRX.inp,'Вход<br><small>тестовый образец</small>');
+  hd('c1',TRX.c1,'Слой 1<br><small>8 фильтров</small>');hd('c2',TRX.c2,'Слой 2<br><small>16 фильтров</small>');hd('c3',TRX.c3,'Слой 3<br><small>16 фильтров</small>');
+  hd('emb',TRX.emb,'Embedding<br><small>32 числа</small>');hd('out',TRX.out+20,'Ответ сети<br><small>вероятности</small>');
+  // вход
+  const inp=box(TRX.inp,TRY,64,64,'');inp.cv.remove();const im=document.createElement('img');im.style.cssText='width:100%;height:100%;display:block';inp.el.appendChild(im);TRN.nodes.inp={el:inp.el,img:im};
+  [['c1',8],['c2',16],['c3',16]].forEach(([k,n])=>{TRN.nodes[k]=[];for(let i=0;i<n;i++)TRN.nodes[k].push(box(TRX[k],trNy(n,i),k==='c1'?32:28,k==='c1'?32:28,''))});
+  TRN.emb=box(TRX.emb,TRY,72,40,'');
+  names.forEach((nm,i)=>{const y=trNy(names.length,i),d=document.createElement('div');d.className='tro';d.style.cssText=`left:${TRX.out-2}px;top:${y-15}px`;
+    d.innerHTML=`<div class="bar" style="width:0"></div><span>${esc(nm)}</span>`;root.appendChild(d);TRN.out.push(d)});
+  const edge=(x1,y1,x2,y2)=>{const p=document.createElementNS(NS,'path'),mx=(x1+x2)/2;p.setAttribute('d',`M${x1},${y1} C${mx},${y1} ${mx},${y2} ${x2},${y2}`);p.setAttribute('fill','none');p.setAttribute('stroke-linecap','round');svg.appendChild(p);return p};
+  TRN.edges.conv1=[...Array(8)].map((_,j)=>edge(TRX.inp+32,TRY,TRX.c1-17,trNy(8,j)));
+  TRN.edges.conv2=[...Array(16)].map((_,j)=>[...Array(8)].map((_,i)=>edge(TRX.c1+17,trNy(8,i),TRX.c2-15,trNy(16,j))));
+  TRN.edges.conv3=[...Array(16)].map((_,j)=>[...Array(16)].map((_,i)=>edge(TRX.c2+15,trNy(16,i),TRX.c3-15,trNy(16,j))));
+  TRN.edges.emb=[...Array(16)].map((_,i)=>edge(TRX.c3+15,trNy(16,i),TRX.emb-37,TRY));
+  TRN.edges.cls=names.map((_,k)=>edge(TRX.emb+37,TRY,TRX.out-4,trNy(names.length,k)));
+  TRN.key=names.join('|');
+}
+function trUpdateNet(sn,st){
+  const names=st.names||[];
+  if(!names.length)return;
+  if(TRN.key!==names.join('|')||!TRN.nodes.c1)trBuildNet(names);
+  const L=sn.net.links,C=sn.net.link_change,NC=sn.net.node_change,H=0.45;
+  const style=(p,v,mx,ch,k)=>{ // плотные межслойные связи рисуем тоньше и прозрачнее, чтобы схема читалась
+    const dense=k==='conv2'||k==='conv3';
+    p.setAttribute('stroke-width',(0.25+(dense?1.7:4.2)*v/mx).toFixed(2));p.setAttribute('stroke',trHeat(ch,H));p.setAttribute('stroke-opacity',dense?'0.5':'0.75')};
+  let mx=Math.max(1e-9,...L.conv1);L.conv1.forEach((v,j)=>style(TRN.edges.conv1[j],v,mx,C.conv1[j],'conv1'));
+  mx=Math.max(1e-9,...L.conv2.flat());L.conv2.forEach((r,j)=>r.forEach((v,i)=>style(TRN.edges.conv2[j][i],v,mx,C.conv2[j][i],'conv2')));
+  mx=Math.max(1e-9,...L.conv3.flat());L.conv3.forEach((r,j)=>r.forEach((v,i)=>style(TRN.edges.conv3[j][i],v,mx,C.conv3[j][i],'conv3')));
+  mx=Math.max(1e-9,...L.emb);L.emb.forEach((v,i)=>style(TRN.edges.emb[i],v,mx,C.emb[i],'emb'));
+  mx=Math.max(1e-9,...L.cls);L.cls.forEach((v,k)=>style(TRN.edges.cls[k],v,mx,C.cls[k],'cls'));
+  // узлы: карты признаков и рамка по степени изменения фильтра
+  [['c1','conv1'],['c2','conv2'],['c3','conv3']].forEach(([k,mk])=>{
+    const m=sn.maps[mk];
+    TRN.nodes[k].forEach((nd,i)=>{nd.cv.width=m.w;nd.cv.height=m.h;trDrawGray(nd.cv,m,i);nd.el.style.borderColor=trHeat(NC[mk][i],0.3)});
+  });
+  if(st.preview)TRN.nodes.inp.img.src=st.preview;
+  const e=sn.preview.emb,em=Math.max(1e-9,...e);
+  TRN.emb.cv.width=8;TRN.emb.cv.height=4;nnHeat(TRN.emb.cv,8,4,(x,y)=>e[y*8+x]/em);
+  // ответ сети
+  const pr=sn.preview.probs,best=pr.indexOf(Math.max(...pr));
+  TRN.out.forEach((d,k)=>{d.querySelector('.bar').style.width=(pr[k]*100).toFixed(0)+'%';d.querySelector('span').textContent=`${names[k]}  ${Math.round(pr[k]*100)}%`;
+    d.classList.toggle('true',k===sn.preview.label);d.classList.toggle('pred',k===best)});
+  const wc=sn.weight_change,pc=v=>Math.round(v*100)+'%';
+  TRN.hd.c1.innerHTML='Слой 1 · 8 фильтров<br><small>веса изменились на '+pc(wc.conv1)+'</small>';
+  TRN.hd.c2.innerHTML='Слой 2 · 16 фильтров<br><small>веса изменились на '+pc(wc.conv2)+'</small>';
+  TRN.hd.c3.innerHTML='Слой 3 · 16 фильтров<br><small>веса изменились на '+pc(wc.conv3)+'</small>';
+  TRN.hd.emb.innerHTML='Embedding · 32 числа<br><small>веса изменились на '+pc(wc.embedding)+'</small>';
+  TRN.hd.out.innerHTML='Ответ сети<br><small>классификатор: '+pc(wc.classifier)+'</small>';
+  const ok=best===sn.preview.label;
+  $('trNetInfo').textContent=`- эпоха ${sn.epoch}: на тестовом образце сеть отвечает «${names[best]}» (${Math.round(pr[best]*100)}%), правильный ответ «${names[sn.preview.label]}» - ${ok?'верно':'пока ошибка'}`;
+}
+
+async function trShowEpoch(n){
+  const sn=await trSnap(n);if(!sn)return;
+  const st=TR.status;
+  $('trSlider').value=n;
+  trUpdateNet(sn,st);
+  const f=v=>v==null?'-':v;
+  $('trEpochInfo').textContent=`${n}: loss ${f(sn.loss)}, точность обучения ${Math.round(sn.train_acc*100)}%, на тесте ${Math.round(sn.test_acc*100)}%, EER ${sn.eer==null?'-':(sn.eer*100).toFixed(1)+'%'}`;
+  if(st&&st.preview)$('trInput').src=st.preview;
+  // фильтры
+  const s0=await trSnap(0),fb=$('trFilters'),fd=$('trFiltD');fb.innerHTML='';fd.innerHTML='';
+  const mx=Math.max(1e-9,...sn.filters.flat(2).map(Math.abs));
+  sn.filters.forEach(k=>{const cv=document.createElement('canvas');cv.width=3;cv.height=3;fb.appendChild(cv);nnHeat(cv,3,3,(x,y)=>k[y][x]/mx)});
+  const delta=sn.filters.map((k,i)=>k.map((r,y)=>r.map((v,x)=>v-s0.filters[i][y][x])));
+  const dmx=Math.max(1e-9,...delta.flat(2).map(Math.abs));
+  delta.forEach(k=>{const cv=document.createElement('canvas');cv.width=3;cv.height=3;fd.appendChild(cv);nnHeat(cv,3,3,(x,y)=>k[y][x]/dmx)});
+  $('trFiltInfo').textContent=n===0?'Это начальное состояние.':`Первый слой изменился на ${(sn.weight_change.conv1*100).toFixed(0)}% от начальных весов (цвета нормированы на самое большое изменение).`;
+  trMaps('trMaps1',sn.maps.conv1,54);trMaps('trMaps2',sn.maps.conv2,50);trMaps('trMaps3',sn.maps.conv3,46);
+  // embedding
+  const names=(st&&st.names)||[],nc=names.length,E=sn.embedding;
+  Plotly.react('trEmb',[{x:E.map(p=>p[0]),y:E.map(p=>p[1]),mode:'markers',type:'scatter',text:E.map(p=>names[p[2]]||''),hoverinfo:'text',
+    marker:{color:E.map(p=>trPalette(p[2],nc)),symbol:E.map(p=>p[3]===1?'diamond':'circle'),size:E.map(p=>p[3]===1?13:(p[3]===2?6:9)),
+      opacity:E.map(p=>p[3]===2?0.55:1),line:{width:1,color:'#fff'}}}],
+    {margin:{t:10,r:10,b:30,l:36},xaxis:{zeroline:false,title:'главная компонента 1'},yaxis:{zeroline:false,title:'главная компонента 2'},showlegend:false},{displayModeBar:false});
+  // свои / чужие
+  const H=sn.hist,ctr=H.bins.slice(0,-1).map((b,i)=>((b+H.bins[i+1])/2).toFixed(3));
+  Plotly.react('trHist',[{x:ctr,y:H.genuine,type:'bar',name:'свои (один объект)',marker:{color:'#2f5bea'},opacity:0.7},
+    {x:ctr,y:H.impostor,type:'bar',name:'чужие (разные объекты)',marker:{color:'#f59322'},opacity:0.7}],
+    {barmode:'overlay',margin:{t:10,r:10,b:40,l:40},xaxis:{title:'косинусное сходство'},yaxis:{title:'пар'},legend:{orientation:'h',y:-0.25}},{displayModeBar:false});
+  $('trEer').textContent=sn.eer==null?'':`EER ≈ ${(sn.eer*100).toFixed(1)}%: чем меньше гистограммы «своих» и «чужих» перекрываются, тем он ниже.`;
+  // тестовые образцы
+  const tb=$('trTests');tb.innerHTML='';
+  (st.samples||[]).forEach((smp,i)=>{
+    const p=sn.test_preds[i];if(!p)return;
+    const d=document.createElement('div');d.className='trtest '+(p.ok?'ok':'bad');
+    d.innerHTML=`<img src="${smp.img}" alt=""><div>${smp.name}<br>→ ${names[p.pred]||p.pred} (${Math.round(p.conf*100)}%)</div>`;
+    tb.appendChild(d);
+  });
+  trCurves(st);
+}
+
+/* ---------- Практикум: код ---------- */
+const esc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const CD={inited:false,tasks:[],cur:null,mon:null,last:null,attempts:0};
+const cdGet=()=>CD.mon?CD.mon.getValue():$('cdTextarea').value;
+const cdSet=v=>{if(CD.mon)CD.mon.setValue(v);else $('cdTextarea').value=v};
+function cdLoadMonaco(){
+  const base='https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.45.0/min',note=$('cdEdNote');
+  const sc=document.createElement('script');sc.src=base+'/vs/loader.min.js';
+  sc.onerror=()=>{note.textContent='Редактор Monaco не загрузился (нужен интернет): используется простое поле ввода.'};
+  sc.onload=()=>{try{
+    window.MonacoEnvironment={getWorkerUrl:()=>'data:text/javascript;charset=utf-8,'+encodeURIComponent("self.MonacoEnvironment={baseUrl:'"+base+"/'};importScripts('"+base+"/vs/base/worker/workerMain.js');")};
+    window.require.config({paths:{vs:base+'/vs'}});
+    window.require(['vs/editor/editor.main'],()=>{
+      const host=document.createElement('div');host.style.cssText='width:100%;height:100%';$('cdEditorBox').appendChild(host);
+      CD.mon=window.monaco.editor.create(host,{value:$('cdTextarea').value,language:'python',theme:'vs',minimap:{enabled:false},fontSize:14,automaticLayout:true,scrollBeyondLastLine:false,tabSize:4});
+      $('cdTextarea').style.display='none';
+    });
+  }catch(e){note.textContent='Не удалось запустить Monaco: используется простое поле ввода.'}};
+  document.head.appendChild(sc);
+}
+function cdInit(){
+  if(CD.inited)return;CD.inited=true;
+  $('cdTextarea').addEventListener('keydown',e=>{ // Tab вставляет 4 пробела
+    if(e.key==='Tab'){e.preventDefault();const t=e.target,a=t.selectionStart;t.value=t.value.slice(0,a)+'    '+t.value.slice(t.selectionEnd);t.selectionStart=t.selectionEnd=a+4}});
+  $('cdRun').onclick=cdRun;$('cdSubmit').onclick=cdSubmit;
+  $('cdReset').onclick=()=>{if(CD.cur)cdSet(CD.cur.starter_code)};
+  $('cdHintBtns').querySelectorAll('button').forEach(b=>b.onclick=()=>cdHint(parseInt(b.dataset.lv)));
+  $('cdExplain').onclick=()=>{cdSay(CD.last?'Разбор результата':'Разбор',CD.last||'Сначала запустите код или проверьте решение, затем я объясню результат.',false)};
+  cdLoadMonaco();
+}
+async function cdShow(){cdInit();await cdLoadTasks()}
+async function cdLoadTasks(){
+  CD.tasks=await (await fetch('/api/v1/code/tasks')).json();
+  $('cdTasks').innerHTML=CD.tasks.map(t=>`<div class="cdtask${CD.cur&&CD.cur.id===t.id?' on':''}" data-id="${t.id}"><b>${esc(t.title)}</b><div>${esc(t.topic)} · ${esc(t.difficulty)}</div><div>лучший: ${t.best==null?'-':t.best}/${t.max_score} · попыток: ${t.attempts}</div></div>`).join('');
+  $('cdTasks').querySelectorAll('.cdtask').forEach(el=>el.onclick=()=>cdOpen(el.dataset.id));
+  if(!CD.cur&&CD.tasks.length)await cdOpen(CD.tasks[0].id);
+}
+async function cdOpen(id){
+  const t=await (await fetch('/api/v1/code/tasks/'+id)).json();
+  CD.cur=t;CD.attempts=t.attempts;CD.last=null;
+  $('cdTitle').textContent=t.title+' ('+t.max_score+' баллов)';
+  $('cdTheory').textContent=t.theory;$('cdDesc').textContent=t.description;$('cdDesc').style.display='block';
+  cdSet(t.last_code||t.starter_code);
+  $('cdQuestion').innerHTML=`<div style="margin-bottom:4px"><b style="font-size:13px">${esc(t.question.text)}</b></div>`+
+    t.question.options.map((o,i)=>`<label><input type="radio" name="cdq" value="${i}"> ${esc(o)}</label>`).join('');
+  $('cdScore').innerHTML='';$('cdFeedback').textContent='';$('cdOut').style.display='none';$('cdTests').innerHTML='';$('cdChat').innerHTML='';
+  cdLockLabel();
+  document.querySelectorAll('.cdtask').forEach(e=>e.classList.toggle('on',e.dataset.id===id));
+  await cdHistory();
+}
+function cdLockLabel(){$('cdH4').textContent=CD.attempts>=3?'4 Решение':'4 Решение 🔒 ('+CD.attempts+'/3)'}
+async function cdHistory(){
+  const rows=await (await fetch('/api/v1/code/attempts/'+CD.cur.id)).json();
+  $('cdHist').innerHTML=rows.length?'<table><tr><th>№</th><th>Балл</th><th>Тесты</th></tr>'+rows.map(r=>`<tr><td>${r.id}</td><td>${r.score}/${r.max_score}</td><td>${r.passed_basic}/${r.total_basic} + ${r.passed_edge}/${r.total_edge}</td></tr>`).join('')+'</table>':'<span class="leg">Попыток пока нет.</span>';
+}
+function cdAnswer(){const r=document.querySelector('input[name=cdq]:checked');return r?parseInt(r.value):null}
+function cdOut(res){
+  const parts=[];
+  if(res.stdout)parts.push('Вывод print():\n'+res.stdout);
+  if(res.example){const e=res.example;
+    parts.push('Пример:\n  вход:      '+e.input+'\n  ожидается: '+e.expected+'\n  результат: '+(e.error?'ошибка '+e.error.type+': '+e.error.message:(e.ok?'совпадает ✓':'не совпадает ✗ '+e.message)));}
+  if(res.error&&res.error.type!=='SyntaxError')parts.push('Ошибка '+res.error.type+(res.error.line?' (строка '+res.error.line+')':'')+': '+res.error.message);
+  if(res.error&&res.error.type==='SyntaxError')parts.push('Синтаксическая ошибка'+(res.error.line?' (строка '+res.error.line+')':'')+': '+res.error.message);
+  const o=$('cdOut');o.style.display=parts.length?'block':'none';o.textContent=parts.join('\n\n');
+}
+function cdSay(title,text,lock){
+  const d=document.createElement('div');d.className='cdhint'+(lock?' lock':'');d.innerHTML=`<div class="t">${esc(title)}</div>${esc(text)}`;
+  $('cdChat').prepend(d);
+}
+async function cdRun(e){
+  if(!CD.cur)return;busy($('cdRun'),true);
+  try{
+    const res=await api('/api/v1/code/run',{task_id:CD.cur.id,code:cdGet()});
+    CD.last=res.feedback;$('cdScore').innerHTML='';$('cdTests').innerHTML='';
+    $('cdFeedback').textContent=res.feedback;cdOut(res);
+    cdSay('Запуск на примере',res.feedback,false);
+  }catch(err){alert(err.message)}
+  busy($('cdRun'),false);
+}
+async function cdSubmit(){
+  if(!CD.cur)return;busy($('cdSubmit'),true);
+  try{
+    const res=await api('/api/v1/code/submit',{task_id:CD.cur.id,code:cdGet(),answer:cdAnswer()});
+    const g=res.grading;CD.last=res.feedback;CD.attempts=res.attempts;cdLockLabel();
+    const names={run:'код запускается без ошибок',basic:'базовые тесты',edge:'граничные случаи',question:'контрольный вопрос'},mx=CD.cur.rubric;
+    $('cdScore').innerHTML=`<div class="cdscore"><div><div class="leg">Оценка за попытку ${res.attempts}</div><div class="big">${g.score}<span style="font-size:16px;color:var(--mut)"> / ${g.max_score}</span></div></div>
+      <div class="cdparts">${Object.keys(names).map(k=>`${names[k]}: <b>${g.parts[k]}</b> из ${mx[k]}`).join('<br>')}</div></div>`;
+    $('cdFeedback').textContent=res.feedback;cdOut(res);
+    $('cdTests').innerHTML=res.tests.length?'<table><tr><th>Тест</th><th>Тип</th><th></th><th>Комментарий</th></tr>'+res.tests.map(t=>
+      `<tr><td>${esc(t.name)}</td><td>${t.kind==='basic'?'базовый':'граничный'}</td><td class="${t.ok?'cdok':'cdbad'}">${t.ok?'✓':'✗'}</td><td>${t.ok?'':esc(t.message)}</td></tr>`).join('')+'</table>':'';
+    cdSay('Разбор проверки',res.feedback,false);
+    await cdHistory();await cdLoadTasks();
+  }catch(err){alert(err.message)}
+  busy($('cdSubmit'),false);
+}
+async function cdHint(level){
+  if(!CD.cur)return;
+  try{
+    const h=await api('/api/v1/code/hint',{task_id:CD.cur.id,level});
+    cdSay(`Подсказка ${h.level}: ${h.title}`,h.text,!h.available);
+  }catch(err){alert(err.message)}
+}
+
+let CURTAB='fingerprint';
+function setMod(name){
+  CURTAB=name;
+  document.querySelectorAll('.tab[data-mod]').forEach(t=>t.classList.toggle('on',t.dataset.mod===name));
+  const SECTIONS={nn:'nnMain',train:'trMain',code:'cdMain'};
+  $('bioMain').style.display=SECTIONS[name]?'none':'';
+  Object.keys(SECTIONS).forEach(k=>{$(SECTIONS[k]).style.display=k===name?'block':'none'});
+  if(SECTIONS[name]){
+    if(typeof p3stop==='function')p3stop();
+    nnPause();trLeave();
+    if(name==='nn')nnShow();else if(name==='train')trShow();else cdShow();
+    return}
+  nnPause();trLeave();
+  MOD=name;
+  document.querySelectorAll('[data-only]').forEach(e=>e.style.display=e.dataset.only===name?'':'none');
+  last=null;evalData=null;procData=null;curStep=0;
+  $('steps').innerHTML='';$('stepImg').removeAttribute('src');$('stepTitle').textContent='';
+  $('stepDesc').textContent='Нажмите «Показать этапы для A».';$('minTable').innerHTML='';$('procName').textContent='';
+  $('cmpRes').innerHTML='<span class="desc">Нажмите «Сравнить A и B».</span>';$('cmpImg').style.display='none';
+  $('evalNow').textContent='';$('evalInfo').textContent='';
+  try{Plotly.purge('chart')}catch(e){}
+  $('th').value=MODS[name].defThr;$('thv').textContent=MODS[name].defThr.toFixed(2);
+  $('dataNote').textContent=MODS[name].note;$('cmpLeg').textContent=MODS[name].legend;
+  buildParams();loadSamples();loadInfo();loadLog();
+}
+document.querySelectorAll('.tab[data-mod]').forEach(t=>t.onclick=()=>{if(t.dataset.mod!==CURTAB)setMod(t.dataset.mod)});
+
+function renderStep(){
+  if(!procData)return;
+  const s=procData.steps[curStep];
+  $('stepImg').src=s.image;$('stepTitle').textContent=s.title;$('stepDesc').textContent=s.description;
+  [...document.querySelectorAll('.step[data-i]')].forEach((e,i)=>e.classList.toggle('on',i===curStep));
+}
+$('bproc').onclick=async e=>{
+  busy(e.target,true);
+  try{
+    procData=await api(API()+'/process',{sample_id:$('sa').value,params:params()});
+    $('procName').textContent='- '+procData.sample_id;
+    $('steps').innerHTML=procData.steps.map((s,i)=>{const n=s.title.split('. ');return `<span class="step" data-i="${i}">${n[0]}. ${(n[1]||'').split(' (')[0]}</span>`}).join('');
+    document.querySelectorAll('.step[data-i]').forEach(el=>el.onclick=()=>{curStep=+el.dataset.i;renderStep()});
+    curStep=procData.steps.length-1;renderStep();
+    let h='';
+    if(procData.facts)h+='<table class="facts" style="margin-top:8px">'+procData.facts.map(f=>`<tr><td>${f[0]}</td><td>${f[1]}</td></tr>`).join('')+'</table>';
+    if(procData.minutiae)h+=`<p class="leg">Найдено minutiae: ${procData.n_minutiae} (окончаний ${procData.n_ending}, разветвлений ${procData.n_bifurcation})</p>
+     <div style="max-height:160px;overflow:auto"><table><tr><th>#</th><th>X</th><th>Y</th><th>Угол</th><th>Тип</th><th>Качество</th></tr>`+
+     procData.minutiae.map((m,i)=>`<tr><td>${i+1}</td><td>${m.x}</td><td>${m.y}</td><td>${m.theta_deg}°</td><td>${m.type==='ending'?'● ending':'▲ bifurcation'}</td><td>${m.quality}</td></tr>`).join('')+'</table></div>';
+    $('minTable').innerHTML=h;
+  }catch(err){alert(err.message)}
+  busy(e.target,false);
+};
+
+function showDecision(){
+  if(!last)return;
+  const t=parseFloat($('th').value), m=last.similarity>=t;
+  const det=(last.details||[]).map(d=>`${d[0]}: ${d[1]}`).join('<br>');
+  $('cmpRes').innerHTML=`<div><div class="leg">Similarity</div><div class="big">${last.similarity.toFixed(2)}</div></div>
+   <div><div class="leg">Threshold</div><div class="big">${t.toFixed(2)}</div></div>
+   <span class="badge ${m?'m':'n'}">${m?'MATCH':'NO MATCH'}</span>
+   <div class="leg">${det}</div>`;
+}
+$('bcmp').onclick=async e=>{
+  busy(e.target,true);
+  try{
+    last=await api(API()+'/compare',{sample_a:$('sa').value,sample_b:$('sb').value,params:params(),threshold:parseFloat($('th').value)});
+    $('cmpImg').src=last.overlay;$('cmpImg').style.display='block';
+    showDecision();loadLog();drawEval();
+  }catch(err){alert(err.message)}
+  busy(e.target,false);
+};
+$('th').oninput=e=>{$('thv').textContent=(+e.target.value).toFixed(2);showDecision();drawEval()};
+
+function drawEval(){
+  if(!evalData)return;
+  const t=parseFloat($('th').value),d=evalData;
+  const g=d.genuine_scores,im=d.impostor_scores;
+  const far=im.filter(s=>s>=t).length/im.length, frr=g.filter(s=>s<t).length/g.length;
+  const acc=((g.length-g.filter(s=>s<t).length)+(im.length-im.filter(s=>s>=t).length))/(g.length+im.length);
+  Plotly.react('chart',[
+    {x:d.thresholds,y:d.far.map(v=>v*100),name:'FAR, %',line:{color:'#d93a3a'}},
+    {x:d.thresholds,y:d.frr.map(v=>v*100),name:'FRR, %',line:{color:'#2f5bea'}}],
+   {margin:{t:10,r:10,b:40,l:45},xaxis:{title:'Threshold'},yaxis:{title:'Ошибки, %'},legend:{orientation:'h'},
+    shapes:[{type:'line',x0:t,x1:t,y0:0,y1:100,line:{color:'#888',dash:'dot'}}]},{displayModeBar:false});
+  $('evalNow').innerHTML=`При threshold ${t.toFixed(2)}: <b>FAR ${(far*100).toFixed(1)}%</b>, <b>FRR ${(frr*100).toFixed(1)}%</b>, Accuracy ${(acc*100).toFixed(1)}%. EER ≈ ${(d.eer*100).toFixed(1)}% при threshold ${d.eer_threshold}.`;
+}
+$('beval').onclick=async e=>{
+  busy(e.target,true);$('evalInfo').textContent='Считаем... (первый запуск может занять до ~10 с)';
+  try{
+    evalData=await api(API()+'/evaluate',{params:params(),n_subjects:8});
+    $('evalInfo').textContent=`Пар: ${evalData.n_genuine} своих и ${evalData.n_impostor} чужих`+(evalData.skipped_images?`; фото без найденного лица: ${evalData.skipped_images}`:'');
+    drawEval();
+  }catch(err){alert(err.message);$('evalInfo').textContent=''}
+  busy(e.target,false);
+};
+
+async function loadLog(){
+  const rows=await (await fetch('/api/v1/experiments?limit=15')).json();
+  $('log').innerHTML='<table><tr><th>№</th><th>Тип</th><th>A</th><th>B</th><th>Similarity</th><th>Thr.</th><th>Решение</th></tr>'+
+   rows.map(r=>`<tr><td>${r.id}</td><td>${r.modality}</td><td>${r.sample_a}</td><td>${r.sample_b}</td><td>${r.similarity.toFixed(2)}</td><td>${r.threshold.toFixed(2)}</td><td>${r.decision}</td></tr>`).join('')+'</table>';
+}
+$('clear').onclick=async()=>{await api('/api/v1/experiments',null,'DELETE');loadLog()};
+
+$('ask').onclick=async e=>{
+  const mode=$('mode').value,q=$('q').value;
+  const ctx=last?Object.assign({},last.context||{},{similarity:last.similarity,threshold:parseFloat($('th').value),n_a:last.n_a,n_b:last.n_b,matched:last.matched}):{};
+  const chat=$('chat');
+  chat.innerHTML+=`<div class="msg u"><span class="t">Вы (${mode})</span><br>${q||'—'}</div>`;
+  busy(e.target,true);
+  try{
+    const r=await api('/api/v1/tutor/ask',{mode,question:q,context:ctx});
+    chat.innerHTML+=`<div class="msg"><span class="t">Наставник (${r.provider})</span><br>${r.answer}</div>`;
+  }catch(err){chat.innerHTML+=`<div class="msg">Ошибка: ${err.message}</div>`}
+  chat.scrollTop=chat.scrollHeight;busy(e.target,false);
+};
+
+async function upload(file,target){
+  if(!file)return;
+  const fd=new FormData();fd.append('file',file);
+  const r=await fetch(API()+'/upload',{method:'POST',body:fd});
+  if(!r.ok){alert(await r.text());return}
+  const {sample_id}=await r.json();
+  const a=$('sa').value,b=$('sb').value;
+  await loadSamples(target==='A'?sample_id:a,target==='B'?sample_id:b);
+}
+$('fileA').onchange=e=>upload(e.target.files[0],'A');
+$('fileB').onchange=e=>upload(e.target.files[0],'B');
+$('reset').onclick=()=>buildParams();
+
+/* ---------- 3D ---------- */
+const V3={inited:false,data:null,mesh:null,markers:null,theta:0.6,phi:1.0,radius:150,drag:null,H:null,M:null};
+function b64u8(b){const bin=atob(b),a=new Uint8Array(bin.length);for(let i=0;i<bin.length;i++)a[i]=bin.charCodeAt(i);return a}
+function v3init(){
+  if(V3.inited)return;
+  if(typeof THREE==='undefined'){alert('Three.js не загрузился (нужен интернет).');return false}
+  const box=$('view3d');
+  V3.renderer=new THREE.WebGLRenderer({antialias:true,alpha:true});
+  V3.renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+  box.appendChild(V3.renderer.domElement);
+  V3.scene=new THREE.Scene();
+  V3.camera=new THREE.PerspectiveCamera(45,1,1,1000);
+  V3.scene.add(new THREE.AmbientLight(0xffffff,0.55));
+  const d=new THREE.DirectionalLight(0xffffff,0.9);d.position.set(-80,120,70);V3.scene.add(d);
+  const d2=new THREE.DirectionalLight(0x88aaff,0.3);d2.position.set(90,40,-60);V3.scene.add(d2);
+  const el=V3.renderer.domElement;
+  el.addEventListener('pointerdown',e=>{V3.drag={x:e.clientX,y:e.clientY};el.setPointerCapture(e.pointerId);box.style.cursor='grabbing'});
+  el.addEventListener('pointermove',e=>{if(!V3.drag)return;
+    V3.theta-=(e.clientX-V3.drag.x)*0.008;V3.phi=Math.min(1.5,Math.max(0.1,V3.phi-(e.clientY-V3.drag.y)*0.008));
+    V3.drag={x:e.clientX,y:e.clientY}});
+  el.addEventListener('pointerup',()=>{V3.drag=null;box.style.cursor='grab'});
+  el.addEventListener('wheel',e=>{e.preventDefault();V3.radius=Math.min(400,Math.max(60,V3.radius*(1+e.deltaY*0.001)))},{passive:false});
+  new ResizeObserver(()=>{const w=box.clientWidth,h=box.clientHeight;V3.renderer.setSize(w,h,false);V3.camera.aspect=w/h;V3.camera.updateProjectionMatrix()}).observe(box);
+  V3.inited=true;
+  (function loop(){
+    requestAnimationFrame(loop);
+    if($('v3r').checked&&!V3.drag)V3.theta+=0.004;
+    const r=V3.radius,c=V3.camera;
+    c.position.set(r*Math.sin(V3.phi)*Math.sin(V3.theta),r*Math.cos(V3.phi),r*Math.sin(V3.phi)*Math.cos(V3.theta));
+    c.lookAt(0,0,0);V3.renderer.render(V3.scene,c);
+  })();
+  return true;
+}
+function v3build(){
+  const d=V3.data,n=d.n,S=100;
+  if(V3.mesh){V3.scene.remove(V3.mesh);V3.mesh.geometry.dispose()}
+  V3.H=b64u8(d.heights);V3.M=b64u8(d.mask);
+  const geo=new THREE.PlaneGeometry(S,S,n-1,n-1);
+  const mat=new THREE.MeshStandardMaterial({color:0xffffff,roughness:0.85,metalness:0,side:THREE.DoubleSide});
+  V3.mesh=new THREE.Mesh(geo,mat);V3.mesh.rotation.x=-Math.PI/2;
+  V3.scene.add(V3.mesh);
+  v3texture();v3relief();
+}
+function v3z(i,j){ // высота вершины (строка i сверху, столбец j)
+  const d=V3.data,n=d.n,k=i*n+j,sh=d.shape;
+  const u=j/(n-1),v=i/(n-1);
+  const q=Math.pow((u-sh.cx)/sh.rx,2)+Math.pow((v-sh.cy)/sh.ry,2);
+  const dome=parseFloat($('v3c').value)*Math.sqrt(Math.max(0,1-q));
+  const ridge=parseFloat($('v3h').value)*V3.H[k]/255*(V3.M[k]>40?1:0);
+  return dome+ridge;
+}
+function v3relief(){
+  if(!V3.mesh)return;
+  const n=V3.data.n,pos=V3.mesh.geometry.attributes.position;
+  for(let i=0;i<n;i++)for(let j=0;j<n;j++)pos.setZ(i*n+j,v3z(i,j));
+  pos.needsUpdate=true;V3.mesh.geometry.computeVertexNormals();
+  v3markers();
+}
+function v3markers(){
+  if(V3.markers){V3.mesh.remove(V3.markers)}
+  const g=new THREE.Group(),d=V3.data,n=d.n,S=100,sz=d.image_size;
+  const geoE=new THREE.SphereGeometry(1.5,12,12);
+  const geoB=new THREE.ConeGeometry(1.7,4.2,12);geoB.rotateX(Math.PI/2);
+  const mE=new THREE.MeshStandardMaterial({color:0xff3b3b,emissive:0x550000});
+  const mB=new THREE.MeshStandardMaterial({color:0x3b8bff,emissive:0x002255});
+  d.minutiae.forEach(m=>{
+    const i=Math.min(n-1,Math.round(m.y/sz*(n-1))),j=Math.min(n-1,Math.round(m.x/sz*(n-1)));
+    const mesh=new THREE.Mesh(m.type==='ending'?geoE:geoB,m.type==='ending'?mE:mB);
+    mesh.position.set((m.x/sz-0.5)*S,(0.5-m.y/sz)*S,v3z(i,j)+3);
+    g.add(mesh);
+  });
+  g.visible=$('v3m').checked;V3.markers=g;V3.mesh.add(g);
+}
+function v3texture(){
+  if(!V3.mesh)return;
+  const k=$('v3tex').value,mat=V3.mesh.material;
+  if(k==='none'){mat.map=null;mat.color.set(0xc9d4f0);mat.needsUpdate=true;return}
+  mat.color.set(0xffffff);
+  new THREE.TextureLoader().load(V3.data.textures[k],t=>{mat.map=t;mat.needsUpdate=true});
+}
+$('b3d').onclick=async e=>{
+  if(v3init()===false)return;
+  busy(e.target,true);
+  try{
+    V3.data=await api(API()+'/relief',{sample_id:$('sa').value,params:params()});
+    $('v3ph').style.display='none';$('v3name').textContent='- '+V3.data.sample_id;
+    v3build();
+  }catch(err){alert(err.message)}
+  busy(e.target,false);
+};
+$('v3tex').onchange=v3texture;
+$('v3h').oninput=e=>{$('v3hv').textContent=e.target.value;v3relief()};
+$('v3c').oninput=e=>{$('v3cv').textContent=e.target.value;v3relief()};
+$('v3m').onchange=e=>{if(V3.markers)V3.markers.visible=e.target.checked};
+$('v3w').onchange=e=>{if(V3.mesh){V3.mesh.material.wireframe=e.target.checked}};
+$('b3reset').onclick=()=>{V3.theta=0.6;V3.phi=1.0;V3.radius=150};
+
+
+/* ---------- 3D-конвейер ---------- */
+const P3={inited:false,meshes:[],labels:[],steps:[],active:-1,theta:0.5,phi:1.1,radius:170,drag:null,timer:null,group:null,arrows:null,H:40};
+function p3init(){
+  if(P3.inited)return true;
+  if(typeof THREE==='undefined'){alert('Three.js не загрузился (нужен интернет).');return false}
+  const box=$('viewP3');
+  P3.renderer=new THREE.WebGLRenderer({antialias:true,alpha:true});
+  P3.renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+  box.appendChild(P3.renderer.domElement);
+  P3.scene=new THREE.Scene();
+  P3.camera=new THREE.PerspectiveCamera(45,1,1,3000);
+  P3.target=new THREE.Vector3();P3.tgt=new THREE.Vector3();
+  const el=P3.renderer.domElement;
+  el.addEventListener('pointerdown',e=>{P3.drag={x:e.clientX,y:e.clientY};el.setPointerCapture(e.pointerId);box.style.cursor='grabbing'});
+  el.addEventListener('pointermove',e=>{if(!P3.drag)return;
+    P3.theta-=(e.clientX-P3.drag.x)*0.008;P3.phi=Math.min(1.55,Math.max(0.15,P3.phi-(e.clientY-P3.drag.y)*0.008));
+    P3.drag={x:e.clientX,y:e.clientY}});
+  el.addEventListener('pointerup',()=>{P3.drag=null;box.style.cursor='grab'});
+  el.addEventListener('wheel',e=>{e.preventDefault();P3.radius=Math.min(900,Math.max(50,P3.radius*(1+e.deltaY*0.001)))},{passive:false});
+  new ResizeObserver(()=>{const w=box.clientWidth,h=box.clientHeight;P3.renderer.setSize(w,h,false);P3.camera.aspect=w/h;P3.camera.updateProjectionMatrix()}).observe(box);
+  P3.inited=true;
+  (function loop(){
+    requestAnimationFrame(loop);
+    P3.target.lerp(P3.tgt,0.08);
+    const r=P3.radius,c=P3.camera,t=P3.target;
+    c.position.set(t.x+r*Math.sin(P3.phi)*Math.sin(P3.theta),t.y+r*Math.cos(P3.phi),t.z+r*Math.sin(P3.phi)*Math.cos(P3.theta));
+    c.lookAt(t);P3.renderer.render(P3.scene,c);
+  })();
+  return true;
+}
+function p3img(url){return new Promise(res=>{const im=new Image();im.onload=()=>res(im);im.src=url})}
+function p3label(text){
+  const cv=document.createElement('canvas');cv.width=512;cv.height=96;
+  const g=cv.getContext('2d');if(!g)return null;
+  g.fillStyle='rgba(20,33,61,0.88)';g.fillRect(0,0,512,96);
+  g.fillStyle='#fff';g.font='bold 34px system-ui,Segoe UI,sans-serif';g.textBaseline='middle';
+  g.fillText(text.length>30?text.slice(0,29)+'…':text,16,48);
+  const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:new THREE.CanvasTexture(cv),transparent:true,depthTest:false}));
+  sp.scale.set(36,6.75,1);return sp;
+}
+async function p3build(steps){
+  P3.steps=steps;
+  const imgs=await Promise.all(steps.map(s=>p3img(s.image)));
+  if(P3.group){P3.scene.remove(P3.group)}
+  P3.group=new THREE.Group();P3.scene.add(P3.group);P3.meshes=[];P3.labels=[];P3.arrows=null;
+  imgs.forEach((im,i)=>{
+    const tex=new THREE.Texture(im);tex.needsUpdate=true;tex.minFilter=THREE.LinearFilter;
+    const w=Math.min(80,P3.H*im.width/im.height);
+    const mesh=new THREE.Mesh(new THREE.PlaneGeometry(w,P3.H),new THREE.MeshBasicMaterial({map:tex,side:THREE.DoubleSide,transparent:true}));
+    mesh.userData={w,i};
+    const edges=new THREE.LineSegments(new THREE.EdgesGeometry(mesh.geometry),new THREE.LineBasicMaterial({color:0x2f5bea}));
+    mesh.add(edges);mesh.userData.edges=edges;
+    P3.group.add(mesh);P3.meshes.push(mesh);
+    const lb=p3label(steps[i].title);
+    if(lb){P3.group.add(lb);P3.labels.push(lb)}else P3.labels.push(null);
+  });
+  const sl=$('p3slider');sl.max=Math.max(0,steps.length-1);
+  p3layout(true);p3setActive(-1);
+}
+function p3arrow(a,b){
+  const dir=new THREE.Vector3().subVectors(b,a),len=dir.length();
+  if(len<1)return;
+  const ar=new THREE.ArrowHelper(dir.clone().normalize(),a,len,0x8fa0c8,Math.min(5,len*0.35),Math.min(3,len*0.2));
+  P3.arrows.add(ar);
+}
+function p3layout(fit){
+  if(!P3.meshes.length)return;
+  const mode=$('p3layout').value,k=parseFloat($('p3gap').value),ms=P3.meshes,n=ms.length,H=P3.H;
+  if(P3.arrows)P3.group.remove(P3.arrows);
+  P3.arrows=new THREE.Group();P3.group.add(P3.arrows);
+  if(mode==='row'){
+    const gap=16*k,total=ms.reduce((a,m)=>a+m.userData.w,0)+gap*(n-1);
+    let x=-total/2;
+    ms.forEach((m,i)=>{
+      m.rotation.set(0,0,0);m.position.set(x+m.userData.w/2,0,0);x+=m.userData.w+gap;
+      if(P3.labels[i])P3.labels[i].position.set(m.position.x,-H/2-6,0);
+    });
+    for(let i=0;i<n-1;i++){
+      const a=ms[i],b=ms[i+1];
+      p3arrow(new THREE.Vector3(a.position.x+a.userData.w/2+1,0,0),new THREE.Vector3(b.position.x-b.userData.w/2-1,0,0));
+    }
+    P3.span=total;
+    if(fit){P3.radius=Math.max(110,total*0.85);P3.phi=1.25;P3.theta=0.35}
+  }else{
+    const gap=24*k;
+    ms.forEach((m,i)=>{
+      m.rotation.set(-Math.PI/2,0,0);m.position.set(0,(i-(n-1)/2)*gap,0);
+      if(P3.labels[i])P3.labels[i].position.set(m.userData.w/2+20,m.position.y,0);
+    });
+    for(let i=0;i<n-1;i++)p3arrow(new THREE.Vector3(0,ms[i].position.y+1,0),new THREE.Vector3(0,ms[i+1].position.y-1,0));
+    P3.span=gap*(n-1)+P3.H;
+    if(fit){P3.radius=Math.max(120,P3.span*1.1+60);P3.phi=1.35;P3.theta=0.6}
+  }
+  p3focus();
+}
+function p3focus(){
+  const i=P3.active;
+  if(i<0||!P3.meshes[i])P3.tgt.set(0,0,0);else P3.tgt.copy(P3.meshes[i].position);
+}
+function p3setActive(i){
+  const n=P3.meshes.length;
+  P3.active=Math.max(-1,Math.min(n-1,i));
+  P3.meshes.forEach((m,j)=>{
+    const on=P3.active<0||j===P3.active;
+    m.material.color.setScalar(on?1:0.3);m.material.opacity=on?1:0.6;
+    m.userData.edges.material.color.set(j===P3.active?0xffd24a:0x2f5bea);
+    m.scale.setScalar(j===P3.active?1.12:1);
+  });
+  p3focus();
+  const st=P3.steps[P3.active];
+  $('p3sv').textContent=st?`${P3.active+1} из ${n}`:'все';
+  $('p3slider').value=Math.max(0,P3.active);
+  $('p3desc').innerHTML=st?`<b>${st.title}</b><br>${st.description}`:'Показаны все этапы. Нажмите «Воспроизвести» или двигайте ползунок «Этап».';
+}
+function p3stop(){if(P3.timer){clearInterval(P3.timer);P3.timer=null}$('p3play').textContent='▶ Воспроизвести'}
+function p3toggle(){
+  if(!P3.meshes.length)return;
+  if(P3.timer){p3stop();return}
+  if(P3.active<0||P3.active>=P3.meshes.length-1)p3setActive(0);
+  $('p3play').textContent='⏸ Пауза';
+  P3.timer=setInterval(()=>{
+    if(P3.active>=P3.meshes.length-1){p3stop();return}
+    p3setActive(P3.active+1);
+  },2800);
+}
+$('bp3').onclick=async e=>{
+  busy(e.target,true);
+  try{
+    const d=await api(API()+'/process',{sample_id:$('sa').value,params:params()});
+    if(!p3init()){busy(e.target,false);return}
+    p3stop();$('p3ph').style.display='none';$('p3name').textContent='- '+d.sample_id;
+    await p3build(d.steps);
+  }catch(err){alert(err.message)}
+  busy(e.target,false);
+};
+$('p3prev').onclick=()=>{p3stop();p3setActive(P3.active<0?0:P3.active-1)};
+$('p3next').onclick=()=>{p3stop();p3setActive(P3.active+1)};
+$('p3all').onclick=()=>{p3stop();p3setActive(-1)};
+$('p3play').onclick=p3toggle;
+$('p3slider').oninput=e=>{p3stop();p3setActive(parseInt(e.target.value))};
+$('p3layout').onchange=()=>p3layout(true);
+$('p3gap').oninput=e=>{$('p3gv').textContent=parseFloat(e.target.value).toFixed(1);p3layout(false)};
+
+/* NN-ENGINE-START */
+function mulberry32(a){return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+function randn(r){let u=0,v=0;while(!u)u=r();while(!v)v=r();return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v)}
+const ACTS={
+  tanh:{f:Math.tanh,d:(z,a)=>1-a*a},
+  relu:{f:z=>Math.max(0,z),d:(z,a)=>z>0?1:0},
+  sigmoid:{f:z=>1/(1+Math.exp(-z)),d:(z,a)=>a*(1-a)},
+  linear:{f:z=>z,d:()=>1}
+};
+const NNF=[
+  {k:'x1',l:'X₁',f:(x,y)=>x/6},
+  {k:'x2',l:'X₂',f:(x,y)=>y/6},
+  {k:'x1sq',l:'X₁²',f:(x,y)=>(x/6)*(x/6)},
+  {k:'x2sq',l:'X₂²',f:(x,y)=>(y/6)*(y/6)},
+  {k:'x1x2',l:'X₁X₂',f:(x,y)=>(x/6)*(y/6)},
+  {k:'sinx1',l:'sin X₁',f:(x,y)=>Math.sin(x)},
+  {k:'sinx2',l:'sin X₂',f:(x,y)=>Math.sin(y)}
+];
+const NN_DATASETS={circle:'Круг',xor:'XOR',gaussian:'Два облака',spiral:'Спираль',bio:'Биометрия: свой / чужой'};
+function genData(name,n,noise,rng){
+  const pts=[],s=noise/100*4,half=Math.floor(n/2),cl=v=>Math.max(-6,Math.min(6,v));
+  const add=(x,y,l)=>pts.push({x:cl(x+randn(rng)*s),y:cl(y+randn(rng)*s),l});
+  if(name==='circle'){
+    for(let i=0;i<half;i++){const r=rng()*2.5,a=rng()*2*Math.PI;add(r*Math.cos(a),r*Math.sin(a),1)}
+    for(let i=0;i<half;i++){const r=3.5+rng()*2.0,a=rng()*2*Math.PI;add(r*Math.cos(a),r*Math.sin(a),-1)}
+  }else if(name==='xor'){
+    for(let i=0;i<n;i++){let x=rng()*10-5,y=rng()*10-5;x+=x>=0?0.3:-0.3;y+=y>=0?0.3:-0.3;add(x,y,x*y>=0?1:-1)}
+  }else if(name==='gaussian'){
+    for(let i=0;i<half;i++)add(2+randn(rng)*0.9,2+randn(rng)*0.9,1);
+    for(let i=0;i<half;i++)add(-2+randn(rng)*0.9,-2+randn(rng)*0.9,-1);
+  }else if(name==='spiral'){
+    for(const [d,l] of [[0,1],[Math.PI,-1]])for(let i=0;i<half;i++){const r=i/half*5.5,t=1.75*i/half*2*Math.PI+d;add(r*Math.sin(t),r*Math.cos(t),l)}
+  }else{ // bio: X1 - оценка сходства, X2 - качество изображения; классы пересекаются
+    for(let i=0;i<half;i++)add(2.2+randn(rng)*1.3,1.0+randn(rng)*1.8,1);
+    for(let i=0;i<half;i++)add(-2.0+randn(rng)*1.3,-1.0+randn(rng)*1.8,-1);
+  }
+  return pts;
+}
+class Net{
+  constructor(inSize,hidden,actName,rng){
+    this.sizes=[inSize,...hidden,1];this.L=this.sizes.length-1;this.act=ACTS[actName];
+    this.W=[];this.b=[];
+    for(let l=0;l<this.L;l++){
+      const fin=this.sizes[l],fout=this.sizes[l+1],sc=Math.sqrt(3/fin);
+      this.W.push(Array.from({length:fout},()=>Array.from({length:fin},()=>(rng()*2-1)*sc)));
+      this.b.push(new Array(fout).fill(actName==='relu'?0.1:0));
+    }
+  }
+  forward(x){
+    const a=[x],z=[];
+    for(let l=0;l<this.L;l++){
+      const zl=new Array(this.sizes[l+1]),al=new Array(this.sizes[l+1]),W=this.W[l],prev=a[l];
+      for(let j=0;j<zl.length;j++){
+        let s=this.b[l][j];const row=W[j];
+        for(let i=0;i<row.length;i++)s+=row[i]*prev[i];
+        zl[j]=s;al[j]=l===this.L-1?Math.tanh(s):this.act.f(s);
+      }
+      z.push(zl);a.push(al);
+    }
+    return {a,z,out:a[this.L][0]};
+  }
+  trainBatch(batch,lr,reg,rate){
+    const L=this.L,gW=this.W.map(m=>m.map(r=>r.map(()=>0))),gB=this.b.map(v=>v.map(()=>0));
+    for(const p of batch){
+      const {a,z}=this.forward(p.inp);
+      let d=[(a[L][0]-p.l)*(1-a[L][0]*a[L][0])];
+      for(let l=L-1;l>=0;l--){
+        const nd=l>0?new Array(a[l].length).fill(0):null;
+        for(let j=0;j<d.length;j++){
+          gB[l][j]+=d[j];const row=this.W[l][j];
+          for(let i=0;i<row.length;i++){gW[l][j][i]+=d[j]*a[l][i];if(nd)nd[i]+=row[i]*d[j]}
+        }
+        if(nd)for(let i=0;i<nd.length;i++)nd[i]*=this.act.d(z[l-1][i],a[l][i]);
+        d=nd;
+      }
+    }
+    const n=batch.length;
+    for(let l=0;l<L;l++)for(let j=0;j<this.W[l].length;j++){
+      for(let i=0;i<this.W[l][j].length;i++){
+        const w=this.W[l][j][i];let g=gW[l][j][i]/n;
+        if(reg==='l2')g+=rate*w;else if(reg==='l1')g+=rate*Math.sign(w);
+        this.W[l][j][i]=w-lr*g;
+      }
+      this.b[l][j]-=lr*gB[l][j]/n;
+    }
+  }
+}
+function evalSet(net,set){
+  let loss=0,ok=0;
+  for(const p of set){const o=net.forward(p.inp).out;loss+=0.5*(o-p.l)*(o-p.l);ok+=((o>=0?1:-1)===p.l)?1:0}
+  const n=Math.max(1,set.length);return {loss:loss/n,acc:ok/n};
+}
+/* NN-ENGINE-END */
+
+/* ---------- Нейросеть: игровая площадка ---------- */
+const NN={cfg:{dataset:'bio',noise:0,ratio:50,batch:10,lr:0.03,act:'tanh',reg:'none',regRate:0,speed:2,layers:[4,2],feats:['x1','x2']},
+  seed:1,rng:null,train:[],test:[],all:[],net:null,epoch:0,running:false,hist:{tr:[],te:[]},cur:{tr:null,te:null,acc:null},ui:null,inited:false,log:[],msg:''};
+const NN_NOTES={
+  bio:'X₁ - оценка сходства (similarity), X₂ - качество изображения. Синие - «свои» (genuine), оранжевые - «чужие» (impostor). Граница решения - аналог порога threshold; пересечение классов даёт ошибки FAR и FRR.',
+  circle:'Классы разделяются окружностью: линейной модели мало, помогают признаки X₁², X₂² или скрытые слои.',
+  xor:'Классы чередуются по квадрантам: без скрытых слоёв или признака X₁X₂ сеть не справится.',
+  gaussian:'Два облака: простой случай, хватает одного нейрона без скрытых слоёв.',
+  spiral:'Сложная задача: нужны скрытые слои и признаки sin X₁, sin X₂, обучение идёт долго.'};
+const NN_W=760,NN_H=470,GN=20;
+function nnActive(){return NNF.filter(f=>NN.cfg.feats.includes(f.k))}
+function nnColor(v){v=Math.max(-1,Math.min(1,v));const t=Math.abs(v),c=v>=0?[8,119,189]:[245,147,34];return [255+(c[0]-255)*t,255+(c[1]-255)*t,255+(c[2]-255)*t]}
+function nnCtx(cv){return cv&&cv.getContext?cv.getContext('2d'):null}
+function nnHeat(cv,w,h,getv){
+  const g=nnCtx(cv);if(!g)return;
+  const im=g.createImageData(w,h);
+  for(let y=0;y<h;y++)for(let x=0;x<w;x++){const c=nnColor(getv(x,y)),k=(y*w+x)*4;im.data[k]=c[0];im.data[k+1]=c[1];im.data[k+2]=c[2];im.data[k+3]=255}
+  g.putImageData(im,0,0);
+}
+function nnMakeData(){
+  NN.rng=mulberry32(NN.seed);
+  const pts=genData(NN.cfg.dataset,300,NN.cfg.noise,NN.rng);
+  for(let i=pts.length-1;i>0;i--){const j=Math.floor(NN.rng()*(i+1));[pts[i],pts[j]]=[pts[j],pts[i]]}
+  const nt=Math.round(pts.length*NN.cfg.ratio/100);
+  NN.all=pts;NN.train=pts.slice(0,nt);NN.test=pts.slice(nt);
+}
+function nnApplyFeatures(){const f=nnActive();NN.all.forEach(p=>p.inp=f.map(q=>q.f(p.x,p.y)))}
+function nnResetNet(){
+  nnApplyFeatures();
+  NN.rng=mulberry32(NN.seed*7919+NN.cfg.layers.join('').length+NN.cfg.feats.length);
+  NN.net=new Net(nnActive().length,NN.cfg.layers,NN.cfg.act,NN.rng);
+  NN.epoch=0;NN.hist={tr:[],te:[]};NN.msg='';
+  nnMeasure();
+}
+function nnMeasure(){
+  const a=evalSet(NN.net,NN.train),b=evalSet(NN.net,NN.test);
+  NN.cur={tr:a.loss,te:b.loss,acc:b.acc,accTr:a.acc};
+  NN.hist.tr.push(a.loss);NN.hist.te.push(b.loss);
+}
+function nnEpoch(){
+  const tr=NN.train,r=NN.rng;
+  for(let i=tr.length-1;i>0;i--){const j=Math.floor(r()*(i+1));[tr[i],tr[j]]=[tr[j],tr[i]]}
+  const bs=NN.cfg.batch;
+  for(let i=0;i<tr.length;i+=bs)NN.net.trainBatch(tr.slice(i,i+bs),NN.cfg.lr,NN.cfg.reg,NN.cfg.regRate);
+  NN.epoch++;nnMeasure();
+  if(!isFinite(NN.cur.tr)){nnPause();NN.msg='Обучение разошлось (loss стал бесконечным): уменьшите learning rate и нажмите «Сбросить».'}
+}
+function nnTick(){
+  if(!NN.running)return;
+  for(let i=0;i<NN.cfg.speed&&NN.running;i++)nnEpoch();
+  nnUpdate();
+  requestAnimationFrame(nnTick);
+}
+function nnPlay(){if(NN.running){nnPause();return}NN.running=true;$('nnPlay').textContent='⏸ Пауза';requestAnimationFrame(nnTick)}
+function nnPause(){NN.running=false;if($('nnPlay'))$('nnPlay').textContent='▶ Обучать'}
+
+/* --- схема сети --- */
+const nnFx=k=>40,nnFy=k=>52+k*56;
+function nnColX(l){const L=NN.net.L;return L===1?690:190+l*(500/(L-1))}
+function nnNy(l,j){const n=NN.net.sizes[l+1],sp=Math.min(56,360/n);return 235+(j-(n-1)/2)*sp}
+function nnBuild(){
+  const root=$('nnNet');root.innerHTML='';root.style.width=NN_W+'px';root.style.height=NN_H+'px';
+  const NS='http://www.w3.org/2000/svg',svg=document.createElementNS(NS,'svg');
+  svg.setAttribute('width',NN_W);svg.setAttribute('height',NN_H);svg.style.cssText='position:absolute;left:0;top:0';
+  root.appendChild(svg);
+  const mk=(x,y,size,cls)=>{const d=document.createElement('div');d.className=cls;d.style.cssText=`left:${x-size/2}px;top:${y-size/2}px;width:${size}px;height:${size}px`;const cv=document.createElement('canvas');cv.width=GN;cv.height=GN;d.appendChild(cv);root.appendChild(d);return {el:d,cv}};
+  const ui={feat:{},nodes:[],edges:[]};
+  // признаки
+  NNF.forEach((f,k)=>{
+    const b=mk(nnFx(k),nnFy(k),40,'nnbox nnfeat'+(NN.cfg.feats.includes(f.k)?'':' off'));
+    const t=document.createElement('span');t.textContent=f.l;b.el.appendChild(t);b.el.title='Клик: включить или выключить признак';
+    b.el.onclick=()=>{const i=NN.cfg.feats.indexOf(f.k);if(i>=0){if(NN.cfg.feats.length>1)NN.cfg.feats.splice(i,1)}else NN.cfg.feats.push(f.k);nnRestructure()};
+    nnHeat(b.cv,GN,GN,(x,y)=>{const X=-6+12*(x+.5)/GN,Y=-6+12*(y+.5)/GN;return f.f(X,Y)});
+    ui.feat[f.k]=b;
+  });
+  // нейроны
+  const L=NN.net.L;
+  for(let l=0;l<L;l++){
+    ui.nodes.push([]);
+    const n=NN.net.sizes[l+1];
+    for(let j=0;j<n;j++)ui.nodes[l].push(mk(nnColX(l),nnNy(l,j),l===L-1?44:36,'nnbox nnnode'+(l===L-1?' out':'')));
+    if(l<L-1){ // кнопки числа нейронов
+      const h=document.createElement('div');h.className='nnhead';h.style.left=(nnColX(l)-40)+'px';
+      h.innerHTML=`<button class="sec" data-l="${l}" data-d="-1">−</button> <b>${n}</b> <button class="sec" data-l="${l}" data-d="1">+</button>`;
+      root.appendChild(h);
+    }
+  }
+  root.querySelectorAll('.nnhead button').forEach(b=>b.onclick=()=>{const l=+b.dataset.l,v=NN.cfg.layers[l]+(+b.dataset.d);if(v>=1&&v<=8){NN.cfg.layers[l]=v;nnRestructure()}});
+  // связи
+  const act=nnActive();
+  const addEdge=(x1,y1,x2,y2,l,j,i)=>{
+    const p=document.createElementNS(NS,'path'),mx=(x1+x2)/2;
+    p.setAttribute('d',`M${x1},${y1} C${mx},${y1} ${mx},${y2} ${x2},${y2}`);p.setAttribute('fill','none');p.setAttribute('stroke-linecap','round');
+    svg.appendChild(p);ui.edges.push({p,l,j,i});
+  };
+  for(let l=0;l<L;l++)for(let j=0;j<NN.net.sizes[l+1];j++){
+    if(l===0)act.forEach((f,i)=>addEdge(nnFx(0)+20,nnFy(NNF.findIndex(q=>q.k===f.k)),nnColX(0)-18,nnNy(0,j),0,j,i));
+    else for(let i=0;i<NN.net.sizes[l];i++)addEdge(nnColX(l-1)+18,nnNy(l-1,i),nnColX(l)-(l===L-1?22:18),nnNy(l,j),l,j,i);
+  }
+  NN.ui=ui;
+  $('nnLn').textContent=NN.cfg.layers.length;
+}
+function nnRestructure(){nnPause();nnResetNet();nnBuild();nnUpdate(true)}
+
+/* --- обновление --- */
+function nnUpdate(){
+  if(!NN.ui||!NN.net)return;
+  $('nnEpoch').textContent=NN.epoch;
+  const fmt=v=>v==null||!isFinite(v)?'-':v.toFixed(3);
+  $('nnTest').textContent=fmt(NN.cur.te);$('nnTrain').textContent=fmt(NN.cur.tr);
+  $('nnAcc').textContent=NN.cur.acc==null?'-':Math.round(NN.cur.acc*100)+'%';
+  $('nnMsg').textContent=NN.msg;
+  // связи
+  NN.ui.edges.forEach(e=>{const w=NN.net.W[e.l][e.j][e.i],c=nnColor(w>0?1:-1);
+    e.p.setAttribute('stroke',`rgb(${c[0]|0},${c[1]|0},${c[2]|0})`);e.p.setAttribute('stroke-width',(0.4+Math.min(6,Math.abs(w)*2.5)).toFixed(2));e.p.setAttribute('stroke-opacity','0.75')});
+  // карты нейронов
+  const act=nnActive(),L=NN.net.L,grid=[];
+  for(let y=0;y<GN;y++)for(let x=0;x<GN;x++){const X=-6+12*(x+.5)/GN,Y=-6+12*(y+.5)/GN;grid.push(NN.net.forward(act.map(f=>f.f(X,Y))).a)}
+  for(let l=0;l<L;l++)NN.ui.nodes[l].forEach((nd,j)=>nnHeat(nd.cv,GN,GN,(x,y)=>grid[y*GN+x][l+1][j]));
+  nnDrawOut();nnDrawChart();
+}
+function nnDrawOut(){
+  const cv=$('nnOut'),g=nnCtx(cv);if(!g)return;
+  const act=nnActive(),N=50,off=document.createElement('canvas');off.width=N;off.height=N;
+  const disc=$('nnDiscrete').checked;
+  nnHeat(off,N,N,(x,y)=>{const o=NN.net.forward(act.map(f=>f.f(-6+12*(x+.5)/N,-6+12*(y+.5)/N))).out;return 0.55*(disc?(o>=0?1:-1):o)});
+  g.imageSmoothingEnabled=!disc;g.drawImage(off,0,0,cv.width,cv.height);
+  const px=v=>(v+6)/12*cv.width;
+  const dot=(p,test)=>{g.beginPath();g.arc(px(p.x),px(p.y),test?4.5:3.5,0,7);const c=p.l>0?'#0877bd':'#f59322';g.fillStyle=c;g.fill();g.lineWidth=test?2:1;g.strokeStyle=test?'#111':'#fff';g.stroke()};
+  NN.train.forEach(p=>dot(p,false));
+  if($('nnShowTest').checked)NN.test.forEach(p=>dot(p,true));
+}
+function nnDrawChart(){
+  const cv=$('nnChart'),g=nnCtx(cv);if(!g)return;
+  g.clearRect(0,0,cv.width,cv.height);
+  const a=NN.hist.tr,b=NN.hist.te,n=a.length;
+  g.strokeStyle='#e1e5ee';g.strokeRect(0.5,0.5,cv.width-1,cv.height-1);
+  if(n<2)return;
+  const tail=Math.max(0,n-400),ys=a.slice(tail).concat(b.slice(tail)).filter(isFinite),ymax=Math.max(0.05,...ys);
+  const line=(arr,col,dash)=>{g.beginPath();g.setLineDash(dash);g.strokeStyle=col;g.lineWidth=1.6;
+    arr.slice(tail).forEach((v,i)=>{const x=i/Math.max(1,n-tail-1)*(cv.width-8)+4,y=cv.height-4-Math.min(1,v/ymax)*(cv.height-8);i?g.lineTo(x,y):g.moveTo(x,y)});g.stroke();g.setLineDash([])};
+  line(b,'#f59322',[4,3]);line(a,'#0877bd',[]);
+  g.fillStyle='#6b7488';g.font='10px sans-serif';g.fillText(ymax.toFixed(2),6,12);
+}
+
+/* --- журнал --- */
+function nnRenderLog(){
+  $('nnLog').innerHTML='<table><tr><th>№</th><th>Данные</th><th>Признаки</th><th>Слои</th><th>LR</th><th>Активация</th><th>Регуляр.</th><th>Эпох</th><th>Train loss</th><th>Test loss</th><th>Точность</th></tr>'+
+   NN.log.map(r=>`<tr><td>${r.n}</td><td>${r.data}</td><td>${r.feats}</td><td>${r.layers}</td><td>${r.lr}</td><td>${r.act}</td><td>${r.reg}</td><td>${r.epoch}</td><td>${r.tr}</td><td>${r.te}</td><td>${r.acc}</td></tr>`).join('')+'</table>';
+}
+function nnSave(){
+  const c=NN.cfg;
+  NN.log.push({n:NN.log.length+1,data:NN_DATASETS[c.dataset],feats:nnActive().map(f=>f.l).join(' '),layers:c.layers.join('-')||'нет',lr:c.lr,act:c.act,
+    reg:c.reg==='none'?'нет':`${c.reg} ${c.regRate}`,epoch:NN.epoch,tr:NN.cur.tr.toFixed(3),te:NN.cur.te.toFixed(3),acc:Math.round(NN.cur.acc*100)+'%'});
+  nnRenderLog();
+}
+function nnCsv(){
+  const rows=[['№','Данные','Признаки','Слои','LR','Активация','Регуляризация','Эпох','Train loss','Test loss','Точность']].concat(NN.log.map(r=>[r.n,r.data,r.feats,r.layers,r.lr,r.act,r.reg,r.epoch,r.tr,r.te,r.acc]));
+  const csv='\ufeff'+rows.map(r=>r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(';')).join('\n');
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));a.download='nn_experiments.csv';a.click();
+}
+
+/* --- инициализация --- */
+function nnInit(){
+  if(NN.inited)return;NN.inited=true;
+  const fill=(id,opts,val)=>{$(id).innerHTML=opts.map(o=>`<option value="${o[0]}"${String(o[0])===String(val)?' selected':''}>${o[1]}</option>`).join('')};
+  fill('nnLr',[0.00001,0.0001,0.001,0.003,0.01,0.03,0.1,0.3,1,3,10].map(v=>[v,v]),NN.cfg.lr);
+  fill('nnAct',[['tanh','tanh'],['relu','ReLU'],['sigmoid','sigmoid'],['linear','linear']],NN.cfg.act);
+  fill('nnReg',[['none','нет'],['l1','L1'],['l2','L2']],NN.cfg.reg);
+  fill('nnRegRate',[0,0.001,0.003,0.01,0.03,0.1,0.3,1,3,10].map(v=>[v,v]),NN.cfg.regRate);
+  fill('nnSpeed',[[1,'медленно'],[2,'обычно'],[5,'быстро'],[10,'очень быстро']],NN.cfg.speed);
+  $('nnDatasets').innerHTML=Object.entries(NN_DATASETS).map(([k,v])=>`<span class="step${k===NN.cfg.dataset?' on':''}" data-d="${k}">${v}</span>`).join('');
+  const regen=()=>{nnPause();nnMakeData();nnResetNet();nnBuild();nnUpdate(true)};
+  $('nnDatasets').querySelectorAll('.step').forEach(el=>el.onclick=()=>{NN.cfg.dataset=el.dataset.d;
+    $('nnDatasets').querySelectorAll('.step').forEach(e=>e.classList.toggle('on',e===el));$('nnDataNote').textContent=NN_NOTES[NN.cfg.dataset];regen()});
+  $('nnPlay').onclick=nnPlay;
+  $('nnStep').onclick=()=>{nnPause();nnEpoch();nnUpdate(true)};
+  $('nnReset').onclick=()=>{nnPause();nnResetNet();nnUpdate(true)};
+  $('nnLr').onchange=e=>{NN.cfg.lr=parseFloat(e.target.value)};
+  $('nnAct').onchange=e=>{NN.cfg.act=e.target.value;nnRestructure()};
+  $('nnReg').onchange=e=>{NN.cfg.reg=e.target.value};
+  $('nnRegRate').onchange=e=>{NN.cfg.regRate=parseFloat(e.target.value)};
+  $('nnSpeed').onchange=e=>{NN.cfg.speed=parseInt(e.target.value)};
+  $('nnRatio').oninput=e=>{NN.cfg.ratio=parseInt(e.target.value);$('nnRatioV').textContent=NN.cfg.ratio+'%'};
+  $('nnRatio').onchange=regen;
+  $('nnNoise').oninput=e=>{NN.cfg.noise=parseInt(e.target.value);$('nnNoiseV').textContent=NN.cfg.noise};
+  $('nnNoise').onchange=regen;
+  $('nnBatch').oninput=e=>{NN.cfg.batch=parseInt(e.target.value);$('nnBatchV').textContent=NN.cfg.batch};
+  $('nnRegen').onclick=()=>{NN.seed++;regen()};
+  $('nnShowTest').onchange=nnDrawOut;$('nnDiscrete').onchange=nnDrawOut;
+  $('nnLp').onclick=()=>{if(NN.cfg.layers.length<6){NN.cfg.layers.push(2);nnRestructure()}};
+  $('nnLm').onclick=()=>{if(NN.cfg.layers.length>0){NN.cfg.layers.pop();nnRestructure()}};
+  $('nnSave').onclick=nnSave;$('nnCsv').onclick=nnCsv;
+  $('nnClearLog').onclick=()=>{NN.log=[];nnRenderLog()};
+  $('nnDataNote').textContent=NN_NOTES[NN.cfg.dataset];
+  nnMakeData();nnResetNet();nnBuild();nnRenderLog();
+}
+function nnShow(){nnInit();nnUpdate(true)}
+
+setMod('fingerprint');
+</script>
+</body>
+</html>
