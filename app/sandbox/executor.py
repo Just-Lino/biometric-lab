@@ -38,15 +38,19 @@ def execute(spec: str, code: str, mode: str = "grade", timeout: float = 20.0) ->
         return _blocked("SyntaxError", e.msg, e.lineno)
     env = {k: os.environ[k] for k in ("SYSTEMROOT", "PATH", "TEMP", "TMP") if k in os.environ}
     env.update(PYTHONIOENCODING="utf-8", OMP_NUM_THREADS="1", OPENBLAS_NUM_THREADS="1", PYTHONHASHSEED="0")
+    # режим -I не видит пакеты из пользовательской папки (pip install --user, AppData на Windows):
+    # передаём дочернему процессу пути поиска пакетов родителя
+    env["LAB_SYS_PATH"] = os.pathsep.join(p for p in sys.path if p and os.path.isdir(p))
     with _slots, tempfile.TemporaryDirectory() as tmp:
         try:
-            p = subprocess.run([sys.executable, "-I", str(RUNNER)], input=json.dumps({"spec": spec, "code": code, "mode": mode}),
-                               capture_output=True, text=True, encoding="utf-8", timeout=timeout, cwd=tmp, env=env,
+            p = subprocess.run([sys.executable, "-I", "-X", "utf8", str(RUNNER)],
+                               input=json.dumps({"spec": spec, "code": code, "mode": mode}),
+                               capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=timeout, cwd=tmp, env=env,
                                preexec_fn=_limits if os.name == "posix" else None)
         except subprocess.TimeoutExpired:
             return _blocked("Timeout", f"Превышено время выполнения ({timeout:g} с): возможно, бесконечный цикл "
                                        "или слишком медленный алгоритм. Попробуйте векторизацию numpy.")
-    for line in reversed(p.stdout.splitlines()):
+    for line in reversed((p.stdout or "").splitlines()):
         if line.startswith(MARK):
             return json.loads(line[len(MARK):])
     tail = (p.stderr or "").strip().splitlines()[-1:] or ["процесс завершился без результата"]

@@ -104,3 +104,21 @@ def test_api_flow_and_hint_gating():
         row = next(x for x in c.get("/api/v1/code/tasks").json() if x["id"] == "binarize")
         assert row["best"] == 10.0 and row["attempts"] == 4 and row["hints"] >= 2
         assert c.post("/api/v1/code/submit", json={"task_id": "nope", "code": "x"}).status_code == 404
+
+
+def test_runner_output_is_ascii_only_regardless_of_console_encoding():
+    """Регрессия для Windows: вывод раннера должен читаться при любой кодировке консоли (cp1251, ascii и т.п.)."""
+    import json
+    import subprocess
+    import sys
+
+    from app.sandbox.executor import MARK, RUNNER
+    req = json.dumps({"spec": "binarize", "mode": "grade",
+                      "code": "def binarize(g, t):\n    print('отладка ×')\n    return g\n"})
+    env = {"PATH": os.environ.get("PATH", ""), "LC_ALL": "C", "LANG": "C",
+           "LAB_SYS_PATH": os.pathsep.join(p for p in sys.path if p and os.path.isdir(p))}
+    for flags in (["-X", "utf8=0"], ["-X", "utf8"]):
+        p = subprocess.run([sys.executable, "-I", *flags, str(RUNNER)], input=req.encode(), capture_output=True, env=env)
+        assert p.returncode == 0, p.stderr.decode("utf-8", "replace")[-300:]
+        line = [l for l in p.stdout.decode("ascii").splitlines() if l.startswith(MARK)][0]  # decode("ascii") не должен упасть
+        assert r"\u043e\u0442\u043b\u0430\u0434\u043a\u0430" in line  # «отладка» в виде экранированных символов

@@ -10,6 +10,11 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
+import os  # noqa: E402
+
+for _p in os.environ.get("LAB_SYS_PATH", "").split(os.pathsep):  # пути пакетов родителя (см. executor.py)
+    if _p and _p not in sys.path:
+        sys.path.append(_p)
 
 from app.sandbox.reference import get_spec, short  # noqa: E402
 from app.sandbox.safety import SafetyError, check_code, safe_builtins  # noqa: E402
@@ -138,7 +143,8 @@ def main():
         _disarm()
     out["stdout"] = buf.getvalue()
     out["time"] = round(time.time() - t0, 3)
-    print(MARK + json.dumps(out, default=str, ensure_ascii=False))
+    # только ASCII: кириллица экранируется (\uXXXX), поэтому вывод не зависит от кодировки консоли (Windows: cp1251/cp866)
+    print(MARK + json.dumps(out, default=str))
 
 
 if __name__ == "__main__":
