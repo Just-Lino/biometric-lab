@@ -4,6 +4,8 @@ from pydantic import BaseModel, Field
 
 
 class FingerprintParams(BaseModel):
+    # набор данных для оценки качества и проверки обученной сети: synthetic, fvc2002_db1..4, fvc2004_db1..4, socofing
+    source: str = Field("synthetic", max_length=40)
     # предобработка
     clahe_clip: float = Field(2.0, ge=0.5, le=10)
     seg_threshold: float = Field(18.0, ge=2, le=80)
@@ -19,6 +21,7 @@ class FingerprintParams(BaseModel):
     border_margin: int = Field(14, ge=0, le=40)
     spur_length: int = Field(7, ge=0, le=20)
     # matching
+    matcher: Literal["hough", "local", "poc", "sift", "cnn"] = "hough"
     dist_tol: float = Field(14.0, ge=3, le=40)
     angle_tol_deg: float = Field(20.0, ge=3, le=60)
     max_rotation_deg: float = Field(40.0, ge=5, le=90)

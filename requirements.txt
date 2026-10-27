@@ -1,10 +1,14 @@
 fastapi>=0.110
 uvicorn[standard]>=0.29
 python-multipart>=0.0.9
+pydantic>=2.5
 pydantic-settings>=2.2
 numpy>=1.26
-opencv-python>=4.9
+# OpenCV 5.x не содержит cv2.CascadeClassifier (каскады Хаара для лица), поэтому верхняя граница обязательна
+opencv-python>=4.9,<5
 scikit-image>=0.22
+scipy>=1.11
+pillow>=10.0
 scikit-learn>=1.4
 # для тестов
 pytest>=8.0

@@ -4,8 +4,8 @@ import io
 import json
 import signal
 import sys
+import threading
 import time
-import traceback
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -46,17 +46,53 @@ def _err(e: BaseException) -> dict:
     return {"type": type(e).__name__, "message": str(e)[:300], "line": line}
 
 
+# состояние для сторожевого таймера (Windows): что сейчас выполняется и что уже накоплено
+STATE: dict = {"out": None, "buf": None, "t0": 0.0, "cases": [], "i": -1, "mode": "grade", "spec": None, "timer": None}
+
+
+def _watchdog_fire():
+    """Windows: сигналов SIGALRM нет, поэтому по таймеру в отдельном потоке пишем итог (текущий тест = Timeout, остальные пропущены) и завершаем процесс."""
+    out, cases, i, spec = STATE["out"], STATE["cases"], STATE["i"], STATE["spec"]
+    msg = f"тест выполнялся дольше {CASE_SECONDS} с"
+    err = {"type": "Timeout", "message": msg, "line": None}
+    if 0 <= i < len(cases):
+        if STATE["mode"] == "example":
+            c = cases[i]
+            out["example"] = {"input": short(c.args if len(c.args) > 1 else c.args[0], 300), "expected": short(spec.ref(*copy.deepcopy(c.args))),
+                              "ok": False, "message": msg, "error": err}
+        else:
+            for k, c in enumerate(cases[i:]):
+                out["tests"].append({"name": c.name, "kind": c.kind, "ok": False, "returned_none": False,
+                                     "error": err if k == 0 else None, "message": msg if k == 0 else "пропущен: ранее превышено время выполнения"})
+    else:
+        out["error"] = {"type": "Timeout", "message": "код выполнялся слишком долго (бесконечный цикл?)", "line": None}
+    out["stdout"] = STATE["buf"].getvalue()
+    out["time"] = round(time.time() - STATE["t0"], 3)
+    sys.__stdout__.write(MARK + json.dumps(out, default=str) + "\n")
+    sys.__stdout__.flush()
+    import os
+    os._exit(0)
+
+
 def _arm():
     if hasattr(signal, "setitimer"):
         def h(*_):
             raise _Timeout()
         signal.signal(signal.SIGALRM, h)
         signal.setitimer(signal.ITIMER_REAL, CASE_SECONDS)
+    else:
+        t = threading.Timer(CASE_SECONDS, _watchdog_fire)
+        t.daemon = True
+        STATE["timer"] = t
+        t.start()
 
 
 def _disarm():
     if hasattr(signal, "setitimer"):
         signal.setitimer(signal.ITIMER_REAL, 0)
+    elif STATE["timer"] is not None:
+        STATE["timer"].cancel()
+        STATE["timer"] = None
 
 
 def run_case(fn, spec, case, reveal: bool) -> dict:
@@ -95,6 +131,7 @@ def main():
     code = req["code"]
     t0 = time.time()
     buf = Cap()
+    STATE.update(out=out, buf=buf, t0=t0, spec=spec, mode=req["mode"], cases=[spec.example] if req["mode"] == "example" else list(spec.basic) + list(spec.edge), i=-1)
     try:
         check_code(code)
         ns = {"__builtins__": safe_builtins(), "__name__": "student"}
@@ -114,14 +151,18 @@ def main():
             sys.stdout = buf
             try:
                 if req["mode"] == "example":
+                    STATE["i"] = 0
                     r = run_case(fn, spec, spec.example, True)
                     exp = spec.ref(*copy.deepcopy(spec.example.args))
                     out["example"] = {"input": short(spec.example.args if len(spec.example.args) > 1 else spec.example.args[0], 300),
                                       "expected": short(exp), "ok": r["ok"], "message": r["message"], "error": r["error"]}
                 else:
                     timed_out = False
+                    idx = -1
                     for cases, reveal in ((spec.basic, True), (spec.edge, False)):
                         for case in cases:
+                            idx += 1
+                            STATE["i"] = idx
                             if timed_out:  # после таймаута остальные тесты не гоняем, чтобы не ждать
                                 out["tests"].append({"name": case.name, "kind": case.kind, "ok": False, "error": None,
                                                      "returned_none": False, "message": "пропущен: ранее превышено время выполнения"})

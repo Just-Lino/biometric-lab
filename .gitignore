@@ -4,8 +4,17 @@ __pycache__/
 data/*.db
 .idea/
 .pytest_cache/
-
-data/*.tgz
-data/*.zip
+models/*.caffemodel
+models/*.prototxt
+models/*.onnx
+models/tts/
+app/web/vendor/
+data/trained/
+datasets/real/
+# галерея лиц (LFW и ваши фото): тысячи фото реальных людей, в репозиторий не кладём
 datasets/faces/*
 !datasets/faces/README.txt
+# архивы обновлений
+update_*.zip
+# профили голоса LAB+ (числа шаблона)
+labplus_data/

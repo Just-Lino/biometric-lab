@@ -7,12 +7,19 @@ import builtins
 
 ALLOWED_IMPORTS = {"math", "numpy", "cv2", "skimage", "itertools", "functools", "collections", "statistics",
                    "typing", "operator", "random", "fractions", "decimal"}
-BANNED_SUBMODULES = {"ctypeslib", "f2py", "testing", "distutils", "_core", "core", "lib"}
+BANNED_SUBMODULES = {"ctypeslib", "f2py", "testing", "distutils", "_core", "core", "lib", "io", "data"}  # skimage.io пишет файлы, skimage.data качает из сети
 BANNED_NAMES = {"eval", "exec", "compile", "open", "input", "__import__", "globals", "locals", "vars", "getattr",
                 "setattr", "delattr", "breakpoint", "exit", "quit", "help", "memoryview", "dir"}
 BANNED_ATTRS = {"load", "loadtxt", "genfromtxt", "fromfile", "save", "savez", "savez_compressed", "savetxt",
                 "tofile", "dump", "dumps", "imread", "imwrite", "VideoCapture", "system", "popen", "ctypeslib",
-                "f2py", "testing", "distutils", "fromregex", "memmap"}
+                "f2py", "testing", "distutils", "fromregex", "memmap",
+                # через модули-обёртки (cv2.os, statistics.sys ...) можно добраться до файловой системы и процессов
+                "os", "sys", "importlib", "modules", "subprocess", "builtins", "environ", "startfile", "execv", "spawnv",
+                # доступ к атрибутам по строке в обход проверки имён
+                "attrgetter", "methodcaller",
+                # OpenCV и scikit-image: запись и чтение файлов, загрузка моделей
+                "imsave", "imread_collection", "FileStorage", "VideoWriter", "dnn", "CascadeClassifier", "readNet",
+                "readNetFromONNX", "readNetFromCaffe", "readNetFromTensorflow", "readNetFromDarknet", "readNetFromTorch"}
 
 
 class SafetyError(Exception):
@@ -33,6 +40,10 @@ def check_code(code: str) -> None:
             if node.level:
                 raise SafetyError("Относительные импорты запрещены.", line)
             _check_module(node.module or "", line)
+            for a in node.names:  # from numpy import load, from cv2 import os - те же запреты, что и для атрибутов
+                if a.name in BANNED_ATTRS or a.name in BANNED_NAMES or a.name.startswith("__"):
+                    raise SafetyError(f"Импорт «{a.name}» запрещён (доступ к файлам и системе).", line)
+                _check_module(f"{node.module}.{a.name}", line)
         elif isinstance(node, ast.Name) and node.id in BANNED_NAMES:
             raise SafetyError(f"Использование «{node.id}» запрещено в учебной песочнице.", line)
         elif isinstance(node, ast.Attribute):

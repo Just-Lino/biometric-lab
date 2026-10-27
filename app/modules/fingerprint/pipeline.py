@@ -15,6 +15,7 @@ class PipelineResult:
     minutiae: list[Minutia] = field(default_factory=list)
     mask: np.ndarray | None = None
     gray: np.ndarray | None = None
+    enhanced: np.ndarray | None = None  # результат фильтра Габора (нужен методам сопоставления по изображению)
 
 
 def segment(gray: np.ndarray, p: FingerprintParams) -> np.ndarray:
@@ -100,6 +101,7 @@ def run_pipeline(gray: np.ndarray, p: FingerprintParams, with_images: bool = Tru
 
     enh = oriented_gabor((norm - 128) / 64.0, phi, p.gabor_period, p.gabor_sigma, bins=8)
     enh_u8 = _norm_u8(enh, mask)
+    res.enhanced = enh_u8
     add("enhanced", "5. Усиление гребней фильтром Габора",
         f"Ориентированный Gabor (период {p.gabor_period:g} px, σ={p.gabor_sigma:g}) подавляет шум "
         "и разрывы, усиливая периодическую структуру гребней.", enh_u8)

@@ -59,6 +59,7 @@ def test_training_improves_and_snapshots():
     assert set(sn["maps"]) == {"conv1", "conv2", "conv3"} and len(sn["test_preds"]) == 4
     assert sum(sn["hist"]["genuine"]) > 0 and sum(sn["hist"]["impostor"]) > 0
     assert t.snapshot(99) is None
+    assert 0 <= sn["eer"] <= 1  # EER эпохи считается по проверочным снимкам против обучающих
     assert t.snapshot(0)["weight_change"]["conv2"] == 0  # в начале веса равны начальным
     assert t.snapshot(6)["weight_change"]["embedding"] > 0
     assert len(s["history"]["wchange"]["conv1"]) == 7
@@ -88,4 +89,19 @@ def test_training_api_flow():
         assert st["state"] == "finished" and st["epoch"] == 3 and len(st["samples"]) == 3
         assert c.get("/api/v1/training/snapshot/3").status_code == 200
         assert c.get("/api/v1/training/snapshot/50").status_code == 404
-        assert c.post("/api/v1/training/start", json={"modality": "iris"}).status_code == 422
+        assert c.post("/api/v1/training/start", json={"modality": "retina"}).status_code == 422
+        # радужка допустима: обучение запускается (останавливаем сразу, полный прогон проверен отдельным тестом)
+        r = c.post("/api/v1/training/start", json={"modality": "iris", "epochs": 10})
+        assert r.status_code == 200
+        c.post("/api/v1/training/stop")
+        for _ in range(300):  # дожидаемся остановки: фоновый поток не должен дописывать сеть и журнал во время следующих тестов
+            if c.get("/api/v1/training/status?light=true").json()["state"] not in ("preparing", "training"):
+                break
+            time.sleep(0.2)
+
+
+def test_iris_dataset_for_training():
+    from app.training.datasets import load_dataset
+    d = load_dataset("iris", 4)
+    assert d.modality == "iris" and len(d.names) == 4 and len(d.train) == 8 and len(d.test) == 4
+    assert d.train[0].shape == (96, 96) and d.size == 64

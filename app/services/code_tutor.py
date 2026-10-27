@@ -19,6 +19,10 @@ ERR_TEXT = {
 }
 
 
+def _cap(text: str) -> str:
+    return text[:1].upper() + text[1:]
+
+
 def explain_error(err: dict) -> str:
     line = f" (строка {err['line']})" if err.get("line") else ""
     tpl = ERR_TEXT.get(err["type"], "Ошибка " + err["type"] + "{line}: {msg}")
@@ -35,7 +39,7 @@ def feedback(task: dict, result: dict, grading: dict | None = None) -> str:
             return explain_error(ex["error"])
         if ex["ok"]:
             return "Пример выполняется верно. Нажмите «Проверить решение»: проверка включает ещё и граничные случаи."
-        return "Результат на примере не совпал с ожидаемым. " + ex.get("message", "")
+        return "Результат на примере не совпал с ожидаемым. " + _cap(ex.get("message", ""))
     tests = result.get("tests", [])
     if not tests:
         return ""

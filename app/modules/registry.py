@@ -1,6 +1,7 @@
 from app.modules.base import BiometricModule
 from app.modules.face.module import FaceModule
 from app.modules.fingerprint.module import FingerprintModule
+from app.modules.iris.module import IrisModule
 
 _MODULES: dict[str, BiometricModule] = {}
 
@@ -21,4 +22,4 @@ def list_modules() -> list[dict]:
 
 register(FingerprintModule())
 register(FaceModule())
-# register(IrisModule())
+register(IrisModule())

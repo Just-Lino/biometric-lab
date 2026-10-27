@@ -77,7 +77,7 @@ def submit(body: SubmitIn):
 @router.post("/hint")
 def hint(body: HintIn):
     t = _task(body.task_id)
-    n = attempts.count(body.task_id)
+    n = attempts.count_valid(body.task_id)
     ok, text = code_tutor.hint(t, body.level, n)
     if ok:
         record_event("hint", {"task": body.task_id, "level": body.level})

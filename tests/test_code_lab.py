@@ -46,6 +46,17 @@ def test_partial_credit_for_edge_case_bug():
     "import numpy as np\ndef binarize(g, t):\n    return np.load('a.npy')",
     "import numpy.ctypeslib\ndef binarize(g, t):\n    return g",
     "def binarize(g, t):\n    return eval('1')",
+    # обходы через модули-обёртки и импорт имён (раньше проходили проверку)
+    "import cv2\ndef binarize(g, t):\n    return cv2.os.listdir('.')",
+    "import statistics\ndef binarize(g, t):\n    return statistics.sys.modules",
+    "import operator\ndef binarize(g, t):\n    return operator.attrgetter('x')",
+    "from operator import attrgetter\ndef binarize(g, t):\n    return g",
+    "from numpy import load\ndef binarize(g, t):\n    return g",
+    "from cv2 import os\ndef binarize(g, t):\n    return g",
+    "import skimage.io\ndef binarize(g, t):\n    return g",
+    "from skimage import data\ndef binarize(g, t):\n    return g",
+    "import cv2\ndef binarize(g, t):\n    return cv2.FileStorage",
+    "import cv2\ndef binarize(g, t):\n    return cv2.dnn.readNet('x')",
 ])
 def test_dangerous_code_is_blocked(code):
     with pytest.raises(SafetyError):
@@ -60,10 +71,14 @@ def test_syntax_error_reports_line():
 
 
 def test_infinite_loop_times_out_quickly():
+    import time
     code = "def binarize(g, t):\n    while True:\n        pass\n"
+    t0 = time.time()
     res = execute("binarize", code, "grade", timeout=15)
     errs = [t for t in res["tests"] if t["error"]]
     assert (res["error"] and res["error"]["type"] == "Timeout") or (errs and errs[0]["error"]["type"] == "Timeout")
+    assert time.time() - t0 < 10  # таймаут на тест работает и на Windows (сторожевой поток), а не только общий лимит запуска
+    assert len(res["tests"]) >= 7 and res["tests"][0]["error"]["type"] == "Timeout"  # первый тест - Timeout, остальные помечены пропущенными
 
 
 def test_student_prints_are_captured_and_input_not_mutated():
@@ -82,6 +97,8 @@ def test_api_flow_and_hint_gating():
 
         r = c.post("/api/v1/code/run", json={"task_id": "binarize", "code": t["starter_code"]}).json()
         assert r["example"]["ok"] is False and r["feedback"]
+        import re
+        assert not re.search(r"\. [а-я]", r["feedback"])  # после точки всегда заглавная буква
 
         # полное решение закрыто до трёх попыток
         h4 = c.post("/api/v1/code/hint", json={"task_id": "binarize", "level": 4}).json()
@@ -122,3 +139,11 @@ def test_runner_output_is_ascii_only_regardless_of_console_encoding():
         assert p.returncode == 0, p.stderr.decode("utf-8", "replace")[-300:]
         line = [l for l in p.stdout.decode("ascii").splitlines() if l.startswith(MARK)][0]  # decode("ascii") не должен упасть
         assert r"\u043e\u0442\u043b\u0430\u0434\u043a\u0430" in line  # «отладка» в виде экранированных символов
+
+
+def test_blocked_and_syntax_error_attempts_do_not_open_solution():
+    with TestClient(app) as c:
+        for code in ("def verify(a, b, t)\n  return a\n", "import os\n", "import subprocess\n"):
+            assert c.post("/api/v1/code/submit", json={"task_id": "verify", "code": code}).status_code == 200
+        h4 = c.post("/api/v1/code/hint", json={"task_id": "verify", "level": 4}).json()
+        assert h4["available"] is False and "(сейчас: 0)" in h4["text"]

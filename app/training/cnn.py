@@ -56,20 +56,24 @@ class Dense:
     params = property(lambda self: [(self, "W", "dW"), (self, "b", "db")])
 
 
+_ARANGE4 = np.arange(4, dtype=np.uint8)
+
+
 def _pool(x):
+    """Макс-пулинг 2×2. Возвращает значения и индекс максимума в каждом окне (быстрее маски равенства примерно в 4 раза;
+    при совпадении значений выбирается первое, на градиент это не влияет: после ReLU нули градиент не получают)."""
     B, C, H, W = x.shape
-    xr = x.reshape(B, C, H // 2, 2, W // 2, 2)
-    out = xr.max(axis=(3, 5))
-    mask = (xr == out[:, :, :, None, :, None]).astype(np.float32)
-    mask /= mask.sum(axis=(3, 5), keepdims=True)
-    return out, mask
+    win = x.reshape(B, C, H // 2, 2, W // 2, 2).transpose(0, 1, 2, 4, 3, 5).reshape(B, C, H // 2, W // 2, 4)
+    idx = win.argmax(-1)
+    return np.take_along_axis(win, idx[..., None], -1)[..., 0], idx.astype(np.uint8)
 
 
 class CNN:
     """Вход: (B,1,S,S), S кратно 8. Выход: logits и embedding."""
 
-    def __init__(self, size=64, n_classes=12, emb=32, filters=(8, 16, 16), seed=0):
+    def __init__(self, size=64, n_classes=12, emb=32, filters=(8, 16, 16), seed=0, optimizer="adam"):
         rng = np.random.RandomState(seed)
+        self.optimizer, self.filters = optimizer, tuple(filters)
         self.size, self.n_classes, self.emb_dim = size, n_classes, emb
         f1, f2, f3 = filters
         self.c1, self.c2, self.c3 = Conv(1, f1, 3, rng), Conv(f1, f2, 3, rng), Conv(f2, f3, 3, rng)
@@ -92,11 +96,24 @@ class CNN:
             self.maps = {"conv1": p1, "conv2": p2, "conv3": p3}
         return logits, e
 
+    def predict(self, x):
+        """Логиты и embedding для любого числа образцов (пачками по 64)."""
+        out = [self.forward(x[i:i + 64]) for i in range(0, len(x), 64)]
+        return np.concatenate([o[0] for o in out]), np.concatenate([o[1] for o in out])
+
     def embed(self, x):
-        out = []
-        for i in range(0, len(x), 64):
-            out.append(self.forward(x[i:i + 64])[1])
-        return np.concatenate(out)
+        return self.predict(x)[1]
+
+    def n_params(self):
+        return int(sum(getattr(o, pn).size for layer in self.layers for o, pn, _ in layer.params))
+
+    def state(self) -> dict:
+        return {f"l{i}_{pn}": getattr(o, pn).copy() for i, layer in enumerate(self.layers) for o, pn, _ in layer.params}
+
+    def load_state(self, d: dict):
+        for i, layer in enumerate(self.layers):
+            for o, pn, _ in layer.params:
+                setattr(o, pn, np.asarray(d[f"l{i}_{pn}"], np.float32))
 
     def loss_grad(self, logits, y):
         z = logits - logits.max(1, keepdims=True)
@@ -116,9 +133,10 @@ class CNN:
         d = self._unpool(d, m1) * (a1 > 0); self.c1.backward(d)
 
     @staticmethod
-    def _unpool(d, mask):
-        B, C, H, W = d.shape
-        return (mask * d[:, :, :, None, :, None]).reshape(B, C, H * 2, W * 2)
+    def _unpool(d, idx):
+        B, C, h, w = d.shape
+        win = ((idx[..., None] == _ARANGE4) * d[..., None]).reshape(B, C, h, w, 2, 2)
+        return win.transpose(0, 1, 2, 4, 3, 5).reshape(B, C, h * 2, w * 2)
 
     def step(self, x, y, lr):
         logits, _ = self.forward(x)
@@ -129,7 +147,12 @@ class CNN:
             for pi, (obj, pn, gn) in enumerate(layer.params):
                 key = (li, pi)
                 g = getattr(obj, gn)
-                m = self._m.setdefault(key, np.zeros_like(g)); v = self._v.setdefault(key, np.zeros_like(g))
+                m = self._m.setdefault(key, np.zeros_like(g))
+                if self.optimizer == "sgd":  # градиентный спуск с моментом
+                    m *= 0.9; m += g
+                    setattr(obj, pn, getattr(obj, pn) - lr * m)
+                    continue
+                v = self._v.setdefault(key, np.zeros_like(g))
                 m *= 0.9; m += 0.1 * g
                 v *= 0.999; v += 0.001 * g * g
                 mh, vh = m / (1 - 0.9 ** self._t), v / (1 - 0.999 ** self._t)

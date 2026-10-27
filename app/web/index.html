@@ -4,13 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Виртуальная лаборатория «Биометрия»</title>
-<script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script defer src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <style>
 :root{--bg:#f4f6fa;--card:#fff;--ink:#1c2333;--mut:#6b7488;--acc:#2f5bea;--ok:#12a150;--bad:#d93a3a;--line:#e1e5ee}
 *{box-sizing:border-box}
 body{margin:0;font:14px/1.45 system-ui,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--ink)}
-header{background:#14213d;color:#fff;padding:12px 20px;display:flex;align-items:center;gap:20px}
+header{background:#14213d;color:#fff;padding:12px 20px;display:flex;align-items:center;gap:20px;flex-wrap:wrap}
 header h1{font-size:17px;margin:0;font-weight:600}
 .tabs{display:flex;gap:6px}
 .tab{padding:5px 12px;border-radius:6px;background:#26365c;color:#cfd8f3;font-size:13px}
@@ -28,6 +28,20 @@ button{background:var(--acc);color:#fff;border:0;border-radius:6px;padding:8px 1
 button.sec{background:#e9edf8;color:var(--ink)}
 button:disabled{opacity:.5;cursor:wait}
 .btns{display:flex;gap:6px;flex-wrap:wrap}
+/* помощник лаборатории: кнопка и панель */
+#as-fab{position:fixed;right:18px;bottom:18px;width:58px;height:58px;border-radius:50%;background:var(--acc);color:#fff;border:none;font-size:26px;box-shadow:0 6px 20px rgba(0,0,0,.3);z-index:50;padding:0;margin:0;cursor:pointer}
+#as-fab.live{background:var(--bad);animation:aspulse 1s infinite}
+@keyframes aspulse{50%{box-shadow:0 0 0 12px rgba(217,58,58,.2)}}
+#as-panel{position:fixed;right:18px;bottom:88px;width:min(400px,calc(100vw - 36px));max-height:74vh;overflow:auto;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px;z-index:50;box-shadow:0 10px 30px rgba(0,0,0,.3);display:none}
+#as-panel.open{display:block}
+#as-panel .row{display:flex;gap:6px;align-items:center}#as-panel .row input[type=text]{flex:1}
+#as-panel button{margin-top:0;padding:7px 10px}
+#as-panel .line{margin:6px 0;font-size:13px}#as-panel .you{color:var(--mut)}
+#as-chips{display:flex;flex-wrap:wrap;gap:4px;margin:8px 0}#as-chips span{background:#e9edf8;border-radius:12px;padding:3px 9px;font-size:12px;cursor:pointer}
+#as-panel details{margin-top:8px;font-size:12px}#as-panel label{margin:6px 0 2px}
+a.tab{text-decoration:none;display:inline-block}
+.realtag{display:inline-block;background:#fff4d6;color:#8a5a00;border:1px solid #f0d58a;border-radius:10px;padding:1px 8px;font-size:11px}
+.bar{background:#e9edf8;border-radius:4px;height:10px;min-width:60px}.bar i{display:block;height:10px;border-radius:4px;background:#2f5bea}
 .steps{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
 .step{padding:4px 9px;border-radius:14px;border:1px solid var(--line);background:#fff;cursor:pointer;font-size:12px}
 .step.on{background:var(--acc);color:#fff;border-color:var(--acc)}
@@ -118,6 +132,20 @@ th{color:var(--mut);font-weight:500}
 #trNet .tro .bar{position:absolute;left:0;top:0;bottom:0;background:#cfe0f5}
 #trNet .tro span{position:relative;display:block;padding:1px 4px;white-space:nowrap}
 #trNet .tro.true{border-color:var(--ok)}#trNet .tro.pred{font-weight:700}
+.hint{font-size:12px;color:var(--mut);margin:3px 0 8px;line-height:1.35}
+.thumbs{display:flex;gap:10px;margin:8px 0}.thumbs figure{margin:0;text-align:center;font-size:11px;color:var(--mut)}
+.thumbs img{width:112px;height:112px;object-fit:contain;background:#fff;border:1px solid var(--line);border-radius:8px;display:block;margin-bottom:2px}
+.flow{display:flex;gap:6px;flex-wrap:wrap;align-items:center}.flow .chip{padding:6px 12px;border-radius:16px;background:var(--line);font-size:12.5px;cursor:pointer;user-select:none}
+.flow .chip.done{background:#e3f6ea;color:#0d7a3c}.flow .chip.next{background:var(--acc);color:#fff;box-shadow:0 0 0 3px rgba(47,91,234,.25)}
+.flow .arrow{color:var(--mut)}.flowtip{font-size:12.5px;color:var(--mut);margin-top:6px}
+details.adv{margin:8px 0}details.adv summary{cursor:pointer;color:var(--acc);font-size:13px;margin-bottom:6px}
+#toasts{position:fixed;right:16px;bottom:16px;display:flex;flex-direction:column;gap:8px;z-index:60}
+.toast{background:#14213d;color:#fff;padding:10px 14px;border-radius:8px;max-width:440px;font-size:13px;box-shadow:0 4px 14px rgba(0,0,0,.25)}.toast.err{background:#a3202b}
+#help{position:fixed;inset:0;background:rgba(10,16,32,.55);display:none;align-items:center;justify-content:center;z-index:70}
+#help .box{background:var(--card);max-width:680px;width:92%;max-height:82vh;overflow:auto;padding:18px 24px;border-radius:12px}
+#help h3{margin:14px 0 4px;font-size:14px}#help li{margin:3px 0}
+.presets{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}.presets button{font-size:12.5px;padding:6px 10px}
+.scroll{overflow-x:auto}
 </style>
 </head>
 <body>
@@ -129,17 +157,26 @@ th{color:var(--mut);font-weight:500}
     <span class="tab" data-mod="code">Практикум: код</span>
     <span class="tab" data-mod="train">Обучение распознаванию</span>
     <span class="tab" data-mod="nn">Площадка нейросети</span>
-    <span class="tab off" title="Следующая итерация">Радужка (скоро)</span>
+    <span class="tab" data-mod="iris">Радужка</span>
+    <a class="tab" href="/labplus/voice" title="Дополнение LAB+: голос, метрики ROC/DET, устойчивость к искажениям, стандарты ISO/IEC">LAB+</a>
   </div>
+  <button class="sec" id="helpBtn" style="margin-left:auto" title="Короткая инструкция по текущей вкладке">? Как работать</button>
 </header>
+<div id="toasts"></div>
+<div id="help"><div class="box"><div id="helpBody"></div><p style="text-align:right"><button id="helpClose">Понятно</button></p></div></div>
 
 <main id="bioMain">
   <!-- ЛЕВО: управление -->
   <div class="stack">
     <div class="card">
       <h2>1. Образцы</h2>
+      <label>Набор данных</label><select id="srcSel"></select>
+      <div id="srcBadge" style="margin-top:4px"></div>
+      <label>Поиск образца</label><input type="text" id="sampleQ" placeholder="например: 101 или Bush">
+      <div class="leg" id="sampleCount"></div>
       <label>Образец A (эталон)</label><select id="sa"></select>
       <label>Образец B (проверяемый)</label><select id="sb"></select>
+      <div class="thumbs"><figure><img id="thA" alt="образец A"><figcaption>A (эталон)</figcaption></figure><figure><img id="thB" alt="образец B"><figcaption>B (проверяемый)</figcaption></figure></div>
       <label>Загрузить своё изображение в A / в B</label>
       <div class="btns" style="margin-top:2px">
         <label class="step" style="margin:0">в A <input type="file" id="fileA" accept="image/*" hidden></label>
@@ -156,7 +193,7 @@ th{color:var(--mut);font-weight:500}
     <div class="card">
       <h2>3. Решение</h2>
       <div class="row"><span>Threshold</span><b id="thv">0.50</b></div>
-      <input type="range" id="th" min="0.05" max="0.95" step="0.01" value="0.50">
+      <input type="range" id="th" min="0.01" max="0.95" step="0.01" value="0.50">
       <div class="btns">
         <button id="bproc">Показать этапы для A</button>
         <button id="bcmp">Сравнить A и B</button>
@@ -166,6 +203,10 @@ th{color:var(--mut);font-weight:500}
 
   <!-- ЦЕНТР -->
   <div class="stack">
+    <div class="card" id="flowCard">
+      <div class="flow" id="flow"></div>
+      <div class="flowtip" id="flowTip"></div>
+    </div>
     <div class="card">
       <h2>Пошаговая обработка образца <span id="procName" class="leg"></span></h2>
       <div class="steps" id="steps"></div>
@@ -180,15 +221,25 @@ th{color:var(--mut);font-weight:500}
         <button class="sec" id="p3play">▶ Воспроизвести</button>
         <button class="sec" id="p3next" title="Следующий этап">▶|</button>
         <button class="sec" id="p3all">Показать все этапы</button>
+        <button class="sec" id="p3orbit" title="Камера делает полный оборот вокруг сцены">⟳ Облёт 360°</button>
+        <button class="sec" id="p3view" title="Вернуть камеру, размер и сдвиг в исходное положение">Сбросить вид</button>
       </div>
-      <div id="viewP3"><div class="ph" id="p3ph">Нажмите «Построить 3D-конвейер». Каждый слой - результат одного этапа алгоритма. Вращение: мышь, масштаб: колесо.</div></div>
+      <div id="viewP3"><div class="ph" id="p3ph">Нажмите «Построить 3D-конвейер». Каждый слой - результат одного этапа алгоритма. Вращение: мышь или ползунки ниже, масштаб: колесо.</div></div>
       <div class="ctl3">
-        <div><label>Раскладка</label><select id="p3layout"><option value="row">Лента (слева направо)</option><option value="stack">Стопка слоёв (снизу вверх)</option></select></div>
+        <div><label>Раскладка</label><select id="p3layout"><option value="row">Лента (слева направо)</option><option value="stack">Стопка слоёв (снизу вверх)</option><option value="ring">Карусель (по кругу, 360°)</option></select></div>
         <div><label>Расстояние между этапами: <b id="p3gv">1.0</b></label><input type="range" id="p3gap" min="0.4" max="2.5" step="0.1" value="1"></div>
         <div><label>Этап: <b id="p3sv">все</b></label><input type="range" id="p3slider" min="0" max="0" step="1" value="0"></div>
       </div>
+      <div class="ctl3">
+        <div><label>Поворот вокруг сцены (0-360°): <b id="p3azv">20°</b></label><input type="range" id="p3az" min="0" max="360" step="1" value="20"></div>
+        <div><label>Наклон камеры (сверху - снизу): <b id="p3tiltv">72°</b></label><input type="range" id="p3tilt" min="10" max="170" step="1" value="72"></div>
+        <div><label>Приближение: <b id="p3zoomv">1.00×</b></label><input type="range" id="p3zoom" min="0.3" max="6" step="0.05" value="1"></div>
+        <div><label>Сдвиг вдоль сцены: <b id="p3panv">0%</b></label><input type="range" id="p3pan" min="-100" max="100" step="1" value="0"></div>
+        <div><label>Размер слоёв: <b id="p3sizev">1.00×</b></label><input type="range" id="p3size" min="0.5" max="2" step="0.05" value="1"></div>
+        <div><label>Скорость облёта: <b id="p3spv">30°/с</b></label><input type="range" id="p3sp" min="5" max="120" step="5" value="30"></div>
+      </div>
       <div id="p3desc" class="desc" style="margin-top:8px"></div>
-      <div class="leg" style="margin-top:6px">Желтая рамка - текущий этап, остальные притемнены. Нейросеть SFace в лаборатории не обучается: используется готовая модель, а здесь показан путь данных через алгоритм.</div>
+      <div class="leg" style="margin-top:6px">Желтая рамка - текущий этап, остальные притемнены. Камеру можно двигать мышью, колесом или ползунками: «Поворот» делает полный круг 0-360°, «Облёт 360°» вращает сцену сам. В «Ленте» и «Стопке» слои сбоку видны ребром, для круговой прокрутки выберите «Карусель». Нейросеть SFace в лаборатории не обучается: используется готовая модель, а здесь показан путь данных через алгоритм.</div>
     </div>
     <div class="card" data-only="fingerprint">
       <h2>3D-визуализация отпечатка <span id="v3name" class="leg"></span></h2>
@@ -210,11 +261,28 @@ th{color:var(--mut);font-weight:500}
       <img id="cmpImg" style="width:100%;max-width:640px;display:none;border:1px solid var(--line);border-radius:6px">
       <div class="leg" id="cmpLeg"></div>
     </div>
+    <div class="card" data-only="fingerprint face iris">
+      <h2 id="cmpTitle">Сравнение детекторов и признаков</h2>
+      <div class="btns">
+        <button id="bdet">Сравнить детекторы на образце A</button>
+        <button id="bemb">Сравнить признаки на паре A и B</button>
+        <button id="beer">Оценить признаки на галерее (EER)</button>
+      </div>
+      <div id="detOut"></div>
+      <div id="embOut"></div>
+      <div id="eerOut"></div>
+      <div class="leg" id="cmpMethodsLeg" style="margin-top:8px">Детекторы: рамки разных цветов на одном изображении, время и уверенность. Признаки: одна и та же пара лиц, но разные способы превратить лицо в вектор. Шкалы сходства у разных признаков разные, поэтому числа напрямую сравнивать нельзя: судить о качестве метода нужно по EER на галерее (чем ниже, тем лучше).</div>
+    </div>
     <div class="card">
       <h2>Оценка качества: FAR / FRR / EER</h2>
       <div class="btns"><button id="beval">Рассчитать на наборе пар</button><span class="leg" id="evalInfo" style="align-self:center"></span></div>
       <div id="chart" style="height:320px"></div>
       <div class="leg" id="evalNow"></div>
+    </div>
+    <div class="card" id="stressCard" style="display:none">
+      <h2>Стресс-тест искажений (SOCOFing)</h2>
+      <div class="btns"><button id="bstress">Запустить стресс-тест</button><span class="leg" id="stressInfo" style="align-self:center"></span></div>
+      <div id="stressOut"></div>
     </div>
     <div class="card">
       <h2>Журнал экспериментов</h2>
@@ -285,17 +353,36 @@ th{color:var(--mut);font-weight:500}
   <div class="card">
     <h2>Обучение нейросети распознаванию <span class="leg">- маленькая CNN учится на сервере, а здесь виден каждый этап</span></h2>
     <div class="nnbar">
-      <label>Что распознаём<br><select id="trMod"><option value="fingerprint">Отпечатки пальцев</option><option value="face">Лица (галерея datasets/faces)</option></select></label>
+      <label>Что распознаём<br><select id="trMod"><option value="fingerprint">Отпечатки пальцев</option><option value="face">Лица (галерея datasets/faces)</option><option value="iris">Радужка</option></select></label>
+      <label>Набор данных<br><select id="trData"></select></label>
       <label>Эпох<br><select id="trEpochs"></select></label>
       <label>Learning rate<br><select id="trLr"></select></label>
+      <label>Размер сети<br><select id="trArch"><option value="small">Малая (8-16-16 фильтров)</option><option value="medium">Средняя (12-24-24)</option><option value="large">Большая (16-32-32)</option></select></label>
+      <label>Оптимизатор<br><select id="trOpt"><option value="adam">Adam</option><option value="sgd">SGD с моментом</option></select></label>
+      <label id="trHoldBox">Снимок для проверки<br><select id="trHold"><option value="3">3 (самый сложный)</option><option value="2">2</option><option value="1">1 (самый лёгкий)</option></select></label>
       <label>Размер батча<br><select id="trBatch"></select></label>
       <label>Объектов (пальцев / людей)<br><select id="trSubj"></select></label>
       <label>Аугментация: <b id="trAugV">1.0</b><br><input type="range" id="trAug" min="0" max="1.5" step="0.25" value="1" style="width:130px"></label>
       <button id="trStart">▶ Начать обучение</button>
       <button class="sec" id="trStop">■ Остановить</button>
     </div>
+    <div class="hint" id="trHint"></div>
+    <div class="leg" style="margin-top:6px"><b>Готовые эксперименты</b> - один клик: настройки выставляются сами и обучение запускается (отпечатки пальцев, 20 эпох):</div>
+    <div class="presets" id="trPresets"></div>
+    <div class="hint" id="trPresetDesc"></div>
     <div id="trStatus" style="font-size:13px;margin-bottom:6px"></div>
     <div class="leg">Сеть из трёх свёрточных слоёв учится отличать объекты друг от друга. Каждую эпоху она видит искажённые копии образцов (поворот, сдвиг, шум), а проверяется на образце, которого не видела. Ползунком эпох можно вернуться к любому моменту обучения. Это обучение с нуля маленькой сети, а не готовая модель SFace из раздела «Лицо».</div>
+  </div>
+  <div class="card" id="trSumCard" style="display:none;margin-bottom:14px">
+    <h2>Итоги и выводы</h2><div id="trSummary"></div>
+    <div class="leg" style="margin-top:8px"><b>Использовать обученную сеть как метод распознавания:</b> сеть сохранена на диск и останется после перезапуска сервера.</div>
+    <div class="btns" id="trUse" style="margin-top:6px"></div>
+  </div>
+  <div class="card" style="margin-bottom:14px">
+    <h2>Журнал запусков <span class="leg">- сравните настройки и результаты разных запусков</span></h2>
+    <div class="btns"><button class="sec" id="trRunsCmp">Сравнить выбранные</button><button class="sec" id="trRunsCsv">Скачать CSV</button><button class="sec" id="trRunsClear">Очистить журнал</button></div>
+    <div class="scroll"><table id="trRunsTbl"></table></div>
+    <div class="trgrid" id="trRunsCharts" style="display:none;margin-top:10px"><div class="card"><h2>Loss выбранных запусков</h2><div id="trCmpLoss" style="height:230px"></div></div><div class="card"><h2>Точность на новых снимках</h2><div id="trCmpAcc" style="height:230px"></div></div></div>
   </div>
   <div class="trgrid">
     <div class="card"><h2>Loss (ошибка обучения)</h2><div id="trLoss" style="height:230px"></div></div>
@@ -412,9 +499,10 @@ th{color:var(--mut);font-weight:500}
 const MODS={
  fingerprint:{defThr:0.5,
   note:'Датасет синтетический: реальные биометрические данные людей не используются.',
-  legend:'● окончание, ▲ разветвление; зелёные - совпавшие minutiae, серые - без пары, жёлтые линии - соответствия.',
+  legend:'Минуции: ● окончание, ▲ разветвление; зелёные - совпавшие, серые - без пары, жёлтые линии - соответствия. POC: слева A, в центре B после совмещения, справа наложение. SIFT: зелёные линии - согласованные пары точек.',
   def:['f01_i1','f01_i2'],
   params:[
+   {t:'select',k:'matcher',l:'Метод сопоставления',opts:[['hough','Минуции + голосование (основной)',0.5],['local','Минуции + локальные структуры',0.55],['poc','Фазовая корреляция (POC)',0.13],['sift','Ключевые точки SIFT',0.16],['cnn','Нейросеть, обученная вами',0.80]],v:'hough'},
    {t:'select',k:'bin_method',l:'Метод бинаризации',opts:[['adaptive','adaptive'],['otsu','otsu'],['fixed','fixed (порог ниже)']],v:'adaptive'},
    {k:'clahe_clip',l:'CLAHE: clip limit',min:0.5,max:8,step:0.5,v:2.0},
    {k:'orient_smooth',l:'Сглаживание поля ориентаций (σ)',min:3,max:16,step:1,v:8},
@@ -423,30 +511,117 @@ const MODS={
    {k:'bin_threshold',l:'Порог бинаризации (для fixed)',min:50,max:200,step:5,v:128,int:true},
    {k:'min_minutiae_dist',l:'Мин. расстояние между minutiae (px)',min:4,max:20,step:1,v:8,int:true},
    {k:'dist_tol',l:'Допуск matching по расстоянию (px)',min:6,max:30,step:1,v:14},
-   {k:'extra_noise',l:'Добавочный шум (σ)',min:0,max:50,step:2,v:0}]},
+   {k:'extra_noise',l:'Добавочный шум (σ)',min:0,max:50,step:2,v:0}],
+  cmp:{imgA:'Образец A с минуциями',imgB:'Образец B с минуциями',srcWord:'извлечение',eerTitle:'Качество методов сопоставления на синтетическом наборе',eerHead:'Метод сопоставления',embW:'width:150px',
+   title:'Сравнение методов бинаризации и сопоставления',b1:'Сравнить бинаризации на образце A',b2:'Сравнить методы сопоставления на паре A и B',b3:'Оценить методы сопоставления (EER)',
+   leg:'Бинаризации: один и тот же отпечаток тремя способами, число найденных минуций и их качество. Методы сопоставления: одна и та же пара отпечатков, сходство и решение при рекомендуемом пороге каждого метода. Шкалы сходства у методов разные (у POC свои около 0,23, у минуций около 0,85), поэтому качество методов сравнивайте по EER и по запасу «худший свой минус лучший чужой» (больше нуля - ошибок нет).'}},
  face:{defThr:0.4,
   note:'Используйте открытые наборы (например LFW) или фото с согласия людей. Фото студентов без необходимости не собирайте.',
   legend:'Сверху - найденное лицо с ключевыми точками, снизу - выровненное лицо (вход для embedding).',
   def:null,
   params:[
-   {t:'select',k:'detector',l:'Детектор лица',opts:[['auto','авто (YuNet, если есть)'],['haar','Haar-каскад (классика)'],['yunet','YuNet (нейросеть)']],v:'auto'},
-   {t:'select',k:'embedder',l:'Признаки (embedding)',opts:[['auto','авто (SFace, если есть)'],['sface','SFace (нейросеть)'],['lbp','LBP (классика)']],v:'auto'},
+   {t:'select',k:'detector',l:'Детектор лица',opts:[['auto','авто (лучший из доступных)'],['haar','Haar: frontalface_default (классика)'],['haar_alt2','Haar: frontalface_alt2 (классика)'],['haar_alt','Haar: frontalface_alt (классика)'],['haar_profile','Haar: профиль лица (классика)'],['ssd','SSD ResNet-10 (нейросеть)'],['ultraface','UltraFace RFB-320 (лёгкая нейросеть)'],['yunet','YuNet (нейросеть)']],v:'auto'},
+   {t:'select',k:'embedder',l:'Признаки (embedding)',opts:[['auto','авто (нейросеть, если есть)'],['sface','SFace (нейросеть)'],['arcface','ArcFace MobileFaceNet (нейросеть)'],['lbp','LBP (классика)'],['hog','HOG (классика)'],['gabor','Габор (классика)'],['dct','DCT (классика)'],['pixels','Пиксели (простейший эталон)'],['eigenfaces','Eigenfaces (PCA по галерее)'],['cnn','Нейросеть, обученная вами']],v:'auto'},
    {t:'select',k:'align',l:'Выравнивание лица',opts:[['true','включено'],['false','выключено']],v:'true',bool:true},
    {k:'scale_factor',l:'Haar: scale factor',min:1.02,max:1.4,step:0.02,v:1.1},
    {k:'min_neighbors',l:'Haar: min neighbors',min:1,max:12,step:1,v:5,int:true},
    {k:'min_face',l:'Мин. размер лица (px)',min:20,max:200,step:5,v:40,int:true},
-   {k:'extra_noise',l:'Добавочный шум (σ)',min:0,max:60,step:2,v:0}]}
+   {k:'yunet_score',l:'Порог уверенности YuNet / SSD',min:0.3,max:0.99,step:0.01,v:0.8},
+   {k:'extra_noise',l:'Добавочный шум (σ)',min:0,max:60,step:2,v:0}],
+  cmp:{imgA:'Выровненное лицо A',imgB:'Выровненное лицо B',srcWord:'детектор',eerTitle:'Качество признаков на галерее',eerHead:'Признаки',embW:'width:112px',
+   title:'Сравнение детекторов и признаков',b1:'Сравнить детекторы на образце A',b2:'Сравнить признаки на паре A и B',b3:'Оценить признаки на галерее (EER)',
+   leg:'Детекторы: рамки разных цветов на одном изображении, время и уверенность. Признаки: одна и та же пара лиц, но разные способы превратить лицо в вектор. Шкалы сходства у разных признаков разные, поэтому числа напрямую сравнивать нельзя: судить о качестве метода нужно по EER на галерее (чем ниже, тем лучше).'}},
+ iris:{defThr:0.66,
+  note:'Датасет синтетический: 12 глаз по 3 снимка, реальные биометрические данные людей не используются. Для синтетики известны истинные окружности, поэтому видна ошибка локализации.',
+  legend:'Сверху - найденные зрачок (красный) и радужка (зелёный); ниже - развёртки A и B (B сдвинута на найденный поворот) и карта битов: белый - совпали, красный - не совпали, серый - не сравнивались.',
+  def:['e01_i1','e01_i2'],
+  params:[
+   {t:'select',k:'localizer',l:'Метод локализации',opts:[['auto','авто (Даугман, при неудаче - другие)'],['daugman','Интегро-дифференциальный оператор Даугмана'],['hough','Преобразование Хафа'],['contour','Порог + радиальный поиск границы']],v:'auto'},
+   {t:'select',k:'encoder',l:'Кодировщик (признаки)',opts:[['gabor','2D-фильтры Габора (Даугман)',0.66],['loggabor','1D лог-Габор (Masek)',0.62],['ordinal','Порядковые признаки (ordinal)',0.70],['dct','Косинусное преобразование (DCT)',0.67],['haar','Вейвлет Хаара',0.60],['cnn','Нейросеть, обученная вами',0.80]],v:'gabor'},
+   {t:'select',k:'mask_eyelids',l:'Маска век, ресниц и бликов',opts:[['true','включена'],['false','выключена']],v:'true',bool:true},
+   {k:'blur',l:'Сглаживание перед поиском границ (σ)',min:0.5,max:6,step:0.5,v:2},
+   {k:'hough_quality',l:'Хаф: порог совершенства окружности',min:0.3,max:0.95,step:0.05,v:0.6},
+   {k:'wavelength',l:'Длина волны фильтров (px развёртки)',min:6,max:48,step:2,v:16},
+   {k:'max_shift',l:'Компенсация поворота: сдвиг до ± (px)',min:0,max:24,step:1,v:10,int:true},
+   {k:'extra_noise',l:'Добавочный шум (σ)',min:0,max:60,step:2,v:0}],
+  cmp:{imgA:'Развёртка A',imgB:'Развёртка B',srcWord:'локализация',eerTitle:'Качество кодировщиков на 12 синтетических глазах',eerHead:'Кодировщик',embW:'width:384px',
+   title:'Сравнение методов локализации и кодирования',b1:'Сравнить локализаторы на образце A',b2:'Сравнить кодировщики на паре A и B',b3:'Оценить кодировщики (EER)',
+   leg:'Локализаторы: окружности разных цветов на одном снимке, время и ошибка относительно истинных окружностей (известны для синтетики). Кодировщики: одна и та же пара развёрток, разные способы получить Iris Code; сходство = 1 - расстояние Хэмминга. Качество метода сравнивайте по EER и по запасу «худший свой минус лучший чужой» (больше нуля - глаза разделяются без ошибок).'}}
+};
+const HINTS={
+ fingerprint:{
+  matcher:{hough:'Основной метод. Каждая пара минуций голосует за поворот и сдвиг, затем считаются согласованные пары. Различает все синтетические отпечатки (EER 0 %), работает за доли секунды.',
+   local:'Каждая минуция описывается расстояниями и углами до пяти соседей; сравниваются эти описания, общее совмещение не нужно. Устойчив к поворотам; EER 0 % на синтетике, но у чужих сходство чуть выше, чем у голосования.',
+   poc:'Фазовая корреляция усиленных изображений: сравнивается всё изображение, а не отдельные точки. Перебирает повороты ±40°. Шкала низкая (свои около 0,23, чужие около 0,05), порог около 0,13.',
+   cnn:'Сеть, которую вы обучили на вкладке «Обучение распознаванию»: embedding образца и косинусное сходство. Оценка EER считается только по снимкам, которых сеть не видела при обучении. У каждой сети свой порог: он подставляется сам.',
+   sift:'Универсальные ключевые точки SIFT и RANSAC. Не рассчитан на отпечатки: гребни похожи друг на друга, поэтому ошибок заметно больше (EER около 13 % на синтетике). Нужен как пример неспециализированного метода.'},
+  bin_method:{adaptive:'Пиксель считается гребнем, если он темнее своей окрестности. Устойчив к неравномерной яркости, даёт сбалансированный набор окончаний и разветвлений.',
+   otsu:'Один общий порог по гистограмме. Быстрый, но рвёт гребни там, где контраст ниже: на наших образцах получается много ложных окончаний (до 80 % всех минуций).',
+   fixed:'Порог задаётся ползунком «Порог бинаризации». Показывает, как неудачный порог рвёт или склеивает гребни; удобен для экспериментов.'}},
+ face:{
+  detector:{auto:'Выбирает лучший из доступных: YuNet, затем SSD, затем UltraFace, иначе каскад Хаара.',
+   haar:'Классический каскад по умолчанию: находит фронтальные лица, чувствителен к наклону и освещению. Скачивать ничего не нужно.',
+   haar_alt2:'Другой обучающий набор каскада Хаара. Сравните его рамки с frontalface_default в карточке сравнения.',
+   haar_alt:'Ещё один вариант каскада Хаара; на сложных снимках рамка может отличаться от других.',
+   haar_profile:'Ищет лица в профиль (проверяет и зеркальное отражение). На фронтальных лицах обычно ничего не находит.',
+   ssd:'Нейросеть SSD ResNet-10 (OpenCV): точнее каскадов при повороте и освещении, около 100-150 мс. Нужна скачанная модель (10 МБ).',
+   ultraface:'Очень лёгкая нейросеть (1 МБ): самая быстрая из нейросетевых (около 15-50 мс), рамка чуть грубее. Нужна скачанная модель.',
+   yunet:'Нейросеть YuNet выдаёт и рамку, и 5 ключевых точек лица, поэтому выравнивание точнее, чем по пропорциям рамки.'},
+  embedder:{auto:'Нейросеть, если модель скачана (SFace, затем ArcFace), иначе LBP.',
+   sface:'Нейросеть SFace: 128 чисел, косинусное сходство, типичный порог около 0,36.',
+   arcface:'Нейросеть ArcFace MobileFaceNet: 512 чисел. На тестовых лицах один человек даёт сходство около 0,95-0,98, разные люди около 0. Лицензия модели: только исследования и обучение.',
+   lbp:'Гистограммы локальных бинарных шаблонов по сетке: классика, чувствительна к освещению. Для вычитания «среднего лица» нужна галерея из 3 и более людей.',
+   hog:'Гистограммы направлений градиентов: описывают форму черт лица, чувствительны к повороту головы. 1764 числа.',
+   gabor:'Отклики банка фильтров Габора: текстура и линии лица. 576 чисел.',
+   dct:'Низкие частоты косинусного преобразования: общая форма без мелких деталей. Всего 63 числа.',
+   pixels:'Само уменьшенное лицо как вектор: простейший эталон, чтобы увидеть, что дают более умные признаки.',
+   cnn:'Сеть, обученная вами на лицах из галереи (вкладка «Обучение распознаванию»). Галерея входила в обучение, поэтому EER в таблице завышен.',
+   eigenfaces:'Метод главных компонент по галерее («собственные лица»). Нужна галерея минимум из 6 фото; метки людей не используются.'},
+  align:{true:'Выравнивание поворачивает лицо так, чтобы глаза лежали на горизонтали; без него сходство падает при наклоне головы.',false:'Лицо подаётся как есть: сравните сходство с включённым выравниванием на снимках с наклоном.'}},
+ iris:{
+  localizer:{auto:'Сначала оператор Даугмана; если он не нашёл окружности, контурный метод, затем Хаф.',
+   daugman:'Ищет окружность, на которой средняя яркость меняется резче всего. Самый точный на синтетике (ошибка около 1 px).',
+   hough:'Голосование за окружности по границам. Чувствителен к векам и бликам: на синтетике иногда не находит радужку (около 1 снимка из 36) и ошибается сильнее.',
+   contour:'Порог по яркости для зрачка и поиск перепада яркости вдоль лучей для границы радужки. Самый быстрый (несколько мс) и на синтетике точный.'},
+  encoder:{gabor:'2D-фильтры Габора, фаза в 2 бита (Даугман): основной метод. На синтетике EER 0 %, запас между «своими» и «чужими» самый большой.',
+   loggabor:'1D лог-Габор по каждому кольцу развёртки (Masek): быстрый, запас меньше, чем у Габора.',
+   ordinal:'Знак разности соседних областей: устойчив к освещению; по запасу второй после Габора.',
+   dct:'Косинусные коэффициенты окон (Monro): проще Габора, запас меньше.',
+   cnn:'Сеть, обученная вами на вкладке «Обучение распознаванию» (вход - вырезка вокруг радужки). Сходство - косинус embedding. Обычно хуже кода Габора, но показывает, чем нейросеть отличается от классики.',
+   haar:'Самый простой код: знаки вейвлета Хаара. Различает глаза хуже остальных (EER около 16 % на синтетике).'},
+  mask_eyelids:{true:'Из сравнения исключаются веки, ресницы и блики: сравниваются только открытые биты обоих снимков.',
+   false:'Маска выключена: сравниваются все биты. На синтетике результат почти не меняется, на реальных снимках с веками и ресницами это важно.'}}
 };
 let MOD='fingerprint';
+const SRC={};  // наборы данных каждой биометрии (из /info)
+const READY={info:null,samples:null};  // для какой вкладки загружены наборы и список образцов (ждёт помощник)
 const API=()=>`/api/v1/biometrics/${MOD}`;
 const $=id=>document.getElementById(id);
 let last=null, evalData=null, procData=null, curStep=0;
 
+function paramHtml(p){return p.t==='select'
+   ? `<label>${p.l}</label><select id="p_${p.k}">${p.opts.map(o=>`<option value="${o[0]}"${o[0]===p.v?' selected':''}>${o[1]}</option>`).join('')}</select><div class="hint" id="hint_${p.k}"></div>`
+   : `<label>${p.l}: <b id="v_${p.k}">${p.v}</b></label><input type="range" id="p_${p.k}" min="${p.min}" max="${p.max}" step="${p.step}" value="${p.v}">`}
 function buildParams(){
-  $('params').innerHTML=MODS[MOD].params.map(p=>p.t==='select'
-   ? `<label>${p.l}</label><select id="p_${p.k}">${p.opts.map(o=>`<option value="${o[0]}"${o[0]===p.v?' selected':''}>${o[1]}</option>`).join('')}</select>`
-   : `<label>${p.l}: <b id="v_${p.k}">${p.v}</b></label><input type="range" id="p_${p.k}" min="${p.min}" max="${p.max}" step="${p.step}" value="${p.v}">`).join('');
-  MODS[MOD].params.filter(p=>p.t!=='select').forEach(p=>$('p_'+p.k).addEventListener('input',e=>$('v_'+p.k).textContent=e.target.value));
+  const adv=new Set(ADV[MOD]||[]),all=MODS[MOD].params;
+  $('params').innerHTML=all.filter(p=>!adv.has(p.k)).map(paramHtml).join('')+
+    (adv.size?`<details class="adv"><summary>Дополнительные параметры (для экспериментов)</summary>${all.filter(p=>adv.has(p.k)).map(paramHtml).join('')}</details>`:'');
+  all.filter(p=>p.t!=='select').forEach(p=>{
+    $('p_'+p.k).addEventListener('input',e=>$('v_'+p.k).textContent=e.target.value);
+    $('p_'+p.k).addEventListener('change',()=>{saveUi();if(p.k==='extra_noise')updateThumbs()});
+  });
+  all.filter(p=>p.t==='select').forEach(p=>{
+    const show=()=>{$('hint_'+p.k).textContent=((HINTS[MOD]||{})[p.k]||{})[$('p_'+p.k).value]||''};
+    $('p_'+p.k).addEventListener('change',()=>{show();
+      const o=p.opts.find(o=>o[0]===$('p_'+p.k).value);
+      if(o&&o[2]!=null){$('th').value=o[2];$('thv').textContent=o[2].toFixed(2)}  // у каждого метода своя шкала: подставляем рекомендуемый порог
+      if(typeof applySrcThr==='function'&&$('srcSel')&&$('srcSel').value)applySrcThr();  // на реальных наборах порог свой
+      if($('p_'+p.k).value==='cnn')cnnCheck();
+      saveUi();
+    });
+    show();
+  });
+  restoreUi();
 }
 function params(){
   const o={};
@@ -454,6 +629,7 @@ function params(){
     const v=$('p_'+p.k).value;
     o[p.k]=p.t==='select'?(p.bool?v==='true':v):(p.int?Math.round(parseFloat(v)):parseFloat(v));
   });
+  if($('srcSel')&&$('srcSel').value)o.source=$('srcSel').value;  // набор данных: для оценки качества и проверки обученной сети
   return o;
 }
 async function api(path,body,method='POST'){
@@ -463,40 +639,144 @@ async function api(path,body,method='POST'){
     try{const j=JSON.parse(t);t=typeof j.detail==='string'?j.detail:JSON.stringify(j.detail)}catch(e){}
     throw new Error(t)
   }
+  if(typeof FLOW!=='undefined'){
+    if(path.endsWith('/process'))FLOW.proc=true;else if(path.endsWith('/compare'))FLOW.cmp=true;else if(path.endsWith('/evaluate'))FLOW.eval=true;
+    if(typeof flowRender==='function')flowRender();
+  }
   return r.json();
 }
 function busy(btn,on){btn.disabled=on}
+/* ---------- уведомления, справка, подсказка «что дальше», миниатюры, запоминание настроек ---------- */
+function toast(msg,kind='err'){
+  const d=document.createElement('div');d.className='toast '+kind;d.textContent=msg;$('toasts').appendChild(d);
+  setTimeout(()=>d.remove(),kind==='err'?9000:4000);d.onclick=()=>d.remove();
+}
+const HELP={
+ fingerprint:'<h3>Отпечатки пальцев</h3><ol><li>Выберите набор данных (синтетика или реальные FVC и SOCOFing, если они подготовлены) и образцы A и B: миниатюры показывают, что выбрано, а поиск помогает найти нужный. Оттиски одного пальца отличаются поворотом, шумом и размытием.</li><li>Нажмите «Показать этапы для A»: пройдите по восьми этапам и посмотрите найденные минуции.</li><li>Нажмите «Сравнить A и B»: получите сходство и решение. Двигайте порог Threshold: решение меняется сразу.</li><li>В карточке «Оценка качества» посчитайте FAR, FRR и EER, а в карточке «Сравнение методов» сравните методы друг с другом.</li></ol><p>Метод сопоставления и бинаризации выбирается в списках слева; под каждым списком есть пояснение. Остальные параметры спрятаны в «Дополнительных параметрах».</p>',
+ face:'<h3>Лицо</h3><ol><li>Фото лежат в <code>datasets/faces/&lt;набор&gt;/&lt;имя_человека&gt;/</code> (например, LFW) или в <code>datasets/faces/&lt;имя_человека&gt;/</code>; выберите набор и найдите человека поиском. Своё изображение можно загрузить кнопками «в A» и «в B»: оно видно только вам и пропадёт после перезапуска сервера.</li><li>Выберите детектор лица и признаки. Нейросетевые модели скачиваются командой <code>python -m scripts.download_models</code>; без них работают каскады Хаара и классические признаки.</li><li>Покажите этапы, сравните лица, затем в карточке «Сравнение детекторов и признаков» оцените все методы по EER.</li></ol><p>Классическим признакам нужна галерея из 3 и более людей. Сеть, обученная вами, выбирается как метод «Нейросеть, обученная вами».</p>',
+ iris:'<h3>Радужка</h3><ol><li>Выберите набор данных (12 синтетических глаз по 3 снимка или реальный CASIA-Iris-Interval, если он подготовлен) и два снимка глаза.</li><li>Покажите этапы: зрачок, граница радужки, маска век, развёртка и Iris Code.</li><li>Сравните: сходство равно 1 минус расстояние Хэмминга; поворот глаза компенсируется сдвигом кода.</li><li>В карточке «Сравнение методов» сравните локализаторы и кодировщики; для синтетики видна ошибка относительно истинных окружностей.</li></ol>',
+ code:'<h3>Практикум: код</h3><ol><li>Выберите задание слева и прочитайте условие.</li><li>Напишите функцию в редакторе и нажмите «Запустить на примере».</li><li>«Проверить решение» запускает все тесты и ставит баллы; подсказки идут по уровням, полное решение открывается после 3 попыток.</li></ol>',
+ train:'<h3>Обучение распознаванию</h3><ol><li>Выберите, что распознаём и на каком наборе данных учим сеть (синтетика или реальные FVC и CASIA), затем нажмите один из «Готовых экспериментов» или «Начать обучение».</li><li>Смотрите кривые Loss и точности, схему сети и изменение весов; ползунком можно вернуться к любой эпохе.</li><li>В «Итогах» сеть сама объяснит результат (переобучение, слишком большой шаг и т. д.).</li><li>Обученную сеть можно выбрать как метод распознавания на вкладках отпечатков, радужки и лица.</li><li>Журнал запусков хранит все эксперименты: отметьте несколько и нажмите «Сравнить выбранные».</li></ol>',
+ nn:'<h3>Площадка нейросети</h3><p>Выберите набор данных, слои и нейроны, нажмите «Обучить» и смотрите, как меняется граница решения и ошибка. Набор «Биометрия: свой / чужой» показывает, как порог создаёт ошибки FAR и FRR.</p>'};
+$('helpBtn').onclick=()=>{$('helpBody').innerHTML=(HELP[CURTAB]||HELP.fingerprint)+'<p class="leg">Подсказки по каждому методу показаны под списками параметров. Вопросы по терминам можно задать ИИ-наставнику справа.</p>';$('help').style.display='flex'};
+$('helpClose').onclick=()=>{$('help').style.display='none'};$('help').onclick=e=>{if(e.target===$('help'))$('help').style.display='none'};
+const FLOW={proc:false,cmp:false,eval:false};
+function flowRender(){
+  const steps=[['1. Выберите образцы A и B',true,()=>$('sa').focus()],['2. Покажите этапы',FLOW.proc,()=>$('bproc').click()],['3. Сравните A и B',FLOW.cmp,()=>$('bcmp').click()],['4. Оцените качество',FLOW.eval,()=>$('beval').click()]];
+  const next=steps.findIndex((s,i)=>i>0&&!s[1]);
+  $('flow').innerHTML=steps.map((s,i)=>`<span class="chip${s[1]?' done':''}${i===next?' next':''}" data-i="${i}">${s[1]&&i>0?'✓ ':''}${s[0]}</span>`).join('<span class="arrow">→</span>');
+  $('flow').querySelectorAll('.chip').forEach(c=>c.onclick=()=>steps[+c.dataset.i][2]());
+  const tips=['Образцы выбраны. Нажмите «Показать этапы для A» (или на шаг 2 выше).','Теперь сравните два образца, чтобы получить сходство и решение.','Осталось оценить качество на всём наборе: FAR, FRR и EER.'];
+  $('flowTip').textContent=next<0?'Все шаги выполнены. Попробуйте поменять метод или параметр и повторить сравнение: результаты попадают в журнал.':tips[next-1];
+}
+async function cnnCheck(){
+  // выбран метод «нейросеть, обученная вами»: подставляем её порог (по EER на снимках, которых сеть не видела) или подсказываем обучить
+  try{
+    const m=await (await fetch('/api/v1/training/model/'+MOD)).json();
+    const key=MOD==='fingerprint'?'matcher':(MOD==='iris'?'encoder':'embedder');
+    if(m.available&&m.test_acc<0.3){toast(`Сеть обучена плохо: точность на новых снимках ${Math.round(m.test_acc*100)} %. Переобучите её (например, с меньшим learning rate).`,'err');$('hint_'+key).textContent='Сеть обучена плохо: точность на новых снимках всего '+Math.round(m.test_acc*100)+' %. Переобучите её на вкладке «Обучение распознаванию».';return}
+    if(m.available&&MOD!=='face'&&m.dataset&&$('srcSel').value&&m.dataset!==$('srcSel').value){toast(`Сеть обучена на наборе «${m.dataset}», а выбран «${$('srcSel').value}». Обучите её на выбранном наборе (вкладка «Обучение распознаванию»).`,'err');$('hint_'+key).textContent=`Сеть обучена на наборе «${m.dataset}»: для выбранного набора её нужно обучить заново.`;return}
+    if(m.available){$('th').value=Math.min(0.95,Math.max(0.05,m.threshold));$('thv').textContent=parseFloat($('th').value).toFixed(2);
+      $('hint_'+key).textContent=`Сеть обучена: ${m.epochs} эпох, точность на новых снимках ${Math.round(m.test_acc*100)} %, EER ${(m.eer*100).toFixed(1)} %, порог ${m.threshold.toFixed(2)} подставлен.`}
+    else{toast('Сеть для этих данных ещё не обучена: откройте вкладку «Обучение распознаванию».','info');$('hint_'+key).textContent='Сеть ещё не обучена: вкладка «Обучение распознаванию», выберите эти же данные.'}
+  }catch(e){}
+}
+function updateThumbs(){
+  const ne=MODS[MOD].params.some(p=>p.k==='extra_noise')&&$('p_extra_noise')?$('p_extra_noise').value:0;
+  [['A','sa'],['B','sb']].forEach(([k,sel])=>{const id=$(sel).value;$('th'+k).src=id?`${API()}/sample/${id}.png?extra_noise=${ne}`:''});
+}
+$('sa').addEventListener('change',updateThumbs);$('sb').addEventListener('change',updateThumbs);
+const ADV={fingerprint:['clahe_clip','orient_smooth','gabor_period','gabor_sigma','bin_threshold','min_minutiae_dist','dist_tol'],
+           face:['scale_factor','min_neighbors','min_face','yunet_score'],iris:['blur','hough_quality','wavelength','max_shift']};
+function saveUi(){try{const o=JSON.parse(localStorage.getItem('lab_params')||'{}');o[MOD]={p:params(),th:$('th').value};localStorage.setItem('lab_params',JSON.stringify(o))}catch(e){}}
+function restoreUi(){
+  try{
+    const o=(JSON.parse(localStorage.getItem('lab_params')||'{}')[MOD])||null;if(!o)return;
+    MODS[MOD].params.forEach(p=>{const el=$('p_'+p.k),v=o.p[p.k];if(!el||v===undefined)return;
+      if(p.t==='select'){const sv=String(v);if([...el.options].some(x=>x.value===sv))el.value=sv;el.dispatchEvent(new Event('change'))}
+      else{el.value=v;$('v_'+p.k).textContent=v}});
+    if(o.th){$('th').value=o.th;$('thv').textContent=parseFloat(o.th).toFixed(2)}
+  }catch(e){}
+}
 
+
+function methodKey(){return MOD==='fingerprint'?'matcher':(MOD==='iris'?'encoder':null)}
+function applySrcThr(){
+  // у каждого метода своя шкала сходства; на реальных наборах рекомендуемый порог другой (замерен по EER на самом наборе)
+  const k=methodKey();if(!k||!$('p_'+k))return;
+  const c=curSource(),v=$('p_'+k).value,own=c&&c.thresholds&&c.thresholds[v];
+  let t=own;
+  if(t==null){const o=(MODS[MOD].params.find(p=>p.k===k).opts||[]).find(x=>x[0]===v);t=o&&o[2]!=null?o[2]:MODS[MOD].defThr}
+  if(t!=null&&v!=='cnn'){const x=Math.min(0.95,Math.max(0.01,t));$('th').value=x;$('thv').textContent=x.toFixed(2)}
+}
+function curSource(){return (SRC[MOD]||[]).find(x=>x.id===$('srcSel').value)}
+function evalN(){const c=curSource();return c&&c.real?(MOD==='fingerprint'?10:(MOD==='iris'?12:8)):8}
+function srcUpdate(){
+  const c=curSource();
+  $('srcBadge').innerHTML=c&&c.real?'<span class="realtag">реальные данные</span>':'';
+  $('dataNote').textContent=c&&c.note?c.note:MODS[MOD].note;
+  $('stressCard').style.display=(MOD==='fingerprint'&&c&&c.id==='socofing')?'':'none';
+  applySrcThr();
+}
 async function loadSamples(selA,selB){
-  const s=await (await fetch(API()+'/samples')).json();
-  const opts=s.map(x=>`<option value="${x.id}">${x.label}</option>`).join('');
+  const mod=MOD,src=$('srcSel').value||'',q=$('sampleQ').value.trim();  // ответ для уже закрытой вкладки отбрасывается (быстрое переключение вкладок)
+  const r=await fetch(API()+'/samples?source='+encodeURIComponent(src)+'&q='+encodeURIComponent(q)+'&limit=500');
+  if(mod!==MOD)return;
+  if(!r.ok){let t=await r.text();try{t=JSON.parse(t).detail||t}catch(e){}toast(String(t));return}
+  const s=await r.json(),total=parseInt(r.headers.get('X-Total-Count')||s.length);
+  if(mod!==MOD)return;
+  const known={};[...$('sa').options,...$('sb').options].forEach(o=>known[o.value]=o.textContent);
+  [selA,selB].forEach(id=>{if(id&&!s.some(x=>x.id===id)&&known[id])s.push({id,label:known[id]})});  // выбранные образцы не пропадают при поиске
+  const opts=s.map(x=>`<option value="${esc(x.id)}">${esc(x.label)}</option>`).join('');
   $('sa').innerHTML=opts;$('sb').innerHTML=opts;
+  const shown=s.filter(x=>!String(x.id).startsWith('up_')).length;
+  $('sampleCount').textContent=total>shown?`Показано ${shown} из ${total}: уточните поиск, чтобы найти нужный образец.`:`Образцов: ${total}`;
   let a=selA,b=selB;
   if(!a&&s.length){
     const def=MODS[MOD].def;
-    if(def){a=def[0];b=def[1]}
+    if(def&&s.some(x=>x.id===def[0])){a=def[0];b=def[1]}
     else{a=s[0].id;const same=s.find((x,i)=>i>0&&x.person&&x.person===s[0].person);b=(same||s[1]||s[0]).id}
   }
   if(a)$('sa').value=a; if(b)$('sb').value=b;
+  updateThumbs();READY.samples=MOD;
 }
 async function loadInfo(){
-  const b=$('banner');b.style.display='none';
+  const mod=MOD,b=$('banner');b.style.display='none';
   try{
     const inf=await (await fetch(API()+'/info')).json();
+    if(mod!==MOD)return;  // пока шёл ответ, вкладку уже сменили
+    SRC[MOD]=inf.sources||[];
+    const sel=$('srcSel');
+    sel.innerHTML=SRC[MOD].map(x=>`<option value="${esc(x.id)}">${esc(x.title)}${x.real?' - реальные данные':''}</option>`).join('');
+    let saved=null;try{saved=localStorage.getItem('lab_src_'+MOD)}catch(e){}
+    const want=[saved,inf.default_source].find(v=>v&&SRC[MOD].some(x=>x.id===v));
+    if(want)sel.value=want;
+    sel.disabled=SRC[MOD].length<2;
+    $('sampleQ').value='';srcUpdate();
     if(inf.hint){b.textContent=inf.hint+(inf.persons!==undefined?` (в галерее: людей ${inf.persons}, фото ${inf.images})`:'');b.style.display='block'}
   }catch(e){}
+  READY.info=MOD;
 }
+$('srcSel').onchange=()=>{
+  READY.samples=null;
+  try{localStorage.setItem('lab_src_'+MOD,$('srcSel').value)}catch(e){}
+  srcUpdate();$('sampleQ').value='';evalData=null;try{Plotly.purge('chart')}catch(e){}$('evalNow').textContent='';$('evalInfo').textContent='';
+  loadSamples();saveUi();
+  if(['cnn'].includes(($('p_matcher')||$('p_encoder')||$('p_embedder')||{}).value))cnnCheck();
+};
+let _qTimer=null;
+$('sampleQ').oninput=()=>{clearTimeout(_qTimer);_qTimer=setTimeout(()=>loadSamples($('sa').value,$('sb').value),300)};
 
 /* ---------- Обучение распознаванию (CNN на сервере) ---------- */
 const TR={inited:false,timer:null,busy:false,snaps:{},sel:0,live:true,status:null,replay:null};
 function trPalette(i,n){return `hsl(${Math.round(360*i/Math.max(1,n))},70%,48%)`}
 function trInit(){
-  if(TR.inited)return;TR.inited=true;
+  if(TR.inited)return;TR.inited=true;trInit2();
   const fill=(id,vals,def)=>{$(id).innerHTML=vals.map(v=>`<option value="${v}"${String(v)===String(def)?' selected':''}>${v}</option>`).join('')};
-  fill('trEpochs',[10,20,30,40,60],30);fill('trLr',[0.0005,0.001,0.003,0.005,0.01],0.003);
+  fill('trEpochs',[10,20,30,40,60],30);fill('trLr',[0.0005,0.001,0.003,0.005,0.01,0.02,0.05],0.003);
   fill('trBatch',[16,32,64],32);fill('trSubj',[4,6,8,12],12);
   $('trAug').oninput=e=>{$('trAugV').textContent=parseFloat(e.target.value).toFixed(2).replace(/0$/,'')};
-  $('trStart').onclick=trStart;
+  $('trStart').onclick=trStart;$('trMod').addEventListener('change',trFillData);$('trData').addEventListener('change',()=>{trFillSubj();trHintUpdate()});trLoadDatasets();
   $('trStop').onclick=()=>fetch('/api/v1/training/stop',{method:'POST'});
   $('trSlider').oninput=e=>{trStopReplay();const n=parseInt(e.target.value);TR.live=TR.status&&n>=TR.status.snapshots-1&&TR.status.state==='training';TR.sel=n;trShowEpoch(n)};
   $('trPrev').onclick=()=>{trStopReplay();TR.live=false;TR.sel=Math.max(0,TR.sel-1);trShowEpoch(TR.sel)};
@@ -512,14 +792,128 @@ function trInit(){
     trShowEpoch(0);
   };
 }
+
+/* ---------- вкладка обучения: настройки, готовые эксперименты, выводы, журнал ---------- */
+const TR_PRESETS=[
+ {n:'Базовый запуск',cfg:{},d:'Настройки по умолчанию: loss быстро падает, сеть хорошо узнаёт новые снимки.'},
+ {n:'Без аугментации',cfg:{aug:0},d:'Сеть не видит искажённых копий: на обучающих снимках почти 100 %, а на новых заметно хуже (в наших запусках около 67 % против 92 %). Это переобучение: сеть запомнила образцы.'},
+ {n:'Слишком большой шаг',cfg:{lr:0.05},d:'Learning rate 0,05: веса «перепрыгивают» минимум, loss не падает и сеть не обучается (точность на уровне случайной, около 8 % для 12 пальцев).'},
+ {n:'Слишком малый шаг',cfg:{lr:0.0005},d:'Learning rate 0,0005: сеть учится, но медленно; за 20 эпох loss остаётся заметно выше, точность на новых снимках ниже.'},
+ {n:'Большая сеть',cfg:{arch:'large'},d:'Больше фильтров и параметров (около 80 тысяч вместо 37): дольше считается, но не всегда точнее.'},
+ {n:'SGD вместо Adam',cfg:{optimizer:'sgd',lr:0.005},d:'Простой градиентный спуск с моментом: ему нужен свой шаг (около 0,005), учится чуть иначе, чем Adam.'},
+ {n:'Проверка на лёгком снимке',cfg:{holdout:1},d:'Для проверки оставлен снимок 1 (самый лёгкий): точность выше, чем при проверке на сложном снимке 3. Оценка зависит от того, на чём проверяем.'}];
+const TR_HINTS={arch:{small:'Малая сеть: около 37 тысяч весов, быстрее всего.',medium:'Средняя сеть: около 55 тысяч весов.',large:'Большая сеть: около 80 тысяч весов, считается примерно в 1,5 раза дольше.'},
+ optimizer:{adam:'Adam подбирает шаг для каждого веса сам: обычно хорошо работает с learning rate 0,003.',sgd:'SGD с моментом: нужен learning rate около 0,005-0,01 (при 0,02 и больше часто расходится).'},
+ holdout:{1:'Снимок 1 самый лёгкий: проверка на нём даёт оптимистичную оценку.',2:'Снимок 2 средней сложности.',3:'Снимок 3 самый сложный (больше всего искажений): строгая проверка.'}};
+let TRD=null;
+async function trLoadDatasets(){try{TRD=await (await fetch('/api/v1/training/datasets')).json();trFillData()}catch(e){}}
+function trCurData(){const m=$('trMod').value;return ((TRD&&TRD.datasets[m])||[]).find(d=>d.id===$('trData').value)}
+function trFillSubj(){
+  // сколько объектов (пальцев, глаз, людей) можно взять из выбранного набора; по умолчанию 12 или максимум набора
+  const d=trCurData(),max=d?d.max_subjects:12,keep=parseInt($('trSubj').value)||12;
+  const vals=[...new Set([4,6,8,12,20,30,40].filter(v=>v<=max).concat([max]))].sort((a,b)=>a-b);
+  $('trSubj').innerHTML=vals.map(v=>`<option value="${v}">${v}${v===max?' (максимум набора)':''}</option>`).join('');
+  $('trSubj').value=String(vals.includes(keep)?keep:Math.min(12,max));
+  $('trHoldBox').querySelectorAll('option').forEach(o=>{
+    const real=d&&d.real&&$('trMod').value!=='face';
+    o.textContent=real?`снимок ${o.value}`:({'3':'3 (самый сложный)','2':'2','1':'1 (самый лёгкий)'}[o.value]);
+  });
+}
+function trFillData(){
+  if(!TRD)return;const m=$('trMod').value,keep=$('trData').value;
+  $('trData').innerHTML=(TRD.datasets[m]||[]).map(d=>`<option value="${esc(d.id)}">${esc(d.title)}${d.real?' - реальные данные':''}</option>`).join('');
+  const ids=(TRD.datasets[m]||[]).map(d=>d.id);
+  $('trData').value=ids.includes(keep)?keep:(TRD.default[m]||ids[0]||'');
+  trFillSubj();trHintUpdate();
+}
+function trSet(id,v){const el=$(id);if(id==='trSubj'&&![...el.options].some(o=>String(o.value)===String(v))&&parseInt(v)>0){const mx=trCurData();v=Math.min(parseInt(v),mx?mx.max_subjects:parseInt(v))}if([...el.options].some(o=>String(o.value)===String(v)))el.value=String(v)}
+function trHintUpdate(){
+  const face=$('trMod').value==='face',d=trCurData(),real=d&&d.real&&!face;$('trHoldBox').style.display=face?'none':'';
+  const hold=face?'Для лиц проверочным остаётся последнее фото каждого человека.':
+    (real?`Снимок ${$('trHold').value} каждого объекта сеть не видит при обучении, на нём она проверяется (у реальных наборов это просто номер по порядку, «лёгких» и «сложных» снимков нет).`:TR_HINTS.holdout[$('trHold').value]);
+  $('trHint').textContent=`${TR_HINTS.arch[$('trArch').value]} ${TR_HINTS.optimizer[$('trOpt').value]} ${hold} Сеть учится различать только выбранные объекты (${$('trSubj').value||12}), незнакомые она не узнает.`;
+}
+function trPreset(i){
+  const c=TR_PRESETS[i],d={modality:'fingerprint',epochs:20,lr:0.003,batch:32,n_subjects:12,aug:1,arch:'small',optimizer:'adam',holdout:3,...c.cfg};
+  trSet('trMod',d.modality);trFillData();trSet('trEpochs',d.epochs);trSet('trLr',d.lr);trSet('trBatch',d.batch);trSet('trSubj',d.n_subjects);
+  $('trAug').value=d.aug;$('trAugV').textContent=d.aug;trSet('trArch',d.arch);trSet('trOpt',d.optimizer);trSet('trHold',d.holdout);
+  trHintUpdate();$('trPresetDesc').textContent=c.n+': '+c.d;trStart();
+}
+function trInit2(){
+  $('trPresets').innerHTML=TR_PRESETS.map((c,i)=>`<button class="sec" data-i="${i}">${c.n}</button>`).join('');
+  $('trPresets').querySelectorAll('button').forEach(b=>b.onclick=()=>trPreset(+b.dataset.i));
+  ['trMod','trArch','trHold'].forEach(id=>$(id).addEventListener('change',trHintUpdate));
+  $('trOpt').addEventListener('change',()=>{trSet('trLr',$('trOpt').value==='sgd'?0.005:0.003);trHintUpdate()});
+  trHintUpdate();
+  $('trRunsCmp').onclick=trRunsCompare;$('trRunsCsv').onclick=trRunsCsv;
+  $('trRunsClear').onclick=async()=>{await fetch('/api/v1/training/runs',{method:'DELETE'});TR.runs=[];trRunsRender();$('trRunsCharts').style.display='none'};
+  trLoadRuns();
+}
+const TR_DATA={fingerprint:'отпечатки',face:'лица',iris:'радужка'};
+const TR_TAB={fingerprint:'Отпечатки пальцев',face:'Лицо',iris:'Радужка'};
+function trSummaryText(st){
+  const h=st.history,n=h.loss.length-1;if(n<1||!['finished','stopped'].includes(st.state))return null;
+  const L=h.loss.filter(v=>v!=null),tr=h.train_acc[n],te=h.test_acc[n],eer=h.eer[n],loss=L[L.length-1],pct=v=>Math.round(v*100)+' %',out=[];
+  if(tr<0.3)out.push(['bad',`Сеть не обучилась: точность на обучающих образцах ${pct(tr)} близка к случайной. Чаще всего это слишком большой шаг (learning rate): уменьшите его в 3-10 раз.`]);
+  else{
+    if(tr-te>0.2)out.push(['bad',`Переобучение: на обучающих образцах ${pct(tr)}, на новых ${pct(te)}. Сеть запомнила образцы. Включите аугментацию (искажения), уменьшите сеть или добавьте данных.`]);
+    else if(te>=0.9)out.push(['ok',`Сеть хорошо обобщает: на образцах, которых она не видела, ${pct(te)}.`]);
+    else out.push(['warn',`На образцах, которых сеть не видела, ${pct(te)} (на обучающих ${pct(tr)}).`]);
+    if(loss>0.3&&tr<0.97)out.push(['warn',`Loss ещё высокий (${loss.toFixed(2)}), точность на обучении ${pct(tr)}: сеть недообучена. Добавьте эпох или немного увеличьте шаг.`]);
+    if(L.slice(5).some((v,i)=>v>L[4+i]*1.5))out.push(['warn','Loss «скачет» вверх на поздних эпохах: шаг, скорее всего, великоват.']);
+    if(eer>0.1)out.push(['warn',`EER ${pct(eer)}: embedding «своих» и «чужих» перекрываются (смотрите гистограмму ниже). Сеть узнаёт, но порог провести трудно.`]);
+    else if(eer<=0.05)out.push(['ok',`EER ${pct(eer)}: «свои» и «чужие» хорошо разделяются, порог провести легко.`]);
+  }
+  const cfg=st.config||{};
+  out.push(['info',`Запуск: ${TR_DATA[cfg.modality]||''}, сеть ${cfg.arch||'small'}, ${cfg.optimizer||'adam'}, learning rate ${cfg.lr}, аугментация ${cfg.aug}, ${st.epoch} эпох.`]);
+  return out;
+}
+function trRenderSummary(st){
+  const t=trSummaryText(st);$('trSumCard').style.display=t?'':'none';if(!t)return;
+  const col={ok:'var(--ok)',bad:'var(--bad)',warn:'#b97700',info:'var(--mut)'};
+  $('trSummary').innerHTML=t.map(([k,x])=>`<div style="margin:4px 0;color:${col[k]}">${k==='ok'?'✓':k==='info'?'':'!'} ${x}</div>`).join('');
+  const m=(st.config||{}).modality||'fingerprint';
+  $('trUse').innerHTML=`<button id="trUseBtn">Открыть вкладку «${TR_TAB[m]}» с этим методом</button>`;
+  $('trUseBtn').onclick=()=>trUse(m);
+}
+function trUse(m){
+  setMod(m);
+  const key=m==='fingerprint'?'matcher':(m==='iris'?'encoder':'embedder'),el=$('p_'+key);
+  if(el){el.value='cnn';el.dispatchEvent(new Event('change'))}
+  toast('Выбран метод «Нейросеть, обученная вами». Нажмите «Сравнить A и B» или оцените метод в карточке сравнения.','info');
+}
+async function trLoadRuns(){try{TR.runs=await (await fetch('/api/v1/training/runs')).json()}catch(e){TR.runs=[]}trRunsRender()}
+function trRunLabel(r){const c=r.config;return `#${r.id} ${TR_DATA[c.modality]||''}${c.dataset&&c.dataset!=='synthetic'?' ('+c.dataset+')':''} ${c.arch||'small'}/${c.optimizer||'adam'} lr ${c.lr} аугм. ${c.aug}`}
+function trRunsRender(){
+  const rs=TR.runs||[];
+  $('trRunsTbl').innerHTML=rs.length?'<tr><th></th><th>№</th><th>Время (UTC)</th><th>Данные</th><th>Сеть</th><th>Оптимизатор</th><th>lr</th><th>Аугм.</th><th>Проверка</th><th>Эпох</th><th>Loss</th><th>Обучение</th><th>Новые снимки</th><th>EER</th><th>Секунд</th></tr>'+
+    rs.map(r=>{const c=r.config,m=r.summary,f=v=>v==null?'-':Math.round(v*100)+' %';
+      return `<tr><td><input type="checkbox" class="trSel" value="${r.id}"></td><td>${r.id}</td><td>${r.ts}</td><td>${TR_DATA[c.modality]||c.modality}${c.dataset&&c.dataset!=='synthetic'?'<br><span class="leg">'+esc(c.dataset)+'</span>':''}</td><td>${c.arch||'small'}</td><td>${c.optimizer||'adam'}</td><td>${c.lr}</td><td>${c.aug}</td><td>снимок ${c.holdout||3}</td><td>${m.epochs}${m.stopped?' (стоп)':''}</td><td>${m.loss==null?'-':m.loss.toFixed(3)}</td><td>${f(m.train_acc)}</td><td><b>${f(m.test_acc)}</b></td><td>${f(m.eer)}</td><td>${m.seconds}</td></tr>`}).join('')
+    :'<tr><td class="leg">Запусков пока нет. Нажмите «Начать обучение» или один из готовых экспериментов.</td></tr>';
+}
+function trRunsCompare(){
+  const ids=[...document.querySelectorAll('.trSel:checked')].map(x=>+x.value),rs=(TR.runs||[]).filter(r=>ids.includes(r.id));
+  if(rs.length<2){toast('Отметьте в журнале минимум два запуска.','info');return}
+  $('trRunsCharts').style.display='grid';
+  const tr=(k)=>rs.map(r=>({x:r.curves[k].map((_,i)=>i),y:r.curves[k],name:trRunLabel(r),mode:'lines'}));
+  const lay=(t)=>({margin:{t:10,r:10,b:60,l:44},xaxis:{title:'Эпоха'},yaxis:{title:t},legend:{orientation:'h',y:-0.35}});
+  Plotly.react('trCmpLoss',tr('loss'),lay('Loss'),{displayModeBar:false});
+  Plotly.react('trCmpAcc',tr('test_acc'),{...lay('Точность'),yaxis:{title:'Точность',range:[0,1.02]}},{displayModeBar:false});
+}
+function trRunsCsv(){
+  const rs=TR.runs||[];if(!rs.length){toast('Журнал пуст.','info');return}
+  const rows=[['id','time','data','arch','optimizer','lr','aug','batch','holdout','epochs','loss','train_acc','test_acc','eer','seconds','params']].concat(rs.map(r=>{const c=r.config,m=r.summary;
+    return [r.id,r.ts,c.modality,c.arch,c.optimizer,c.lr,c.aug,c.batch,c.holdout,m.epochs,m.loss,m.train_acc,m.test_acc,m.eer,m.seconds,m.params]}));
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['\ufeff'+rows.map(r=>r.join(';')).join('\n')],{type:'text/csv'}));a.download='training_runs.csv';a.click();
+}
 function trStopReplay(){if(TR.replay){clearInterval(TR.replay);TR.replay=null}$('trReplay').textContent='⟲ Показать обучение с начала'}
 function trLeave(){if(TR.timer){clearInterval(TR.timer);TR.timer=null}trStopReplay()}
 function trShow(){trInit();trPoll()}
 async function trStart(){
   const body={modality:$('trMod').value,epochs:parseInt($('trEpochs').value),lr:parseFloat($('trLr').value),batch:parseInt($('trBatch').value),
-    n_subjects:parseInt($('trSubj').value),aug:parseFloat($('trAug').value)};
+    n_subjects:parseInt($('trSubj').value),aug:parseFloat($('trAug').value),arch:$('trArch').value,optimizer:$('trOpt').value,holdout:parseInt($('trHold').value),dataset:$('trData').value||undefined};
   try{
-    TR.snaps={};TR.sel=0;TR.live=true;trStopReplay();
+    TR.snaps={};TR.sel=0;TR.live=true;TR.samples=null;trStopReplay();
     await api('/api/v1/training/start',body);
     await trPoll();
   }catch(err){$('trStatus').textContent='Ошибка: '+err.message}
@@ -531,15 +925,18 @@ async function trSnap(n){
 async function trPoll(){
   if(TR.busy)return;TR.busy=true;
   try{
-    const st=await (await fetch('/api/v1/training/status')).json();
+    const st=await (await fetch('/api/v1/training/status'+(TR.samples?'?light=1':''))).json();
+    if(st.samples&&st.samples.length){TR.samples=st.samples;TR.preview=st.preview}   // картинки образцов приходят один раз за запуск
+    else if(TR.samples){st.samples=TR.samples;st.preview=TR.preview}
     TR.status=st;
     const names={idle:'готов к запуску',preparing:'подготовка данных...',training:'идёт обучение',finished:'обучение завершено',stopped:'остановлено',error:'ошибка'};
     $('trStatus').innerHTML=`<b>${names[st.state]||st.state}</b>`+(st.total?` - эпоха ${st.epoch} из ${st.total}`:'')+(st.message?` <span style="color:var(--bad)">${st.message}</span>`:'');
     $('trSlider').max=Math.max(0,st.snapshots-1);
     if(st.snapshots>0&&TR.live)TR.sel=st.snapshots-1;
-    trCurves(st);
+    trCurves(st);trRenderSummary(st);
     if(st.snapshots>0)await trShowEpoch(TR.sel);
     const active=st.state==='training'||st.state==='preparing';
+    if(TR.wasActive&&!active)trLoadRuns();TR.wasActive=active;
     if(active&&!TR.timer)TR.timer=setInterval(trPoll,900);
     if(!active&&TR.timer){clearInterval(TR.timer);TR.timer=null}
   }catch(e){}
@@ -579,7 +976,8 @@ const TRN={key:'',nodes:{},edges:{},hd:{},out:[],emb:null};
 const TRX={inp:60,c1:215,c2:385,c3:555,emb:715,out:880},TRY=330;
 function trHeat(f,scale){const t=Math.max(0,Math.min(1,f/scale)),a=[150,160,185],b=[245,147,34];return `rgb(${a.map((v,i)=>Math.round(v+(b[i]-v)*t)).join(',')})`}
 function trNy(n,i){return TRY+(i-(n-1)/2)*Math.min(36,500/n)}
-function trBuildNet(names){
+const TR_FILT={small:[8,16,16],medium:[12,24,24],large:[16,32,32]};
+function trBuildNet(names,f){
   const root=$('trNet');root.innerHTML='';root.style.width='1020px';root.style.height='640px';
   const NS='http://www.w3.org/2000/svg',svg=document.createElementNS(NS,'svg');
   svg.setAttribute('width',1020);svg.setAttribute('height',640);svg.style.cssText='position:absolute;left:0;top:0';root.appendChild(svg);
@@ -587,26 +985,27 @@ function trBuildNet(names){
   const box=(x,y,w,h,cls)=>{const d=document.createElement('div');d.className='nnbox '+(cls||'');d.style.cssText=`left:${x-w/2}px;top:${y-h/2}px;width:${w}px;height:${h}px`;const cv=document.createElement('canvas');cv.width=8;cv.height=8;d.appendChild(cv);root.appendChild(d);return {el:d,cv}};
   const hd=(k,x,t)=>{const d=document.createElement('div');d.className='trhd';d.style.left=x+'px';d.innerHTML=t;root.appendChild(d);TRN.hd[k]=d};
   hd('inp',TRX.inp,'Вход<br><small>тестовый образец</small>');
-  hd('c1',TRX.c1,'Слой 1<br><small>8 фильтров</small>');hd('c2',TRX.c2,'Слой 2<br><small>16 фильтров</small>');hd('c3',TRX.c3,'Слой 3<br><small>16 фильтров</small>');
+  hd('c1',TRX.c1,`Слой 1<br><small>${f[0]} фильтров</small>`);hd('c2',TRX.c2,`Слой 2<br><small>${f[1]} фильтров</small>`);hd('c3',TRX.c3,`Слой 3<br><small>${f[2]} фильтров</small>`);
   hd('emb',TRX.emb,'Embedding<br><small>32 числа</small>');hd('out',TRX.out+20,'Ответ сети<br><small>вероятности</small>');
   // вход
   const inp=box(TRX.inp,TRY,64,64,'');inp.cv.remove();const im=document.createElement('img');im.style.cssText='width:100%;height:100%;display:block';inp.el.appendChild(im);TRN.nodes.inp={el:inp.el,img:im};
-  [['c1',8],['c2',16],['c3',16]].forEach(([k,n])=>{TRN.nodes[k]=[];for(let i=0;i<n;i++)TRN.nodes[k].push(box(TRX[k],trNy(n,i),k==='c1'?32:28,k==='c1'?32:28,''))});
+  [['c1',f[0]],['c2',f[1]],['c3',f[2]]].forEach(([k,n])=>{TRN.nodes[k]=[];const sz=Math.max(10,Math.min(k==='c1'?32:28,Math.floor(Math.min(36,500/n))-2));for(let i=0;i<n;i++)TRN.nodes[k].push(box(TRX[k],trNy(n,i),sz,sz,''))});
   TRN.emb=box(TRX.emb,TRY,72,40,'');
   names.forEach((nm,i)=>{const y=trNy(names.length,i),d=document.createElement('div');d.className='tro';d.style.cssText=`left:${TRX.out-2}px;top:${y-15}px`;
     d.innerHTML=`<div class="bar" style="width:0"></div><span>${esc(nm)}</span>`;root.appendChild(d);TRN.out.push(d)});
   const edge=(x1,y1,x2,y2)=>{const p=document.createElementNS(NS,'path'),mx=(x1+x2)/2;p.setAttribute('d',`M${x1},${y1} C${mx},${y1} ${mx},${y2} ${x2},${y2}`);p.setAttribute('fill','none');p.setAttribute('stroke-linecap','round');svg.appendChild(p);return p};
-  TRN.edges.conv1=[...Array(8)].map((_,j)=>edge(TRX.inp+32,TRY,TRX.c1-17,trNy(8,j)));
-  TRN.edges.conv2=[...Array(16)].map((_,j)=>[...Array(8)].map((_,i)=>edge(TRX.c1+17,trNy(8,i),TRX.c2-15,trNy(16,j))));
-  TRN.edges.conv3=[...Array(16)].map((_,j)=>[...Array(16)].map((_,i)=>edge(TRX.c2+15,trNy(16,i),TRX.c3-15,trNy(16,j))));
-  TRN.edges.emb=[...Array(16)].map((_,i)=>edge(TRX.c3+15,trNy(16,i),TRX.emb-37,TRY));
+  TRN.edges.conv1=[...Array(f[0])].map((_,j)=>edge(TRX.inp+32,TRY,TRX.c1-17,trNy(f[0],j)));
+  TRN.edges.conv2=[...Array(f[1])].map((_,j)=>[...Array(f[0])].map((_,i)=>edge(TRX.c1+17,trNy(f[0],i),TRX.c2-15,trNy(f[1],j))));
+  TRN.edges.conv3=[...Array(f[2])].map((_,j)=>[...Array(f[1])].map((_,i)=>edge(TRX.c2+15,trNy(f[1],i),TRX.c3-15,trNy(f[2],j))));
+  TRN.edges.emb=[...Array(f[2])].map((_,i)=>edge(TRX.c3+15,trNy(f[2],i),TRX.emb-37,TRY));
   TRN.edges.cls=names.map((_,k)=>edge(TRX.emb+37,TRY,TRX.out-4,trNy(names.length,k)));
-  TRN.key=names.join('|');
+  TRN.key=names.join('|')+'|'+f.join(',');
 }
 function trUpdateNet(sn,st){
   const names=st.names||[];
   if(!names.length)return;
-  if(TRN.key!==names.join('|')||!TRN.nodes.c1)trBuildNet(names);
+  const f=TR_FILT[(st.config||{}).arch||'small']||TR_FILT.small;
+  if(TRN.key!==names.join('|')+'|'+f.join(',')||!TRN.nodes.c1)trBuildNet(names,f);
   const L=sn.net.links,C=sn.net.link_change,NC=sn.net.node_change,H=0.45;
   const style=(p,v,mx,ch,k)=>{ // плотные межслойные связи рисуем тоньше и прозрачнее, чтобы схема читалась
     const dense=k==='conv2'||k==='conv3';
@@ -629,9 +1028,9 @@ function trUpdateNet(sn,st){
   TRN.out.forEach((d,k)=>{d.querySelector('.bar').style.width=(pr[k]*100).toFixed(0)+'%';d.querySelector('span').textContent=`${names[k]}  ${Math.round(pr[k]*100)}%`;
     d.classList.toggle('true',k===sn.preview.label);d.classList.toggle('pred',k===best)});
   const wc=sn.weight_change,pc=v=>Math.round(v*100)+'%';
-  TRN.hd.c1.innerHTML='Слой 1 · 8 фильтров<br><small>веса изменились на '+pc(wc.conv1)+'</small>';
-  TRN.hd.c2.innerHTML='Слой 2 · 16 фильтров<br><small>веса изменились на '+pc(wc.conv2)+'</small>';
-  TRN.hd.c3.innerHTML='Слой 3 · 16 фильтров<br><small>веса изменились на '+pc(wc.conv3)+'</small>';
+  TRN.hd.c1.innerHTML='Слой 1 · '+f[0]+' фильтров<br><small>веса изменились на '+pc(wc.conv1)+'</small>';
+  TRN.hd.c2.innerHTML='Слой 2 · '+f[1]+' фильтров<br><small>веса изменились на '+pc(wc.conv2)+'</small>';
+  TRN.hd.c3.innerHTML='Слой 3 · '+f[2]+' фильтров<br><small>веса изменились на '+pc(wc.conv3)+'</small>';
   TRN.hd.emb.innerHTML='Embedding · 32 числа<br><small>веса изменились на '+pc(wc.embedding)+'</small>';
   TRN.hd.out.innerHTML='Ответ сети<br><small>классификатор: '+pc(wc.classifier)+'</small>';
   const ok=best===sn.preview.label;
@@ -644,7 +1043,7 @@ async function trShowEpoch(n){
   $('trSlider').value=n;
   trUpdateNet(sn,st);
   const f=v=>v==null?'-':v;
-  $('trEpochInfo').textContent=`${n}: loss ${f(sn.loss)}, точность обучения ${Math.round(sn.train_acc*100)}%, на тесте ${Math.round(sn.test_acc*100)}%, EER ${sn.eer==null?'-':(sn.eer*100).toFixed(1)+'%'}`;
+  $('trEpochInfo').textContent=`${n}: loss ${f(sn.loss)}, точность обучения ${Math.round(sn.train_acc*100)}%, на тесте ${Math.round(sn.test_acc*100)}%, EER на проверочных ${sn.eer==null?'-':(sn.eer*100).toFixed(1)+'%'}`;
   if(st&&st.preview)$('trInput').src=st.preview;
   // фильтры
   const s0=await trSnap(0),fb=$('trFilters'),fd=$('trFiltD');fb.innerHTML='';fd.innerHTML='';
@@ -754,7 +1153,7 @@ async function cdRun(e){
     CD.last=res.feedback;$('cdScore').innerHTML='';$('cdTests').innerHTML='';
     $('cdFeedback').textContent=res.feedback;cdOut(res);
     cdSay('Запуск на примере',res.feedback,false);
-  }catch(err){alert(err.message)}
+  }catch(err){toast(err.message)}
   busy($('cdRun'),false);
 }
 async function cdSubmit(){
@@ -770,7 +1169,7 @@ async function cdSubmit(){
       `<tr><td>${esc(t.name)}</td><td>${t.kind==='basic'?'базовый':'граничный'}</td><td class="${t.ok?'cdok':'cdbad'}">${t.ok?'✓':'✗'}</td><td>${t.ok?'':esc(t.message)}</td></tr>`).join('')+'</table>':'';
     cdSay('Разбор проверки',res.feedback,false);
     await cdHistory();await cdLoadTasks();
-  }catch(err){alert(err.message)}
+  }catch(err){toast(err.message)}
   busy($('cdSubmit'),false);
 }
 async function cdHint(level){
@@ -778,12 +1177,61 @@ async function cdHint(level){
   try{
     const h=await api('/api/v1/code/hint',{task_id:CD.cur.id,level});
     cdSay(`Подсказка ${h.level}: ${h.title}`,h.text,!h.available);
-  }catch(err){alert(err.message)}
+  }catch(err){toast(err.message)}
 }
+
+/* ---------- Лицо: сравнение детекторов и признаков ---------- */
+const fmtN=(v,d=2)=>v==null?'-':Number(v).toFixed(d);
+const NOTE=t=>`<span class="leg">${esc(t)}</span>`;
+function cellFmt(k,x){
+  const v=x[k];
+  if(k==='n')return `<span style="display:inline-block;width:12px;height:12px;border-radius:3px;background:${x.color};margin-right:5px"></span>${x.n}`;
+  if(k==='found')return !x.available?NOTE(x.note):(x.found?'<b class="cdok">да</b>':'<b class="cdbad">нет</b>');
+  if(k==='similarity')return x.available?`<b>${fmtN(v)}</b>`:NOTE(x.note);
+  if(v==null)return '-';
+  if(Array.isArray(v))return v.join(', ');
+  if(typeof v==='number')return k==='time_ms'?fmtN(v,1):(Number.isInteger(v)?v:fmtN(v,3));
+  return esc(v);
+}
+const rowsTable=(cols,rows)=>'<table><tr>'+cols.map(c=>`<th>${esc(c[1])}</th>`).join('')+'</tr>'+rows.map(x=>'<tr>'+cols.map(c=>`<td>${cellFmt(c[0],x)}</td>`).join('')+'</tr>').join('')+'</table>';
+async function faceDetectors(btn){
+  busy(btn,true);
+  try{
+    const r=await api(API()+'/detectors',{sample_id:$('sa').value,params:params()});
+    const cols=r.columns||[['n','№'],['title','Детектор'],['found','Найдено'],['time_ms','Время, мс'],['box','Рамка (x, y, w, h)'],['confidence','Confidence'],['lm_source','Ключевые точки']];
+    $('detOut').innerHTML=`<img src="${r.overlay}" style="max-width:100%;max-height:420px;border:1px solid var(--line);border-radius:6px;margin:10px 0 6px">`+rowsTable(cols,r.rows);
+  }catch(e){toast(e.message)}
+  busy(btn,false);
+}
+async function faceEmbedders(btn){
+  busy(btn,true);
+  try{
+    const r=await api(API()+'/embedders',{sample_a:$('sa').value,sample_b:$('sb').value,params:params()});
+    $('embOut').innerHTML=`<div style="display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap;margin:10px 0 6px">
+      <div><div class="leg">${MODS[MOD].cmp.imgA} (${MODS[MOD].cmp.srcWord}: ${esc(r.detector)})</div><img src="${r.aligned_a}" style="${MODS[MOD].cmp.embW};max-width:100%;border:1px solid var(--line);border-radius:6px"></div>
+      <div><div class="leg">${MODS[MOD].cmp.imgB}</div><img src="${r.aligned_b}" style="${MODS[MOD].cmp.embW};max-width:100%;border:1px solid var(--line);border-radius:6px"></div></div>
+      `+rowsTable(r.columns||[['title','Признаки'],['dim','Размерность'],['similarity','Сходство A-B'],['time_ms','Время, мс'],['centered_txt','«Среднее лицо» галереи вычтено']],
+        r.rows.map(x=>({...x,centered_txt:x.available?(x.centered?'да':'нет'):'-'})));
+  }catch(e){toast(e.message)}
+  busy(btn,false);
+}
+async function faceEer(btn){
+  busy(btn,true);$('eerOut').innerHTML='<p class="leg">Считаем EER для каждого метода... (может занять до минуты)</p>';
+  try{
+    const r=await api(API()+'/embedders/eval',{params:params(),n_subjects:evalN()});
+    const ok=r.rows.filter(x=>x.available),bestRow=[...ok].sort((a,b)=>a.eer-b.eer||(b.margin||0)-(a.margin||0))[0];  // лучший: меньше EER, при равенстве больше запас
+    $('eerOut').innerHTML=`<p style="margin:10px 0 4px"><b>${MODS[MOD].cmp.eerTitle}</b> <span class="leg">(${MODS[MOD].cmp.srcWord}: ${esc(r.detector)})</span></p>
+      <table><tr><th>${MODS[MOD].cmp.eerHead}</th><th>EER, %</th><th>Порог при EER</th><th>Среднее сходство «своих»</th><th>«чужих»</th>${ok.some(x=>x.margin!=null)?'<th>Запас</th>':''}<th>Пар</th><th>Время, с</th></tr>`+
+      r.rows.map(x=>x.available?`<tr${x===bestRow?' style="background:#eefaf1"':''}><td>${esc(x.title)}${x===bestRow?' <b class="cdok">лучший</b>':''}</td><td><b>${fmtN(x.eer*100,1)}</b></td><td>${fmtN(x.eer_threshold)}</td><td>${fmtN(x.mean_genuine)}</td><td>${fmtN(x.mean_impostor)}</td>${x.margin!=null?`<td class="${x.margin>0?'cdok':'cdbad'}">${fmtN(x.margin,3)}</td>`:''}<td>${x.n_genuine} / ${x.n_impostor}</td><td>${fmtN(x.time_s,1)}</td></tr>`
+        :`<tr><td>${esc(x.title)}</td><td colspan="6">${NOTE(x.note)}</td></tr>`).join('')+'</table>';
+  }catch(e){$('eerOut').innerHTML='';toast(e.message)}
+  busy(btn,false);
+}
+$('bdet').onclick=e=>faceDetectors(e.currentTarget);$('bemb').onclick=e=>faceEmbedders(e.currentTarget);$('beer').onclick=e=>faceEer(e.currentTarget);
 
 let CURTAB='fingerprint';
 function setMod(name){
-  CURTAB=name;
+  CURTAB=name;try{localStorage.setItem('lab_tab',name)}catch(e){}
   document.querySelectorAll('.tab[data-mod]').forEach(t=>t.classList.toggle('on',t.dataset.mod===name));
   const SECTIONS={nn:'nnMain',train:'trMain',code:'cdMain'};
   $('bioMain').style.display=SECTIONS[name]?'none':'';
@@ -794,24 +1242,25 @@ function setMod(name){
     if(name==='nn')nnShow();else if(name==='train')trShow();else cdShow();
     return}
   nnPause();trLeave();
-  MOD=name;
-  document.querySelectorAll('[data-only]').forEach(e=>e.style.display=e.dataset.only===name?'':'none');
-  last=null;evalData=null;procData=null;curStep=0;
+  MOD=name;p3reset();
+  document.querySelectorAll('[data-only]').forEach(e=>e.style.display=e.dataset.only.split(' ').includes(name)?'':'none');
+  if(MODS[name].cmp){const c=MODS[name].cmp;$('cmpTitle').textContent=c.title;$('bdet').textContent=c.b1;$('bemb').textContent=c.b2;$('beer').textContent=c.b3;$('cmpMethodsLeg').textContent=c.leg}
+  last=null;evalData=null;procData=null;curStep=0;FLOW.proc=FLOW.cmp=FLOW.eval=false;flowRender();
   $('steps').innerHTML='';$('stepImg').removeAttribute('src');$('stepTitle').textContent='';
   $('stepDesc').textContent='Нажмите «Показать этапы для A».';$('minTable').innerHTML='';$('procName').textContent='';
   $('cmpRes').innerHTML='<span class="desc">Нажмите «Сравнить A и B».</span>';$('cmpImg').style.display='none';
-  $('evalNow').textContent='';$('evalInfo').textContent='';
+  $('evalNow').textContent='';$('evalInfo').textContent='';['detOut','embOut','eerOut'].forEach(id=>{$(id).innerHTML=''});
   try{Plotly.purge('chart')}catch(e){}
   $('th').value=MODS[name].defThr;$('thv').textContent=MODS[name].defThr.toFixed(2);
   $('dataNote').textContent=MODS[name].note;$('cmpLeg').textContent=MODS[name].legend;
-  buildParams();loadSamples();loadInfo();loadLog();
+  READY.info=READY.samples=null;buildParams();loadInfo().then(()=>loadSamples());loadLog();
 }
 document.querySelectorAll('.tab[data-mod]').forEach(t=>t.onclick=()=>{if(t.dataset.mod!==CURTAB)setMod(t.dataset.mod)});
 
 function renderStep(){
   if(!procData)return;
   const s=procData.steps[curStep];
-  $('stepImg').src=s.image;$('stepTitle').textContent=s.title;$('stepDesc').textContent=s.description;
+  $('stepImg').src=s.image;$('stepTitle').textContent=s.title;$('stepDesc').textContent=s.description||s.desc||'';
   [...document.querySelectorAll('.step[data-i]')].forEach((e,i)=>e.classList.toggle('on',i===curStep));
 }
 $('bproc').onclick=async e=>{
@@ -828,7 +1277,7 @@ $('bproc').onclick=async e=>{
      <div style="max-height:160px;overflow:auto"><table><tr><th>#</th><th>X</th><th>Y</th><th>Угол</th><th>Тип</th><th>Качество</th></tr>`+
      procData.minutiae.map((m,i)=>`<tr><td>${i+1}</td><td>${m.x}</td><td>${m.y}</td><td>${m.theta_deg}°</td><td>${m.type==='ending'?'● ending':'▲ bifurcation'}</td><td>${m.quality}</td></tr>`).join('')+'</table></div>';
     $('minTable').innerHTML=h;
-  }catch(err){alert(err.message)}
+  }catch(err){toast(err.message)}
   busy(e.target,false);
 };
 
@@ -847,7 +1296,7 @@ $('bcmp').onclick=async e=>{
     last=await api(API()+'/compare',{sample_a:$('sa').value,sample_b:$('sb').value,params:params(),threshold:parseFloat($('th').value)});
     $('cmpImg').src=last.overlay;$('cmpImg').style.display='block';
     showDecision();loadLog();drawEval();
-  }catch(err){alert(err.message)}
+  }catch(err){toast(err.message)}
   busy(e.target,false);
 };
 $('th').oninput=e=>{$('thv').textContent=(+e.target.value).toFixed(2);showDecision();drawEval()};
@@ -863,15 +1312,29 @@ function drawEval(){
     {x:d.thresholds,y:d.frr.map(v=>v*100),name:'FRR, %',line:{color:'#2f5bea'}}],
    {margin:{t:10,r:10,b:40,l:45},xaxis:{title:'Threshold'},yaxis:{title:'Ошибки, %'},legend:{orientation:'h'},
     shapes:[{type:'line',x0:t,x1:t,y0:0,y1:100,line:{color:'#888',dash:'dot'}}]},{displayModeBar:false});
-  $('evalNow').innerHTML=`При threshold ${t.toFixed(2)}: <b>FAR ${(far*100).toFixed(1)}%</b>, <b>FRR ${(frr*100).toFixed(1)}%</b>, Accuracy ${(acc*100).toFixed(1)}%. EER ≈ ${(d.eer*100).toFixed(1)}% при threshold ${d.eer_threshold}.`;
+  $('evalNow').innerHTML=`При threshold ${t.toFixed(2)}: <b>FAR ${(far*100).toFixed(1)}%</b>, <b>FRR ${(frr*100).toFixed(1)}%</b>, Accuracy ${(acc*100).toFixed(1)}%. EER ≈ ${(d.eer*100).toFixed(1)}% при threshold ${d.eer_threshold}.`+
+    (d.source_title?`<br>Данные: ${d.real?'<span class="realtag">реальные данные</span> ':''}${esc(d.source_title)}.`+(d.real?' Это не синтетика: метрики хуже, чем на синтетике, и это ожидаемо.':''):'');
 }
 $('beval').onclick=async e=>{
   busy(e.target,true);$('evalInfo').textContent='Считаем... (первый запуск может занять до ~10 с)';
   try{
-    evalData=await api(API()+'/evaluate',{params:params(),n_subjects:8});
+    evalData=await api(API()+'/evaluate',{params:params(),n_subjects:evalN()});
     $('evalInfo').textContent=`Пар: ${evalData.n_genuine} своих и ${evalData.n_impostor} чужих`+(evalData.skipped_images?`; фото без найденного лица: ${evalData.skipped_images}`:'');
     drawEval();
-  }catch(err){alert(err.message);$('evalInfo').textContent=''}
+  }catch(err){toast(err.message);$('evalInfo').textContent=''}
+  busy(e.target,false);
+};
+
+$('bstress').onclick=async e=>{
+  busy(e.target,true);$('stressInfo').textContent='Считаем... (до ~20 с)';
+  try{
+    const r=await api(API()+'/stress',{params:params(),n_subjects:12});
+    $('stressInfo').textContent=`Людей: ${r.n_people}, метод: ${r.matcher}, порог ${r.threshold}`;
+    const lv={Easy:'лёгкий',Medium:'средний',Hard:'сильный'},bar=v=>v==null?'-':`<div class="bar"><i style="width:${Math.round(Math.max(0,Math.min(1,v))*100)}%"></i></div> ${v.toFixed(2)}`;
+    $('stressOut').innerHTML='<table><tr><th>Уровень</th>'+Object.values(r.kinds).map(k=>`<th>${esc(k)}</th>`).join('')+'<th>Среднее</th><th>Узнано при пороге</th></tr>'+
+      r.rows.map(x=>`<tr><td>${lv[x.level]||x.level}</td>`+Object.keys(r.kinds).map(k=>`<td>${bar(x.by_kind[k])}</td>`).join('')+`<td><b>${x.mean==null?'-':x.mean.toFixed(2)}</b></td><td>${x.match_rate==null?'-':Math.round(x.match_rate*100)+' %'}</td></tr>`).join('')+'</table>'+
+      `<p class="leg">Чужие (оригинал против чужих отпечатков): среднее ${r.impostor_mean}, максимум ${r.impostor_max}. Чем ближе «свои» к этим числам, тем труднее узнать палец.</p><p class="leg">${esc(r.note)}</p>`;
+  }catch(err){toast(err.message);$('stressInfo').textContent=''}
   busy(e.target,false);
 };
 
@@ -899,21 +1362,21 @@ async function upload(file,target){
   if(!file)return;
   const fd=new FormData();fd.append('file',file);
   const r=await fetch(API()+'/upload',{method:'POST',body:fd});
-  if(!r.ok){alert(await r.text());return}
+  if(!r.ok){toast(await r.text());return}
   const {sample_id}=await r.json();
   const a=$('sa').value,b=$('sb').value;
   await loadSamples(target==='A'?sample_id:a,target==='B'?sample_id:b);
 }
 $('fileA').onchange=e=>upload(e.target.files[0],'A');
 $('fileB').onchange=e=>upload(e.target.files[0],'B');
-$('reset').onclick=()=>buildParams();
+$('reset').onclick=()=>{try{const o=JSON.parse(localStorage.getItem('lab_params')||'{}');delete o[MOD];localStorage.setItem('lab_params',JSON.stringify(o))}catch(e){}buildParams();$('th').value=MODS[MOD].defThr;$('thv').textContent=MODS[MOD].defThr.toFixed(2);updateThumbs()};
 
 /* ---------- 3D ---------- */
 const V3={inited:false,data:null,mesh:null,markers:null,theta:0.6,phi:1.0,radius:150,drag:null,H:null,M:null};
 function b64u8(b){const bin=atob(b),a=new Uint8Array(bin.length);for(let i=0;i<bin.length;i++)a[i]=bin.charCodeAt(i);return a}
 function v3init(){
   if(V3.inited)return;
-  if(typeof THREE==='undefined'){alert('Three.js не загрузился (нужен интернет).');return false}
+  if(typeof THREE==='undefined'){toast('Three.js не загрузился. Нужен интернет или выполните python -m scripts.download_assets.');return false}
   const box=$('view3d');
   V3.renderer=new THREE.WebGLRenderer({antialias:true,alpha:true});
   V3.renderer.setPixelRatio(Math.min(devicePixelRatio,2));
@@ -995,7 +1458,7 @@ $('b3d').onclick=async e=>{
     V3.data=await api(API()+'/relief',{sample_id:$('sa').value,params:params()});
     $('v3ph').style.display='none';$('v3name').textContent='- '+V3.data.sample_id;
     v3build();
-  }catch(err){alert(err.message)}
+  }catch(err){toast(err.message)}
   busy(e.target,false);
 };
 $('v3tex').onchange=v3texture;
@@ -1007,10 +1470,10 @@ $('b3reset').onclick=()=>{V3.theta=0.6;V3.phi=1.0;V3.radius=150};
 
 
 /* ---------- 3D-конвейер ---------- */
-const P3={inited:false,meshes:[],labels:[],steps:[],active:-1,theta:0.5,phi:1.1,radius:170,drag:null,timer:null,group:null,arrows:null,H:40};
+const P3={inited:false,meshes:[],labels:[],steps:[],active:-1,theta:0.5,phi:1.1,baseR:170,zoom:1,pan:0,size:1,orbit:false,goal:null,t:0,span:400,drag:null,timer:null,group:null,arrows:null,H:40};
 function p3init(){
   if(P3.inited)return true;
-  if(typeof THREE==='undefined'){alert('Three.js не загрузился (нужен интернет).');return false}
+  if(typeof THREE==='undefined'){toast('Three.js не загрузился. Нужен интернет или выполните python -m scripts.download_assets.');return false}
   const box=$('viewP3');
   P3.renderer=new THREE.WebGLRenderer({antialias:true,alpha:true});
   P3.renderer.setPixelRatio(Math.min(devicePixelRatio,2));
@@ -1019,20 +1482,27 @@ function p3init(){
   P3.camera=new THREE.PerspectiveCamera(45,1,1,3000);
   P3.target=new THREE.Vector3();P3.tgt=new THREE.Vector3();
   const el=P3.renderer.domElement;
-  el.addEventListener('pointerdown',e=>{P3.drag={x:e.clientX,y:e.clientY};el.setPointerCapture(e.pointerId);box.style.cursor='grabbing'});
+  el.addEventListener('pointerdown',e=>{P3.goal=null;P3.drag={x:e.clientX,y:e.clientY};el.setPointerCapture(e.pointerId);box.style.cursor='grabbing'});
   el.addEventListener('pointermove',e=>{if(!P3.drag)return;
-    P3.theta-=(e.clientX-P3.drag.x)*0.008;P3.phi=Math.min(1.55,Math.max(0.15,P3.phi-(e.clientY-P3.drag.y)*0.008));
+    P3.theta-=(e.clientX-P3.drag.x)*0.008;P3.phi=Math.min(2.97,Math.max(0.17,P3.phi-(e.clientY-P3.drag.y)*0.008));
     P3.drag={x:e.clientX,y:e.clientY}});
   el.addEventListener('pointerup',()=>{P3.drag=null;box.style.cursor='grab'});
-  el.addEventListener('wheel',e=>{e.preventDefault();P3.radius=Math.min(900,Math.max(50,P3.radius*(1+e.deltaY*0.001)))},{passive:false});
+  el.addEventListener('wheel',e=>{e.preventDefault();P3.zoom=Math.min(6,Math.max(0.3,P3.zoom*(1-e.deltaY*0.001)))},{passive:false});
   new ResizeObserver(()=>{const w=box.clientWidth,h=box.clientHeight;P3.renderer.setSize(w,h,false);P3.camera.aspect=w/h;P3.camera.updateProjectionMatrix()}).observe(box);
   P3.inited=true;
   (function loop(){
     requestAnimationFrame(loop);
+    const now=performance.now(),dt=Math.min(0.1,(now-(P3.t||now))/1000);P3.t=now;
+    if(P3.orbit&&!P3.drag)P3.theta+=(parseFloat($('p3sp').value)||30)*Math.PI/180*dt; // облёт на 360°
+    if(P3.goal!==null&&!P3.drag){ // плавный поворот к выбранному этапу по кратчайшей дуге
+      let d=(P3.goal-P3.theta)%(2*Math.PI);if(d>Math.PI)d-=2*Math.PI;if(d<-Math.PI)d+=2*Math.PI;
+      P3.theta+=d*0.08;if(Math.abs(d)<0.003){P3.theta=P3.goal;P3.goal=null}
+    }
     P3.target.lerp(P3.tgt,0.08);
-    const r=P3.radius,c=P3.camera,t=P3.target;
+    const r=P3.baseR/P3.zoom,c=P3.camera,t=P3.target;
     c.position.set(t.x+r*Math.sin(P3.phi)*Math.sin(P3.theta),t.y+r*Math.cos(P3.phi),t.z+r*Math.sin(P3.phi)*Math.cos(P3.theta));
     c.lookAt(t);P3.renderer.render(P3.scene,c);
+    p3sync();
   })();
   return true;
 }
@@ -1041,10 +1511,10 @@ function p3label(text){
   const cv=document.createElement('canvas');cv.width=512;cv.height=96;
   const g=cv.getContext('2d');if(!g)return null;
   g.fillStyle='rgba(20,33,61,0.88)';g.fillRect(0,0,512,96);
-  g.fillStyle='#fff';g.font='bold 34px system-ui,Segoe UI,sans-serif';g.textBaseline='middle';
-  g.fillText(text.length>30?text.slice(0,29)+'…':text,16,48);
+  g.fillStyle='#fff';g.font='bold 40px system-ui,Segoe UI,sans-serif';g.textBaseline='middle';
+  g.fillText(text.split(' (')[0],16,48,480); // maxWidth сжимает длинный текст по ширине подписи
   const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:new THREE.CanvasTexture(cv),transparent:true,depthTest:false}));
-  sp.scale.set(36,6.75,1);return sp;
+  sp.scale.set(46,8.6,1);return sp;
 }
 async function p3build(steps){
   P3.steps=steps;
@@ -1088,7 +1558,22 @@ function p3layout(fit){
       p3arrow(new THREE.Vector3(a.position.x+a.userData.w/2+1,0,0),new THREE.Vector3(b.position.x-b.userData.w/2-1,0,0));
     }
     P3.span=total;
-    if(fit){P3.radius=Math.max(110,total*0.85);P3.phi=1.25;P3.theta=0.35}
+    if(fit){P3.baseR=Math.max(100,total*0.7);P3.zoom=1;P3.pan=0;P3.phi=1.25;P3.theta=0.35}
+  }else if(mode==='ring'){
+    // этапы по кругу лицом наружу: при повороте камеры вокруг сцены всегда видны читаемые карточки
+    const gap=14*k,total=ms.reduce((a,m)=>a+m.userData.w,0)+gap*n,R=Math.max(40,total/(2*Math.PI));
+    let acc=0;
+    ms.forEach((m,i)=>{
+      const al=(acc+m.userData.w/2)/R;acc+=m.userData.w+gap;
+      m.userData.alpha=al;m.rotation.set(0,al,0);m.position.set(R*Math.sin(al),0,R*Math.cos(al));
+      if(P3.labels[i])P3.labels[i].position.set((R+2)*Math.sin(al),-H/2-6,(R+2)*Math.cos(al));
+    });
+    for(let i=0;i<n-1;i++){
+      const a=ms[i],b=ms[i+1],ta=new THREE.Vector3(Math.cos(a.userData.alpha),0,-Math.sin(a.userData.alpha)),tb=new THREE.Vector3(Math.cos(b.userData.alpha),0,-Math.sin(b.userData.alpha));
+      p3arrow(a.position.clone().addScaledVector(ta,a.userData.w/2+1),b.position.clone().addScaledVector(tb,-(b.userData.w/2+1)));
+    }
+    P3.span=2*R;
+    if(fit){P3.baseR=Math.max(110,R*2.3);P3.zoom=1;P3.pan=0;P3.phi=1.35;P3.theta=0}
   }else{
     const gap=24*k;
     ms.forEach((m,i)=>{
@@ -1097,13 +1582,15 @@ function p3layout(fit){
     });
     for(let i=0;i<n-1;i++)p3arrow(new THREE.Vector3(0,ms[i].position.y+1,0),new THREE.Vector3(0,ms[i+1].position.y-1,0));
     P3.span=gap*(n-1)+P3.H;
-    if(fit){P3.radius=Math.max(120,P3.span*1.1+60);P3.phi=1.35;P3.theta=0.6}
+    if(fit){P3.baseR=Math.max(120,P3.span*1.1+60);P3.zoom=1;P3.pan=0;P3.phi=1.35;P3.theta=0.6}
   }
   p3focus();
 }
 function p3focus(){
   const i=P3.active;
   if(i<0||!P3.meshes[i])P3.tgt.set(0,0,0);else P3.tgt.copy(P3.meshes[i].position);
+  const o=P3.pan*(P3.span||0)/2; // ползунок «сдвиг вдоль ленты»: лента идёт по X, стопка по Y
+  if($('p3layout').value==='row')P3.tgt.x+=o;else P3.tgt.y+=o;
 }
 function p3setActive(i){
   const n=P3.meshes.length;
@@ -1112,15 +1599,35 @@ function p3setActive(i){
     const on=P3.active<0||j===P3.active;
     m.material.color.setScalar(on?1:0.3);m.material.opacity=on?1:0.6;
     m.userData.edges.material.color.set(j===P3.active?0xffd24a:0x2f5bea);
-    m.scale.setScalar(j===P3.active?1.12:1);
+    m.scale.setScalar((j===P3.active?1.12:1)*P3.size);
   });
   p3focus();
+  if($('p3layout').value==='ring'&&P3.active>=0&&P3.meshes[P3.active])P3.goal=P3.meshes[P3.active].userData.alpha;
   const st=P3.steps[P3.active];
   $('p3sv').textContent=st?`${P3.active+1} из ${n}`:'все';
   $('p3slider').value=Math.max(0,P3.active);
   $('p3desc').innerHTML=st?`<b>${st.title}</b><br>${st.description}`:'Показаны все этапы. Нажмите «Воспроизвести» или двигайте ползунок «Этап».';
 }
+function p3sync(){ // значения ползунков следуют за мышью, колесом и облётом
+  const set=(id,vid,v,txt)=>{const el=$(id);if(document.activeElement!==el&&Math.abs(parseFloat(el.value)-v)>0.01)el.value=v;$(vid).textContent=txt};
+  const az=Math.round(((P3.theta*180/Math.PI)%360+360)%360),tilt=Math.round(P3.phi*180/Math.PI);
+  set('p3az','p3azv',az,az+'°');set('p3tilt','p3tiltv',tilt,tilt+'°');
+  set('p3zoom','p3zoomv',Math.round(P3.zoom*100)/100,P3.zoom.toFixed(2)+'×');
+  set('p3pan','p3panv',Math.round(P3.pan*100),Math.round(P3.pan*100)+'%');
+  set('p3size','p3sizev',P3.size,P3.size.toFixed(2)+'×');
+  $('p3spv').textContent=$('p3sp').value+'°/с';
+}
+function p3viewReset(){
+  P3.size=1;P3.orbit=false;$('p3orbit').textContent='⟳ Облёт 360°';
+  if(P3.meshes.length){p3layout(true);p3setActive(P3.active)}else{P3.theta=0.5;P3.phi=1.1;P3.zoom=1;P3.pan=0}
+}
 function p3stop(){if(P3.timer){clearInterval(P3.timer);P3.timer=null}$('p3play').textContent='▶ Воспроизвести'}
+function p3reset(){ // при смене биометрии старая сцена не должна оставаться на экране
+  p3stop();P3.orbit=false;if($('p3orbit'))$('p3orbit').textContent='⟳ Облёт 360°';
+  if(P3.group&&P3.scene)P3.scene.remove(P3.group);
+  P3.group=null;P3.meshes=[];P3.labels=[];P3.arrows=null;P3.steps=[];P3.active=-1;
+  $('p3ph').style.display='';$('p3name').textContent='';$('p3desc').innerHTML='';$('p3sv').textContent='все';$('p3slider').max=0;
+}
 function p3toggle(){
   if(!P3.meshes.length)return;
   if(P3.timer){p3stop();return}
@@ -1138,7 +1645,7 @@ $('bp3').onclick=async e=>{
     if(!p3init()){busy(e.target,false);return}
     p3stop();$('p3ph').style.display='none';$('p3name').textContent='- '+d.sample_id;
     await p3build(d.steps);
-  }catch(err){alert(err.message)}
+  }catch(err){toast(err.message)}
   busy(e.target,false);
 };
 $('p3prev').onclick=()=>{p3stop();p3setActive(P3.active<0?0:P3.active-1)};
@@ -1147,6 +1654,13 @@ $('p3all').onclick=()=>{p3stop();p3setActive(-1)};
 $('p3play').onclick=p3toggle;
 $('p3slider').oninput=e=>{p3stop();p3setActive(parseInt(e.target.value))};
 $('p3layout').onchange=()=>p3layout(true);
+$('p3az').oninput=e=>{P3.goal=null;P3.theta=parseFloat(e.target.value)*Math.PI/180};
+$('p3tilt').oninput=e=>{P3.phi=parseFloat(e.target.value)*Math.PI/180};
+$('p3zoom').oninput=e=>{P3.zoom=parseFloat(e.target.value)};
+$('p3pan').oninput=e=>{P3.pan=parseFloat(e.target.value)/100;p3focus()};
+$('p3size').oninput=e=>{P3.size=parseFloat(e.target.value);if(P3.meshes.length)p3setActive(P3.active)};
+$('p3orbit').onclick=()=>{P3.goal=null;P3.orbit=!P3.orbit;$('p3orbit').textContent=P3.orbit?'⏹ Остановить облёт':'⟳ Облёт 360°'};
+$('p3view').onclick=p3viewReset;
 $('p3gap').oninput=e=>{$('p3gv').textContent=parseFloat(e.target.value).toFixed(1);p3layout(false)};
 
 /* NN-ENGINE-START */
@@ -1442,7 +1956,236 @@ function nnInit(){
 }
 function nnShow(){nnInit();nnUpdate(true)}
 
-setMod('fingerprint');
+let _tab0='fingerprint';try{_tab0=localStorage.getItem('lab_tab')||'fingerprint'}catch(e){}
+setMod(MODS[_tab0]||['code','train','nn'].includes(_tab0)?_tab0:'fingerprint');
+</script>
+<script>
+/* ---------- Помощник лаборатории: команды голосом или текстом управляют интерфейсом ----------
+   Фразу разбирает сервер (/api/v1/assistant/parse, правила), здесь выполняются действия: открыть вкладку, выбрать набор и метод,
+   нажать кнопки, провести экскурсию «от изображения до решения». Распознавание речи и озвучка - браузер (лучше всего Chrome или Edge). */
+const AS={busy:false,abort:false,fab:null,panel:null};
+const asSleep=ms=>new Promise(r=>setTimeout(r,ms));
+async function asUntil(cond,ms=10000){const t0=Date.now();while(Date.now()-t0<ms){if(cond())return true;await asSleep(100)}return false}
+const AS_BIO=['fingerprint','face','iris'];
+const TTS={on:true,rate:1.05,voice:'',voices:[],server:[]};  // server: голоса Piper на сервере (если установлены)
+try{Object.assign(TTS,JSON.parse(localStorage.getItem('lab_tts')||'{}'))}catch(e){}
+function ttsSave(){try{localStorage.setItem('lab_tts',JSON.stringify({on:TTS.on,rate:TTS.rate,voice:TTS.voice}))}catch(e){}}
+function ttsRank(v){const n=v.name.toLowerCase();return(/natural|neural/.test(n)?100:0)+(/google/.test(n)?60:0)+(/online/.test(n)?40:0)+(/svetlana|dariya|irina|dmitry|pavel/.test(n)?20:0)+(v.localService?0:10)}
+function ttsPick(){
+  const vs=TTS.voices;if(!vs.length)return null;
+  return vs.find(v=>v.name===TTS.voice)||[...vs].sort((a,b)=>ttsRank(b)-ttsRank(a))[0];
+}
+function ttsVoices(){
+  if('speechSynthesis' in window)TTS.voices=speechSynthesis.getVoices().filter(v=>/^ru/i.test(v.lang));
+  const sel=$('as-voice');if(!sel)return;
+  const best=ttsPick(),auto=TTS.server.length?'голос лаборатории: '+TTS.server[0].title:(best?'лучший: '+best.name:'нет русских голосов');
+  sel.innerHTML='<option value="">Автоматически ('+esc(auto)+')</option>'+
+    TTS.server.map(v=>`<option value="srv:${esc(v.id)}">Голос лаборатории: ${esc(v.title)}</option>`).join('')+
+    TTS.voices.map(v=>`<option value="${esc(v.name)}">Браузер: ${esc(v.name)}${v.localService?'':' (онлайн)'}</option>`).join('');
+  const ok=TTS.voice&&([...sel.options].some(o=>o.value===TTS.voice));
+  sel.value=ok?TTS.voice:'';
+}
+async function ttsLoadServer(){
+  TTS.info=null;
+  try{const r=await fetch('/api/v1/assistant/voices');if(r.ok){TTS.info=await r.json();TTS.server=TTS.info.voices||[]}else TTS.server=[]}catch(e){TTS.server=[]}
+  ttsVoices();
+  const h=$('as-voicehint');
+  if(h)h.textContent=TTS.server.length?'':(TTS.info&&!TTS.info.engine?'Голос лаборатории не установлен: в Python, которым запущен сервер ('+TTS.info.python+'), нет пакета piper-tts. Выполните: "'+TTS.info.python+'" -m pip install -r requirements-tts.txt и перезапустите сервер.':(TTS.info&&!TTS.info.files?'Файлы голосов не скачаны: python -m scripts.download_tts':''));
+}
+function ttsTarget(){  // что озвучивает: серверный голос (если есть) или голос браузера
+  const v=TTS.voice;
+  if(v.startsWith('srv:')&&TTS.server.some(s=>'srv:'+s.id===v))return{srv:v.slice(4)};
+  if(!v&&TTS.server.length)return{srv:TTS.server[0].id};
+  return{};
+}
+async function saySrv(parts,voice){
+  const get=t=>fetch('/api/v1/assistant/tts',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({text:t,voice})}).then(r=>{if(!r.ok)throw new Error('tts');return r.blob()});
+  let nxt=get(parts[0]);nxt.catch(()=>{});
+  for(let i=0;i<parts.length;i++){
+    if(AS.abort)return;
+    const blob=await nxt;
+    if(i+1<parts.length){nxt=get(parts[i+1]);nxt.catch(()=>{})}  // следующая фраза синтезируется, пока звучит текущая
+    await new Promise(res=>{
+      const a=new Audio(URL.createObjectURL(blob));AS.audio=a;a.playbackRate=TTS.rate;
+      a.onended=a.onerror=()=>{URL.revokeObjectURL(a.src);res()};a.play().catch(()=>res());
+    });
+  }
+}
+async function say(text){
+  if(!TTS.on||!text)return;
+  const tg=ttsTarget();
+  if(tg.srv){
+    const parts=(String(text).match(/[^.!?;:]+[.!?;:]?/g)||[String(text)]).map(x=>x.trim()).filter(Boolean).flatMap(x=>x.match(/.{1,500}/g));
+    try{await saySrv(parts,tg.srv);return}catch(e){TTS.server=[];ttsVoices()}  // сервер не ответил: дальше голос браузера
+  }
+  return sayBrowser(text);
+}
+function sayBrowser(text){
+  return new Promise(res=>{
+    if(!TTS.on||!('speechSynthesis' in window)||!text)return res();
+    speechSynthesis.cancel();
+    const parts=String(text).match(/[^.!?;:]+[.!?;:]?/g)||[String(text)];  // по предложениям: длинный текст целиком Chrome обрывает
+    let i=0,done=false;const fin=()=>{if(!done){done=true;res()}};
+    const next=()=>{
+      if(AS.abort||i>=parts.length)return fin();
+      const t=parts[i++].trim();if(!t)return next();
+      const u=new SpeechSynthesisUtterance(t);u.lang='ru-RU';u.rate=TTS.rate;const v=ttsPick();if(v)u.voice=v;
+      u.onend=next;u.onerror=next;speechSynthesis.speak(u);
+    };
+    next();setTimeout(fin,Math.max(5000,String(text).length*140));
+  });
+}
+function asLog(cls,t){const d=document.createElement('div');d.className='line '+cls;d.textContent=t;const l=$('as-log');l.prepend(d)}
+function asChips(list){$('as-chips').innerHTML=list.map(t=>`<span>${esc(t)}</span>`).join('');$('as-chips').querySelectorAll('span').forEach(el=>el.onclick=()=>asRun(el.textContent))}
+function asScroll(id){const el=$(id);if(el)el.scrollIntoView({behavior:'smooth',block:'center'})}
+async function asClick(id,scrollId){
+  const b=$(id);if(!b)throw new Error('Эта кнопка недоступна на текущей вкладке.');
+  if(scrollId)asScroll(scrollId);
+  b.click();await asSleep(250);await asUntil(()=>!b.disabled,120000);
+}
+function asDecision(){
+  if(!last)return 'Результата сравнения пока нет.';
+  const thr=parseFloat($('th').value),s=last.similarity;
+  return `Сходство ${s.toFixed(2).replace('.',',')}, порог ${thr.toFixed(2).replace('.',',')}. Решение: ${s>=thr?'совпадение, MATCH':'не совпадает, NO MATCH'}. `+
+    (s>=thr?'Сходство не ниже порога, поэтому система принимает образец.':'Сходство ниже порога, поэтому система отклоняет образец.');
+}
+async function asTour(){
+  asLog('','🧭 Экскурсия: от изображения до решения');
+  await say('Покажу по шагам, как изображение превращается в решение.');
+  await asClick('bproc','steps');
+  const steps=(procData&&procData.steps)||[];
+  for(let i=0;i<steps.length&&!AS.abort;i++){
+    curStep=i;renderStep();asScroll('stepImg');
+    const st=steps[i],d=st.description||st.desc||'';
+    asLog('',st.title);
+    await say(st.title.replace(/^(\d+)\.\s*/,'Этап $1: ')+'. '+d);
+    if(!TTS.on)await asSleep(2800);
+  }
+  if(AS.abort)return;
+  if(procData&&procData.n_minutiae!==undefined)await say(`Итого на образце найдено минуций: ${procData.n_minutiae}.`);
+  await say('Теперь сравним образец A с образцом B и примем решение по порогу.');
+  if(AS.abort)return;
+  await asClick('bcmp','cmpRes');
+  const t=asDecision();asLog('','🤖 '+t);await say(t);
+  await say('Чтобы увидеть то же самое в 3D, скажите: покажи 3D-конвейер.');
+}
+async function asDo(a){
+  switch(a.do){
+    case 'page':location.href=a.url;await asSleep(3000);return;
+    case 'open':{
+      const t=document.querySelector(`.tab[data-mod="${a.mod}"]`);if(!t)throw new Error('Вкладка не найдена.');
+      if(CURTAB!==a.mod)t.click();
+      await asUntil(()=>CURTAB===a.mod);
+      if(AS_BIO.includes(a.mod))await asUntil(()=>READY.info===CURTAB&&READY.samples===CURTAB,15000);else await asSleep(500);
+      return}
+    case 'source':{
+      const sel=$('srcSel'),want=String(a.value).toLowerCase();
+      const o=[...sel.options].find(x=>x.value.toLowerCase()===want)||[...sel.options].find(x=>x.value.toLowerCase().startsWith(want));
+      if(!o){const m=`Набор «${a.value}» на этой вкладке недоступен. Подготовьте его (README, раздел «Реальные открытые наборы данных») и перезапустите сервер.`;asLog('','⚠️ '+m);await say('Этот набор недоступен.');return}
+      if(sel.value!==o.value){sel.value=o.value;sel.dispatchEvent(new Event('change'));await asSleep(300);await asUntil(()=>READY.samples===CURTAB,15000)}
+      return}
+    case 'method':{
+      const key={fingerprint:'matcher',iris:'encoder',face:'embedder'}[CURTAB],el=key&&$('p_'+key);
+      const o=el&&[...el.options].find(x=>x.value===a.value);
+      if(!o){asLog('','⚠️ Такого метода нет на этой вкладке.');return}
+      el.value=o.value;el.dispatchEvent(new Event('change'));await asSleep(300);return}
+    case 'threshold':$('th').value=a.value;$('th').dispatchEvent(new Event('input'));return;
+    case 'tour':return asTour();
+    case 'stages':await asClick('bproc','steps');await say(`Показаны этапы обработки образца A. Переключайте их по кнопкам над картинкой.`);return;
+    case 'compare':{await asClick('bcmp','cmpRes');const t=asDecision();asLog('','🤖 '+t);await say(t);return}
+    case 'methods':await asClick('bemb','embOut');await say('Готово: таблица сравнения методов на выбранной паре. Сравнивайте не само сходство, а решение и время: шкалы у методов разные.');return;
+    case 'detectors':await asClick('bdet','detOut');await say('Готово: способы получения признаков на одном образце.');return;
+    case 'methods_eer':await asClick('beer','eerOut');await say('Готово: таблица методов по EER. Чем ниже EER, тем лучше метод различает своих и чужих.');return;
+    case 'evaluate':{
+      await asClick('beval','chart');
+      if(evalData){const t=`EER ${(evalData.eer*100).toFixed(1).replace('.',',')} процента при пороге ${evalData.eer_threshold}.`+(evalData.real?' Это реальные данные, поэтому ошибки выше, чем на синтетике.':' Данные синтетические: на них метод почти не ошибается.');asLog('','🤖 '+t);await say(t)}
+      return}
+    case 'relief3d':await asClick('b3d','view3d');await say('3D-рельеф построен: высота показывает выраженность гребней. Вращайте мышью.');return;
+    case 'pipeline3d':{
+      await asClick('bp3','viewP3');
+      await say('3D-конвейер построен: каждый слой это результат одного этапа алгоритма. Запускаю воспроизведение.');
+      if(!P3.timer)p3toggle();return}
+    case 'orbit':{await asUntil(()=>P3.meshes&&P3.meshes.length>0,30000);if(!P3.orbit)$('p3orbit').click();return}
+    case 'stress':{
+      if(!$('srcSel')||$('srcSel').value!=='socofing'){await asDo({do:'source',value:'socofing'})}
+      if($('stressCard').style.display==='none'){asLog('','⚠️ Стресс-тест доступен только для SOCOFing: подготовьте набор (README).');return}
+      await asClick('bstress','stressOut');await say('Стресс-тест готов: таблица показывает, как падает сходство с ростом искажений.');return}
+    case 'train_mod':{$('trMod').value=a.mod;$('trMod').dispatchEvent(new Event('change'));await asSleep(300);return}
+    case 'train_data':{
+      await asUntil(()=>$('trData').options.length>0,8000);
+      const want=String(a.value).toLowerCase(),o=[...$('trData').options].find(x=>x.value.toLowerCase().startsWith(want));
+      if(!o){asLog('','⚠️ Для обучения этот набор недоступен.');await say('Для обучения этот набор недоступен.');return}
+      $('trData').value=o.value;$('trData').dispatchEvent(new Event('change'));await asSleep(300);return}
+    case 'train_start':
+      if(!confirm('Начать обучение с текущими настройками? Сеть, сохранённая раньше для этой биометрии, будет заменена.')){asLog('','Обучение не запущено.');return}
+      $('trStart').click();await say('Обучение запущено. Следите за кривыми loss и точности.');return;
+    case 'train_stop':$('trStop').click();await say('Останавливаю обучение.');return;
+    case 'explain':{
+      if(!last){const t='Сначала выполните сравнение, тогда я смогу объяснить результат.';asLog('','🤖 '+t);await say(t);return}
+      const ctx=Object.assign({},last.context||{},{similarity:last.similarity,threshold:parseFloat($('th').value),n_a:last.n_a,n_b:last.n_b,matched:last.matched});
+      const r=await api('/api/v1/tutor/ask',{mode:'diagnose',question:'',context:ctx});
+      asLog('','🤖 '+r.answer);await say(r.answer);return}
+    case 'help':return;
+  }
+}
+async function asRun(text){
+  text=String(text||'').trim();if(!text)return;
+  if(AS.busy){asLog('','Подождите: предыдущая команда ещё выполняется. Кнопка «Стоп» её остановит.');return}
+  $('as-panel').classList.add('open');asLog('you','🗣 '+text);
+  let r;
+  try{r=await api('/api/v1/assistant/parse',{text,context:{mod:CURTAB}})}catch(e){asLog('','⚠️ '+e.message);return}
+  asLog('','🤖 '+r.reply);
+  if(!r.understood){asChips(r.examples||[]);await say('Команда не распознана. Попробуйте одну из подсказок.');return}
+  asChips([]);AS.busy=true;AS.abort=false;$('as-stop').style.display='';
+  try{
+    const quick=r.actions.length&&r.actions.every(a=>['open','source','method','threshold','page','train_mod','train_data'].includes(a.do));
+    if(r.actions.some(a=>a.do==='help')){await say(r.reply)}
+    else if(!quick||r.actions.length>1)await say(r.reply);
+    if(AS_BIO.includes(CURTAB))await asUntil(()=>READY.info===CURTAB&&READY.samples===CURTAB,8000);  // страница ещё грузит списки
+    for(const a of r.actions){if(AS.abort)break;await asDo(a)}
+  }catch(e){asLog('','⚠️ '+e.message);toast(e.message)}
+  finally{AS.busy=false;$('as-stop').style.display='none'}
+}
+function asListen(){
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  if(!SR){asLog('','Распознавание речи этим браузером не поддерживается. Откройте Chrome или введите команду текстом.');return}
+  speechSynthesis&&speechSynthesis.cancel();
+  const sr=new SR();sr.lang='ru-RU';sr.interimResults=false;sr.maxAlternatives=1;
+  $('as-panel').classList.add('open');AS.fab.classList.add('live');asLog('','🎤 Слушаю...');
+  sr.onresult=e=>asRun(e.results[0][0].transcript);
+  sr.onerror=e=>asLog('','⚠️ Микрофон: '+({'not-allowed':'нет разрешения на микрофон','no-speech':'речь не услышана','audio-capture':'микрофон не найден'}[e.error]||e.error));
+  sr.onend=()=>AS.fab.classList.remove('live');
+  try{sr.start()}catch(e){AS.fab.classList.remove('live')}
+}
+(function asInit(){
+  const fab=document.createElement('button');fab.id='as-fab';fab.title='Помощник лаборатории: команды голосом или текстом';fab.textContent='🎤';
+  const panel=document.createElement('div');panel.id='as-panel';
+  panel.innerHTML=`<div class="row"><b>Помощник лаборатории</b><button class="sec" id="as-x" style="margin-left:auto" title="Свернуть">×</button></div>
+    <div class="leg" style="margin:4px 0 8px">Команда голосом или текстом, например: «покажи, как изображение превращается в решение». Скажите «что ты умеешь», чтобы услышать весь список.</div>
+    <div class="row"><input type="text" id="as-txt" placeholder="Напишите команду"><button id="as-send" title="Выполнить">▶</button><button id="as-mic" title="Сказать команду (Chrome)">🎤</button></div>
+    <div id="as-chips"></div>
+    <div class="row"><button class="sec" id="as-stop" style="display:none">■ Стоп</button><a href="/labplus/voice" style="font-size:12px;margin-left:auto">LAB+: голос, ROC, стандарты</a></div>
+    <div id="as-log" style="margin-top:6px"></div>
+    <details><summary>Озвучка</summary>
+      <label><input type="checkbox" id="as-on"> Озвучивать ответы</label>
+      <label>Голос</label><select id="as-voice"></select><div class="leg" id="as-voicehint" style="color:#b45309"></div>
+      <label>Скорость: <b id="as-ratev"></b></label><input type="range" id="as-rate" min="0.8" max="1.4" step="0.05">
+      <button class="sec" id="as-demo" style="margin-top:6px">▶ Проверить голос</button>
+      <div class="leg">«Голос лаборатории» озвучивает сервер (Piper): он одинаков у всех пользователей и работает без интернета. Если он не установлен, используются голоса браузера: самые естественные в Chrome («Google русский») и Edge («Microsoft … Online (Natural)»).</div></details>`;
+  document.body.append(fab,panel);AS.fab=fab;AS.panel=panel;
+  fab.onclick=()=>panel.classList.toggle('open');$('as-x').onclick=()=>panel.classList.remove('open');
+  $('as-send').onclick=()=>{const t=$('as-txt').value;$('as-txt').value='';asRun(t)};
+  $('as-txt').onkeydown=e=>{if(e.key==='Enter')$('as-send').click()};
+  $('as-mic').onclick=asListen;
+  $('as-stop').onclick=()=>{AS.abort=true;try{speechSynthesis.cancel()}catch(e){}try{AS.audio&&AS.audio.pause()}catch(e){}asLog('','Остановлено.')};
+  $('as-on').checked=TTS.on;$('as-on').onchange=e=>{TTS.on=e.target.checked;ttsSave();if(!TTS.on)try{speechSynthesis.cancel()}catch(x){}};
+  $('as-rate').value=TTS.rate;$('as-ratev').textContent=TTS.rate;$('as-rate').oninput=e=>{TTS.rate=parseFloat(e.target.value);$('as-ratev').textContent=TTS.rate;ttsSave()};
+  $('as-voice').onchange=e=>{TTS.voice=e.target.value;ttsSave()};
+  $('as-demo').onclick=()=>say('Здравствуйте! Я помощник виртуальной лаборатории. Скажите, что показать.');
+  if('speechSynthesis' in window){ttsVoices();speechSynthesis.onvoiceschanged=ttsVoices}
+  ttsLoadServer();
+  asChips(['Покажи, как изображение превращается в решение','Открой радужку, набор CASIA, покажи этапы','Оцени качество на FVC2004','Покажи 3D-конвейер','Сравни методы']);
+})();
 </script>
 </body>
 </html>

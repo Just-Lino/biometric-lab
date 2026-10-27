@@ -26,6 +26,11 @@ CREATE TABLE IF NOT EXISTS events (
     ts TEXT DEFAULT CURRENT_TIMESTAMP,
     type TEXT, payload TEXT
 );
+CREATE TABLE IF NOT EXISTS training_runs (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    ts TEXT DEFAULT CURRENT_TIMESTAMP,
+    modality TEXT, config TEXT, summary TEXT, curves TEXT
+);
 """
 
 

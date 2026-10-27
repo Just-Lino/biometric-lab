@@ -62,3 +62,88 @@ def test_evaluate_needs_two_people(mod):
 def test_unknown_sample(mod):
     with pytest.raises(KeyError):
         mod.process("nobody__x", {})
+
+
+# ---------- несколько детекторов и признаков ----------
+from app.modules.face import models as _models  # noqa: E402
+from app.modules.face.embed import CLASSICAL, EMBEDDERS, embed  # noqa: E402
+
+_DIMS = {"lbp": 640, "hog": 1764, "gabor": 576, "dct": 63, "pixels": 576}
+_need_arcface = pytest.mark.skipif(_models.model_path("arcface") is None, reason="модель ArcFace не скачана")
+_need_ssd = pytest.mark.skipif(_models.model_path("ssd_model") is None or _models.model_path("ssd_proto") is None,
+                               reason="модель SSD не скачана")
+
+
+def test_classical_embedders_shape_and_determinism():
+    aligned = cv2.resize(cv2.cvtColor(skd.astronaut(), cv2.COLOR_RGB2BGR)[40:200, 120:300], (112, 112))
+    for name, dim in _DIMS.items():
+        a, b = embed(aligned, name), embed(aligned, name)
+        assert a.shape == (dim,) and np.isfinite(a).all() and np.array_equal(a, b)
+        assert abs(float(a @ a / (np.linalg.norm(a) ** 2)) - 1) < 1e-6
+
+
+def test_compare_detectors_rows(mod):
+    r = mod.compare_detectors("astro__a", {})
+    names = [x["name"] for x in r["rows"]]
+    assert names == ["haar", "haar_alt2", "haar_alt", "haar_profile", "ssd", "ultraface", "yunet"]
+    found = {x["name"]: x.get("found") for x in r["rows"]}
+    assert found["haar"] and found["haar_alt2"] and found["haar_alt"]  # фронтальные каскады находят лицо
+    assert r["overlay"].startswith("data:image/png")
+    assert all("time_ms" in x for x in r["rows"] if x["available"])
+
+
+def test_compare_embedders_rows(mod):
+    r = mod.compare_embedders("astro__a", "astro__b", {})
+    assert [x["name"] for x in r["rows"]] == list(EMBEDDERS)
+    for x in r["rows"]:
+        if x["available"]:
+            assert x["similarity"] > 0.8 and x["dim"] > 0  # одно и то же лицо с другой яркостью
+        else:
+            assert x["note"]
+
+
+def test_evaluate_embedders_needs_gallery(mod):
+    with pytest.raises(ValueError, match="минимум 2 человека"):
+        mod.evaluate_embedders({}, 5)
+
+
+def test_unknown_detector_and_missing_model_message(mod, monkeypatch):
+    monkeypatch.setattr("app.modules.face.detect.detector_available", lambda n: False if n in ("ssd", "yunet") else True)
+    with pytest.raises(ValueError, match="не найдена"):
+        mod.process("astro__a", {"detector": "ssd"})
+
+
+@_need_ssd
+def test_ssd_detector_and_pipeline(mod):
+    r = mod.process("astro__a", {"detector": "ssd"})
+    assert r["found"] and any(f[1].startswith("SSD") for f in r["facts"])
+
+
+@_need_arcface
+def test_arcface_same_face_high(mod):
+    r = mod.compare("astro__a", "astro__b", {"embedder": "arcface"})
+    assert r["similarity"] > 0.9
+
+
+_need_ultraface = pytest.mark.skipif(_models.model_path("ultraface") is None, reason="модель UltraFace не скачана")
+
+
+@_need_ultraface
+def test_ultraface_detector(mod):
+    r = mod.process("astro__a", {"detector": "ultraface"})
+    assert r["found"] and any(f[1].startswith("UltraFace") for f in r["facts"])
+
+
+def test_eigenfaces_basis_and_small_gallery(mod):
+    from app.modules.face.embed import eigen_basis, eigen_embedding
+    base = cv2.resize(cv2.cvtColor(skd.astronaut(), cv2.COLOR_RGB2BGR)[40:200, 120:300], (112, 112))
+    faces = [cv2.convertScaleAbs(base, alpha=0.7 + 0.1 * k, beta=5 * k) for k in range(8)]
+    faces = [np.roll(f, k, axis=1) for k, f in enumerate(faces)]
+    mean, comps = eigen_basis(faces)
+    assert comps.shape == (7, 1024) and mean.shape == (1024,)
+    e = eigen_embedding(faces[0], (mean, comps))
+    assert e.shape == (7,) and np.isfinite(e).all()
+    with pytest.raises(ValueError, match="минимум из 6"):
+        eigen_basis(faces[:3])
+    rows = {x["name"]: x for x in mod.compare_embedders("astro__a", "astro__b", {})["rows"]}
+    assert not rows["eigenfaces"]["available"] and "6 фото" in rows["eigenfaces"]["note"]  # в тестовой галерее всего 2 фото

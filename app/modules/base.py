@@ -13,7 +13,8 @@ class BiometricModule(ABC):
     default_threshold: float = 0.5
 
     @abstractmethod
-    def list_samples(self) -> list[dict[str, Any]]: ...
+    def list_samples(self, source: str | None = None, q: str = "", limit: int = 0) -> list[dict[str, Any]]:
+        """Образцы выбранного набора данных (source) плюс загрузки текущего посетителя; q - поиск по подписи, limit - не больше N образцов (0 - все)."""
 
     @abstractmethod
     def get_sample_preview(self, sample_id: str, params: dict) -> bytes: ...
@@ -37,5 +38,18 @@ class BiometricModule(ABC):
         raise NotImplementedError
 
     def info(self) -> dict[str, Any]:
-        """Служебная информация для интерфейса (доступные модели, размер галереи и т.п.)."""
+        """Служебная информация для интерфейса (доступные модели, наборы данных sources, размер галереи и т.п.)."""
         return {}
+
+    def stress(self, params: dict, n_subjects: int = 12) -> dict[str, Any]:
+        """Стресс-тест устойчивости к искажениям (только там, где есть набор с искажёнными копиями)."""
+        raise NotImplementedError
+
+    def compare_detectors(self, sample_id: str, params: dict) -> dict[str, Any]:
+        raise NotImplementedError
+
+    def compare_embedders(self, sample_a: str, sample_b: str, params: dict) -> dict[str, Any]:
+        raise NotImplementedError
+
+    def evaluate_embedders(self, params: dict, n_subjects: int = 8) -> dict[str, Any]:
+        raise NotImplementedError

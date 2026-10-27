@@ -19,6 +19,12 @@ def count(task_id: str) -> int:
         return c.execute("SELECT COUNT(*) FROM attempts WHERE task_id=?", (task_id,)).fetchone()[0]
 
 
+def count_valid(task_id: str) -> int:
+    """Попытки, в которых код дошёл до тестов (не заблокирован песочницей и без синтаксической ошибки): по ним открывается полное решение."""
+    with connect() as c:
+        return c.execute("SELECT COUNT(*) FROM attempts WHERE task_id=? AND total_basic>0", (task_id,)).fetchone()[0]
+
+
 def history(task_id: str, limit: int = 20) -> list[dict]:
     with connect() as c:
         rows = c.execute("SELECT id, ts, score, max_score, passed_basic, total_basic, passed_edge, total_edge, run_ok, answer_ok "

@@ -1,15 +1,22 @@
 """Фоновое обучение CNN с записью «снимка» состояния на каждой эпохе:
 метрики, фильтры, карты признаков, проекция embeddings, распределения «свои/чужие», предсказания на тесте."""
 import base64
+import os
 import threading
-from dataclasses import dataclass
+import time
+from concurrent.futures import ThreadPoolExecutor
+from dataclasses import dataclass, replace
 
 import cv2
 import numpy as np
 
 from app.core.imaging import to_data_url
 from app.training.cnn import CNN
+from app.services import training_runs
+from app.training import registry
 from app.training.datasets import TrainData, augment, load_dataset, prep
+
+FILTERS = {"small": (8, 16, 16), "medium": (12, 24, 24), "large": (16, 32, 32)}  # число фильтров в трёх свёрточных слоях
 
 
 @dataclass
@@ -21,6 +28,10 @@ class TrainConfig:
     aug: float = 1.0
     copies: int = 8
     n_subjects: int = 12
+    arch: str = "small"  # small | medium | large
+    optimizer: str = "adam"  # adam | sgd
+    holdout: int = 3  # снимок, оставленный для проверки (отпечатки и радужка)
+    dataset: str = ""  # набор данных (пусто - набор по умолчанию для этой биометрии, см. datasets.default_dataset)
 
 
 def _eer(gen: np.ndarray, imp: np.ndarray) -> float:
@@ -90,11 +101,12 @@ class Trainer:
         if self.thread:
             self.thread.join(timeout)
 
-    def status(self) -> dict:
+    def status(self, light: bool = False) -> dict:
+        """light=True: без картинок образцов (они не меняются в течение запуска, а весят почти весь ответ)."""
         with self.lock:
             return {"state": self.state, "message": self.message, "epoch": self.epoch, "total": self.total,
                     "config": self.config, "history": self.history, "names": self.names,
-                    "samples": self.samples, "preview": self.preview, "snapshots": len(self.snapshots)}
+                    "samples": [] if light else self.samples, "preview": None if light else self.preview, "snapshots": len(self.snapshots)}
 
     def snapshot(self, n: int) -> dict | None:
         with self.lock:
@@ -103,11 +115,12 @@ class Trainer:
     # ---------- обучение ----------
     def _run(self, cfg: TrainConfig) -> None:
         try:
-            data = load_dataset(cfg.modality, cfg.n_subjects)
+            t_start = time.time()
+            data = load_dataset(cfg.modality, cfg.n_subjects, cfg.holdout, cfg.dataset or None)
             S, ncls = data.size, len(data.names)
             Xtr = np.stack([prep(i, S) for i in data.train])[:, None]
             Xte = np.stack([prep(i, S) for i in data.test])[:, None]
-            net = CNN(S, ncls, 32, seed=1)
+            net = CNN(S, ncls, 32, filters=FILTERS[cfg.arch], seed=1, optimizer=cfg.optimizer)
             self._w0 = [layer.W.copy() for layer in net.layers]  # начальные веса: сравниваем с ними
             rng = np.random.RandomState(0)
             vrng = np.random.RandomState(123)
@@ -123,14 +136,20 @@ class Trainer:
                 self.preview = self.samples[0]["img"] if self.samples else None
                 self.state = "training"
             self._snap(0, net, data, Xtr, Xte, Xviz, yviz, split, clean, loss=float("nan"))
+            pool = ThreadPoolExecutor(max_workers=min(4, os.cpu_count() or 1))  # cv2 и numpy отпускают GIL: аугментация идёт параллельно
+            # аугментация идёт на 2×S пикселей, а не на полном разрешении (потом всё равно сжимается до S): примерно в 3 раза дешевле;
+            # уровень шума пересчитывается, чтобы после сжатия он остался прежним
+            small = [cv2.resize(im, (2 * S, 2 * S), interpolation=cv2.INTER_AREA) if im.shape[0] > 2 * S else im for im in data.train]
+            ratio = small[0].shape[0] / data.train[0].shape[0]
+            adata = replace(data, noise=(data.noise[0] * ratio, data.noise[1] * ratio))
+            imgs = [im for im in small for _ in range(cfg.copies)]
+            y = np.repeat(data.ytrain, cfg.copies)
             for ep in range(1, cfg.epochs + 1):
                 if self.stop_flag:
                     break
-                X, y = [], []
-                for im, lab in zip(data.train, data.ytrain):
-                    for _ in range(cfg.copies):
-                        X.append(prep(augment(im, rng, cfg.aug, data), S)); y.append(lab)
-                X = np.stack(X)[:, None].astype(np.float32); y = np.array(y)
+                seeds = rng.randint(0, 2 ** 31 - 1, len(imgs))  # у каждого образца свой генератор: результат не зависит от числа потоков
+                X = np.stack(list(pool.map(lambda a: prep(augment(a[0], np.random.RandomState(a[1]), cfg.aug, adata), S), zip(imgs, seeds))))
+                X = X[:, None].astype(np.float32)
                 idx = rng.permutation(len(X)); losses = []
                 for b in range(0, len(X), cfg.batch):
                     if self.stop_flag:
@@ -139,19 +158,52 @@ class Trainer:
                     losses.append(net.step(X[j], y[j], cfg.lr)[0])
                 loss = float(np.mean(losses)) if losses else float("nan")
                 self._snap(ep, net, data, Xtr, Xte, Xviz, yviz, split, clean, loss)
+            pool.shutdown(wait=False)
+            self._finish(cfg, net, data, Xtr, Xte, time.time() - t_start)
             with self.lock:
                 self.state = "stopped" if self.stop_flag else "finished"
         except Exception as e:  # ошибки данных и т.п. показываем в интерфейсе
             with self.lock:
                 self.state, self.message = "error", str(e)
 
+    def _finish(self, cfg: TrainConfig, net, data: TrainData, Xtr, Xte, seconds: float) -> None:
+        """Сохраняет обученную сеть как метод распознавания и записывает запуск в журнал."""
+        if self.epoch < 1:
+            return
+        h = self.history
+        # порог и EER по образцам, которых сеть не видела: проверочные против обучающих (свои - одна метка, чужие - разные)
+        et, etr = net.embed(Xte), net.embed(Xtr)
+        n = lambda a: a / (np.linalg.norm(a, axis=1, keepdims=True) + 1e-9)
+        sim = n(et) @ n(etr).T
+        same = data.ytest[:, None] == data.ytrain[None, :]
+        gen, imp = sim[same], sim[~same]
+        th = np.round(np.arange(0, 1.0001, 0.01), 2)
+        far = np.array([(imp >= t).mean() for t in th]); frr = np.array([(gen < t).mean() for t in th])
+        k = int(np.argmin(np.abs(far - frr)))
+        thr, eer_u = float(th[k]), float((far[k] + frr[k]) / 2)
+        try:  # сохранение сети и журнал вторичны: сбой записи не должен превращать удачное обучение в ошибку
+            registry.store(registry.TrainedModel(
+                modality=cfg.modality, filters=FILTERS[cfg.arch], size=data.size, names=data.names, holdout=data.holdout, threshold=thr,
+                eer=round(eer_u, 4), test_acc=float(h["test_acc"][-1]), epochs=self.epoch, config=cfg.__dict__.copy(),
+                trained_at=registry.now(), dataset=data.dataset, weights=net.state()))
+        except OSError as e:
+            self.message = f"Сеть обучена, но не сохранена на диск: {e}"
+        summary = {"epochs": self.epoch, "seconds": round(seconds, 1), "loss": h["loss"][-1], "train_acc": h["train_acc"][-1],
+                   "test_acc": h["test_acc"][-1], "eer": h["eer"][-1], "eer_unseen": round(eer_u, 4), "params": net.n_params(),
+                   "stopped": bool(self.stop_flag)}
+        try:
+            training_runs.save(cfg.modality, cfg.__dict__.copy(), summary,
+                               {"loss": h["loss"], "train_acc": h["train_acc"], "test_acc": h["test_acc"], "eer": h["eer"]})
+        except Exception as e:  # например, база недоступна
+            self.message = f"Сеть обучена, но запуск не записан в журнал: {e}"
+
     def _snap(self, ep, net, data: TrainData, Xtr, Xte, Xviz, yviz, split, clean, loss):
         ytr, yte = data.ytrain, data.ytest
-        ptr = net.forward(Xtr)[0].argmax(1); tr_acc = float((ptr == ytr).mean())
-        lg = net.forward(Xte)[0]
+        lg_all, emb = net.predict(Xviz)  # один проход по всем образцам: Xviz = обучающие + проверочные + искажённые копии
+        tr_acc = float((lg_all[:len(Xtr)].argmax(1) == ytr).mean())
+        lg = lg_all[len(Xtr):len(Xtr) + len(Xte)]
         z = lg - lg.max(1, keepdims=True); pr = np.exp(z); pr /= pr.sum(1, keepdims=True)
         te_pred = pr.argmax(1); te_acc = float((te_pred == yte).mean())
-        emb = net.embed(Xviz)
         # проекция embeddings на 2 главные компоненты (знак фиксируем, чтобы картинка не «переворачивалась»)
         c = emb - emb.mean(0)
         _, _, Vt = np.linalg.svd(c, full_matrices=False)
@@ -171,7 +223,11 @@ class Trainer:
         gen, imp = s[same], s[~same]
         bins = np.linspace(0, 1, 21)
         hg, _ = np.histogram(np.clip(gen, 0, 1), bins); hi, _ = np.histogram(np.clip(imp, 0, 1), bins)
-        eer = _eer(gen, imp)
+        # EER в заголовке эпохи - по проверочным снимкам против обучающих (сеть их не видела), а не по всем вместе
+        nrm = lambda a: a / (np.linalg.norm(a, axis=1, keepdims=True) + 1e-9)
+        su = nrm(emb[len(Xtr):len(Xtr) + len(Xte)]) @ nrm(emb[:len(Xtr)]).T
+        same_u = yte[:, None] == ytr[None, :]
+        eer = _eer(su[same_u], su[~same_u])
         lg1, e1 = net.forward(Xte[:1], keep=True)
         z1 = lg1[0] - lg1[0].max(); p1 = np.exp(z1); p1 /= p1.sum()
         maps = {k: _b64_channels(v[0]) for k, v in net.maps.items()}

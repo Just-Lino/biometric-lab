@@ -1,0 +1,119 @@
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LAB+ · Голос</title><link rel="stylesheet" href="/labplus/static/labplus.css"></head><body>
+<script src="/labplus/static/labplus.js" data-assistant></script>
+<div class="wrap">
+<h1>Голосовая биометрия</h1>
+<p class="sub">Регистрация голоса → проверка «свой/чужой» → голосовые команды лаборатории. Хранится только числовой шаблон, записи не сохраняются.</p>
+
+<div class="card"><h2>1. Голосовой шаблон</h2>
+ <div class="grid g2"><div>
+  <label>Имя профиля (лучше псевдоним, не ФИО)</label><input type="text" id="name" maxlength="32" placeholder="например, student-1">
+  <label>Существующие профили</label><select id="profiles"></select>
+  <div class="row" style="margin-top:8px"><button id="useProfile">Использовать выбранный</button><button id="delProfile">Удалить профиль</button></div>
+ </div><div>
+  <label>Произнесите разные фразы по 2–5 секунд (нужно минимум 3):</label>
+  <div class="note" id="phraseHint"></div>
+  <div class="row" style="margin-top:8px"><button class="pri" id="recPhrase">🎤 Записать фразу</button><button id="enroll" disabled>Создать шаблон</button><button id="clearPhrases">Сбросить</button></div>
+  <div class="bar" style="margin-top:8px"><i id="lvl1" style="width:0"></i></div>
+  <div id="phraseList" class="note" style="margin-top:6px"></div>
+ </div></div>
+ <div class="msg" id="enrollMsg" style="display:none"></div>
+</div>
+
+<div class="card"><h2>2. Проверка голоса</h2>
+ <div class="grid g2"><div>
+  <label>Порог принятия: <b id="thv">0.50</b></label><input type="range" id="th" min="0.1" max="0.95" step="0.01" value="0.5">
+  <div class="row" style="margin-top:8px"><button class="pri" id="recVerify">🎤 Записать и проверить</button></div>
+  <div class="bar" style="margin-top:8px"><i id="lvl2" style="width:0"></i></div>
+  <div id="verdict" style="margin-top:10px"></div>
+  <div class="bar" style="margin-top:10px"><i id="scoreBar"></i><u id="thMark" style="left:50%"></u></div>
+  <div class="note">Заполнение полосы — оценка сходства, чёрная черта — порог. Передвигайте порог после проверки: решение пересчитывается сразу.</div>
+ </div><div>
+  <div class="kpi" id="kpi"></div>
+  <div class="row" style="margin-top:10px"><select id="lvl" style="width:auto"><option value="1">Подсказка</option><option value="2" selected>Объяснение</option><option value="3">Рекомендация</option></select><button id="explainBtn" disabled>🤖 Объяснить результат</button><button id="speakBtn" disabled>🔊 Озвучить</button></div>
+  <div class="msg" id="explainMsg" style="display:none"></div>
+ </div></div>
+ <h3>Что видит система</h3>
+ <div class="note">Волна → лог-мел-спектрограмма (энергия по частотам) → MFCC (компактное описание тембра).</div>
+ <canvas id="cWave"></canvas><canvas id="cMel"></canvas><canvas id="cMfcc"></canvas>
+ <div class="msg" id="verifyMsg" style="display:none"></div>
+</div>
+
+<div class="card"><h2>3. Устойчивость голоса к искажениям</h2>
+ <p class="note">Берёт последнюю запись из шага 2 и ухудшает её: шум, телефонный канал, эхо, имитация воспроизведения с динамика. Видно, при каком уровне система перестаёт узнавать вас, и это хорошая иллюстрация атаки повтором.</p>
+ <div class="row"><button id="robBtn" disabled>Проверить устойчивость</button></div>
+ <div id="robOut" style="margin-top:10px"></div><div class="msg" id="robMsg" style="display:none"></div>
+</div>
+
+<div class="card"><h2>4. Голосовые команды</h2>
+ <p>Нажмите 🎤 в правом нижнем углу. Режимы: <b>автозапуск</b> (система сама открывает раздел и озвучивает ответ), <b>подсказка</b> (объясняет, а вы нажимаете сами), <b>подтверждение</b> (спрашивает «запустить?»). Команду можно и напечатать, если браузер не поддерживает распознавание речи (нужен Chrome).</p>
+ <p class="note">Если включить «Проверять мой голос», команды от чужого голоса не выполняются. Примеры: «покажи распознавание отпечатков пальцев по датасету FVC2004 для 20 человек», «покажи кривые ROC», «проверь устойчивость к шуму», «объясни результат».</p>
+ <p class="note">Ограничения: распознавание речи делает сам браузер (звук уходит на сервис браузера, не в лабораторию); смысл команды определяют правила по ключевым словам.</p>
+</div>
+</div>
+<script>
+LAB.nav('voice');
+const $=LAB.$, PHRASES=['Меня зовут … и я изучаю биометрию','Сегодня хорошая погода для лабораторной работы','Один два три четыре пять шесть семь','Виртуальная лаборатория распознаёт образы'];
+let phrases=[], recorder=null, lastWav=null, lastRes=null;
+$('#phraseHint').textContent='Идеи: '+PHRASES.join(' · ');
+
+async function refreshProfiles(){
+  const d=await LAB.api('/api/labplus/voice/profiles'); const s=$('#profiles'); s.innerHTML='';
+  d.profiles.forEach(p=>{const o=document.createElement('option');o.value=p.name;o.textContent=`${p.name} (${p.n_phrases} фраз, ${p.created})`;s.append(o)});
+  if(!d.profiles.length){const o=document.createElement('option');o.textContent='— профилей пока нет —';o.value='';s.append(o)}
+  const cur=LAB.store.get('voiceName',''); if(cur&&d.profiles.some(p=>p.name===cur)) s.value=cur;
+  $('#name').value=$('#name').value||cur;
+}
+function setActive(name){LAB.store.set('voiceName',name);const n=document.getElementById('lp-name');if(n)n.textContent=name||'нет';const c=document.getElementById('lp-spk');if(c){c.disabled=!name}}
+
+/* запись по кнопке: нажали — пишем, нажали ещё раз — стоп (авто-стоп через 7 с) */
+async function toggleRecord(btn,lvlEl,onDone){
+  if(recorder){const r=recorder;recorder=null;btn.classList.remove('rec');btn.textContent=btn.dataset.t;const blob=await r.stop();lvlEl.style.width='0';return onDone(blob)}
+  recorder=new LAB.Recorder();btn.dataset.t=btn.textContent;
+  try{await recorder.start(v=>{lvlEl.style.width=Math.min(100,v*400)+'%'})}catch(e){recorder=null;throw e}
+  btn.classList.add('rec');btn.textContent='⏹ Стоп';
+  setTimeout(()=>{if(recorder&&btn.classList.contains('rec'))btn.click()},7000);
+}
+const guard=(el,fn)=>async()=>{try{await fn()}catch(e){LAB.show(el,e.message,true)}};
+
+$('#recPhrase').onclick=guard($('#enrollMsg'),()=>toggleRecord($('#recPhrase'),$('#lvl1'),blob=>{phrases.push(blob);renderPhrases()}));
+function renderPhrases(){$('#phraseList').textContent=phrases.length?`Записано фраз: ${phrases.length}`:'';$('#enroll').disabled=phrases.length<3}
+$('#clearPhrases').onclick=()=>{phrases=[];renderPhrases()};
+$('#enroll').onclick=guard($('#enrollMsg'),async()=>{
+  const fd=new FormData();fd.append('name',$('#name').value);phrases.forEach((b,i)=>fd.append('files',b,`p${i}.wav`));
+  const r=await LAB.api('/api/labplus/voice/enroll',{method:'POST',body:fd});
+  const sc=r.self_consistency==null?'':` Стабильность голоса между фразами: ${r.self_consistency.toFixed(2)}.`;
+  LAB.show($('#enrollMsg'),`Шаблон «${r.name}» создан: ${r.n_phrases} фразы, ${r.dim} признаков.${sc} Сами записи не сохранены.`);
+  setActive(r.name);phrases=[];renderPhrases();await refreshProfiles();$('#profiles').value=r.name;
+});
+$('#useProfile').onclick=()=>{const n=$('#profiles').value;if(n){setActive(n);$('#name').value=n;LAB.show($('#enrollMsg'),`Активный профиль: ${n}`)}};
+$('#delProfile').onclick=guard($('#enrollMsg'),async()=>{const n=$('#profiles').value;if(!n)return;if(!confirm('Удалить профиль «'+n+'»?'))return;
+  await LAB.api('/api/labplus/voice/profiles/'+encodeURIComponent(n),{method:'DELETE'});if(LAB.store.get('voiceName','')===n)setActive('');LAB.show($('#enrollMsg'),'Профиль удалён.');refreshProfiles()});
+
+function th(){return +$('#th').value}
+$('#th').oninput=()=>{$('#thv').textContent=th().toFixed(2);LAB.store.set('voiceThreshold',th());render()};
+function render(){
+  if(!lastRes)return; const s=lastRes.score, ok=s>=th();
+  $('#verdict').innerHTML=`<span class="pill ${ok?'ok':'bad'}">${ok?'MATCH · голос принят':'NO MATCH · голос не принят'}</span> сходство <b>${s.toFixed(3)}</b>, порог ${th().toFixed(2)}`;
+  $('#scoreBar').style.width=(s*100)+'%';$('#thMark').style.left=(th()*100)+'%';
+  lastRes.threshold=th();lastRes.decision=ok?'MATCH':'NO MATCH';LAB.setLast('voice',lastRes);
+}
+$('#recVerify').onclick=guard($('#verifyMsg'),()=>toggleRecord($('#recVerify'),$('#lvl2'),async blob=>{
+  const name=LAB.store.get('voiceName','')||$('#profiles').value; if(!name) throw new Error('Сначала создайте или выберите профиль.');
+  lastWav=blob;const fd=new FormData();fd.append('name',name);fd.append('threshold',th());fd.append('file',blob,'v.wav');
+  lastRes=await LAB.api('/api/labplus/voice/verify',{method:'POST',body:fd});LAB.show($('#verifyMsg'),'');
+  const v=lastRes.viz;LAB.waveform($('#cWave'),v.waveform);LAB.heat($('#cMel'),v.mel,110);LAB.heat($('#cMfcc'),v.mfcc,80);
+  $('#kpi').innerHTML=`<div><small>Расстояние до шаблона</small><b>${lastRes.distance}</b></div><div><small>Речь, с</small><b>${v.speech_sec}</b></div><div><small>Тон F0, Гц</small><b>${v.f0_hz??'—'}</b></div><div><small>Доля звонких</small><b>${v.voiced_ratio}</b></div>`;
+  $('#explainBtn').disabled=false;$('#speakBtn').disabled=false;$('#robBtn').disabled=false;render();
+}));
+$('#explainBtn').onclick=guard($('#explainMsg'),async()=>{if(!lastRes)return;const r=await LAB.post('/api/labplus/explain',{kind:'voice',payload:lastRes,level:+$('#lvl').value});LAB.show($('#explainMsg'),r.text)});
+$('#speakBtn').onclick=()=>LAB.speak($('#explainMsg').textContent||$('#verdict').textContent);
+$('#robBtn').onclick=guard($('#robMsg'),async()=>{
+  const name=LAB.store.get('voiceName','')||$('#profiles').value;const fd=new FormData();fd.append('name',name);fd.append('threshold',th());fd.append('file',lastWav,'v.wav');
+  LAB.show($('#robMsg'),'Считаю…');const r=await LAB.api('/api/labplus/voice/robustness',{method:'POST',body:fd});LAB.show($('#robMsg'),'');
+  let h=`<p class="note">Исходная оценка: <b>${r.reference_score}</b>, порог ${r.threshold}. Зелёное — принято, красное — не принято; «отклонено» — после искажения в записи не нашлось достаточно речи.</p><table class="heat"><tr><th>Искажение</th><th colspan="5">Оценки от слабого к сильному</th><th>Ломается на</th></tr>`;
+  r.results.forEach(x=>{h+=`<tr><td style="text-align:left">${x.title}<br><span class="note">${x.unit}</span></td>`+x.points.map(p=>`<td class="${p.pass?'ok':'bad'}">${p.rejected?'отклонено':p.score.toFixed(2)}<br><span class="note">${p.value}</span></td>`).join('')+'<td></td>'.repeat(5-x.points.length)+`<td>${x.breakpoint===null?'не ломается':x.breakpoint+' '+x.unit}</td></tr>`});
+  $('#robOut').innerHTML=h+'</table>';
+});
+refreshProfiles().catch(e=>LAB.show($('#enrollMsg'),e.message,true));
+</script></body></html>

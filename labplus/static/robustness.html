@@ -1,0 +1,62 @@
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LAB+ · Устойчивость</title><link rel="stylesheet" href="/labplus/static/labplus.css"></head><body>
+<script src="/labplus/static/labplus.js" data-assistant></script>
+<div class="wrap">
+<h1>Атаки и устойчивость</h1>
+<p class="sub">Изображение портится всё сильнее: шум, размытие, поворот, потеря контраста, закрытая область, сжатие, низкое разрешение. Смотрим, при каком уровне сопоставитель перестаёт узнавать тот же образ.</p>
+
+<div class="card"><h2>Эксперимент</h2>
+<div class="grid g3">
+ <div><label>Изображение (необязательно)</label><input type="file" id="file" accept="image/*"><div class="note">Без файла берётся учебный синтетический отпечаток.</div></div>
+ <div><label>Сопоставитель</label><select id="matcher"></select><div class="note">Свой алгоритм подключается через register_matcher (см. README).</div></div>
+ <div><label>Искажение</label><select id="kind"></select></div>
+</div>
+<div class="grid g2"><div><label>Порог: <b id="thv">0.50</b></label><input type="range" id="th" min="0.1" max="0.95" step="0.01" value="0.5"></div>
+<div><label>Номер синтетического образца (seed)</label><input type="number" id="seed" value="1" min="1" max="9999"></div></div>
+<div class="row" style="margin-top:8px"><button class="pri" id="run">▶ Запустить</button>
+ <select id="lvl" style="width:auto"><option value="1">Подсказка</option><option value="2" selected>Объяснение</option><option value="3">Рекомендация</option></select><button id="explainBtn" disabled>🤖 Объяснить</button><button id="speakBtn" disabled>🔊 Озвучить</button></div>
+<div class="msg" id="msg" style="display:none"></div><div class="msg" id="explainMsg" style="display:none"></div>
+</div>
+
+<div class="card" id="out" style="display:none">
+ <div class="grid g2"><div><h2>Исходное изображение</h2><img id="orig" style="width:160px;height:160px;border-radius:10px;border:1px solid var(--line)"><div class="note" id="srcNote"></div></div>
+ <div><h2>Как читать результат</h2><p class="note">Оценка 1.0 — полное совпадение с оригиналом. «Уровень пола» — оценка для заведомо чужого содержимого (те же пиксели, перемешанные плитки): всё выше него система считает похожим, ниже порога — отвергает. Если график ниже порога, система потеряла образ.</p></div></div>
+ <h3>Оценка сходства по уровням искажения</h3><canvas id="chart"></canvas><div class="legend" id="legend"></div>
+ <h3>Таблица (зелёное — принято, красное — отклонено)</h3><div style="overflow:auto"><table class="heat" id="heat"></table></div>
+ <div id="thumbBox" style="display:none"><h3>Как выглядит искажённое изображение</h3><div class="thumbs" id="thumbs"></div></div>
+</div>
+</div>
+<script>
+LAB.nav('robustness');
+const $=LAB.$;let last=null;const COL=['#3d6fd9','#d1495b','#1f9d6a','#e08a1e','#8a5cd6','#16a3b8','#a8742f','#7a8394'];
+(async()=>{try{const o=await LAB.api('/api/labplus/robust/options');
+ $('#matcher').innerHTML=Object.entries(o.matchers).map(([k,t])=>`<option value="${k}">${t}</option>`).join('');
+ $('#kind').innerHTML='<option value="all">Все искажения</option>'+Object.entries(o.attacks).map(([k,a])=>`<option value="${k}">${a.title}</option>`).join('');
+ if(LAB.params.get('autorun')==='1')run();}catch(e){LAB.show($('#msg'),e.message,true)}})();
+$('#th').oninput=()=>{$('#thv').textContent=(+$('#th').value).toFixed(2);if(last)redraw()};
+$('#run').onclick=run;
+async function run(){
+ try{LAB.show($('#msg'),'Считаю…');const fd=new FormData();fd.append('kind',$('#kind').value);fd.append('matcher',$('#matcher').value||'hog');fd.append('threshold',$('#th').value);fd.append('seed',$('#seed').value);
+  const f=$('#file').files[0];if(f)fd.append('file',f);
+  last=await LAB.api('/api/labplus/robust/image',{method:'POST',body:fd});LAB.show($('#msg'),'');$('#out').style.display='block';
+  $('#orig').src=last.original;$('#srcNote').textContent=last.source==='upload'?'Ваше изображение (в лабораторию не сохраняется).':'Синтетический учебный образец.';
+  $('#explainBtn').disabled=false;$('#speakBtn').disabled=false;redraw();
+ }catch(e){LAB.show($('#msg'),e.message,true)}
+}
+function redraw(){
+ const th=+$('#th').value,c=LAB.col(),R=last.results,n=R[0].points.length;
+ R.forEach(r=>{r.points.forEach(p=>p.pass=p.score>=th);const b=r.points.find(p=>!p.pass);r.breakpoint=b?b.value:null});
+ const S=R.map((r,i)=>({x:r.points.map((_,k)=>k),y:r.points.map(p=>p.score),color:COL[i%COL.length]}));
+ LAB.plot($('#chart'),{xmin:0,xmax:n-1,ymin:0,ymax:1.02,xticks:Array.from({length:n},(_,k)=>[k,'ур. '+k]),xlabel:'уровень искажения (0 — без искажения)',ylabel:'оценка сходства',series:S,hlines:[{y:th,color:c.ink,label:'порог'},{y:last.floor,color:c.mute,label:'уровень «чужого»'}],h:280});
+ $('#legend').innerHTML=R.map((r,i)=>`<span><i style="background:${COL[i%COL.length]}"></i>${r.title}</span>`).join('');
+ let h=`<tr><th style="text-align:left">Искажение</th>${Array.from({length:n},(_,k)=>`<th>ур. ${k}</th>`).join('')}<th>Ломается на</th></tr>`;
+ R.forEach(r=>{h+=`<tr><td style="text-align:left">${r.title}<br><span class="note">${r.unit}</span></td>`+r.points.map(p=>`<td class="${p.pass?'ok':'bad'}">${p.score.toFixed(2)}<br><span class="note">${p.value}</span></td>`).join('')+`<td>${r.breakpoint===null?'не ломается':r.breakpoint+' '+r.unit}</td></tr>`});
+ $('#heat').innerHTML=h;
+ const one=R.length===1&&R[0].points[0].thumb;$('#thumbBox').style.display=one?'block':'none';
+ if(one)$('#thumbs').innerHTML=R[0].points.map(p=>`<figure><img class="${p.pass?'ok':'bad'}" src="${p.thumb}"><br>${p.value}<br><b>${p.score.toFixed(2)}</b></figure>`).join('');
+ LAB.setLast('robust',{threshold:th,results:R.map(r=>({title:r.title,unit:r.unit,breakpoint:r.breakpoint}))});
+}
+$('#explainBtn').onclick=async()=>{try{const l=LAB.getLast();const r=await LAB.post('/api/labplus/explain',{kind:'robust',payload:l.payload,level:+$('#lvl').value});LAB.show($('#explainMsg'),r.text)}catch(e){LAB.show($('#explainMsg'),e.message,true)}};
+$('#speakBtn').onclick=()=>LAB.speak($('#explainMsg').textContent||'Сначала нажмите «Объяснить».');
+window.addEventListener('resize',()=>{if(last)redraw()});
+</script></body></html>
