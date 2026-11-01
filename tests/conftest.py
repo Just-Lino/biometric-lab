@@ -24,3 +24,14 @@ def _no_trained_models():
     shutil.rmtree(Path(settings.db_path).resolve().parent / "trained", ignore_errors=True)
     yield
     registry.reset_cache()
+
+
+@pytest.fixture(autouse=True)
+def _rule_tutor(monkeypatch):
+    """Тесты не ходят во внешние API: наставник по правилам, даже если в .env включён OpenAI (и ключ не тратится)."""
+    from app.services import tutor
+    monkeypatch.setattr(settings, "tutor_provider", "rule")
+    monkeypatch.setattr(settings, "openai_api_key", None)
+    monkeypatch.setattr(tutor, "_tutor", None)
+    yield
+    tutor._tutor = None

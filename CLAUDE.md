@@ -58,5 +58,5 @@ unless asked. `data/lab.db` is the student's local database. Task solutions in `
 
 ## Working rules
 
-Before changing behaviour, run `python -m pytest -q` (195 tests, about 6-7 min) and report what fails. Keep new user-facing strings in Russian.
+Before changing behaviour, run `python -m pytest -q` (195 tests, about 8 min) and report what fails. Keep new user-facing strings in Russian.
 All tabs live in `app/web/index.html` (see `setMod` and its `SECTIONS` map).
