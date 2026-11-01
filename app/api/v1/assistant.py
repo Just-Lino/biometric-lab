@@ -13,12 +13,13 @@ router = APIRouter(prefix="/api/v1/assistant", tags=["assistant"])
 class ParseIn(BaseModel):
     text: str = Field("", max_length=500)
     context: dict = Field(default_factory=dict)  # mod: текущая вкладка
+    alternatives: list[str] = Field(default_factory=list, max_length=5)  # другие варианты распознавания речи
 
 
 @router.post("/parse")
 def parse(body: ParseIn):
     """Фраза -> список действий для интерфейса (см. app/services/assistant.py)."""
-    res = assistant.parse(body.text, body.context)
+    res = assistant.parse(body.text, body.context, [a[:500] for a in body.alternatives])
     record_event("assistant", {"text": body.text[:200], "understood": res["understood"], "actions": [a["do"] for a in res["actions"]]})
     return res
 

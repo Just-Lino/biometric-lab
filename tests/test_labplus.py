@@ -145,6 +145,11 @@ def test_voice_enroll_verify_flow(client):
     import os
     stored = open(os.path.join(os.environ["LABPLUS_DATA"], "voice_profiles.json"), encoding="utf-8").read()
     assert "RIFF" not in stored and "mu" in stored
+    prof = client.get("/api/labplus/voice/profiles").json()["profiles"][0]
+    assert prof["n_audio"] == 4                                        # записи фраз лежат отдельно и их можно прослушать
+    wavr = client.get("/api/labplus/voice/profiles/tester/phrase/0.wav")
+    assert wavr.status_code == 200 and wavr.content[:4] == b"RIFF" and wavr.headers["content-type"] == "audio/wav"
+    assert client.get("/api/labplus/voice/profiles/tester/phrase/9.wav").status_code == 404
 
     def verify(spk, seed, th=0.5):
         return client.post("/api/labplus/voice/verify", data={"name": "tester", "threshold": th},
@@ -164,6 +169,7 @@ def test_voice_enroll_verify_flow(client):
 
     assert client.get("/api/labplus/voice/profiles").json()["profiles"][0]["name"] == "tester"
     assert client.delete("/api/labplus/voice/profiles/tester").status_code == 200
+    assert client.get("/api/labplus/voice/profiles/tester/phrase/0.wav").status_code == 404   # записи удалены вместе с профилем
     assert client.delete("/api/labplus/voice/profiles/tester").status_code == 404
     assert verify("A", 1).get("detail")                                # профиля больше нет
 

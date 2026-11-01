@@ -158,6 +158,7 @@ details.adv{margin:8px 0}details.adv summary{cursor:pointer;color:var(--acc);fon
     <span class="tab" data-mod="train">Обучение распознаванию</span>
     <span class="tab" data-mod="nn">Площадка нейросети</span>
     <span class="tab" data-mod="iris">Радужка</span>
+    <span class="tab" data-mod="voice">Голос</span>
     <a class="tab" href="/labplus/voice" title="Дополнение LAB+: голос, метрики ROC/DET, устойчивость к искажениям, стандарты ISO/IEC">LAB+</a>
   </div>
   <button class="sec" id="helpBtn" style="margin-left:auto" title="Короткая инструкция по текущей вкладке">? Как работать</button>
@@ -177,10 +178,16 @@ details.adv{margin:8px 0}details.adv summary{cursor:pointer;color:var(--acc);fon
       <label>Образец A (эталон)</label><select id="sa"></select>
       <label>Образец B (проверяемый)</label><select id="sb"></select>
       <div class="thumbs"><figure><img id="thA" alt="образец A"><figcaption>A (эталон)</figcaption></figure><figure><img id="thB" alt="образец B"><figcaption>B (проверяемый)</figcaption></figure></div>
-      <label>Загрузить своё изображение в A / в B</label>
+      <label id="upLabel">Загрузить своё изображение в A / в B</label>
       <div class="btns" style="margin-top:2px">
         <label class="step" style="margin:0">в A <input type="file" id="fileA" accept="image/*" hidden></label>
         <label class="step" style="margin:0">в B <input type="file" id="fileB" accept="image/*" hidden></label>
+      </div>
+      <div data-only="voice" style="display:none">
+        <label>Записать голос с микрофона (4 секунды)</label>
+        <div class="btns" style="margin-top:2px"><button class="sec" id="recA">🎙 Записать в A</button><button class="sec" id="recB">🎙 Записать в B</button></div>
+        <label>Прослушать</label>
+        <div class="btns" style="margin-top:2px"><button class="sec" id="playA">▶ A</button><button class="sec" id="playB">▶ B</button></div>
       </div>
       <div class="banner" id="banner"></div>
       <div class="leg" style="margin-top:6px" id="dataNote"></div>
@@ -196,6 +203,7 @@ details.adv{margin:8px 0}details.adv summary{cursor:pointer;color:var(--acc);fon
       <input type="range" id="th" min="0.01" max="0.95" step="0.01" value="0.50">
       <div class="btns">
         <button id="bproc">Показать этапы для A</button>
+        <button id="bprocB">Показать этапы для B</button>
         <button id="bcmp">Сравнить A и B</button>
       </div>
     </div>
@@ -210,7 +218,7 @@ details.adv{margin:8px 0}details.adv summary{cursor:pointer;color:var(--acc);fon
     <div class="card">
       <h2>Пошаговая обработка образца <span id="procName" class="leg"></span></h2>
       <div class="steps" id="steps"></div>
-      <div class="view"><div><img id="stepImg" alt=""></div><div><b id="stepTitle"></b><p class="desc" id="stepDesc">Нажмите «Показать этапы для A».</p></div></div>
+      <div class="view"><div><img id="stepImg" alt=""></div><div><b id="stepTitle"></b><p class="desc" id="stepDesc">Нажмите «Показать этапы для A» или «для B».</p></div></div>
       <div id="minTable"></div>
     </div>
     <div class="card">
@@ -261,7 +269,7 @@ details.adv{margin:8px 0}details.adv summary{cursor:pointer;color:var(--acc);fon
       <img id="cmpImg" style="width:100%;max-width:640px;display:none;border:1px solid var(--line);border-radius:6px">
       <div class="leg" id="cmpLeg"></div>
     </div>
-    <div class="card" data-only="fingerprint face iris">
+    <div class="card" data-only="fingerprint face iris voice">
       <h2 id="cmpTitle">Сравнение детекторов и признаков</h2>
       <div class="btns">
         <button id="bdet">Сравнить детекторы на образце A</button>
@@ -548,6 +556,19 @@ const MODS={
    title:'Сравнение методов локализации и кодирования',b1:'Сравнить локализаторы на образце A',b2:'Сравнить кодировщики на паре A и B',b3:'Оценить кодировщики (EER)',
    leg:'Локализаторы: окружности разных цветов на одном снимке, время и ошибка относительно истинных окружностей (известны для синтетики). Кодировщики: одна и та же пара развёрток, разные способы получить Iris Code; сходство = 1 - расстояние Хэмминга. Качество метода сравнивайте по EER и по запасу «худший свой минус лучший чужой» (больше нуля - глаза разделяются без ошибок).'}}
 };
+MODS.voice={defThr:0.5,
+  note:'Голоса синтетические: 12 дикторов говорят одну и ту же фразу по 3 раза, реальные записи людей не используются. Свой голос можно записать с микрофона или загрузить файл: запись хранится только в памяти сервера и видна только вам.',
+  legend:'Сверху спектрограммы A и B (светлее - громче). Снизу столбики шаблонов в z-оценках: оранжевые - запись A, синие - запись B. Чем ближе столбики, тем выше сходство голосов.',
+  def:['v01_r1','v01_r2'],
+  params:[
+   {t:'select',k:'method',l:'Метод шаблона голоса',opts:[['mfcc','MFCC: тембр голоса',0.50],['mfcc_delta','MFCC + динамика',0.40],['pitch','Только высота тона',0.65],['combo','MFCC + высота тона',0.45]],v:'mfcc'},
+   {t:'select',k:'vad',l:'Выделение речи (VAD)',opts:[['adaptive','Адаптивный порог по энергии'],['fixed','Фиксированный порог (ползунок ниже)'],['zcr','Энергия + пересечения нуля']],v:'adaptive'},
+   {k:'vad_level',l:'VAD: порог, дБ ниже пика (для фиксированного)',min:10,max:50,step:1,v:30,int:true},
+   {k:'n_mfcc',l:'Число коэффициентов MFCC',min:8,max:20,step:1,v:13,int:true},
+   {k:'extra_noise',l:'Добавочный шум, % от громкости',min:0,max:60,step:2,v:0}],
+  cmp:{imgA:'Спектрограмма A',imgB:'Спектрограмма B',srcWord:'выделение речи',eerTitle:'Качество методов шаблона на 12 синтетических дикторах',eerHead:'Метод шаблона',embW:'width:384px',
+   title:'Сравнение способов выделения речи и методов шаблона',b1:'Сравнить способы выделения речи на записи A',b2:'Сравнить методы шаблона на паре A и B',b3:'Оценить методы шаблона (EER)',
+   leg:'Способы выделения речи: зелёным отмечено, что каждый способ считает речью, и сколько это занимает времени. Методы шаблона: одна и та же пара записей, разные способы описать голос числами. Шкалы сходства у методов разные, поэтому судить о качестве нужно по EER на всех дикторах (чем ниже, тем лучше).'}};
 const HINTS={
  fingerprint:{
   matcher:{hough:'Основной метод. Каждая пара минуций голосует за поворот и сдвиг, затем считаются согласованные пары. Различает все синтетические отпечатки (EER 0 %), работает за доли секунды.',
@@ -592,6 +613,14 @@ const HINTS={
   mask_eyelids:{true:'Из сравнения исключаются веки, ресницы и блики: сравниваются только открытые биты обоих снимков.',
    false:'Маска выключена: сравниваются все биты. На синтетике результат почти не меняется, на реальных снимках с веками и ресницами это важно.'}}
 };
+HINTS.voice={
+  method:{mfcc:'MFCC: средние и разброс спектральной огибающей по речи записи. Описывает тембр, то есть форму речевого тракта диктора. На синтетических голосах EER около 5 %.',
+   mfcc_delta:'К MFCC добавлена скорость их изменения (дельта-коэффициенты): учитывается манера говорить, но шаблон длиннее, а шум влияет сильнее.',
+   pitch:'Только высота тона: медиана, диапазон и разброс. Просто и наглядно, но голоса с близкой высотой путаются (EER около 25 %): у женщин и мужчин высота разная, а у двух мужчин может совпасть.',
+   combo:'MFCC вместе с высотой тона: тембр и высота вместе. Полезно, когда тембры похожи, а высота различается.'},
+  vad:{adaptive:'Порог берётся между уровнем тишины и громкими кадрами этой записи, поэтому работает при разной громкости.',
+   fixed:'Речью считается всё, что не тише самого громкого кадра более чем на заданное число дБ (ползунок). Показывает, как неверный порог захватывает шум или отрезает тихие слова.',
+   zcr:'Как адаптивный, но кадры с очень частыми пересечениями нуля (шипение, шум) не считаются речью.'}};
 let MOD='fingerprint';
 const SRC={};  // наборы данных каждой биометрии (из /info)
 const READY={info:null,samples:null};  // для какой вкладки загружены наборы и список образцов (ждёт помощник)
@@ -652,12 +681,13 @@ function toast(msg,kind='err'){
   setTimeout(()=>d.remove(),kind==='err'?9000:4000);d.onclick=()=>d.remove();
 }
 const HELP={
- fingerprint:'<h3>Отпечатки пальцев</h3><ol><li>Выберите набор данных (синтетика или реальные FVC и SOCOFing, если они подготовлены) и образцы A и B: миниатюры показывают, что выбрано, а поиск помогает найти нужный. Оттиски одного пальца отличаются поворотом, шумом и размытием.</li><li>Нажмите «Показать этапы для A»: пройдите по восьми этапам и посмотрите найденные минуции.</li><li>Нажмите «Сравнить A и B»: получите сходство и решение. Двигайте порог Threshold: решение меняется сразу.</li><li>В карточке «Оценка качества» посчитайте FAR, FRR и EER, а в карточке «Сравнение методов» сравните методы друг с другом.</li></ol><p>Метод сопоставления и бинаризации выбирается в списках слева; под каждым списком есть пояснение. Остальные параметры спрятаны в «Дополнительных параметрах».</p>',
+ fingerprint:'<h3>Отпечатки пальцев</h3><ol><li>Выберите набор данных (синтетика или реальные FVC и SOCOFing, если они подготовлены) и образцы A и B: миниатюры показывают, что выбрано, а поиск помогает найти нужный. Оттиски одного пальца отличаются поворотом, шумом и размытием.</li><li>Нажмите «Показать этапы для A» (или «для B», чтобы посмотреть второй образец): пройдите по восьми этапам и посмотрите найденные минуции.</li><li>Нажмите «Сравнить A и B»: получите сходство и решение. Двигайте порог Threshold: решение меняется сразу.</li><li>В карточке «Оценка качества» посчитайте FAR, FRR и EER, а в карточке «Сравнение методов» сравните методы друг с другом.</li></ol><p>Метод сопоставления и бинаризации выбирается в списках слева; под каждым списком есть пояснение. Остальные параметры спрятаны в «Дополнительных параметрах».</p>',
  face:'<h3>Лицо</h3><ol><li>Фото лежат в <code>datasets/faces/&lt;набор&gt;/&lt;имя_человека&gt;/</code> (например, LFW) или в <code>datasets/faces/&lt;имя_человека&gt;/</code>; выберите набор и найдите человека поиском. Своё изображение можно загрузить кнопками «в A» и «в B»: оно видно только вам и пропадёт после перезапуска сервера.</li><li>Выберите детектор лица и признаки. Нейросетевые модели скачиваются командой <code>python -m scripts.download_models</code>; без них работают каскады Хаара и классические признаки.</li><li>Покажите этапы, сравните лица, затем в карточке «Сравнение детекторов и признаков» оцените все методы по EER.</li></ol><p>Классическим признакам нужна галерея из 3 и более людей. Сеть, обученная вами, выбирается как метод «Нейросеть, обученная вами».</p>',
  iris:'<h3>Радужка</h3><ol><li>Выберите набор данных (12 синтетических глаз по 3 снимка или реальный CASIA-Iris-Interval, если он подготовлен) и два снимка глаза.</li><li>Покажите этапы: зрачок, граница радужки, маска век, развёртка и Iris Code.</li><li>Сравните: сходство равно 1 минус расстояние Хэмминга; поворот глаза компенсируется сдвигом кода.</li><li>В карточке «Сравнение методов» сравните локализаторы и кодировщики; для синтетики видна ошибка относительно истинных окружностей.</li></ol>',
  code:'<h3>Практикум: код</h3><ol><li>Выберите задание слева и прочитайте условие.</li><li>Напишите функцию в редакторе и нажмите «Запустить на примере».</li><li>«Проверить решение» запускает все тесты и ставит баллы; подсказки идут по уровням, полное решение открывается после 3 попыток.</li></ol>',
  train:'<h3>Обучение распознаванию</h3><ol><li>Выберите, что распознаём и на каком наборе данных учим сеть (синтетика или реальные FVC и CASIA), затем нажмите один из «Готовых экспериментов» или «Начать обучение».</li><li>Смотрите кривые Loss и точности, схему сети и изменение весов; ползунком можно вернуться к любой эпохе.</li><li>В «Итогах» сеть сама объяснит результат (переобучение, слишком большой шаг и т. д.).</li><li>Обученную сеть можно выбрать как метод распознавания на вкладках отпечатков, радужки и лица.</li><li>Журнал запусков хранит все эксперименты: отметьте несколько и нажмите «Сравнить выбранные».</li></ol>',
  nn:'<h3>Площадка нейросети</h3><p>Выберите набор данных, слои и нейроны, нажмите «Обучить» и смотрите, как меняется граница решения и ошибка. Набор «Биометрия: свой / чужой» показывает, как порог создаёт ошибки FAR и FRR.</p>'};
+HELP.voice='<h3>Голос</h3><ol><li>Выберите два образца: диктор и запись (12 синтетических дикторов по 3 записи) или запишите свой голос кнопкой «Записать в A» и «Записать в B» (4 секунды, нужен микрофон и localhost или HTTPS). Кнопки «▶ A» и «▶ B» проигрывают записи.</li><li>«Показать этапы для A»: сигнал, выделение речи, спектрограмма, мел-спектрограмма, MFCC, высота тона и шаблон голоса.</li><li>«Сравнить A и B»: сходство и решение MATCH / NO MATCH по порогу. Записи одного диктора дают высокое сходство, разных низкое.</li><li>В карточках «Оценка качества» и «Сравнение методов» посчитайте FAR, FRR, EER и сравните методы шаблона. Ползунок шума показывает, как помехи портят распознавание.</li></ol><p>Все дикторы говорят одну и ту же фразу: сравнивается голос, а не содержание речи.</p>';
 $('helpBtn').onclick=()=>{$('helpBody').innerHTML=(HELP[CURTAB]||HELP.fingerprint)+'<p class="leg">Подсказки по каждому методу показаны под списками параметров. Вопросы по терминам можно задать ИИ-наставнику справа.</p>';$('help').style.display='flex'};
 $('helpClose').onclick=()=>{$('help').style.display='none'};$('help').onclick=e=>{if(e.target===$('help'))$('help').style.display='none'};
 const FLOW={proc:false,cmp:false,eval:false};
@@ -687,7 +717,7 @@ function updateThumbs(){
 }
 $('sa').addEventListener('change',updateThumbs);$('sb').addEventListener('change',updateThumbs);
 const ADV={fingerprint:['clahe_clip','orient_smooth','gabor_period','gabor_sigma','bin_threshold','min_minutiae_dist','dist_tol'],
-           face:['scale_factor','min_neighbors','min_face','yunet_score'],iris:['blur','hough_quality','wavelength','max_shift']};
+           face:['scale_factor','min_neighbors','min_face','yunet_score'],iris:['blur','hough_quality','wavelength','max_shift'],voice:['vad_level','n_mfcc']};
 function saveUi(){try{const o=JSON.parse(localStorage.getItem('lab_params')||'{}');o[MOD]={p:params(),th:$('th').value};localStorage.setItem('lab_params',JSON.stringify(o))}catch(e){}}
 function restoreUi(){
   try{
@@ -700,7 +730,7 @@ function restoreUi(){
 }
 
 
-function methodKey(){return MOD==='fingerprint'?'matcher':(MOD==='iris'?'encoder':null)}
+function methodKey(){return MOD==='fingerprint'?'matcher':(MOD==='iris'?'encoder':(MOD==='voice'?'method':null))}
 function applySrcThr(){
   // у каждого метода своя шкала сходства; на реальных наборах рекомендуемый порог другой (замерен по EER на самом наборе)
   const k=methodKey();if(!k||!$('p_'+k))return;
@@ -710,7 +740,7 @@ function applySrcThr(){
   if(t!=null&&v!=='cnn'){const x=Math.min(0.95,Math.max(0.01,t));$('th').value=x;$('thv').textContent=x.toFixed(2)}
 }
 function curSource(){return (SRC[MOD]||[]).find(x=>x.id===$('srcSel').value)}
-function evalN(){const c=curSource();return c&&c.real?(MOD==='fingerprint'?10:(MOD==='iris'?12:8)):8}
+function evalN(){if(MOD==='voice')return 12;const c=curSource();return c&&c.real?(MOD==='fingerprint'?10:(MOD==='iris'?12:8)):8}
 function srcUpdate(){
   const c=curSource();
   $('srcBadge').innerHTML=c&&c.real?'<span class="realtag">реальные данные</span>':'';
@@ -1244,10 +1274,12 @@ function setMod(name){
   nnPause();trLeave();
   MOD=name;p3reset();
   document.querySelectorAll('[data-only]').forEach(e=>e.style.display=e.dataset.only.split(' ').includes(name)?'':'none');
+  $('fileA').accept=$('fileB').accept=name==='voice'?'audio/*,.wav':'image/*';
+  $('upLabel').textContent=name==='voice'?'Загрузить свою запись (WAV, MP3 и др.) в A / в B':'Загрузить своё изображение в A / в B';
   if(MODS[name].cmp){const c=MODS[name].cmp;$('cmpTitle').textContent=c.title;$('bdet').textContent=c.b1;$('bemb').textContent=c.b2;$('beer').textContent=c.b3;$('cmpMethodsLeg').textContent=c.leg}
   last=null;evalData=null;procData=null;curStep=0;FLOW.proc=FLOW.cmp=FLOW.eval=false;flowRender();
   $('steps').innerHTML='';$('stepImg').removeAttribute('src');$('stepTitle').textContent='';
-  $('stepDesc').textContent='Нажмите «Показать этапы для A».';$('minTable').innerHTML='';$('procName').textContent='';
+  $('stepDesc').textContent='Нажмите «Показать этапы для A» или «для B».';$('minTable').innerHTML='';$('procName').textContent='';
   $('cmpRes').innerHTML='<span class="desc">Нажмите «Сравнить A и B».</span>';$('cmpImg').style.display='none';
   $('evalNow').textContent='';$('evalInfo').textContent='';['detOut','embOut','eerOut'].forEach(id=>{$(id).innerHTML=''});
   try{Plotly.purge('chart')}catch(e){}
@@ -1263,11 +1295,11 @@ function renderStep(){
   $('stepImg').src=s.image;$('stepTitle').textContent=s.title;$('stepDesc').textContent=s.description||s.desc||'';
   [...document.querySelectorAll('.step[data-i]')].forEach((e,i)=>e.classList.toggle('on',i===curStep));
 }
-$('bproc').onclick=async e=>{
-  busy(e.target,true);
+async function showProc(btn,sel,label){
+  busy(btn,true);
   try{
-    procData=await api(API()+'/process',{sample_id:$('sa').value,params:params()});
-    $('procName').textContent='- '+procData.sample_id;
+    procData=await api(API()+'/process',{sample_id:$(sel).value,params:params()});
+    $('procName').textContent='- '+label+': '+procData.sample_id;
     $('steps').innerHTML=procData.steps.map((s,i)=>{const n=s.title.split('. ');return `<span class="step" data-i="${i}">${n[0]}. ${(n[1]||'').split(' (')[0]}</span>`}).join('');
     document.querySelectorAll('.step[data-i]').forEach(el=>el.onclick=()=>{curStep=+el.dataset.i;renderStep()});
     curStep=procData.steps.length-1;renderStep();
@@ -1278,8 +1310,10 @@ $('bproc').onclick=async e=>{
      procData.minutiae.map((m,i)=>`<tr><td>${i+1}</td><td>${m.x}</td><td>${m.y}</td><td>${m.theta_deg}°</td><td>${m.type==='ending'?'● ending':'▲ bifurcation'}</td><td>${m.quality}</td></tr>`).join('')+'</table></div>';
     $('minTable').innerHTML=h;
   }catch(err){toast(err.message)}
-  busy(e.target,false);
-};
+  busy(btn,false);
+}
+$('bproc').onclick=e=>showProc(e.target,'sa','образец A');
+$('bprocB').onclick=e=>showProc(e.target,'sb','образец B');
 
 function showDecision(){
   if(!last)return;
@@ -1358,11 +1392,49 @@ $('ask').onclick=async e=>{
   chat.scrollTop=chat.scrollHeight;busy(e.target,false);
 };
 
+async function fileToWav(file){
+  // любой звук, который умеет читать браузер (WAV, MP3, OGG, запись с микрофона), -> моно WAV 16 кГц: так его принимает сервер
+  const AC=window.AudioContext||window.webkitAudioContext;if(!AC)throw new Error('Браузер не умеет декодировать звук.');
+  const ctx=new AC();let buf;
+  try{buf=await ctx.decodeAudioData(await file.arrayBuffer())}catch(e){throw new Error('Не удалось прочитать звук. Попробуйте файл WAV или запишите голос кнопкой.')}finally{ctx.close()}
+  const sr=16000,n=Math.max(1,Math.ceil(buf.duration*sr)),off=new OfflineAudioContext(1,n,sr),src=off.createBufferSource();
+  src.buffer=buf;src.connect(off.destination);src.start();
+  const x=(await off.startRendering()).getChannelData(0),dv=new DataView(new ArrayBuffer(44+x.length*2));
+  const w=(o,t)=>[...t].forEach((c,i)=>dv.setUint8(o+i,c.charCodeAt(0)));
+  w(0,'RIFF');dv.setUint32(4,36+x.length*2,true);w(8,'WAVEfmt ');dv.setUint32(16,16,true);dv.setUint16(20,1,true);dv.setUint16(22,1,true);
+  dv.setUint32(24,sr,true);dv.setUint32(28,sr*2,true);dv.setUint16(32,2,true);dv.setUint16(34,16,true);w(36,'data');dv.setUint32(40,x.length*2,true);
+  for(let i=0;i<x.length;i++)dv.setInt16(44+i*2,Math.max(-1,Math.min(1,x[i]))*32767,true);
+  return new Blob([dv],{type:'audio/wav'});
+}
+async function recordWav(sec){
+  if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia)throw new Error('Запись голоса работает только на localhost или по HTTPS.');
+  const stream=await navigator.mediaDevices.getUserMedia({audio:true}).catch(()=>{throw new Error('Нет доступа к микрофону: разрешите его в браузере.')});
+  const rec=new MediaRecorder(stream),chunks=[];rec.ondataavailable=e=>chunks.push(e.data);
+  const done=new Promise(r=>rec.onstop=r);rec.start();
+  await new Promise(r=>setTimeout(r,sec*1000));rec.stop();await done;stream.getTracks().forEach(t=>t.stop());
+  return fileToWav(new Blob(chunks));
+}
+async function recordTo(t){
+  const b=$('rec'+t);b.disabled=true;
+  try{toast('Говорите 4 секунды...','info');const wav=await recordWav(4);await upload(wav,t);toast('Запись добавлена в образец '+t,'info')}
+  catch(e){toast(e.message)}
+  b.disabled=false;
+}
+function playSample(sel){
+  const id=$(sel).value;if(!id)return;
+  const ne=$('p_extra_noise')?$('p_extra_noise').value:0;
+  try{if(window.SAMPLE_AUDIO)window.SAMPLE_AUDIO.pause()}catch(e){}
+  const a=new Audio(`${API()}/sample/${encodeURIComponent(id)}.wav?extra_noise=${ne}`);window.SAMPLE_AUDIO=a;
+  a.play().catch(()=>toast('Не удалось воспроизвести звук.'));
+}
+$('recA').onclick=()=>recordTo('A');$('recB').onclick=()=>recordTo('B');
+$('playA').onclick=()=>playSample('sa');$('playB').onclick=()=>playSample('sb');
 async function upload(file,target){
   if(!file)return;
-  const fd=new FormData();fd.append('file',file);
+  try{if(MOD==='voice')file=await fileToWav(file)}catch(e){toast(e.message);return}
+  const fd=new FormData();fd.append('file',file,file.name||'record.wav');
   const r=await fetch(API()+'/upload',{method:'POST',body:fd});
-  if(!r.ok){toast(await r.text());return}
+  if(!r.ok){let t=await r.text();try{t=JSON.parse(t).detail||t}catch(e){}toast(String(t));return}
   const {sample_id}=await r.json();
   const a=$('sa').value,b=$('sb').value;
   await loadSamples(target==='A'?sample_id:a,target==='B'?sample_id:b);
@@ -1966,7 +2038,7 @@ setMod(MODS[_tab0]||['code','train','nn'].includes(_tab0)?_tab0:'fingerprint');
 const AS={busy:false,abort:false,fab:null,panel:null};
 const asSleep=ms=>new Promise(r=>setTimeout(r,ms));
 async function asUntil(cond,ms=10000){const t0=Date.now();while(Date.now()-t0<ms){if(cond())return true;await asSleep(100)}return false}
-const AS_BIO=['fingerprint','face','iris'];
+const AS_BIO=['fingerprint','face','iris','voice'];
 const TTS={on:true,rate:1.05,voice:'',voices:[],server:[]};  // server: голоса Piper на сервере (если установлены)
 try{Object.assign(TTS,JSON.parse(localStorage.getItem('lab_tts')||'{}'))}catch(e){}
 function ttsSave(){try{localStorage.setItem('lab_tts',JSON.stringify({on:TTS.on,rate:TTS.rate,voice:TTS.voice}))}catch(e){}}
@@ -2007,6 +2079,7 @@ async function saySrv(parts,voice){
     if(i+1<parts.length){nxt=get(parts[i+1]);nxt.catch(()=>{})}  // следующая фраза синтезируется, пока звучит текущая
     await new Promise(res=>{
       const a=new Audio(URL.createObjectURL(blob));AS.audio=a;a.playbackRate=TTS.rate;
+      AS.audioDone=res;  // «Стоп» ставит звук на паузу, а событие ended тогда не приходит: завершаем ожидание вручную
       a.onended=a.onerror=()=>{URL.revokeObjectURL(a.src);res()};a.play().catch(()=>res());
     });
   }
@@ -2085,11 +2158,43 @@ async function asDo(a){
       if(sel.value!==o.value){sel.value=o.value;sel.dispatchEvent(new Event('change'));await asSleep(300);await asUntil(()=>READY.samples===CURTAB,15000)}
       return}
     case 'method':{
-      const key={fingerprint:'matcher',iris:'encoder',face:'embedder'}[CURTAB],el=key&&$('p_'+key);
+      const key={fingerprint:'matcher',iris:'encoder',face:'embedder',voice:'method'}[CURTAB],el=key&&$('p_'+key);
       const o=el&&[...el.options].find(x=>x.value===a.value);
       if(!o){asLog('','⚠️ Такого метода нет на этой вкладке.');return}
       el.value=o.value;el.dispatchEvent(new Event('change'));await asSleep(300);return}
-    case 'threshold':$('th').value=a.value;$('th').dispatchEvent(new Event('input'));return;
+    case 'threshold':{
+      const v=a.delta!==undefined?Math.min(0.95,Math.max(0.01,parseFloat($('th').value)+a.delta)):a.value;
+      $('th').value=v.toFixed(2);$('th').dispatchEvent(new Event('input'));asLog('','Порог: '+v.toFixed(2).replace('.',','));return}
+    case 'sample':return asPickSample(a);
+    case 'step':{
+      if(!procData||!procData.steps)await asClick('bproc','steps');
+      const n=procData.steps.length;let i=a.n!==undefined?(a.n===-1?n-1:a.n-1):curStep+a.delta;
+      if(i<0||i>=n){const m=i<0?'Это первый этап.':'Это последний этап.';asLog('','🤖 '+m);await say(m);return}
+      curStep=i;renderStep();asScroll('stepImg');
+      const st=procData.steps[i],d=st.description||st.desc||'';asLog('',st.title);
+      await say(st.title.replace(/^(\d+)\.\s*/,'Этап $1: ')+'. '+d);return}
+    case 'repeat':case 'cancel':return;  // обрабатываются в asRun
+    case 'record':return recordTo(a.slot==='b'?'B':'A');
+    case 'play':playSample(a.slot==='b'?'sb':'sa');return;
+    case 'task':{
+      await asUntil(()=>CD.tasks&&CD.tasks.length>0,8000);
+      const el=document.querySelector(`.cdtask[data-id="${a.id}"]`);if(!el){asLog('','⚠️ Такого задания нет.');return}
+      el.click();await asSleep(600);asScroll('cdTitle');return}
+    case 'code_run':{asScroll('cdOut');await asClick('cdRun','cdOut');await asSleep(1500);
+      const t=($('cdFeedback').textContent||'').trim();if(t){asLog('','🤖 '+t);await say(t)}return}
+    case 'code_submit':{
+      if(!confirm('Проверить решение? Попытка будет засчитана (после трёх попыток открывается полное решение).')){asLog('','Проверка не запущена.');return}
+      await asClick('cdSubmit','cdScore');await asSleep(2500);
+      const t=($('cdScore').textContent||'').replace(/\s+/g,' ').trim();if(t){asLog('','🤖 '+t);await say(t)}return}
+    case 'code_reset':{
+      if(!confirm('Вернуть начальный код? Ваш текущий код будет заменён.')){asLog('','Код не изменён.');return}
+      $('cdReset').click();return}
+    case 'hint':{const b=document.querySelector(`#cdHintBtns button[data-lv="${a.level}"]`);if(!b)return;asScroll('cdChat');b.click();await asSleep(900);
+      await say('Подсказка '+a.level+' показана ниже. Прочитайте её и попробуйте исправить код.');return}
+    case 'code_explain':asScroll('cdChat');$('cdExplain').click();await asSleep(900);return;
+    case 'nn_play':$('nnPlay').click();return;
+    case 'nn_step':$('nnStep').click();return;
+    case 'nn_reset':$('nnReset').click();return;
     case 'tour':return asTour();
     case 'stages':await asClick('bproc','steps');await say(`Показаны этапы обработки образца A. Переключайте их по кнопкам над картинкой.`);return;
     case 'compare':{await asClick('bcmp','cmpRes');const t=asDecision();asLog('','🤖 '+t);await say(t);return}
@@ -2128,17 +2233,42 @@ async function asDo(a){
     case 'help':return;
   }
 }
-async function asRun(text){
+async function asPickSample(a){
+  const pad=(n,k)=>String(n).padStart(k,'0'),src=encodeURIComponent($('srcSel').value||'');
+  const exact=[new RegExp('(^|[^0-9])'+a.n+'_'+a.m+'$'),new RegExp('^[fe]'+pad(a.n,2)+'_i'+a.m+'$'),new RegExp('^v'+pad(a.n,2)+'_r'+a.m+'$')];
+  const queries=CURTAB==='fingerprint'?[`${a.n}_${a.m}`,`f${pad(a.n,2)}_i${a.m}`]:(CURTAB==='iris'?[`e${pad(a.n,2)}_i${a.m}`]:(CURTAB==='voice'?[`v${pad(a.n,2)}_r${a.m}`]:[String(a.n)]));
+  let found=null;
+  for(const q of queries){
+    const r=await fetch(API()+'/samples?source='+src+'&q='+encodeURIComponent(q)+'&limit=20');if(!r.ok)continue;
+    found=(await r.json()).find(x=>!String(x.id).startsWith('up_')&&exact.some(re=>re.test(x.id)));if(found)break;
+  }
+  if(!found){const m=`Образец ${a.kind} ${a.n}, снимок ${a.m} в этом наборе не найден. Проверьте номер или выберите другой набор.`;asLog('','⚠️ '+m);await say('Такого образца в этом наборе нет.');return}
+  const sel=$(a.slot==='a'?'sa':'sb');
+  [$('sa'),$('sb')].forEach(s=>{if(![...s.options].some(o=>o.value===found.id)){const op=document.createElement('option');op.value=found.id;op.textContent=found.label;s.appendChild(op)}});
+  sel.value=found.id;updateThumbs();asLog('','Образец '+a.slot.toUpperCase()+': '+found.label);
+}
+function asCancel(){
+  AS.abort=true;try{speechSynthesis.cancel()}catch(e){}try{AS.audio&&AS.audio.pause()}catch(e){}try{AS.sr&&AS.sr.abort()}catch(e){}
+  if(AS.audioDone){const d=AS.audioDone;AS.audioDone=null;d()}
+  asLog('','Остановлено.');
+}
+function asHist(t){try{let h=JSON.parse(localStorage.getItem('lab_as_hist')||'[]').filter(x=>x!==t);h.push(t);localStorage.setItem('lab_as_hist',JSON.stringify(h.slice(-30)))}catch(e){}}
+async function asRun(text,alts){
   text=String(text||'').trim();if(!text)return;
-  if(AS.busy){asLog('','Подождите: предыдущая команда ещё выполняется. Кнопка «Стоп» её остановит.');return}
+  if(/^(стоп|хватит|отмена|отмени|остановись|прекрати)[.!]?$/i.test(text)){$('as-panel').classList.add('open');asLog('you','🗣 '+text);asCancel();return}  // работает и во время выполнения
+  if(AS.busy){asLog('','Подождите: предыдущая команда ещё выполняется. Скажите «стоп» или нажмите Esc.');return}
   $('as-panel').classList.add('open');asLog('you','🗣 '+text);
   let r;
-  try{r=await api('/api/v1/assistant/parse',{text,context:{mod:CURTAB}})}catch(e){asLog('','⚠️ '+e.message);return}
+  try{r=await api('/api/v1/assistant/parse',{text,alternatives:alts||[],context:{mod:CURTAB}})}catch(e){asLog('','⚠️ '+e.message);return}
+  if(r.heard&&r.heard!==text)asLog('you','(понято как: '+r.heard+')');
   asLog('','🤖 '+r.reply);
-  if(!r.understood){asChips(r.examples||[]);await say('Команда не распознана. Попробуйте одну из подсказок.');return}
+  if(!r.understood){asChips(r.examples||[]);await say(r.reply.length>220?'Команда не распознана. Попробуйте одну из подсказок.':r.reply);return}
+  if(r.actions.length===1&&r.actions[0].do==='repeat'){if(!AS.last){await say('Повторять пока нечего.');return}return asRun(AS.last)}
+  if(r.actions.length===1&&r.actions[0].do==='cancel'){asCancel();return}
+  AS.last=r.heard||text;asHist(AS.last);
   asChips([]);AS.busy=true;AS.abort=false;$('as-stop').style.display='';
   try{
-    const quick=r.actions.length&&r.actions.every(a=>['open','source','method','threshold','page','train_mod','train_data'].includes(a.do));
+    const quick=r.actions.length&&r.actions.every(a=>['open','source','method','threshold','page','train_mod','train_data','sample','step','task','hint','code_run','code_reset','code_explain','nn_play','nn_step','nn_reset'].includes(a.do));
     if(r.actions.some(a=>a.do==='help')){await say(r.reply)}
     else if(!quick||r.actions.length>1)await say(r.reply);
     if(AS_BIO.includes(CURTAB))await asUntil(()=>READY.info===CURTAB&&READY.samples===CURTAB,8000);  // страница ещё грузит списки
@@ -2149,20 +2279,29 @@ async function asRun(text){
 function asListen(){
   const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
   if(!SR){asLog('','Распознавание речи этим браузером не поддерживается. Откройте Chrome или введите команду текстом.');return}
-  speechSynthesis&&speechSynthesis.cancel();
-  const sr=new SR();sr.lang='ru-RU';sr.interimResults=false;sr.maxAlternatives=1;
-  $('as-panel').classList.add('open');AS.fab.classList.add('live');asLog('','🎤 Слушаю...');
-  sr.onresult=e=>asRun(e.results[0][0].transcript);
-  sr.onerror=e=>asLog('','⚠️ Микрофон: '+({'not-allowed':'нет разрешения на микрофон','no-speech':'речь не услышана','audio-capture':'микрофон не найден'}[e.error]||e.error));
-  sr.onend=()=>AS.fab.classList.remove('live');
-  try{sr.start()}catch(e){AS.fab.classList.remove('live')}
+  if(AS.sr){try{AS.sr.stop()}catch(e){}return}  // повторное нажатие или Alt+V останавливает запись
+  try{speechSynthesis.cancel()}catch(e){}try{AS.audio&&AS.audio.pause()}catch(e){}
+  const sr=new SR();AS.sr=sr;sr.lang='ru-RU';sr.interimResults=true;sr.maxAlternatives=3;
+  $('as-panel').classList.add('open');AS.fab.classList.add('live');$('as-live').textContent='🎤 Слушаю... (Alt+V - остановить)';
+  let done=false;
+  sr.onresult=e=>{
+    const r=e.results[e.results.length-1];
+    if(!r.isFinal){$('as-live').textContent='🎤 '+r[0].transcript;return}
+    done=true;$('as-live').textContent='';
+    const alts=[...r].map(x=>x.transcript.trim()).filter(Boolean);  // все варианты распознавания: сервер берёт первый, который понял
+    asRun(alts[0],alts.slice(1));
+  };
+  sr.onerror=e=>{done=true;$('as-live').textContent='';asLog('','⚠️ Микрофон: '+({'not-allowed':'нет разрешения на микрофон','no-speech':'речь не услышана, повторите','audio-capture':'микрофон не найден','network':'нет связи с сервисом распознавания речи'}[e.error]||e.error))};
+  sr.onend=()=>{AS.sr=null;AS.fab.classList.remove('live');if(!done)$('as-live').textContent=''};
+  try{sr.start()}catch(e){AS.sr=null;AS.fab.classList.remove('live')}
 }
 (function asInit(){
   const fab=document.createElement('button');fab.id='as-fab';fab.title='Помощник лаборатории: команды голосом или текстом';fab.textContent='🎤';
   const panel=document.createElement('div');panel.id='as-panel';
   panel.innerHTML=`<div class="row"><b>Помощник лаборатории</b><button class="sec" id="as-x" style="margin-left:auto" title="Свернуть">×</button></div>
-    <div class="leg" style="margin:4px 0 8px">Команда голосом или текстом, например: «покажи, как изображение превращается в решение». Скажите «что ты умеешь», чтобы услышать весь список.</div>
-    <div class="row"><input type="text" id="as-txt" placeholder="Напишите команду"><button id="as-send" title="Выполнить">▶</button><button id="as-mic" title="Сказать команду (Chrome)">🎤</button></div>
+    <div class="leg" style="margin:4px 0 8px">Команда голосом или текстом, например: «покажи, как изображение превращается в решение». Скажите «что ты умеешь», чтобы услышать весь список. Клавиши: Alt+V - говорить, Esc - стоп. Слова «повтори» и «стоп» работают голосом.</div>
+    <div class="row"><input type="text" id="as-txt" placeholder="Напишите команду (↑ - прошлые)"><button id="as-send" title="Выполнить">▶</button><button id="as-mic" title="Сказать команду (Chrome)">🎤</button></div>
+    <div class="leg" id="as-live" style="min-height:16px;color:var(--acc)"></div>
     <div id="as-chips"></div>
     <div class="row"><button class="sec" id="as-stop" style="display:none">■ Стоп</button><a href="/labplus/voice" style="font-size:12px;margin-left:auto">LAB+: голос, ROC, стандарты</a></div>
     <div id="as-log" style="margin-top:6px"></div>
@@ -2175,9 +2314,21 @@ function asListen(){
   document.body.append(fab,panel);AS.fab=fab;AS.panel=panel;
   fab.onclick=()=>panel.classList.toggle('open');$('as-x').onclick=()=>panel.classList.remove('open');
   $('as-send').onclick=()=>{const t=$('as-txt').value;$('as-txt').value='';asRun(t)};
-  $('as-txt').onkeydown=e=>{if(e.key==='Enter')$('as-send').click()};
+  let hi=-1;
+  $('as-txt').onkeydown=e=>{
+    if(e.key==='Enter'){hi=-1;$('as-send').click();return}
+    if(e.key==='ArrowUp'||e.key==='ArrowDown'){  // история команд
+      let h=[];try{h=JSON.parse(localStorage.getItem('lab_as_hist')||'[]')}catch(x){}
+      if(!h.length)return;e.preventDefault();
+      hi=e.key==='ArrowUp'?Math.min(h.length-1,hi+1):Math.max(-1,hi-1);
+      $('as-txt').value=hi<0?'':h[h.length-1-hi];
+    }};
+  document.addEventListener('keydown',e=>{
+    if(e.altKey&&(e.key==='v'||e.key==='V'||e.key==='м'||e.key==='М')){e.preventDefault();asListen()}
+    else if(e.key==='Escape'&&(AS.busy||AS.sr||(speechSynthesis&&speechSynthesis.speaking)))asCancel();
+  });
   $('as-mic').onclick=asListen;
-  $('as-stop').onclick=()=>{AS.abort=true;try{speechSynthesis.cancel()}catch(e){}try{AS.audio&&AS.audio.pause()}catch(e){}asLog('','Остановлено.')};
+  $('as-stop').onclick=asCancel;
   $('as-on').checked=TTS.on;$('as-on').onchange=e=>{TTS.on=e.target.checked;ttsSave();if(!TTS.on)try{speechSynthesis.cancel()}catch(x){}};
   $('as-rate').value=TTS.rate;$('as-ratev').textContent=TTS.rate;$('as-rate').oninput=e=>{TTS.rate=parseFloat(e.target.value);$('as-ratev').textContent=TTS.rate;ttsSave()};
   $('as-voice').onchange=e=>{TTS.voice=e.target.value;ttsSave()};

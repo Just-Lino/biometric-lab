@@ -1,9 +1,11 @@
-"""Голосовой шаблон: регистрация, проверка «свой/чужой», хранение (только шаблон, без аудио)."""
+"""Голосовой шаблон: регистрация, проверка «свой/чужой». В профиле только числа; записи фраз лежат отдельными WAV, чтобы их можно было прослушать, и удаляются вместе с профилем."""
 from __future__ import annotations
 
 import json
 import os
+import hashlib
 import re
+import shutil
 import threading
 import time
 from pathlib import Path
@@ -22,6 +24,30 @@ def data_dir() -> Path:
     p = Path(os.environ.get("LABPLUS_DATA", "labplus_data"))
     p.mkdir(parents=True, exist_ok=True)
     return p
+
+
+def audio_dir(name: str) -> Path:
+    """Папка с записями профиля; имя папки - хэш имени, чтобы не зависеть от символов в имени."""
+    return data_dir() / "voice_audio" / hashlib.sha1((name or "").strip().encode("utf-8")).hexdigest()[:16]
+
+
+def save_phrases(name: str, wavs: list[bytes]) -> None:
+    d = audio_dir(name)
+    with _LOCK:
+        shutil.rmtree(d, ignore_errors=True)
+        d.mkdir(parents=True, exist_ok=True)
+        for i, w in enumerate(wavs):
+            (d / f"{i}.wav").write_bytes(w)
+
+
+def phrase_count(name: str) -> int:
+    d = audio_dir(name)
+    return len(list(d.glob("*.wav"))) if d.is_dir() else 0
+
+
+def phrase_path(name: str, i: int) -> Path | None:
+    p = audio_dir(name) / f"{int(i)}.wav"
+    return p if p.is_file() else None
 
 
 def _store() -> Path:
@@ -99,7 +125,7 @@ def get_profile(name: str) -> dict | None:
 
 def list_profiles() -> list[dict]:
     return [{"name": n, "n_phrases": p["n_phrases"], "created": p.get("created", ""),
-             "dim": p["dim"]} for n, p in _load().items()]
+             "dim": p["dim"], "n_audio": phrase_count(n)} for n, p in _load().items()]
 
 
 def delete_profile(name: str) -> bool:
@@ -107,6 +133,7 @@ def delete_profile(name: str) -> bool:
         db = _load()
         ok = db.pop((name or "").strip(), None) is not None
         _save(db)
+        shutil.rmtree(audio_dir(name), ignore_errors=True)
     return ok
 
 

@@ -46,7 +46,7 @@ def test_api_flow():
         assert c.post("/api/v1/biometrics/iris/process", json={"sample_id": "x"}).status_code == 404
         assert c.post("/api/v1/biometrics/face/process", json={"sample_id": "x"}).status_code == 404
         mods = {m["name"] for m in c.get("/api/v1/biometrics").json()}
-        assert mods == {"fingerprint", "face", "iris"}
+        assert mods == {"fingerprint", "face", "iris", "voice"}
         info = c.get("/api/v1/biometrics/face/info").json()
         assert info["detectors"]["haar"] is True and "persons" in info
         assert set(info["detectors"]) == {"haar", "haar_alt2", "haar_alt", "haar_profile", "ssd", "ultraface", "yunet"}

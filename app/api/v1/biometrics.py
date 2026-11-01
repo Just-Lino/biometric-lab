@@ -72,18 +72,28 @@ def sample_png(modality: str, sample_id: str, extra_noise: float = 0):
     return Response(data, media_type="image/png")
 
 
+@router.get("/{modality}/sample/{sample_id}.wav")
+def sample_wav(modality: str, sample_id: str, extra_noise: float = 0):
+    """Звук образца (для биометрий, где образец - запись голоса)."""
+    fn = getattr(_mod(modality), "get_sample_audio", None)
+    if fn is None:
+        raise HTTPException(404, "У этой биометрии нет звука")
+    return Response(_guard(fn, sample_id, {"extra_noise": extra_noise}), media_type="audio/wav")
+
+
 @router.post("/{modality}/upload")
 async def upload(modality: str, file: UploadFile = File(...)):
     data = await file.read(MAX_UPLOAD_BYTES + 1)  # читаем не больше лимита: большой файл не должен целиком попасть в память
     if len(data) > MAX_UPLOAD_BYTES:
         raise HTTPException(413, "Файл больше 5 МБ")
-    try:  # размер в пикселях берётся из заголовка файла, без полного декодирования: сжатый файл может распаковаться в гигабайты
-        from PIL import Image
-        w, h = Image.open(io.BytesIO(data)).size
-    except Exception:
-        raise HTTPException(400, "Не удалось прочитать изображение")
-    if w * h > MAX_UPLOAD_PIXELS:
-        raise HTTPException(413, f"Изображение слишком большое ({w}×{h}): допускается до {MAX_UPLOAD_PIXELS // 1_000_000} мегапикселей")
+    if getattr(_mod(modality), "upload_kind", "image") == "image":
+        try:  # размер в пикселях берётся из заголовка файла, без полного декодирования: сжатый файл может распаковаться в гигабайты
+            from PIL import Image
+            w, h = Image.open(io.BytesIO(data)).size
+        except Exception:
+            raise HTTPException(400, "Не удалось прочитать изображение")
+        if w * h > MAX_UPLOAD_PIXELS:
+            raise HTTPException(413, f"Изображение слишком большое ({w}×{h}): допускается до {MAX_UPLOAD_PIXELS // 1_000_000} мегапикселей")
     sid = _guard(_mod(modality).upload, data)
     record_event("upload", {"modality": modality, "sample_id": sid})
     return {"sample_id": sid}

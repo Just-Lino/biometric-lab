@@ -73,17 +73,21 @@ def voice_analyze(file: UploadFile = File(...)):
 
 @router.post("/api/labplus/voice/enroll")
 def voice_enroll(name: str = Form(...), files: List[UploadFile] = File(...)):
-    vecs, quality = [], []
+    vecs, quality, raws = [], [], []
     last = None
     for i, f in enumerate(files, 1):
         try:
-            a = _analyze_upload(f)
+            raw = _read_limited(f, MAX_AUDIO)
+            a = _guard(audio.analyze, _guard(audio.read_wav, raw))
+            raws.append(raw)
         except HTTPException as e:
             raise HTTPException(400, f"Фраза {i}: {e.detail}")
         vecs.append(a["vector"])
         quality.append({"speech_sec": round(a["speech_sec"], 2), "f0_hz": None if a["f0_hz"] is None else round(a["f0_hz"], 1)})
         last = a
     info = _guard(voice_core.enroll, name, vecs)
+    voice_core.save_phrases(info["name"], raws)
+    info["n_audio"] = len(raws)
     info["phrases"] = quality
     info["viz"] = audio.viz_payload(last)
     return info
@@ -123,6 +127,14 @@ def voice_robustness(name: str = Form(...), threshold: float = Form(0.5), file: 
 @router.get("/api/labplus/voice/profiles")
 def voice_profiles():
     return {"profiles": voice_core.list_profiles(), "min_phrases": voice_core.MIN_ENROLL, "max_phrases": voice_core.MAX_ENROLL}
+
+
+@router.get("/api/labplus/voice/profiles/{name}/phrase/{i}.wav")
+def voice_phrase(name: str, i: int):
+    p = voice_core.phrase_path(name, i)
+    if p is None:
+        raise HTTPException(404, "Запись не найдена.")
+    return FileResponse(p, media_type="audio/wav")
 
 
 @router.delete("/api/labplus/voice/profiles/{name}")

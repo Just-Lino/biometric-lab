@@ -9,6 +9,7 @@ from typing import Any
 
 class BiometricModule(ABC):
     name: str = ""
+    upload_kind: str = "image"  # что загружают в модуль: image или audio
     title: str = ""
     default_threshold: float = 0.5
 

@@ -3,13 +3,14 @@
 <script src="/labplus/static/labplus.js" data-assistant></script>
 <div class="wrap">
 <h1>Голосовая биометрия</h1>
-<p class="sub">Регистрация голоса → проверка «свой/чужой» → голосовые команды лаборатории. Хранится только числовой шаблон, записи не сохраняются.</p>
+<p class="sub">Регистрация голоса → проверка «свой/чужой» → голосовые команды лаборатории. В профиле хранится числовой шаблон; записи фраз лежат на сервере отдельными файлами, чтобы их можно было прослушать, и удаляются вместе с профилем.</p>
 
 <div class="card"><h2>1. Голосовой шаблон</h2>
  <div class="grid g2"><div>
   <label>Имя профиля (лучше псевдоним, не ФИО)</label><input type="text" id="name" maxlength="32" placeholder="например, student-1">
   <label>Существующие профили</label><select id="profiles"></select>
   <div class="row" style="margin-top:8px"><button id="useProfile">Использовать выбранный</button><button id="delProfile">Удалить профиль</button></div>
+  <div id="profAudio" class="note" style="margin-top:8px"></div>
  </div><div>
   <label>Произнесите разные фразы по 2–5 секунд (нужно минимум 3):</label>
   <div class="note" id="phraseHint"></div>
@@ -63,6 +64,16 @@ async function refreshProfiles(){
   if(!d.profiles.length){const o=document.createElement('option');o.textContent='— профилей пока нет —';o.value='';s.append(o)}
   const cur=LAB.store.get('voiceName',''); if(cur&&d.profiles.some(p=>p.name===cur)) s.value=cur;
   $('#name').value=$('#name').value||cur;
+  window._profData=d;renderProfAudio(d);
+}
+$('#profiles').onchange=()=>renderProfAudio(window._profData);
+function renderProfAudio(d){
+  const box=$('#profAudio'),n=$('#profiles').value;box.innerHTML='';
+  const p=d&&d.profiles.find(x=>x.name===n); if(!p){return}
+  if(!p.n_audio){box.textContent='Записи этого профиля не сохранены (профиль создан до добавления прослушивания). Создайте шаблон заново, чтобы их можно было слушать.';return}
+  box.append('Записи профиля: ');
+  for(let i=0;i<p.n_audio;i++){const b=document.createElement('button');b.textContent='▶ Фраза '+(i+1);
+    b.onclick=()=>{if(window._pa){window._pa.pause()}window._pa=new Audio('/api/labplus/voice/profiles/'+encodeURIComponent(n)+'/phrase/'+i+'.wav');window._pa.play().catch(()=>LAB.show($('#enrollMsg'),'Не удалось воспроизвести запись.',true))};box.append(b,' ')}
 }
 function setActive(name){LAB.store.set('voiceName',name);const n=document.getElementById('lp-name');if(n)n.textContent=name||'нет';const c=document.getElementById('lp-spk');if(c){c.disabled=!name}}
 
@@ -77,13 +88,13 @@ async function toggleRecord(btn,lvlEl,onDone){
 const guard=(el,fn)=>async()=>{try{await fn()}catch(e){LAB.show(el,e.message,true)}};
 
 $('#recPhrase').onclick=guard($('#enrollMsg'),()=>toggleRecord($('#recPhrase'),$('#lvl1'),blob=>{phrases.push(blob);renderPhrases()}));
-function renderPhrases(){$('#phraseList').textContent=phrases.length?`Записано фраз: ${phrases.length}`:'';$('#enroll').disabled=phrases.length<3}
+function renderPhrases(){const pl=$('#phraseList');pl.textContent=phrases.length?`Записано фраз: ${phrases.length} `:'';phrases.forEach((b,i)=>{const x=document.createElement('button');x.textContent='▶ '+(i+1);x.onclick=()=>new Audio(URL.createObjectURL(b)).play();pl.append(x,' ')});$('#enroll').disabled=phrases.length<3}
 $('#clearPhrases').onclick=()=>{phrases=[];renderPhrases()};
 $('#enroll').onclick=guard($('#enrollMsg'),async()=>{
   const fd=new FormData();fd.append('name',$('#name').value);phrases.forEach((b,i)=>fd.append('files',b,`p${i}.wav`));
   const r=await LAB.api('/api/labplus/voice/enroll',{method:'POST',body:fd});
   const sc=r.self_consistency==null?'':` Стабильность голоса между фразами: ${r.self_consistency.toFixed(2)}.`;
-  LAB.show($('#enrollMsg'),`Шаблон «${r.name}» создан: ${r.n_phrases} фразы, ${r.dim} признаков.${sc} Сами записи не сохранены.`);
+  LAB.show($('#enrollMsg'),`Шаблон «${r.name}» создан: ${r.n_phrases} фразы, ${r.dim} признаков.${sc} Записи фраз сохранены, их можно прослушать ниже.`);
   setActive(r.name);phrases=[];renderPhrases();await refreshProfiles();$('#profiles').value=r.name;
 });
 $('#useProfile').onclick=()=>{const n=$('#profiles').value;if(n){setActive(n);$('#name').value=n;LAB.show($('#enrollMsg'),`Активный профиль: ${n}`)}};

@@ -31,7 +31,8 @@ def acts(text, mod="fingerprint"):
     ("покажи кривые ROC", "fingerprint", [("page", "/labplus/metrics")]),
     ("стандарты ISO", "face", [("page", "/labplus/standards")]),
     ("проверь устойчивость к шуму", "fingerprint", [("page", "/labplus/robustness")]),
-    ("открой голосовую биометрию", "fingerprint", [("page", "/labplus/voice")]),
+    ("открой голосовую биометрию", "fingerprint", [("open", "voice")]),
+    ("открой страницу голоса LAB+", "fingerprint", [("page", "/labplus/voice")]),
 ])
 def test_phrases_become_actions(text, mod, expected):
     assert acts(text, mod) == expected
@@ -62,3 +63,66 @@ def test_assistant_api_and_limits():
         assert c.get("/api/v1/assistant/examples").json()["examples"] == EXAMPLES
         assert 'id="as-fab"' not in c.get("/").text  # кнопка создаётся скриптом, а не вшита в разметку
         assert "/api/v1/assistant/parse" in c.get("/").text and "labplus.js" not in c.get("/").text
+
+
+# ---------- улучшенное голосовое управление ----------
+@pytest.mark.parametrize("text, mod, expected", [
+    ("порог ноль пять", "fingerprint", [("threshold", 0.5)]),
+    ("сравни порог ноль целых две десятых", "fingerprint", [("threshold", 0.2), ("compare", None)]),
+    ("порог пятьдесят процентов", "fingerprint", [("threshold", 0.5)]),
+    ("увеличь порог", "fingerprint", [("threshold", None)]),
+    ("повтори", "fingerprint", [("repeat", None)]),
+    ("стоп", "fingerprint", [("cancel", None)]),
+    ("следующий этап", "fingerprint", [("step", None)]),
+    ("перейди на этап четыре", "fingerprint", [("step", None)]),
+    ("первый этап", "fingerprint", [("step", None)]),
+    ("покажи этапы", "nn", [("open", "fingerprint"), ("stages", None)]),
+    ("открой практикум", "fingerprint", [("open", "code")]),
+    ("задание бинаризация", "code", [("open", "code"), ("task", "binarize")]),
+    ("задание три", "code", [("open", "code"), ("task", "crossing_number")]),
+    ("запусти код на примере", "code", [("open", "code"), ("code_run", None)]),
+    ("дай подсказку два", "code", [("open", "code"), ("hint", None)]),
+    ("проверь решение", "code", [("code_submit", None)]),
+    ("объясни результат", "code", [("code_explain", None)]),
+    ("запусти обучение", "nn", [("nn_play", None)]),
+    ("открой площадку нейросети и запусти обучение", "fingerprint", [("open", "nn"), ("nn_play", None)]),
+    ("начни обучение на CASIA", "nn", [("open", "train"), ("train_mod", "iris"), ("train_data", "casia_interval"), ("train_start", None)]),
+])
+def test_voice_commands(text, mod, expected):
+    got = [(a["do"], a.get("mod") or a.get("value") or a.get("url") or a.get("id")) for a in parse(text, {"mod": mod})["actions"]]
+    assert [(d, v) for d, v in got] == [(d, v if v is not None else g) for (d, v), (_, g) in zip(expected, got)]
+
+
+def test_sample_selection_by_voice():
+    r = parse("выбери палец сто три оттиск два как образец б", {"mod": "fingerprint"})["actions"]
+    assert r == [{"do": "sample", "slot": "b", "kind": "палец", "n": 103, "m": 2}]
+    r = parse("сравни палец 101 оттиск 1 и палец 102 оттиск 3", {"mod": "fingerprint"})["actions"]
+    assert [(a["do"], a.get("slot"), a.get("n"), a.get("m")) for a in r] == [("sample", "a", 101, 1), ("sample", "b", 102, 3), ("compare", None, None, None)]
+    assert parse("выбери глаз пять снимок три", {"mod": "iris"})["actions"][0]["kind"] == "глаз"
+
+
+def test_relative_and_absolute_threshold():
+    assert parse("увеличь порог", {"mod": "face"})["actions"] == [{"do": "threshold", "delta": 0.05}]
+    assert parse("уменьши порог на 0,1", {"mod": "face"})["actions"] == [{"do": "threshold", "delta": -0.1}]
+    assert parse("порог на 0,3", {"mod": "face"})["actions"] == [{"do": "threshold", "value": 0.3}]
+
+
+def test_recognition_alternatives_pick_the_phrase_that_is_understood_better():
+    r = parse("сравни порок", {"mod": "fingerprint"}, ["сравни порог ноль три", "сравни пароль"])
+    assert r["heard"] == "сравни порог ноль три" and [a["do"] for a in r["actions"]] == ["threshold", "compare"]
+    r = parse("абракадабра", {"mod": "fingerprint"}, ["тоже ерунда"])
+    assert r["understood"] is False and r["heard"] == "абракадабра"
+
+
+def test_close_phrases_are_suggested_instead_of_guessing():
+    r = parse("покажи рельеф", {"mod": "fingerprint"})
+    assert [a["do"] for a in r["actions"]] == ["relief3d"]
+    r = parse("покажи тройное конвейер", {"mod": "fingerprint"})
+    assert r["understood"] is False and "Возможно, вы имели в виду" in r["reply"] and r["examples"]
+
+
+def test_api_accepts_alternatives():
+    with TestClient(app) as c:
+        r = c.post("/api/v1/assistant/parse", json={"text": "сравни порок", "alternatives": ["сравни порог ноль пять"], "context": {"mod": "fingerprint"}}).json()
+        assert r["heard"] == "сравни порог ноль пять" and r["actions"][0] == {"do": "threshold", "value": 0.5}
+        assert c.post("/api/v1/assistant/parse", json={"text": "a", "alternatives": ["x"] * 6}).status_code == 422
