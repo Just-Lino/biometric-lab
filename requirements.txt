@@ -10,6 +10,8 @@ scikit-image>=0.22
 scipy>=1.11
 pillow>=10.0
 scikit-learn>=1.4
+# PostgreSQL (нужен только при DATABASE_URL=postgresql://...; для SQLite не требуется)
+psycopg[binary,pool]>=3.1
 # для тестов
 pytest>=8.0
 httpx>=0.27

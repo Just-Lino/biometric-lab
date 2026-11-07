@@ -5,6 +5,7 @@ from fastapi.responses import Response
 from pydantic import BaseModel, Field, ValidationError
 
 from app.modules.registry import get_module, list_modules
+from app.modules.uploads import UPLOAD_ID
 from app.services import experiments
 from app.services.events import record_event
 
@@ -37,13 +38,25 @@ def _mod(name: str):
         raise HTTPException(404, f"Модуль «{name}» не найден")
 
 
+LOST_UPLOAD = ("Загруженный файл не найден: сервер был перезапущен, прошло много времени или файл загружен из другой сессии. "
+               "Загрузки хранятся только в памяти сервера. Загрузите файл заново.")
+
+
+def _check_uploads(modality: str, *sample_ids: str) -> None:
+    """Образец, похожий на загрузку, но отсутствующий у текущей сессии, это потерянная загрузка: понятный ответ 404 вместо ошибки внутри модуля."""
+    mod = _mod(modality)
+    for sid in sample_ids:
+        if UPLOAD_ID.fullmatch(sid) and not mod.has_upload(sid):
+            raise HTTPException(404, LOST_UPLOAD)
+
+
 def _guard(fn, *a, **k):
     try:
         return fn(*a, **k)
     except ValidationError as e:
         raise HTTPException(422, e.errors(include_url=False, include_context=False))
     except KeyError as e:
-        raise HTTPException(404, str(e))
+        raise HTTPException(404, e.args[0] if e.args and isinstance(e.args[0], str) else str(e))  # без кавычек, которые KeyError добавляет сам
     except ValueError as e:
         raise HTTPException(400, str(e))
 
@@ -68,6 +81,7 @@ def samples(modality: str, response: FastResponse, source: str | None = None, q:
 
 @router.get("/{modality}/sample/{sample_id}.png")
 def sample_png(modality: str, sample_id: str, extra_noise: float = 0):
+    _check_uploads(modality, sample_id)
     data = _guard(_mod(modality).get_sample_preview, sample_id, {"extra_noise": extra_noise})
     return Response(data, media_type="image/png")
 
@@ -75,6 +89,7 @@ def sample_png(modality: str, sample_id: str, extra_noise: float = 0):
 @router.get("/{modality}/sample/{sample_id}.wav")
 def sample_wav(modality: str, sample_id: str, extra_noise: float = 0):
     """Звук образца (для биометрий, где образец - запись голоса)."""
+    _check_uploads(modality, sample_id)
     fn = getattr(_mod(modality), "get_sample_audio", None)
     if fn is None:
         raise HTTPException(404, "У этой биометрии нет звука")
@@ -101,6 +116,7 @@ async def upload(modality: str, file: UploadFile = File(...)):
 
 @router.post("/{modality}/process")
 def process(modality: str, body: ProcessIn):
+    _check_uploads(modality, body.sample_id)
     res = _guard(_mod(modality).process, body.sample_id, body.params)
     record_event("process", {"modality": modality, "sample": body.sample_id, "params": body.params})
     return res
@@ -108,6 +124,7 @@ def process(modality: str, body: ProcessIn):
 
 @router.post("/{modality}/compare")
 def compare(modality: str, body: CompareIn):
+    _check_uploads(modality, body.sample_a, body.sample_b)
     res = _guard(_mod(modality).compare, body.sample_a, body.sample_b, body.params)
     decision = "MATCH" if res["similarity"] >= body.threshold else "NO MATCH"
     res.update(threshold=body.threshold, decision=decision)
@@ -140,6 +157,7 @@ def stress(modality: str, body: EvaluateIn):
 
 @router.post("/{modality}/relief")
 def relief(modality: str, body: ProcessIn):
+    _check_uploads(modality, body.sample_id)
     try:
         res = _guard(_mod(modality).relief, body.sample_id, body.params)
     except NotImplementedError:
@@ -150,6 +168,7 @@ def relief(modality: str, body: ProcessIn):
 
 @router.post("/{modality}/detectors")
 def detectors(modality: str, body: ProcessIn):
+    _check_uploads(modality, body.sample_id)
     try:
         return _guard(_mod(modality).compare_detectors, body.sample_id, body.params)
     except NotImplementedError:
@@ -158,6 +177,7 @@ def detectors(modality: str, body: ProcessIn):
 
 @router.post("/{modality}/embedders")
 def embedders(modality: str, body: CompareIn):
+    _check_uploads(modality, body.sample_a, body.sample_b)
     try:
         return _guard(_mod(modality).compare_embedders, body.sample_a, body.sample_b, body.params)
     except NotImplementedError:

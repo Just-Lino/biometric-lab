@@ -57,7 +57,7 @@ th{color:var(--mut);font-weight:500}
 .badge.m{background:var(--ok)}.badge.n{background:var(--bad)}
 .stack{display:flex;flex-direction:column;gap:14px}
 #chat{height:300px;overflow:auto;border:1px solid var(--line);border-radius:6px;padding:8px;background:#fafbfd;margin-bottom:8px}
-.msg{margin-bottom:8px}.msg.u{color:var(--acc)}.msg .t{color:var(--mut);font-size:11px}
+.msg{margin-bottom:8px;white-space:pre-wrap}.msg.u{color:var(--acc)}.msg .t{color:var(--mut);font-size:11px}
 .leg{font-size:12px;color:var(--mut)}
 #view3d,#viewP3{position:relative;height:430px;border-radius:8px;overflow:hidden;background:linear-gradient(#1d2740,#0e1424);cursor:grab;touch-action:none}
 #view3d canvas,#viewP3 canvas{display:block;width:100%;height:100%}
@@ -1383,12 +1383,12 @@ $('ask').onclick=async e=>{
   const mode=$('mode').value,q=$('q').value;
   const ctx=last?Object.assign({},last.context||{},{similarity:last.similarity,threshold:parseFloat($('th').value),n_a:last.n_a,n_b:last.n_b,matched:last.matched}):{};
   const chat=$('chat');
-  chat.innerHTML+=`<div class="msg u"><span class="t">Вы (${mode})</span><br>${q||'—'}</div>`;
+  chat.innerHTML+=`<div class="msg u"><span class="t">Вы (${mode})</span><br>${esc(q||'—')}</div>`;
   busy(e.target,true);
   try{
     const r=await api('/api/v1/tutor/ask',{mode,question:q,context:ctx});
-    chat.innerHTML+=`<div class="msg"><span class="t">Наставник (${r.provider})</span><br>${r.answer}</div>`;
-  }catch(err){chat.innerHTML+=`<div class="msg">Ошибка: ${err.message}</div>`}
+    chat.innerHTML+=`<div class="msg"><span class="t">Наставник (${r.provider})</span><br>${esc(r.answer)}</div>`;
+  }catch(err){chat.innerHTML+=`<div class="msg">Ошибка: ${esc(err.message)}</div>`}
   chat.scrollTop=chat.scrollHeight;busy(e.target,false);
 };
 

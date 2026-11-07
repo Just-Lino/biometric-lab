@@ -54,7 +54,8 @@ def status(light: bool = False):
 def snapshot(epoch: int):
     s = trainer.snapshot(epoch)
     if s is None:
-        raise HTTPException(404, "Снимок этой эпохи ещё не готов")
+        raise HTTPException(404, "Снимок этой эпохи недоступен: обучение ещё не дошло до неё, не запускалось или сервер был перезапущен "
+                                 "(состояние обучения хранится только в памяти сервера). Запустите обучение заново.")
     return s
 
 

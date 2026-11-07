@@ -58,5 +58,9 @@ unless asked. `data/lab.db` is the student's local database. Task solutions in `
 
 ## Working rules
 
-Before changing behaviour, run `python -m pytest -q` (195 tests, about 8 min) and report what fails. Keep new user-facing strings in Russian.
+Before changing behaviour, run `python -m pytest -q` (267 passed, 7 skipped, about 7 min) and report what fails. Keep new user-facing strings in Russian.
 All tabs live in `app/web/index.html` (see `setMod` and its `SECTIONS` map).
+## Deployment
+
+New env vars (see `.env.example`, README "Переменные окружения"): `DATABASE_URL` (PostgreSQL; otherwise SQLite from `DB_PATH`), `DB_POOL_MAX_SIZE`, `TUTOR_RATE_LIMIT_PER_HOUR`, `SANDBOX_MAX_CONCURRENT`, `PORT`, `COOKIE_SECURE`, `SUBJECT_HEADER` (ID пользователя сайта-хозяина из заголовка; tables events/attempts/experiments/training_runs have nullable `session_id` (hash of the lab_sid cookie) and `subject`, filled via `app.core.session.owner()`; never expose them to the client). SQL in `app/core/db.py` is written once with `?` placeholders and runs on both SQLite and PostgreSQL; use `c.insert(...)` and `json_field(...)` instead of dialect-specific SQL.
+Load test: `scripts/loadtest/locustfile.py` (local server only). In-memory state (uploads, training, rate limits, caches) is per process, so deploy with a single instance; see README "Ограничения при деплое".

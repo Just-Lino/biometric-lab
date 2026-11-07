@@ -31,6 +31,11 @@ class BiometricModule(ABC):
     def evaluate(self, params: dict, n_subjects: int = 10) -> dict[str, Any]:
         raise NotImplementedError
 
+    def has_upload(self, sample_id: str) -> bool:
+        """Есть ли такая загрузка у текущего посетителя (хранилище загрузок модуля лежит в `_uploads`)."""
+        store = getattr(self, "_uploads", None)
+        return store is not None and store.get(sample_id) is not None
+
     def upload(self, data: bytes) -> str:
         raise NotImplementedError
 

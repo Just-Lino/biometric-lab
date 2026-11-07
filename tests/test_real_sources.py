@@ -158,7 +158,7 @@ def _model(dataset):
                                  test_acc=0.5, epochs=1, config={}, trained_at="x", dataset=dataset, weights=net.state())
 
 
-def test_trained_net_refuses_other_dataset():
+def test_trained_net_refuses_other_dataset(real_dir):
     registry.store(_model("synthetic"))
     assert registry.require("fingerprint", "отпечатков", "synthetic").dataset == "synthetic"
     assert registry.require("fingerprint", "отпечатков").dataset == "synthetic"  # без указания набора проверки нет

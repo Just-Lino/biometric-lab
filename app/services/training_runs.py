@@ -2,13 +2,13 @@
 import json
 
 from app.core.db import connect
+from app.core.session import owner
 
 
 def save(modality: str, config: dict, summary: dict, curves: dict) -> int:
     with connect() as c:
-        cur = c.execute("INSERT INTO training_runs(modality, config, summary, curves) VALUES (?,?,?,?)",
-                        (modality, json.dumps(config, ensure_ascii=False), json.dumps(summary, ensure_ascii=False), json.dumps(curves)))
-        return cur.lastrowid
+        return c.insert("INSERT INTO training_runs(modality, config, summary, curves, session_id, subject) VALUES (?,?,?,?,?,?)",
+                        (modality, json.dumps(config, ensure_ascii=False), json.dumps(summary, ensure_ascii=False), json.dumps(curves), *owner()))
 
 
 def list_runs(limit: int = 40) -> list[dict]:

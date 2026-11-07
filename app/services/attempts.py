@@ -1,17 +1,17 @@
 """Репозиторий попыток студента (основа для Learning Analytics)."""
 import json
 
-from app.core.db import connect
+from app.core.db import connect, json_field
+from app.core.session import owner
 
 
 def add_attempt(task_id: str, code: str, g: dict, details: dict) -> int:
     with connect() as c:
-        cur = c.execute(
-            "INSERT INTO attempts(task_id, score, max_score, passed_basic, total_basic, passed_edge, total_edge, run_ok, answer_ok, code, details)"
-            " VALUES (?,?,?,?,?,?,?,?,?,?,?)",
+        return c.insert(
+            "INSERT INTO attempts(task_id, score, max_score, passed_basic, total_basic, passed_edge, total_edge, run_ok, answer_ok, code, details, session_id, subject)"
+            " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)",
             (task_id, g["score"], g["max_score"], g["passed_basic"], g["total_basic"], g["passed_edge"], g["total_edge"],
-             int(g["run_ok"]), int(g["answer_ok"]), code, json.dumps(details, ensure_ascii=False)))
-        return cur.lastrowid
+             int(g["run_ok"]), int(g["answer_ok"]), code, json.dumps(details, ensure_ascii=False), *owner()))
 
 
 def count(task_id: str) -> int:
@@ -40,8 +40,8 @@ def last_code(task_id: str) -> str | None:
 
 def summary() -> dict[str, dict]:
     with connect() as c:
-        rows = c.execute("SELECT task_id, COUNT(*) n, MAX(score) best FROM attempts GROUP BY task_id").fetchall()
-        hints = c.execute("SELECT json_extract(payload,'$.task') t, COUNT(*) n FROM events WHERE type='hint' GROUP BY t").fetchall()
+        rows = c.execute("SELECT task_id, COUNT(*) AS n, MAX(score) AS best FROM attempts GROUP BY task_id").fetchall()
+        hints = c.execute(f"SELECT {json_field('payload', 'task')} AS t, COUNT(*) AS n FROM events WHERE type='hint' GROUP BY 1").fetchall()
     out = {r["task_id"]: {"attempts": r["n"], "best": r["best"], "hints": 0} for r in rows}
     for h in hints:
         if h["t"]:

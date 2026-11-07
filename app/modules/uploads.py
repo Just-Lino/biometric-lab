@@ -2,6 +2,7 @@
 
 Файлы на диск не пишутся и пропадают при перезапуске сервера. Чужие загрузки не видны: образец доступен только
 той сессии, которая его загрузила (см. app/core/session.py)."""
+import re
 import threading
 import uuid
 from collections import OrderedDict
@@ -9,6 +10,10 @@ from collections import OrderedDict
 import numpy as np
 
 from app.core.session import current_sid
+
+
+# Идентификатор загрузки: по нему API отличает «загрузка потеряна» (перезапуск, чужая сессия) от неизвестного образца набора данных.
+UPLOAD_ID = re.compile(r"up_[0-9a-f]{6}")
 
 
 class UploadStore:

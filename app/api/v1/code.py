@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel, Field
 
-from app.sandbox.executor import execute
+from app.sandbox.executor import SandboxBusy, execute
 from app.sandbox.tasks import get_task, load_tasks, public_task
 from app.services import attempts, code_tutor
 from app.services.events import record_event
@@ -22,6 +22,14 @@ class SubmitIn(RunIn):
 class HintIn(BaseModel):
     task_id: str
     level: int = Field(ge=1, le=4)
+
+
+def _run_code(spec: str, code: str, mode: str) -> dict:
+    """Запуск кода в песочнице; при перегрузке ответ 503 с подсказкой повторить (попытка при этом не засчитывается)."""
+    try:
+        return execute(spec, code, mode)
+    except SandboxBusy as e:
+        raise HTTPException(status_code=503, detail=str(e), headers={"Retry-After": "5"})
 
 
 def _task(task_id: str) -> dict:
@@ -54,7 +62,7 @@ def task(task_id: str):
 @router.post("/run")
 def run(body: RunIn):
     t = _task(body.task_id)
-    res = execute(t["spec"], body.code, "example")
+    res = _run_code(t["spec"], body.code, "example")
     res["feedback"] = code_tutor.feedback(t, res)
     record_event("code_run", {"task": body.task_id, "ok": bool(res.get("example") and res["example"]["ok"])})
     return res
@@ -63,7 +71,7 @@ def run(body: RunIn):
 @router.post("/submit")
 def submit(body: SubmitIn):
     t = _task(body.task_id)
-    res = execute(t["spec"], body.code, "grade")
+    res = _run_code(t["spec"], body.code, "grade")
     g = grade(t, res, body.answer)
     res["grading"] = g
     res["feedback"] = code_tutor.feedback(t, res, g)

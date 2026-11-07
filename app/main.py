@@ -8,8 +8,8 @@ from fastapi.staticfiles import StaticFiles
 
 from app.api.v1 import assistant, biometrics, code, experiments, training, tutor
 from app.core.config import settings
-from app.core.db import init_db
-from app.core.session import SessionMiddleware
+from app.core.db import close_pools, init_db
+from app.core.session import SecurityHeadersMiddleware, SessionMiddleware
 from labplus import router as labplus_router  # дополнение LAB+: голос, метрики, устойчивость, стандарты
 
 WEB = Path(__file__).parent / "web"
@@ -22,9 +22,11 @@ async def lifespan(_: FastAPI):
         from app.modules.face import models
         models.download_missing_async()
     yield
+    close_pools()  # пулы соединений PostgreSQL закрываются при остановке; для SQLite ничего не делает
 
 
 app = FastAPI(title=settings.app_name, version="0.1.0", lifespan=lifespan)
+app.add_middleware(SecurityHeadersMiddleware)
 app.add_middleware(SessionMiddleware)  # анонимная сессия (cookie): загруженные изображения видны только их владельцу
 app.add_middleware(GZipMiddleware, minimum_size=1024)  # JSON со снимками обучения и картинками сжимается в разы
 # офлайн-режим: если выполнить `python -m scripts.download_assets`, Plotly и Three.js берутся из app/web/vendor, а не из интернета

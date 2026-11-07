@@ -4,6 +4,7 @@ import io
 import json
 
 from app.core.db import connect
+from app.core.session import owner
 
 COLUMNS = ["id", "ts", "modality", "sample_a", "sample_b", "similarity",
            "threshold", "decision", "n_a", "n_b", "matched", "params"]
@@ -15,15 +16,15 @@ def add_experiment(modality: str, sample_a: str, sample_b: str, params: dict,
     with connect() as c:
         c.execute(
             "INSERT INTO experiments(modality, sample_a, sample_b, params, similarity,"
-            " threshold, decision, n_a, n_b, matched) VALUES (?,?,?,?,?,?,?,?,?,?)",
+            " threshold, decision, n_a, n_b, matched, session_id, subject) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)",
             (modality, sample_a, sample_b, json.dumps(params), similarity,
-             threshold, decision, n_a, n_b, matched))
+             threshold, decision, n_a, n_b, matched, *owner()))
 
 
 def list_experiments(limit: int = 100) -> list[dict]:
     with connect() as c:
         rows = c.execute("SELECT * FROM experiments ORDER BY id DESC LIMIT ?", (limit,)).fetchall()
-    return [dict(r) for r in rows]
+    return [{k: v for k, v in dict(r).items() if k not in ("session_id", "subject")} for r in rows]  # кто выполнил, клиенту не отдаём
 
 
 def export_csv() -> str:
