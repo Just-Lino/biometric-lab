@@ -194,13 +194,13 @@
   LAB.ttsSave = function (patch) { try { localStorage.setItem('lab_tts', JSON.stringify(Object.assign({ on: true, rate: 1.05, voice: '' }, LAB.ttsPrefs(), patch))); } catch (e) { /* ничего */ } };
   LAB.ttsServer = async function () {
     if (LAB.tts.server) return LAB.tts.server;
-    try { const r = await fetch('/api/v1/assistant/voices'); LAB.tts.server = r.ok ? ((await r.json()).voices || []) : []; } catch (e) { LAB.tts.server = []; }
+    try { const r = await fetch('/api/v1/assistant/voices'); LAB.tts.server = r.ok ? ((await r.json()).voices || []).filter(v => v.lang === LAB.SPEECH.slice(0, 2)) : []; } catch (e) { LAB.tts.server = []; }
     return LAB.tts.server;
   };
   LAB.speak = async function (text) {
     const pref = LAB.ttsPrefs();
     if (!text || pref.on === false) return;
-    const vs = LAB.SPEECH === 'ru-RU' ? await LAB.ttsServer() : [], v = pref.voice || '';  // серверные голоса Piper русские
+    const vs = await LAB.ttsServer(), v = pref.voice || '';
     const id =v.startsWith('srv:') && vs.some(x => 'srv:' + x.id === v) ? v.slice(4) : (!v && vs.length ? vs[0].id : null);
     if (id) {
       try {

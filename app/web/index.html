@@ -2128,13 +2128,12 @@ function ttsVoices(){
 }
 async function ttsLoadServer(){
   TTS.info=null;
-  try{const r=await fetch('/api/v1/assistant/voices');if(r.ok){TTS.info=await r.json();TTS.server=TTS.info.voices||[]}else TTS.server=[]}catch(e){TTS.server=[]}
+  try{const r=await fetch('/api/v1/assistant/voices');if(r.ok){TTS.info=await r.json();TTS.server=(TTS.info.voices||[]).filter(v=>v.lang===SPEECH.slice(0,2))}else TTS.server=[]}catch(e){TTS.server=[]}
   ttsVoices();
   const h=$('as-voicehint');
   if(h)h.textContent=TTS.server.length?'':(TTS.info&&!TTS.info.engine?LT('Голос лаборатории не установлен: в Python, которым запущен сервер (')+TTS.info.python+LT('), нет пакета piper-tts. Выполните: "')+TTS.info.python+LT('" -m pip install -r requirements-tts.txt и перезапустите сервер.'):(TTS.info&&!TTS.info.files?LT('Файлы голосов не скачаны: python -m scripts.download_tts'):''));
 }
 function ttsTarget(){  // что озвучивает: серверный голос (если есть) или голос браузера
-  if(SPEECH!=='ru-RU')return{};  // серверные голоса Piper русские: для казахского и английского говорит браузер
   const v=TTS.voice;
   if(v.startsWith('srv:')&&TTS.server.some(s=>'srv:'+s.id===v))return{srv:v.slice(4)};
   if(!v&&TTS.server.length)return{srv:TTS.server[0].id};

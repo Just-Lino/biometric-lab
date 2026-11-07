@@ -1,7 +1,9 @@
-"""Озвучка на сервере: русские голоса Piper (ONNX, процессор). Голоса лежат в models/tts/ (скачивает `python -m scripts.download_tts`,
+"""Озвучка на сервере: голоса Piper (ONNX, процессор): русские и казахские. Голоса лежат в models/tts/ (скачивает `python -m scripts.download_tts`,
 в Git не попадают). Если пакет piper-tts или файлы голосов отсутствуют, озвучка недоступна, а интерфейс использует голос браузера.
 
-Движок Piper: GPL-3.0-or-later (ставится отдельно, requirements-tts.txt). Голоса Дмитрий и Денис обучены на данных CC0 (OHF-Voice/voice-datasets)."""
+Движок Piper: GPL-3.0-or-later (ставится отдельно, requirements-tts.txt). Голоса Дмитрий и Денис обучены на данных CC0 (OHF-Voice/voice-datasets).
+Казахские голоса - модель kk_KZ-issai-high (корпус ISSAI KazakhTTS, Nazarbayev University; при использовании указывайте авторство и не создавайте
+оскорбительный или дискриминационный контент): одна модель с несколькими дикторами, выбор по номеру диктора."""
 import io
 import logging
 import threading
@@ -11,13 +13,24 @@ from pathlib import Path
 
 log = logging.getLogger("uvicorn.error")
 TTS_DIR = Path(__file__).resolve().parents[2] / "models" / "tts"
-VOICES = [{"id": "dmitri", "title": "Дмитрий (Piper, мужской)"}, {"id": "denis", "title": "Денис (Piper, мужской)"}]
+ISSAI = "kk_KZ-issai-high"
+VOICES = [{"id": "dmitri", "title": "Дмитрий (Piper, мужской)", "lang": "ru", "stem": "ru_RU-dmitri-medium"},
+          {"id": "denis", "title": "Денис (Piper, мужской)", "lang": "ru", "stem": "ru_RU-denis-medium"},
+          {"id": "kk_raya", "title": "Райя (Piper, женский)", "lang": "kk", "stem": ISSAI, "speaker": 3},
+          {"id": "kk_iseke", "title": "Исеке (Piper, мужской)", "lang": "kk", "stem": ISSAI, "speaker": 1},
+          {"id": "kk_f2", "title": "Дикторша 2 (Piper, женский)", "lang": "kk", "stem": ISSAI, "speaker": 4},
+          {"id": "kk_m2", "title": "Диктор 2 (Piper, мужской)", "lang": "kk", "stem": ISSAI, "speaker": 0}]
 MAX_CHARS = 600
 _lock = threading.Lock()  # синтез по одной фразе: процессор делят сервер, конвейеры и обучение сети
 
 
+def _voice(voice_id: str) -> dict | None:
+    return next((v for v in VOICES if v["id"] == voice_id), None)
+
+
 def _paths(voice_id: str) -> tuple[Path, Path]:
-    return TTS_DIR / f"ru_RU-{voice_id}-medium.onnx", TTS_DIR / f"ru_RU-{voice_id}-medium.onnx.json"
+    stem = _voice(voice_id)["stem"]
+    return TTS_DIR / f"{stem}.onnx", TTS_DIR / f"{stem}.onnx.json"
 
 
 def engine_available() -> bool:
@@ -40,11 +53,14 @@ def available_voices() -> list[dict]:
     return [v for v in VOICES if _paths(v["id"])[0].exists() and _paths(v["id"])[0].stat().st_size > 10_000_000 and _paths(v["id"])[1].exists()]
 
 
-@lru_cache(maxsize=2)
-def _load(voice_id: str):
+@lru_cache(maxsize=3)
+def _load_stem(stem: str):
     from piper import PiperVoice
-    model, cfg = _paths(voice_id)
-    return PiperVoice.load(str(model), config_path=str(cfg))
+    return PiperVoice.load(str(TTS_DIR / f"{stem}.onnx"), config_path=str(TTS_DIR / f"{stem}.onnx.json"))
+
+
+def _load(voice_id: str):
+    return _load_stem(_voice(voice_id)["stem"])
 
 
 _warming = False
@@ -80,5 +96,10 @@ def synthesize(text: str, voice_id: str) -> bytes:
         voice = _load(voice_id)
         buf = io.BytesIO()
         with wave.open(buf, "wb") as w:
-            voice.synthesize_wav(text, w)
+            sp = _voice(voice_id).get("speaker")
+            if sp is None:
+                voice.synthesize_wav(text, w)
+            else:
+                from piper import SynthesisConfig
+                voice.synthesize_wav(text, w, syn_config=SynthesisConfig(speaker_id=sp))
     return buf.getvalue()

@@ -42,3 +42,15 @@ def test_synthesis_returns_wav():
         assert r.status_code == 200 and r.headers["content-type"] == "audio/wav" and r.content[:4] == b"RIFF"
         w = wave.open(io.BytesIO(r.content))
         assert w.getnchannels() == 1 and w.getnframes() / w.getframerate() > 1.5  # реальная речь, а не тишина
+
+
+def test_voices_have_language_and_kazakh_ones_share_one_model():
+    assert {v["lang"] for v in tts.VOICES} == {"ru", "kk"}
+    kk = [v for v in tts.VOICES if v["lang"] == "kk"]
+    assert len(kk) >= 2 and len({v["stem"] for v in kk}) == 1 and len({v["speaker"] for v in kk}) == len(kk)
+
+
+@pytest.mark.skipif(not any(v["id"].startswith("kk_") for v in tts.available_voices()), reason="казахский голос не скачан: python -m scripts.download_tts --lang kk")
+def test_kazakh_voice_speaks():
+    wav = tts.synthesize("Сәлеметсіз бе!", "kk_raya")
+    assert wav[:4] == b"RIFF" and len(wav) > 10_000
