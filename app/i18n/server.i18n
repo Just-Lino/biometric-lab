@@ -1,0 +1,3037 @@
+# Сообщения сервера: ответы API, шаги конвейеров, подсказки наставника (собрано из кода; казахский проверить носителем).
+
+ru> Модуль «{0}» не найден
+en> Module “{0}” not found
+kk> «{0}» модулі табылмады
+
+ru> Загруженный файл не найден: сервер был перезапущен, прошло много времени или файл загружен из другой сессии. Загрузки хранятся только в памяти сервера. Загрузите файл заново.
+en> The uploaded file was not found: the server was restarted, a long time has passed, or the file was uploaded from another session. Uploads are kept only in the server memory. Upload the file again.
+kk> Жүктелген файл табылмады: сервер қайта іске қосылды, көп уақыт өтті немесе файл басқа сеанста жүктелген. Жүктеулер тек сервер жадында сақталады. Файлды қайта жүктеңіз.
+
+ru> У этой биометрии нет звука
+en> This biometric has no sound
+kk> Бұл биометрияда дыбыс жоқ
+
+ru> Файл больше 5 МБ
+en> The file is larger than 5 MB
+kk> Файл 5 МБ-тан үлкен
+
+ru> Не удалось прочитать изображение
+en> Could not read the image
+kk> Суретті оқу мүмкін болмады
+
+ru> Изображение слишком большое ({0}×{1}): допускается до {2} мегапикселей
+en> The image is too large ({0}×{1}): up to {2} megapixels are allowed
+kk> Сурет тым үлкен ({0}×{1}): {2} мегапиксельге дейін рұқсат етіледі
+
+ru> Для этого модуля оценка метрик пока не реализована
+en> Metric evaluation is not implemented for this module yet
+kk> Бұл модуль үшін метрикаларды бағалау әлі жүзеге асырылмаған
+
+ru> Стресс-тест искажений для этого модуля не реализован
+en> The distortion stress test is not implemented for this module
+kk> Бұл модуль үшін бұрмалау стресс-тесті жүзеге асырылмаған
+
+ru> 3D-визуализация для этого модуля пока не реализована
+en> 3D visualization is not implemented for this module yet
+kk> Бұл модуль үшін 3D-визуализация әлі жүзеге асырылмаған
+
+ru> Сравнение детекторов для этого модуля не реализовано
+en> Detector comparison is not implemented for this module
+kk> Бұл модуль үшін детекторларды салыстыру жүзеге асырылмаған
+
+ru> Сравнение признаков для этого модуля не реализовано
+en> Feature comparison is not implemented for this module
+kk> Бұл модуль үшін белгілерді салыстыру жүзеге асырылмаған
+
+ru> Оценка признаков для этого модуля не реализована
+en> Feature evaluation is not implemented for this module
+kk> Бұл модуль үшін белгілерді бағалау жүзеге асырылмаған
+
+ru> Набор данных «{0}» недоступен для этой биометрии. Доступны: {1}
+en> The dataset “{0}” is not available for this biometric. Available: {1}
+kk> «{0}» деректер жиыны бұл биометрия үшін қолжетімсіз. Қолжетімді: {1}
+
+ru> Снимок этой эпохи недоступен: обучение ещё не дошло до неё, не запускалось или сервер был перезапущен (состояние обучения хранится только в памяти сервера). Запустите обучение заново.
+en> The snapshot of this epoch is not available: training has not reached it yet, was not started, or the server was restarted (the training state is kept only in the server memory). Start the training again.
+kk> Бұл дәуірдің суреті қолжетімсіз: оқыту оған әлі жеткен жоқ, іске қосылмаған немесе сервер қайта іске қосылған (оқыту күйі тек сервер жадында сақталады). Оқытуды қайта іске қосыңыз.
+
+ru> Неизвестная биометрия
+en> Unknown biometric
+kk> Белгісіз биометрия
+
+ru> Контекст эксперимента слишком большой
+en> The experiment context is too large
+kk> Эксперимент контексті тым үлкен
+
+ru> Неизвестный язык: 
+en> Unknown language: 
+kk> Белгісіз тіл:
+
+ru> Haar: frontalface_default (классика)
+en> Haar: frontalface_default (classic)
+kk> Haar: frontalface_default (классикалық)
+
+ru> Haar: frontalface_alt2 (классика)
+en> Haar: frontalface_alt2 (classic)
+kk> Haar: frontalface_alt2 (классикалық)
+
+ru> Haar: frontalface_alt (классика)
+en> Haar: frontalface_alt (classic)
+kk> Haar: frontalface_alt (классикалық)
+
+ru> Haar: профиль лица (классика)
+en> Haar: face profile (classic)
+kk> Haar: бет профилі (классикалық)
+
+ru> SSD ResNet-10 (нейросеть)
+en> SSD ResNet-10 (neural network)
+kk> SSD ResNet-10 (нейрондық желі)
+
+ru> UltraFace RFB-320 (лёгкая нейросеть)
+en> UltraFace RFB-320 (light neural network)
+kk> UltraFace RFB-320 (жеңіл нейрондық желі)
+
+ru> YuNet (нейросеть, свои ключевые точки)
+en> YuNet (neural network, own landmarks)
+kk> YuNet (нейрондық желі, өз кілттік нүктелері)
+
+ru> Модель детектора «{0}» не найдена в папке models/. Выполните: python -m scripts.download_models
+en> The detector model “{0}” was not found in the models/ folder. Run: python -m scripts.download_models
+kk> «{0}» детектор моделі models/ папкасында табылмады. Орындаңыз: python -m scripts.download_models
+
+ru> Не удалось загрузить каскад {0}
+en> Could not load the cascade {0}
+kk> {0} каскадын жүктеу мүмкін болмады
+
+ru> SFace (нейросеть, 128 чисел)
+en> SFace (neural network, 128 numbers)
+kk> SFace (нейрондық желі, 128 сан)
+
+ru> ArcFace MobileFaceNet (нейросеть, 512 чисел)
+en> ArcFace MobileFaceNet (neural network, 512 numbers)
+kk> ArcFace MobileFaceNet (нейрондық желі, 512 сан)
+
+ru> LBP-гистограммы (классика, 640 чисел)
+en> LBP histograms (classic, 640 numbers)
+kk> LBP гистограммалары (классикалық, 640 сан)
+
+ru> HOG - гистограммы градиентов (классика, 1764 числа)
+en> HOG - histograms of gradients (classic, 1764 numbers)
+kk> HOG - градиент гистограммалары (классикалық, 1764 сан)
+
+ru> Признаки Габора (классика, 576 чисел)
+en> Gabor features (classic, 576 numbers)
+kk> Габор белгілері (классикалық, 576 сан)
+
+ru> DCT - низкие частоты (классика, 63 числа)
+en> DCT - low frequencies (classic, 63 numbers)
+kk> DCT - төмен жиіліктер (классикалық, 63 сан)
+
+ru> Нормированные пиксели (простейший эталон, 576 чисел)
+en> Normalized pixels (the simplest baseline, 576 numbers)
+kk> Нормаланған пиксельдер (ең қарапайым эталон, 576 сан)
+
+ru> Eigenfaces - метод главных компонент по галерее (классика, до 40 чисел)
+en> Eigenfaces - principal component analysis over the gallery (classic, up to 40 numbers)
+kk> Eigenfaces - галерея бойынша бас компоненттер әдісі (классикалық, 40 санға дейін)
+
+ru> Нейросеть, обученная вами (вкладка «Обучение», 32 числа)
+en> The neural network trained by you (the “Training” tab, 32 numbers)
+kk> Сіз оқытқан нейрондық желі («Оқыту» қойындысы, 32 сан)
+
+ru> лиц
+en> faces
+kk> бет
+
+ru> Модель признаков «{0}» не найдена в папке models/. Выполните: python -m scripts.download_models
+en> The feature model “{0}” was not found in the models/ folder. Run: python -m scripts.download_models
+kk> «{0}» белгілер моделі models/ папкасында табылмады. Орындаңыз: python -m scripts.download_models
+
+ru> Для Eigenfaces нужна галерея минимум из 6 фото (лучше 3+ человека по 2+ фото) в datasets/faces/.
+en> Eigenfaces needs a gallery of at least 6 photos (better 3+ people with 2+ photos each) in datasets/faces/.
+kk> Eigenfaces үшін datasets/faces/ ішінде кемінде 6 фотодан тұратын галерея қажет (әрқайсысында 2+ фотосы бар 3+ адам болса жақсы).
+
+ru> файл слишком мал (возможно, это не модель)
+en> the file is too small (maybe it is not a model)
+kk> файл тым кішкентай (мүмкін, бұл модель емес)
+
+ru> Модель %s скачана
+en> Model %s downloaded
+kk> %s моделі жүктелді
+
+ru> Не удалось скачать %s: %s
+en> Could not download %s: %s
+kk> %s жүктеу мүмкін болмады: %s
+
+ru> левый глаз
+en> left eye
+kk> сол көз
+
+ru> правый глаз
+en> right eye
+kk> оң көз
+
+ru> нос
+en> nose
+kk> мұрын
+
+ru> левый угол рта
+en> left mouth corner
+kk> ауыздың сол жақ бұрышы
+
+ru> правый угол рта
+en> right mouth corner
+kk> ауыздың оң жақ бұрышы
+
+ru> ключевые точки найдены нейросетью YuNet (5 точек)
+en> the landmarks were found by the YuNet neural network (5 points)
+kk> кілттік нүктелерді YuNet нейрондық желісі тапты (5 нүкте)
+
+ru> глаза найдены каскадом Хаара, нос и рот оценены по пропорциям рамки
+en> the eyes were found by a Haar cascade, the nose and mouth were estimated from the box proportions
+kk> көздерді Хаар каскады тапты, мұрын мен ауыз рамка пропорциялары бойынша бағаланды
+
+ru> точки оценены по пропорциям рамки лица (глаза не найдены каскадом)
+en> the points were estimated from the face box proportions (the cascade did not find the eyes)
+kk> нүктелер бет рамкасының пропорциялары бойынша бағаланды (каскад көздерді таппады)
+
+ru> Не удалось прочитать изображение {0}
+en> Could not read the image {0}
+kk> {0} суретін оқу мүмкін болмады
+
+ru> Распознавание лица
+en> Face recognition
+kk> Бетті тану
+
+ru> Источник лиц «{0}» не найден в datasets/faces/
+en> The face source “{0}” was not found in datasets/faces/
+kk> «{0}» бет көзі datasets/faces/ ішінде табылмады
+
+ru> Загружено: {0}
+en> Uploaded: {0}
+kk> Жүктелді: {0}
+
+ru> Все источники галереи
+en> All gallery sources
+kk> Галереяның барлық көздері
+
+ru> Реальные фотографии людей (LFW и ваши). Для сравнения методов нужны люди минимум с двумя фото.
+en> Real photos of people (LFW and yours). To compare methods you need people with at least two photos.
+kk> Адамдардың нақты фотосуреттері (LFW және сіздікі). Әдістерді салыстыру үшін кемінде екі фотосы бар адамдар қажет.
+
+ru> Галерея «{0}» (datasets/faces/{1}/<имя>/)
+en> Gallery “{0}” (datasets/faces/{1}/<name>/)
+kk> «{0}» галереясы (datasets/faces/{1}/<аты>/)
+
+ru> Ваши фото (datasets/faces/<имя>/)
+en> Your photos (datasets/faces/<name>/)
+kk> Сіздің фотоларыңыз (datasets/faces/<аты>/)
+
+ru> Реальные фотографии людей. Метрики зависят от детектора и признаков; сравните методы на одном наборе.
+en> Real photos of people. The metrics depend on the detector and the features; compare the methods on one set.
+kk> Адамдардың нақты фотосуреттері. Метрикалар детектор мен белгілерге байланысты; әдістерді бір жиында салыстырыңыз.
+
+ru> Для классических признаков (LBP, HOG, Габор, DCT, пиксели) нужна галерея минимум из 3 разных людей (иначе сходство у всех лиц будет завышено). 
+en> Classic features (LBP, HOG, Gabor, DCT, pixels) need a gallery of at least 3 different people (otherwise the similarity of all faces will be overestimated). 
+kk> Классикалық белгілерге (LBP, HOG, Габор, DCT, пиксельдер) кемінде 3 түрлі адамнан тұратын галерея қажет (әйтпесе барлық беттердің ұқсастығы асыра көрсетіледі).
+
+ru> . Работают классические методы. Для полной версии выполните: python -m scripts.download_models и перезапустите сервер. 
+en> . The classic methods work. For the full version run: python -m scripts.download_models and restart the server. 
+kk> . Классикалық әдістер жұмыс істейді. Толық нұсқа үшін орындаңыз: python -m scripts.download_models және серверді қайта іске қосыңыз.
+
+ru> Не скачаны нейросетевые модели: 
+en> The neural network models are not downloaded: 
+kk> Нейрондық желі модельдері жүктелмеген:
+
+ru> Галерея пуста: положите фото в datasets/faces/<имя_человека>/ (или datasets/faces/<набор>/<имя_человека>/) или загрузите свои изображения.
+en> The gallery is empty: put photos into datasets/faces/<person_name>/ (or datasets/faces/<set>/<person_name>/) or upload your own images.
+kk> Галерея бос: фотоларды datasets/faces/<адам_аты>/ (немесе datasets/faces/<жиын>/<адам_аты>/) ішіне салыңыз немесе өз суреттеріңізді жүктеңіз.
+
+ru> Неизвестный образец: {0}
+en> Unknown sample: {0}
+kk> Белгісіз үлгі: {0}
+
+ru> Входная фотография {0}×{1} пикселей. Для скорости крупные кадры уменьшаются до {2} px по большей стороне.
+en> Input photo {0}×{1} pixels. For speed, large frames are reduced to {2} px on the longer side.
+kk> Кіріс фотосурет {0}×{1} пиксель. Жылдамдық үшін үлкен кадрлар ұзын жағы бойынша {2} px-ке дейін кішірейтіледі.
+
+ru> 1. Исходное изображение
+en> 1. Source image
+kk> 1. Бастапқы сурет
+
+ru> Детектор: {0}. Лицо не найдено. Попробуйте снизить min neighbors, уменьшить минимальный размер лица или выбрать другой детектор.
+en> Detector: {0}. No face found. Try lowering min neighbors, reducing the minimum face size or choosing another detector.
+kk> Детектор: {0}. Бет табылмады. Min neighbors мәнін төмендетіп, беттің ең аз өлшемін кішірейтіп немесе басқа детекторды таңдап көріңіз.
+
+ru> 2. Обнаружение лица
+en> 2. Face detection
+kk> 2. Бетті табу
+
+ru> Детектор
+en> Detector
+kk> Детектор
+
+ru> Результат
+en> Result
+kk> Нәтиже
+
+ru> лицо не найдено
+en> no face found
+kk> бет табылмады
+
+ru>  (для Хаара это условная оценка по весу каскада)
+en>  (for Haar this is a conditional estimate from the cascade weight)
+kk>  (Хаар үшін бұл каскад салмағы бойынша шартты баға)
+
+ru> Детектор: {0}. Рамка: x={1}, y={2}, width={3}, height={4}. Confidence = {5}{6}.
+en> Detector: {0}. Box: x={1}, y={2}, width={3}, height={4}. Confidence = {5}{6}.
+kk> Детектор: {0}. Рамка: x={1}, y={2}, width={3}, height={4}. Confidence = {5}{6}.
+
+ru> 3. Ключевые точки лица
+en> 3. Face landmarks
+kk> 3. Беттің кілттік нүктелері
+
+ru> Зелёные - глаза, красная - нос, оранжевые - углы рта; {0}.
+en> Green - eyes, red - nose, orange - mouth corners; {0}.
+kk> Жасыл - көздер, қызыл - мұрын, сарғылт - ауыз бұрыштары; {0}.
+
+ru> Лицо поворачивается, масштабируется и сдвигается так, чтобы глаза и рот встали в стандартные позиции {0}×{1}. Наклон линии глаз до выравнивания: {2}°. Слева - простое вырезание, справа - после выравнивания.
+en> The face is rotated, scaled and shifted so that the eyes and mouth take the standard positions {0}×{1}. Tilt of the eye line before alignment: {2}°. Left - simple cropping, right - after alignment.
+kk> Бет бұрылып, масштабталып және жылжытылып, көздер мен ауыз {0}×{1} стандартты орындарына келеді. Туралауға дейінгі көз сызығының көлбеуі: {2}°. Сол жақта - қарапайым қию, оң жақта - туралаудан кейін.
+
+ru> Выравнивание отключено: лицо только вырезано по рамке. Слева и справа одно и то же. Включите выравнивание и сравните similarity.
+en> Alignment is off: the face is only cropped by the box. The left and the right are the same. Turn the alignment on and compare the similarity.
+kk> Туралау өшірулі: бет тек рамка бойынша қиылған. Сол және оң жағы бірдей. Туралауды қосып, ұқсастықты салыстырыңыз.
+
+ru> 4. Выравнивание (alignment)
+en> 4. Alignment
+kk> 4. Туралау (alignment)
+
+ru> 5. Нормализация освещения (CLAHE)
+en> 5. Illumination normalization (CLAHE)
+kk> 5. Жарықтандыруды нормалау (CLAHE)
+
+ru> Локальное выравнивание контраста уменьшает влияние освещения. Классические признаки (LBP, HOG, Габор, DCT, пиксели) строятся по этому серому изображению; нейросети (SFace, ArcFace) принимают выровненное цветное лицо.
+en> Local contrast equalization reduces the influence of illumination. Classic features (LBP, HOG, Gabor, DCT, pixels) are built from this gray image; neural networks (SFace, ArcFace) take the aligned color face.
+kk> Контрастты жергілікті теңестіру жарықтандырудың әсерін азайтады. Классикалық белгілер (LBP, HOG, Габор, DCT, пиксельдер) осы сұр кескін бойынша құрылады; нейрондық желілер (SFace, ArcFace) туралалған түсті бетті қабылдайды.
+
+ru> {0}. Размерность {1}, норма {2}. Каждая клетка - одно число вектора признаков: лицо превращено в набор чисел, которые и сравниваются.
+en> {0}. Dimension {1}, norm {2}. Each cell is one number of the feature vector: the face is turned into a set of numbers that are what gets compared.
+kk> {0}. Өлшемділік {1}, норма {2}. Әр ұяшық - белгілер векторының бір саны: бет салыстырылатын сандар жиынына айналады.
+
+ru> Рамка (x, y, w, h)
+en> Box (x, y, w, h)
+kk> Рамка (x, y, w, h)
+
+ru> Ключевые точки
+en> Landmarks
+kk> Кілттік нүктелер
+
+ru> Выравнивание
+en> Alignment
+kk> Туралау
+
+ru> Признаки
+en> Features
+kk> Белгілер
+
+ru> включено
+en> on
+kk> қосулы
+
+ru> выключено
+en> off
+kk> өшірулі
+
+ru> Размерность embedding
+en> Embedding dimension
+kk> Embedding өлшемділігі
+
+ru> Норма вектора
+en> Vector norm
+kk> Вектор нормасы
+
+ru> На образце {0} лицо не найдено. Измените параметры детекции или выберите другой образец.
+en> No face was found in the sample {0}. Change the detection parameters or choose another sample.
+kk> {0} үлгісінде бет табылмады. Табу параметрлерін өзгертіңіз немесе басқа үлгіні таңдаңыз.
+
+ru> Размерность
+en> Dimension
+kk> Өлшемділік
+
+ru> Метрика
+en> Metric
+kk> Метрика
+
+ru> нет
+en> no
+kk> жоқ
+
+ru> Для оценки метрик нужны минимум 2 человека, у каждого минимум 2 фото в папке datasets/faces/<имя>/.
+en> To evaluate metrics you need at least 2 people, each with at least 2 photos in the datasets/faces/<name>/ folder.
+kk> Метрикаларды бағалау үшін кемінде 2 адам қажет, әрқайсысының datasets/faces/<аты>/ папкасында кемінде 2 фотосы болуы керек.
+
+ru> Недостаточно пар: на слишком многих фото лицо не найдено. Смените детектор или параметры.
+en> Not enough pairs: no face is found in too many photos. Change the detector or the parameters.
+kk> Жұптар жеткіліксіз: тым көп фотода бет табылмады. Детекторды немесе параметрлерді өзгертіңіз.
+
+ru> Сеть для лиц ещё не обучена: вкладка «Обучение распознаванию», данные «Лица».
+en> The network for faces is not trained yet: the “Training recognition” tab, the “Faces” data.
+kk> Беттерге арналған желі әлі оқытылмаған: «Тануды оқыту» қойындысы, «Беттер» деректері.
+
+ru> модель не скачана
+en> the model is not downloaded
+kk> модель жүктелмеген
+
+ru>  (галерея входила в обучение: оценка завышена)
+en>  (the gallery was part of the training: the estimate is overestimated)
+kk>  (галерея оқытуға кірді: баға асыра көрсетілген)
+
+ru> Минуции + голосование за поворот и сдвиг
+en> Minutiae + voting for rotation and shift
+kk> Минуциялар + бұру мен жылжыту бойынша дауыс беру
+
+ru> Минуции + локальные структуры соседей
+en> Minutiae + local neighbor structures
+kk> Минуциялар + көршілердің жергілікті құрылымдары
+
+ru> Фазовая корреляция (POC) с перебором поворотов
+en> Phase correlation (POC) with a search over rotations
+kk> Бұрулар бойынша іріктеумен фазалық корреляция (POC)
+
+ru> Ключевые точки SIFT + RANSAC
+en> SIFT keypoints + RANSAC
+kk> SIFT кілттік нүктелері + RANSAC
+
+ru> Нейросеть, обученная вами (вкладка «Обучение»)
+en> The neural network trained by you (the “Training” tab)
+kk> Сіз оқытқан нейрондық желі («Оқыту» қойындысы)
+
+ru> Совпало
+en> Matched
+kk> Сәйкес келді
+
+ru> Поворот
+en> Rotation
+kk> Бұру
+
+ru> Сдвиг
+en> Shift
+kk> Жылжу
+
+ru> отпечатков пальцев
+en> fingerprints
+kk> саусақ іздері
+
+ru> Косинусное сходство embedding
+en> Cosine similarity of embeddings
+kk> Embedding-дердің косинустық ұқсастығы
+
+ru> {0} эпох, точность на новых снимках {1} %, {2}, {3}
+en> {0} epochs, accuracy on new shots {1} %, {2}, {3}
+kk> {0} дәуір, жаңа суреттердегі дәлдік {1} %, {2}, {3}
+
+ru> Сеть
+en> Network
+kk> Желі
+
+ru> {0} (по EER на снимках, которых сеть не видела)
+en> {0} (by the EER on shots the network has not seen)
+kk> {0} (желі көрмеген суреттердегі EER бойынша)
+
+ru> Рекомендуемый порог
+en> Recommended threshold
+kk> Ұсынылатын шек
+
+ru> Пик корреляции
+en> Correlation peak
+kk> Корреляция шыңы
+
+ru> Лучший поворот
+en> Best rotation
+kk> Ең жақсы бұру
+
+ru> Сдвиг пика
+en> Peak shift
+kk> Шыңның жылжуы
+
+ru> Проверено поворотов
+en> Rotations checked
+kk> Тексерілген бұрулар
+
+ru> Ключевых точек A
+en> Keypoints A
+kk> A кілттік нүктелері
+
+ru> Ключевых точек B
+en> Keypoints B
+kk> B кілттік нүктелері
+
+ru> Хороших пар (тест отношения)
+en> Good pairs (ratio test)
+kk> Жақсы жұптар (қатынас тесті)
+
+ru> Согласованных (RANSAC)
+en> Consistent (RANSAC)
+kk> Келісілген (RANSAC)
+
+ru> Синтетика лаборатории (12 пальцев × 3 оттиска)
+en> Laboratory synthetic set (12 fingers × 3 impressions)
+kk> Зертханалық синтетика (12 саусақ × 3 таңба)
+
+ru> Распознавание отпечатков пальцев
+en> Fingerprint recognition
+kk> Саусақ ізін тану
+
+ru> Палец {0}, оттиск {1}
+en> Finger {0}, impression {1}
+kk> Саусақ {0}, таңба {1}
+
+ru> Датасет синтетический: реальные биометрические данные людей не используются.
+en> The dataset is synthetic: no real biometric data of people is used.
+kk> Деректер жиыны синтетикалық: адамдардың нақты биометриялық деректері қолданылмайды.
+
+ru> Метод сопоставления
+en> Matching method
+kk> Салыстыру әдісі
+
+ru> синтетический набор: {0} пальцев × {1} оттиска
+en> synthetic set: {0} fingers × {1} impressions
+kk> синтетикалық жиын: {0} саусақ × {1} таңба
+
+ru> В SOCOFing по одному снимку на палец: «свои» пары были бы оригиналом и его искажённой копией, а не независимыми оттисками, поэтому EER не считается. Используйте «Стресс-тест искажений» или набор FVC.
+en> SOCOFing has one shot per finger: the “genuine” pairs would be the original and its distorted copy, not independent impressions, so the EER is not computed. Use the “Distortion stress test” or the FVC set.
+kk> SOCOFing-те әр саусаққа бір сурет бар: «өз» жұптар тәуелсіз таңбалар емес, түпнұсқа мен оның бұрмаланған көшірмесі болар еді, сондықтан EER есептелмейді. «Бұрмалау стресс-тестін» немесе FVC жиынын қолданыңыз.
+
+ru> Неизвестный набор данных «{0}».
+en> Unknown dataset “{0}”.
+kk> «{0}» деректер жиыны белгісіз.
+
+ru> В наборе меньше трёх пальцев с двумя и более оттисками.
+en> The set has fewer than three fingers with two or more impressions.
+kk> Жиында екі және одан көп таңбасы бар үш саусақтан аз.
+
+ru> {0}: {1} пальцев × {2} оттисков
+en> {0}: {1} fingers × {2} impressions
+kk> {0}: {1} саусақ × {2} таңба
+
+ru> Оценка по парам, где участвует снимок {0}: сеть не видела его при обучении.
+en> Estimated on the pairs that include the shot {0}: the network did not see it during training.
+kk> {0} суретін қамтитын жұптар бойынша бағаланды: желі оны оқыту кезінде көрмеген.
+
+ru> В SOCOFing не нашлось трёх человек с нужным пальцем и искажёнными копиями.
+en> SOCOFing has no three people with the needed finger and distorted copies.
+kk> SOCOFing-те қажетті саусағы мен бұрмаланған көшірмелері бар үш адам табылмады.
+
+ru> Оригинал сравнивается со своей искажённой копией (а не с независимым оттиском), поэтому «своё» сходство здесь завышено относительно реальной жизни. Смотрите, как оно падает с уровнем искажения и как приближается к «чужим».
+en> The original is compared with its own distorted copy (not with an independent impression), so the “genuine” similarity here is overestimated compared with real life. Watch how it falls with the distortion level and approaches the “impostor” ones.
+kk> Түпнұсқа өзінің бұрмаланған көшірмесімен салыстырылады (тәуелсіз таңбамен емес), сондықтан мұндағы «өз» ұқсастығы нақты өмірмен салыстырғанда асыра көрсетілген. Оның бұрмалау деңгейімен қалай төмендейтінін және «бөтен» ұқсастықтарға қалай жақындайтынын бақылаңыз.
+
+ru> Адаптивный порог (по локальной окрестности)
+en> Adaptive threshold (by the local neighborhood)
+kk> Адаптивті шек (жергілікті аймақ бойынша)
+
+ru> Метод Оцу (один порог по гистограмме)
+en> Otsu method (one threshold from the histogram)
+kk> Оцу әдісі (гистограмма бойынша бір шек)
+
+ru> Фиксированный порог (ползунок)
+en> Fixed threshold (slider)
+kk> Бекітілген шек (жүгірткі)
+
+ru> {0} (окончаний {1}, разветвлений {2})
+en> {0} (endings {1}, bifurcations {2})
+kk> {0} (аяқталулар {1}, тармақталулар {2})
+
+ru> Бинаризация
+en> Binarization
+kk> Бинаризация
+
+ru> Найдено минуций
+en> Minutiae found
+kk> Табылған минуциялар
+
+ru> Среднее качество точек
+en> Average point quality
+kk> Нүктелердің орташа сапасы
+
+ru> Время, мс
+en> Time, ms
+kk> Уақыт, мс
+
+ru> Сходство
+en> Similarity
+kk> Ұқсастық
+
+ru> Решение при нём
+en> Decision at it
+kk> Сондағы шешім
+
+ru> Найденный поворот
+en> Rotation found
+kk> Табылған бұру
+
+ru> минуции извлечены текущими настройками конвейера
+en> the minutiae were extracted with the current pipeline settings
+kk> минуциялар конвейердің ағымдағы параметрлерімен алынды
+
+ru>  (оценка по снимкам, которых сеть не видела)
+en>  (estimated on the shots the network has not seen)
+kk>  (желі көрмеген суреттер бойынша бағаланды)
+
+ru> 1. Исходное изображение (grayscale)
+en> 1. Source image (grayscale)
+kk> 1. Бастапқы сурет (grayscale)
+
+ru> Биометрический образ в оттенках серого. Гребни тёмные, межгребневые промежутки светлые. Размер {0}×{1}, средняя яркость {2}.
+en> The biometric image in shades of gray. The ridges are dark, the gaps between the ridges are light. Size {0}×{1}, mean brightness {2}.
+kk> Сұр реңктердегі биометриялық бейне. Жоталар қара, жоталар аралығы ашық. Өлшемі {0}×{1}, орташа жарықтығы {2}.
+
+ru> 2. Сегментация области отпечатка
+en> 2. Segmentation of the fingerprint area
+kk> 2. Таңба аймағын сегменттеу
+
+ru> Область с выраженной текстурой гребней отделяется от фона (по локальной дисперсии). Дальнейшие признаки ищутся только внутри этой области.
+en> The area with a pronounced ridge texture is separated from the background (by the local variance). Further features are searched only inside this area.
+kk> Жота текстурасы айқын аймақ фоннан бөлінеді (жергілікті дисперсия бойынша). Одан кейінгі белгілер тек осы аймақ ішінде ізделеді.
+
+ru> 3. Нормализация контраста (CLAHE)
+en> 3. Contrast normalization (CLAHE)
+kk> 3. Контрастты нормалау (CLAHE)
+
+ru> Выравнивание яркости и контраста уменьшает влияние освещения и давления пальца.
+en> Equalizing brightness and contrast reduces the influence of lighting and finger pressure.
+kk> Жарықтық пен контрастты теңестіру жарықтандыру мен саусақ қысымының әсерін азайтады.
+
+ru> 4. Поле ориентаций гребней
+en> 4. Ridge orientation field
+kk> 4. Жоталардың бағыт өрісі
+
+ru> Красные штрихи показывают локальное направление папиллярных линий. Оно управляет ориентацией Gabor-фильтра в каждой точке.
+en> The red strokes show the local direction of the papillary lines. It controls the orientation of the Gabor filter at each point.
+kk> Қызыл штрихтар папиллярлы сызықтардың жергілікті бағытын көрсетеді. Ол әр нүктедегі Габор сүзгісінің бағытын басқарады.
+
+ru> 5. Усиление гребней фильтром Габора
+en> 5. Ridge enhancement by the Gabor filter
+kk> 5. Жоталарды Габор сүзгісімен күшейту
+
+ru> Ориентированный Gabor (период {0} px, σ={1}) подавляет шум и разрывы, усиливая периодическую структуру гребней.
+en> The oriented Gabor (period {0} px, σ={1}) suppresses noise and gaps, enhancing the periodic structure of the ridges.
+kk> Бағытталған Габор (кезең {0} px, σ={1}) шу мен үзілістерді басып, жоталардың периодты құрылымын күшейтеді.
+
+ru> 6. Бинаризация ({0})
+en> 6. Binarization ({0})
+kk> 6. Бинаризация ({0})
+
+ru> Изображение разделяется на гребни (чёрные) и фон. Метод и порог можно менять в эксперименте.
+en> The image is split into ridges (black) and background. The method and threshold can be changed in the experiment.
+kk> Сурет жоталарға (қара) және фонға бөлінеді. Әдіс пен шекті экспериментте өзгертуге болады.
+
+ru> 7. Скелетизация (thinning)
+en> 7. Skeletonization (thinning)
+kk> 7. Скелетизация (thinning)
+
+ru> Гребни утоньшаются до линий толщиной 1 пиксель — так проще найти окончания и разветвления.
+en> The ridges are thinned to lines 1 pixel thick, so it is easier to find the endings and bifurcations.
+kk> Жоталар қалыңдығы 1 пиксель сызықтарға дейін жіңішкертіледі - осылайша аяқталулар мен тармақталуларды табу оңайырақ.
+
+ru> 8. Выделение minutiae
+en> 8. Minutiae extraction
+kk> 8. Минуцияларды бөліп алу
+
+ru> ● окончание гребня (ridge ending): {0}; ▲ разветвление (bifurcation): {1}. Точки у края и слишком близкие друг к другу отбрасываются как ненадёжные.
+en> ● ridge ending: {0}; ▲ bifurcation: {1}. Points near the edge and points too close to each other are discarded as unreliable.
+kk> ● жота аяқталуы (ridge ending): {0}; ▲ тармақталу (bifurcation): {1}. Шетке жақын және бір-біріне тым жақын нүктелер сенімсіз ретінде алынып тасталады.
+
+ru> левый
+en> left
+kk> сол
+
+ru> правый
+en> right
+kk> оң
+
+ru> большой
+en> thumb
+kk> бас бармақ
+
+ru> указательный
+en> index
+kk> сұқ саусақ
+
+ru> средний
+en> middle
+kk> ортан терек
+
+ru> безымянный
+en> ring
+kk> шылдыр шүмек
+
+ru> мизинец
+en> little
+kk> шынашақ
+
+ru> стирание
+en> erasing
+kk> өшіру
+
+ru> центральный поворот
+en> central rotation
+kk> орталық бұру
+
+ru> Z-разрез
+en> Z-cut
+kk> Z-кесу
+
+ru> лёгкое
+en> light
+kk> жеңіл
+
+ru> среднее
+en> medium
+kk> орташа
+
+ru> сильное
+en> strong
+kk> күшті
+
+ru> SOCOFing (реальные отпечатки, 600 человек × 10 пальцев)
+en> SOCOFing (real fingerprints, 600 people × 10 fingers)
+kk> SOCOFing (нақты саусақ іздері, 600 адам × 10 саусақ)
+
+ru> FVC{0}, база DB{1} (набор B: 10 пальцев × 8 оттисков)
+en> FVC{0}, database DB{1} (set B: 10 fingers × 8 impressions)
+kk> FVC{0}, DB{1} базасы (B жиыны: 10 саусақ × 8 таңба)
+
+ru> Реальные отпечатки, по одному снимку на палец. После каждого оригинала в списке идут его искажённые копии (стирание, центральный поворот, Z-разрез): выберите оригинал в A и его копию в B, это «свои» пары. Два оригинала разных пальцев - «чужие». EER не считается (копии не независимы), используйте «Стресс-тест искажений».
+en> Real fingerprints, one shot per finger. After each original the list contains its distorted copies (erasing, central rotation, Z-cut): choose an original in A and its copy in B, these are “genuine” pairs. Two originals of different fingers are “impostor” pairs. The EER is not computed (the copies are not independent), use the “Distortion stress test”.
+kk> Нақты саусақ іздері, әр саусаққа бір сурет. Әр түпнұсқадан кейін тізімде оның бұрмаланған көшірмелері тұрады (өшіру, орталық бұру, Z-кесу): A-да түпнұсқаны, B-да оның көшірмесін таңдаңыз, бұл «өз» жұптар. Әртүрлі саусақтардың екі түпнұсқасы - «бөтен» жұптар. EER есептелмейді (көшірмелер тәуелсіз емес), «Бұрмалау стресс-тестін» қолданыңыз.
+
+ru> Реальные оттиски (FVC). Метрики хуже, чем на синтетике: это ожидаемо. Параметры конвейера подобраны под синтетику, при необходимости их стоит менять.
+en> Real impressions (FVC). The metrics are worse than on synthetic data: this is expected. The pipeline parameters are tuned for the synthetic data, so change them if needed.
+kk> Нақты таңбалар (FVC). Метрикалар синтетикаға қарағанда нашар: бұл күтілетін жағдай. Конвейер параметрлері синтетикаға бапталған, қажет болса оларды өзгерту керек.
+
+ru> Набор «{0}» не найден в datasets/real/. Подготовьте данные: python -m scripts.prepare_real
+en> The set “{0}” was not found in datasets/real/. Prepare the data: python -m scripts.prepare_real
+kk> «{0}» жиыны datasets/real/ ішінде табылмады. Деректерді дайындаңыз: python -m scripts.prepare_real
+
+ru> {0} - искажение {1}, {2}
+en> {0} - distortion {1}, {2}
+kk> {0} - бұрмалау {1}, {2}
+
+ru> FVC{0} DB{1}: палец {2}, оттиск {3}
+en> FVC{0} DB{1}: finger {2}, impression {3}
+kk> FVC{0} DB{1}: саусақ {2}, таңба {3}
+
+ru> SOCOFing не найден в datasets/real/. Подготовьте данные: python -m scripts.prepare_real
+en> SOCOFing was not found in datasets/real/. Prepare the data: python -m scripts.prepare_real
+kk> SOCOFing datasets/real/ ішінде табылмады. Деректерді дайындаңыз: python -m scripts.prepare_real
+
+ru> Неизвестный образец: файл {0} не найден
+en> Unknown sample: the file {0} was not found
+kk> Белгісіз үлгі: {0} файлы табылмады
+
+ru> 2D-фильтры Габора → Iris Code (Даугман)
+en> 2D Gabor filters → Iris Code (Daugman)
+kk> 2D Габор сүзгілері → Iris Code (Даугман)
+
+ru> 1D лог-Габор по кольцам → Iris Code (Masek)
+en> 1D log-Gabor along the rings → Iris Code (Masek)
+kk> Сақиналар бойынша 1D лог-Габор → Iris Code (Масек)
+
+ru> Порядковые признаки (ordinal measures) → код
+en> Ordinal measures → code
+kk> Реттік белгілер (ordinal measures) → код
+
+ru> Косинусное преобразование окон (DCT, Monro) → код
+en> Cosine transform of windows (DCT, Monro) → code
+kk> Терезелердің косинустық түрлендіруі (DCT, Монро) → код
+
+ru> Вейвлет Хаара → знаковый код
+en> Haar wavelet → sign code
+kk> Хаар вейвлеті → таңбалық код
+
+ru> Интегро-дифференциальный оператор Даугмана
+en> Daugman's integro-differential operator
+kk> Даугманның интегро-дифференциалдық операторы
+
+ru> Преобразование Хафа (окружности)
+en> Hough transform (circles)
+kk> Хаф түрлендіруі (шеңберлер)
+
+ru> Порог + радиальный поиск границы
+en> Threshold + radial boundary search
+kk> Шек + шекараны радиалды іздеу
+
+ru> Синтетика лаборатории (12 глаз × 3 снимка)
+en> Laboratory synthetic set (12 eyes × 3 shots)
+kk> Зертханалық синтетика (12 көз × 3 сурет)
+
+ru> Распознавание радужной оболочки
+en> Iris recognition
+kk> Көздің нұрлы қабығын тану
+
+ru> Глаз {0}, снимок {1}
+en> Eye {0}, shot {1}
+kk> Көз {0}, сурет {1}
+
+ru> Снимок глаза в оттенках серого (как в ближнем ИК-диапазоне), {0}×{1}. Распознаётся текстура радужной оболочки; зрачок служит ориентиром для её поиска.
+en> A shot of the eye in shades of gray (as in the near infrared range), {0}×{1}. The iris texture is recognized; the pupil serves as a landmark for finding it.
+kk> Сұр реңктердегі көз суреті (жақын ИК диапазонындағыдай), {0}×{1}. Нұрлы қабықтың текстурасы танылады; қарашық оны іздеуге бағдар болады.
+
+ru> Гауссово сглаживание (σ = {0}) убирает шум и мелкие детали, чтобы границы зрачка и радужки находились устойчиво.
+en> Gaussian smoothing (σ = {0}) removes noise and small details so that the pupil and iris boundaries are found reliably.
+kk> Гаусс тегістеуі (σ = {0}) шу мен ұсақ бөлшектерді жояды, сонда қарашық пен нұрлы қабық шекаралары тұрақты табылады.
+
+ru> 2. Предобработка
+en> 2. Preprocessing
+kk> 2. Алдын ала өңдеу
+
+ru> 3. Локализация зрачка
+en> 3. Pupil localization
+kk> 3. Қарашықты локализациялау
+
+ru> Зрачок или граница радужки не найдены. Смените метод локализации, уменьшите сглаживание или порог Хафа.
+en> The pupil or the iris boundary was not found. Change the localization method, reduce the smoothing or the Hough threshold.
+kk> Қарашық немесе нұрлы қабық шекарасы табылмады. Локализация әдісін өзгертіңіз, тегістеуді немесе Хаф шегін азайтыңыз.
+
+ru> Метод локализации
+en> Localization method
+kk> Локализация әдісі
+
+ru> не удалось найти окружности
+en> could not find the circles
+kk> шеңберлерді табу мүмкін болмады
+
+ru> Метод: {0}. Зрачок: центр ({1}; {2}), радиус {3} px. Зрачок - самая тёмная круглая область, его граница - резкий переход к радужке.
+en> Method: {0}. Pupil: center ({1}; {2}), radius {3} px. The pupil is the darkest round area, its boundary is a sharp transition to the iris.
+kk> Әдіс: {0}. Қарашық: центрі ({1}; {2}), радиусы {3} px. Қарашық - ең қара дөңгелек аймақ, оның шекарасы - нұрлы қабыққа өткендегі күрт ауысу.
+
+ru> Внешняя граница (лимб): центр ({0}; {1}), радиус {2} px. Центры зрачка и радужки обычно не совпадают: смещение {3} px. Ищется по боковым дугам, которые не закрыты веками.
+en> Outer boundary (limbus): center ({0}; {1}), radius {2} px. The centers of the pupil and the iris usually do not coincide: offset {3} px. It is searched along the side arcs that are not covered by the eyelids.
+kk> Сыртқы шекара (лимб): центрі ({0}; {1}), радиусы {2} px. Қарашық пен нұрлы қабық центрлері әдетте сәйкес келмейді: жылжуы {3} px. Ол қабақтармен жабылмаған бүйір доғалары бойынша ізделеді.
+
+ru> 4. Граница радужки
+en> 4. Iris boundary
+kk> 4. Нұрлы қабық шекарасы
+
+ru> Кольцо между зрачком и лимбом - область радужки. Зелёные точки участвуют в сравнении, красные исключены (веки, ресницы, блики). Открыто {0} % радужки.
+en> The ring between the pupil and the limbus is the iris area. Green points take part in the comparison, red ones are excluded (eyelids, eyelashes, glare). {0} % of the iris is visible.
+kk> Қарашық пен лимб арасындағы сақина - нұрлы қабық аймағы. Жасыл нүктелер салыстыруға қатысады, қызылдары алынып тасталған (қабақтар, кірпіктер, жарқылдар). Нұрлы қабықтың {0} % ашық.
+
+ru> 5. Сегментация
+en> 5. Segmentation
+kk> 5. Сегменттеу
+
+ru> Модель Даугмана «резиновый лист»: кольцо разворачивается в прямоугольник {0}×{1} (радиус × угол). Так снимки с разным размером зрачка и положением глаза становятся сравнимыми; поворот глаза превращается в циклический сдвиг по горизонтали. Красным - исключённые точки.
+en> Daugman's “rubber sheet” model: the ring is unrolled into a {0}×{1} rectangle (radius × angle). So shots with a different pupil size and eye position become comparable; the eye rotation turns into a cyclic horizontal shift. Red - excluded points.
+kk> Даугманның «резеңке парақ» моделі: сақина {0}×{1} тіктөртбұрышына жайылады (радиус × бұрыш). Осылайша қарашық өлшемі мен көз орны әртүрлі суреттер салыстырмалы болады; көздің бұрылуы көлденең циклдік жылжуға айналады. Қызыл - алынып тасталған нүктелер.
+
+ru> 6. Нормализация (rubber sheet)
+en> 6. Normalization (rubber sheet)
+kk> 6. Нормалау (rubber sheet)
+
+ru> радужки
+en> irises
+kk> нұрлы қабықтар
+
+ru> 7. Вход нейросети
+en> 7. Network input
+kk> 7. Желі кірісі
+
+ru> Квадрат вокруг найденной радужки: сеть получает его вместо развёртки (при обучении поворот этой вырезки имитировал поворот глаза). Размер 96×96, внутри сети уменьшается до 64×64.
+en> A square around the found iris: the network receives it instead of the unrolled image (during training, rotation of this crop imitated the eye rotation). Size 96×96, inside the network it is reduced to 64×64.
+kk> Табылған нұрлы қабық айналасындағы шаршы: желі жайылманың орнына осыны алады (оқыту кезінде осы қиманың бұрылуы көздің бұрылуын имитациялады). Өлшемі 96×96, желі ішінде 64×64-ке дейін кішірейтіледі.
+
+ru> 32 числа (4×8 клетки: светлее - больше значение). Это шаблон радужки для нейросети: два снимка сравниваются косинусным сходством векторов (чем ближе к 1, тем больше похожи).
+en> 32 numbers (4×8 cells: lighter - larger value). This is the iris template for the neural network: two shots are compared by the cosine similarity of the vectors (the closer to 1, the more alike).
+kk> 32 сан (4×8 ұяшық: ашығырақ - мән үлкенірек). Бұл нейрондық желіге арналған нұрлы қабық шаблоны: екі сурет векторлардың косинустық ұқсастығымен салыстырылады (1-ге жақын болған сайын, соғұрлым ұқсас).
+
+ru> 8. Embedding сети
+en> 8. Network embedding
+kk> 8. Желі embedding-і
+
+ru> Зрачок (x, y, r)
+en> Pupil (x, y, r)
+kk> Қарашық (x, y, r)
+
+ru> Радужка (x, y, R)
+en> Iris (x, y, R)
+kk> Нұрлы қабық (x, y, R)
+
+ru> Открыто радужки
+en> Iris visible
+kk> Нұрлы қабық ашық
+
+ru> Кодировщик
+en> Encoder
+kk> Кодтаушы
+
+ru> 32 числа, норма 1
+en> 32 numbers, norm 1
+kk> 32 сан, норма 1
+
+ru> {0}. Показан отклик первого фильтра: красный - положительный, синий - отрицательный. Знак (а для Габора - фаза) этого отклика и превращается в биты.
+en> {0}. The response of the first filter is shown: red - positive, blue - negative. The sign (and for Gabor the phase) of this response is turned into bits.
+kk> {0}. Бірінші сүзгінің жауабы көрсетілген: қызыл - оң, көк - теріс. Осы жауаптың таңбасы (ал Габор үшін фазасы) биттерге айналады.
+
+ru> 7. Извлечение признаков
+en> 7. Feature extraction
+kk> 7. Белгілерді бөліп алу
+
+ru> Бинарный шаблон: {0} бит в {1} слоях (показаны до четырёх). Белый - 1, чёрный - 0, серый - ненадёжные или закрытые биты, они не сравниваются. Надёжных бит: {2} ({3} %). Два шаблона сравниваются по доле несовпавших битов (расстояние Хэмминга).
+en> Binary template: {0} bits in {1} layers (up to four are shown). White - 1, black - 0, gray - unreliable or covered bits, they are not compared. Reliable bits: {2} ({3} %). Two templates are compared by the fraction of mismatched bits (Hamming distance).
+kk> Бинарлы шаблон: {1} қабаттағы {0} бит (төрттен көп емес көрсетілген). Ақ - 1, қара - 0, сұр - сенімсіз немесе жабылған биттер, олар салыстырылмайды. Сенімді биттер: {2} ({3} %). Екі шаблон сәйкес келмеген биттер үлесі бойынша салыстырылады (Хэмминг қашықтығы).
+
+ru> Отношение радиусов зрачок / радужка
+en> Pupil / iris radius ratio
+kk> Қарашық / нұрлы қабық радиустарының қатынасы
+
+ru> {0} бит, надёжных {1} %
+en> {0} bits, reliable {1} %
+kk> {0} бит, сенімдісі {1} %
+
+ru> Длина кода
+en> Code length
+kk> Код ұзындығы
+
+ru> центр зрачка {0} px, радиус {1} px; центр радужки {2} px, радиус {3} px
+en> pupil center {0} px, radius {1} px; iris center {2} px, radius {3} px
+kk> қарашық центрі {0} px, радиусы {1} px; нұрлы қабық центрі {2} px, радиусы {3} px
+
+ru> Ошибка относительно эталона (синтетика)
+en> Error relative to the ground truth (synthetic)
+kk> Эталонға қатысты қате (синтетика)
+
+ru> На образце {0} не удалось найти зрачок и радужку. Смените метод локализации или параметры.
+en> The pupil and the iris could not be found in the sample {0}. Change the localization method or the parameters.
+kk> {0} үлгісінде қарашық пен нұрлы қабықты табу мүмкін болмады. Локализация әдісін немесе параметрлерді өзгертіңіз.
+
+ru> Расстояние Хэмминга (HD)
+en> Hamming distance (HD)
+kk> Хэмминг қашықтығы (HD)
+
+ru> Сходство = 1 - HD
+en> Similarity = 1 - HD
+kk> Ұқсастық = 1 - HD
+
+ru> {0} % от кода
+en> {0} % of the code
+kk> Кодтың {0} %-ы
+
+ru> Компенсация поворота
+en> Rotation compensation
+kk> Бұруды компенсациялау
+
+ru> Сравнивалось бит
+en> Bits compared
+kk> Салыстырылған биттер
+
+ru> Локализация
+en> Localization
+kk> Локализация
+
+ru> {0} эпох, точность на новых снимках {1} %
+en> {0} epochs, accuracy on new shots {1} %
+kk> {0} дәуір, жаңа суреттердегі дәлдік {1} %
+
+ru> синтетический набор: {0} глаз × {1} снимка
+en> synthetic set: {0} eyes × {1} shots
+kk> синтетикалық жиын: {0} көз × {1} сурет
+
+ru> В CASIA меньше трёх глаз с тремя и более снимками.
+en> CASIA has fewer than three eyes with three or more shots.
+kk> CASIA-да үш және одан көп суреті бар үш көзден аз.
+
+ru> {0}: {1} глаз × {2} снимка
+en> {0}: {1} eyes × {2} shots
+kk> {0}: {1} көз × {2} сурет
+
+ru> Недостаточно пар: на многих снимках радужка не найдена. Смените метод локализации или параметры.
+en> Not enough pairs: the iris is not found in many shots. Change the localization method or the parameters.
+kk> Жұптар жеткіліксіз: көп суретте нұрлы қабық табылмады. Локализация әдісін немесе параметрлерді өзгертіңіз.
+
+ru> Недостаточно пар: на многих снимках радужка не найдена.
+en> Not enough pairs: the iris is not found in many shots.
+kk> Жұптар жеткіліксіз: көп суретте нұрлы қабық табылмады.
+
+ru> зрачок {0} px, радужка {1} px
+en> pupil {0} px, iris {1} px
+kk> қарашық {0} px, нұрлы қабық {1} px
+
+ru> Метод
+en> Method
+kk> Әдіс
+
+ru> Найдено
+en> Found
+kk> Табылды
+
+ru> Ошибка относительно эталона
+en> Error relative to the ground truth
+kk> Эталонға қатысты қате
+
+ru> На образце {0} не удалось найти зрачок и радужку.
+en> The pupil and the iris could not be found in the sample {0}.
+kk> {0} үлгісінде қарашық пен нұрлы қабықты табу мүмкін болмады.
+
+ru> Сеть для радужки ещё не обучена: откройте вкладку «Обучение распознаванию».
+en> The network for the iris is not trained yet: open the “Training recognition” tab.
+kk> Нұрлы қабыққа арналған желі әлі оқытылмаған: «Тануды оқыту» қойындысын ашыңыз.
+
+ru> Сеть обучена на наборе «{0}», а выбран «{1}»: обучите её на выбранном наборе.
+en> The network was trained on the set “{0}”, and “{1}” is selected: train it on the selected set.
+kk> Желі «{0}» жиынында оқытылған, ал «{1}» таңдалған: оны таңдалған жиында оқытыңыз.
+
+ru> Длина кода, бит
+en> Code length, bits
+kk> Код ұзындығы, бит
+
+ru> авто (Даугман, затем другие)
+en> auto (Daugman, then others)
+kk> авто (Даугман, содан кейін басқалары)
+
+ru> CASIA-Iris-Interval (реальные снимки, ближний ИК)
+en> CASIA-Iris-Interval (real shots, near infrared)
+kk> CASIA-Iris-Interval (нақты суреттер, жақын инфрақызыл)
+
+ru> Реальные снимки (CASIA-Iris-Interval). Метрики хуже, чем на синтетике: это ожидаемо. Истинных окружностей в наборе нет, поэтому ошибка локализации в пикселях не показывается.
+en> Real shots (CASIA-Iris-Interval). The metrics are worse than on synthetic data: this is expected. The set has no true circles, so the localization error in pixels is not shown.
+kk> Нақты суреттер (CASIA-Iris-Interval). Метрикалар синтетикаға қарағанда нашар: бұл күтілетін жағдай. Жиында шынайы шеңберлер жоқ, сондықтан локализация қатесі пиксельдермен көрсетілмейді.
+
+ru> Человек {0}, {1} глаз, снимок {2}
+en> Person {0}, {1} eye, shot {2}
+kk> Адам {0}, {1} көз, сурет {2}
+
+ru> CASIA не найден в datasets/real/. Подготовьте данные: python -m scripts.prepare_real
+en> CASIA was not found in datasets/real/. Prepare the data: python -m scripts.prepare_real
+kk> CASIA datasets/real/ ішінде табылмады. Деректерді дайындаңыз: python -m scripts.prepare_real
+
+ru> Не удалось прочитать WAV. Загрузите файл формата WAV или запишите голос кнопкой «Записать».
+en> Could not read the WAV. Upload a file in the WAV format or record your voice with the “Record” button.
+kk> WAV оқу мүмкін болмады. WAV форматындағы файлды жүктеңіз немесе дауысыңызды «Жазу» батырмасымен жазыңыз.
+
+ru> Неподдерживаемая разрядность WAV (нужна 8, 16 или 32 бита).
+en> Unsupported WAV bit depth (8, 16 or 32 bits are needed).
+kk> WAV разрядтылығы қолдау таппайды (8, 16 немесе 32 бит қажет).
+
+ru> Запись пустая: в ней тишина.
+en> The recording is empty: it is silence.
+kk> Жазба бос: онда тыныштық.
+
+ru> В записи мало речи ({0} с, нужно не меньше {1} с). Говорите громче и ближе к микрофону или смените способ выделения речи.
+en> There is little speech in the recording ({0} s, at least {1} s are needed). Speak louder and closer to the microphone or change the speech detection method.
+kk> Жазбада сөйлеу аз ({0} с, кемінде {1} с қажет). Дауыстырақ және микрофонға жақынырақ сөйлеңіз немесе сөйлеуді бөліп алу әдісін өзгертіңіз.
+
+ru> MFCC: средние и разброс спектральной огибающей (тембр)
+en> MFCC: means and spread of the spectral envelope (timbre)
+kk> MFCC: спектрлік қабықтың орташасы мен таралуы (тембр)
+
+ru> MFCC + динамика (дельта-коэффициенты)
+en> MFCC + dynamics (delta coefficients)
+kk> MFCC + динамика (дельта-коэффициенттер)
+
+ru> Высота тона (f0): медиана, диапазон, разброс
+en> Pitch (f0): median, range, spread
+kk> Тон биіктігі (f0): медиана, диапазон, таралу
+
+ru> MFCC + высота тона
+en> MFCC + pitch
+kk> MFCC + тон биіктігі
+
+ru> В записи слишком мало озвученных кадров: высоту тона определить не удалось. Говорите протяжнее и громче.
+en> There are too few voiced frames in the recording: the pitch could not be determined. Speak in a more drawn-out way and louder.
+kk> Жазбада дыбысталған кадрлар тым аз: тон биіктігін анықтау мүмкін болмады. Созып және дауыстырақ сөйлеңіз.
+
+ru> Неизвестный метод: {0}
+en> Unknown method: {0}
+kk> Белгісіз әдіс: {0}
+
+ru> Синтетические дикторы (12 голосов × 3 записи, одна фраза)
+en> Synthetic speakers (12 voices × 3 recordings, one phrase)
+kk> Синтетикалық дикторлар (12 дауыс × 3 жазба, бір фраза)
+
+ru> Адаптивный порог по энергии
+en> Adaptive threshold by energy
+kk> Энергия бойынша адаптивті шек
+
+ru> Фиксированный порог (дБ ниже пика, ползунок)
+en> Fixed threshold (dB below the peak, slider)
+kk> Бекітілген шек (шыңнан төмен дБ, жүгірткі)
+
+ru> Энергия + пересечения нуля (без шума)
+en> Energy + zero crossings (without noise)
+kk> Энергия + нөлден өту (шусыз)
+
+ru> Распознавание голоса (диктор)
+en> Voice recognition (speaker)
+kk> Дауысты тану (диктор)
+
+ru> Набор «{0}» не найден. Для своих записей используйте кнопки «Записать» и «Загрузить».
+en> The set “{0}” was not found. For your own recordings use the “Record” and “Upload” buttons.
+kk> «{0}» жиыны табылмады. Өз жазбаларыңыз үшін «Жазу» және «Жүктеу» батырмаларын қолданыңыз.
+
+ru> Диктор {0}, запись {1} (f0 около {2} Гц)
+en> Speaker {0}, recording {1} (f0 about {2} Hz)
+kk> Диктор {0}, жазба {1} (f0 шамамен {2} Гц)
+
+ru> Записано или загружено: {0}
+en> Recorded or uploaded: {0}
+kk> Жазылды немесе жүктелді: {0}
+
+ru> Голоса синтетические: реальные записи людей не используются. Свой голос можно записать с микрофона или загрузить WAV; запись хранится только в памяти сервера и видна только вам.
+en> The voices are synthetic: no real recordings of people are used. You can record your own voice from the microphone or upload a WAV; the recording is kept only in the server memory and is visible only to you.
+kk> Дауыстар синтетикалық: адамдардың нақты жазбалары қолданылмайды. Өз дауысыңызды микрофоннан жазуға немесе WAV жүктеуге болады; жазба тек сервер жадында сақталады және тек өзіңізге көрінеді.
+
+ru> Запись слишком короткая (меньше 0,8 с).
+en> The recording is too short (less than 0.8 s).
+kk> Жазба тым қысқа (0,8 с-тан аз).
+
+ru> Запись слишком длинная (больше {0} с).
+en> The recording is too long (more than {0} s).
+kk> Жазба тым ұзын ({0} с-тан көп).
+
+ru> Автокорреляция в каждом кадре находит период колебаний голосовых складок: это основной тон (f0) диктора. У мужчин он обычно 85-180 Гц, у женщин 165-255 Гц. Медиана этой записи: {0} Гц.
+en> Autocorrelation in each frame finds the period of vocal fold vibration: this is the fundamental frequency (f0) of the speaker. For men it is usually 85-180 Hz, for women 165-255 Hz. The median of this recording: {0} Hz.
+kk> Әр кадрдағы автокорреляция дауыс шымшықтарының тербеліс кезеңін табады: бұл диктордың негізгі тоны (f0). Ерлерде ол әдетте 85-180 Гц, әйелдерде 165-255 Гц. Осы жазбаның медианасы: {0} Гц.
+
+ru> Высота тона не найдена: в записи нет озвученных кадров.
+en> The pitch was not found: there are no voiced frames in the recording.
+kk> Тон биіктігі табылмады: жазбада дыбысталған кадрлар жоқ.
+
+ru> Запись {0} с, частота дискретизации 16 кГц. Показана форма волны: громкость в каждый момент времени. Пока это просто колебания воздуха, записанные микрофоном: на таком сигнале голоса сравнивать нельзя.
+en> Recording {0} s, sampling rate 16 kHz. The waveform is shown: loudness at each moment. So far these are just air oscillations recorded by the microphone: voices cannot be compared on such a signal.
+kk> Жазба {0} с, дискреттеу жиілігі 16 кГц. Толқын пішіні көрсетілген: әр сәттегі дауыстылық. Әзірге бұл микрофон жазған ауа тербелістері ғана: мұндай сигналда дауыстарды салыстыруға болмайды.
+
+ru> 1. Исходный сигнал
+en> 1. Source signal
+kk> 1. Бастапқы сигнал
+
+ru> Способ: {0}. Зелёным отмечены кадры по 25 мс, где есть речь: {1} из {2} с ({3} фрагм.). Паузы и шум отбрасываются, иначе тишина попадёт в шаблон и «размоет» голос.
+en> Method: {0}. Green marks the 25 ms frames with speech: {1} of {2} s ({3} fragments). Pauses and noise are discarded, otherwise silence would get into the template and “blur” the voice.
+kk> Әдіс: {0}. Жасыл түспен сөйлеу бар 25 мс кадрлар белгіленген: {2} с-тың {1}-і ({3} фрагм.). Үзілістер мен шу алынып тасталады, әйтпесе тыныштық шаблонға түсіп, дауысты «бұлдыратады».
+
+ru> 2. Выделение речи (VAD)
+en> 2. Speech detection (VAD)
+kk> 2. Сөйлеуді бөліп алу (VAD)
+
+ru> 3. Спектрограмма
+en> 3. Spectrogram
+kk> 3. Спектрограмма
+
+ru> Сигнал нарезается на кадры по 25 мс, для каждого считается спектр (какие частоты звучат). По горизонтали время, по вертикали частота 0-8 кГц, яркость - энергия. Горизонтальные полосы - гармоники голоса, тёмные пятна между ними - форманты речевого тракта.
+en> The signal is cut into 25 ms frames, and for each one the spectrum is computed (which frequencies sound). Time is horizontal, frequency 0-8 kHz is vertical, brightness is energy. The horizontal bands are the voice harmonics, the dark spots between them are the formants of the vocal tract.
+kk> Сигнал 25 мс кадрларға кесіледі, әрқайсысы үшін спектр есептеледі (қандай жиіліктер дыбысталады). Көлденеңі - уақыт, тігінен 0-8 кГц жиілік, жарықтық - энергия. Көлденең жолақтар - дауыс гармоникалары, олардың арасындағы қара дақтар - сөйлеу жолының форманттары.
+
+ru> 4. Мел-спектрограмма
+en> 4. Mel spectrogram
+kk> 4. Мел-спектрограмма
+
+ru> Частоты пересчитываются в мел-шкалу: слух различает низкие частоты точнее высоких, поэтому 40 фильтров идут чаще внизу и реже вверху. Получается компактное описание огибающей спектра.
+en> The frequencies are converted to the mel scale: hearing tells low frequencies apart more accurately than high ones, so the 40 filters are denser at the bottom and sparser at the top. The result is a compact description of the spectrum envelope.
+kk> Жиіліктер мел шкаласына қайта есептеледі: есту төмен жиіліктерді жоғарыларға қарағанда дәлірек ажыратады, сондықтан 40 сүзгі төменде жиі, жоғарыда сирек орналасады. Спектр қабығының ықшам сипаттамасы шығады.
+
+ru> Дискретное косинусное преобразование мел-спектра даёт {0} коэффициентов MFCC в каждом кадре. Они описывают тембр: форму речевого тракта диктора. Первый коэффициент (громкость) отбрасывается.
+en> The discrete cosine transform of the mel spectrum gives {0} MFCC coefficients in each frame. They describe the timbre: the shape of the speaker's vocal tract. The first coefficient (loudness) is discarded.
+kk> Мел-спектрдің дискретті косинустық түрлендіруі әр кадрда {0} MFCC коэффициентін береді. Олар тембрді: диктордың сөйлеу жолының пішінін сипаттайды. Бірінші коэффициент (дауыстылық) алынып тасталады.
+
+ru> 6. Высота тона (f0)
+en> 6. Pitch (f0)
+kk> 6. Тон биіктігі (f0)
+
+ru> Метод: {0}. По всей речи записи считаются средние и разброс признаков, получается вектор из {1} чисел. Столбики показывают его в z-оценках (отклонение от «среднего диктора» в долях разброса): это и есть шаблон, который сравнивается с другими.
+en> Method: {0}. Over all the speech of the recording the means and spread of the features are computed, which gives a vector of {1} numbers. The bars show it in z-scores (deviation from the “average speaker” in fractions of the spread): this is the template that is compared with the others.
+kk> Әдіс: {0}. Жазбаның бүкіл сөйлеуі бойынша белгілердің орташасы мен таралуы есептеледі, {1} саннан тұратын вектор шығады. Бағандар оны z-бағалармен көрсетеді («орташа диктордан» таралу үлесіндегі ауытқу): бұл басқалармен салыстырылатын шаблон.
+
+ru> 7. Шаблон голоса
+en> 7. Voice template
+kk> 7. Дауыс шаблоны
+
+ru> {0} с, {1} % записи
+en> {0} s, {1} % of the recording
+kk> {0} с, жазбаның {1} %-ы
+
+ru> Длительность
+en> Duration
+kk> Ұзақтығы
+
+ru> Речь (VAD)
+en> Speech (VAD)
+kk> Сөйлеу (VAD)
+
+ru> Высота тона f0
+en> Pitch f0
+kk> Тон биіктігі f0
+
+ru> Размерность шаблона
+en> Template dimension
+kk> Шаблон өлшемділігі
+
+ru> не найдена
+en> not found
+kk> табылмады
+
+ru> добавлено {0} % от громкости
+en> {0} % of loudness added
+kk> дауыстылықтың {0} %-ы қосылған
+
+ru> Шум в записи
+en> Noise in the recording
+kk> Жазбадағы шу
+
+ru> добавочного шума нет
+en> no added noise
+kk> қосымша шу жоқ
+
+ru> Среднее расстояние² между шаблонами
+en> Mean squared distance between templates
+kk> Шаблондар арасындағы орташа қашықтық²
+
+ru> Речь A / B
+en> Speech A / B
+kk> Сөйлеу A / B
+
+ru> Высота тона A / B
+en> Pitch A / B
+kk> Тон биіктігі A / B
+
+ru> Способ выделения речи
+en> Speech detection method
+kk> Сөйлеуді бөліп алу әдісі
+
+ru> Найдено речи
+en> Speech found
+kk> Табылған сөйлеу
+
+ru> Фрагментов
+en> Fragments
+kk> Фрагменттер
+
+ru> Метод шаблона
+en> Template method
+kk> Шаблон әдісі
+
+ru> Длина шаблона
+en> Template length
+kk> Шаблон ұзындығы
+
+ru> Неизвестный образец: v{0}_r{1}
+en> Unknown sample: v{0}_r{1}
+kk> Белгісіз үлгі: v{0}_r{1}
+
+ru> Код слишком длинный (максимум 20000 символов).
+en> The code is too long (maximum 20000 characters).
+kk> Код тым ұзын (ең көбі 20000 таңба).
+
+ru> Сервер занят: сейчас проверяется много решений. Повторите через несколько секунд.
+en> The server is busy: many solutions are being checked now. Try again in a few seconds.
+kk> Сервер бос емес: қазір көп шешім тексерілуде. Бірнеше секундтан кейін қайталаңыз.
+
+ru> Превышено время выполнения ({0} с): возможно, бесконечный цикл или слишком медленный алгоритм. Попробуйте векторизацию numpy.
+en> The execution time was exceeded ({0} s): maybe an infinite loop or too slow an algorithm. Try numpy vectorization.
+kk> Орындау уақыты асып кетті ({0} с): мүмкін, шексіз цикл немесе тым баяу алгоритм. numpy векторизациясын байқап көріңіз.
+
+ru> процесс завершился без результата
+en> the process ended without a result
+kk> процесс нәтижесіз аяқталды
+
+ru> Не удалось выполнить код: {0}
+en> Could not run the code: {0}
+kk> Кодты орындау мүмкін болмады: {0}
+
+ru> функция вернула None (забыт return?)
+en> the function returned None (forgot return?)
+kk> функция None қайтарды (return ұмытылды ма?)
+
+ru> результат не является массивом: {0}
+en> the result is not an array: {0}
+kk> нәтиже массив емес: {0}
+
+ru> неверная форма результата: ожидалась {0}, получена {1}
+en> wrong shape of the result: expected {0}, got {1}
+kk> нәтиженің пішіні қате: {0} күтілді, {1} алынды
+
+ru> неверный тип данных: ожидался {0}, получен {1}
+en> wrong data type: expected {0}, got {1}
+kk> деректер түрі қате: {0} күтілді, {1} алынды
+
+ru> значения не совпадают: ожидалось {0}, получено {1}
+en> the values do not match: expected {0}, got {1}
+kk> мәндер сәйкес келмейді: {0} күтілді, {1} алынды
+
+ru> пример
+en> example
+kk> мысал
+
+ru> случайный массив 8×8, порог 100
+en> random 8×8 array, threshold 100
+kk> кездейсоқ 8×8 массив, шек 100
+
+ru> фрагмент отпечатка, порог 128
+en> fingerprint fragment, threshold 128
+kk> саусақ ізінің фрагменті, шек 128
+
+ru> случайный массив 6×6, порог 200
+en> random 6×6 array, threshold 200
+kk> кездейсоқ 6×6 массив, шек 200
+
+ru> массив 5×7, порог 50
+en> 5×7 array, threshold 50
+kk> 5×7 массив, шек 50
+
+ru> массив 3×9, порог 177
+en> 3×9 array, threshold 177
+kk> 3×9 массив, шек 177
+
+ru> фрагмент отпечатка, порог 90
+en> fingerprint fragment, threshold 90
+kk> саусақ ізінің фрагменті, шек 90
+
+ru> порог 0: все пиксели светлые
+en> threshold 0: all pixels are light
+kk> шек 0: барлық пиксельдер ашық
+
+ru> пиксель, равный порогу
+en> a pixel equal to the threshold
+kk> шекке тең пиксель
+
+ru> порог 255 и крайние значения
+en> threshold 255 and extreme values
+kk> шек 255 және шеткі мәндер
+
+ru> изображение 1×1
+en> 1×1 image
+kk> 1×1 сурет
+
+ru> порог выше всех значений
+en> the threshold is above all the values
+kk> шек барлық мәндерден жоғары
+
+ru> случайный массив 5×5
+en> random 5×5 array
+kk> кездейсоқ 5×5 массив
+
+ru> фрагмент отпечатка, m0=100, s0=30
+en> fingerprint fragment, m0=100, s0=30
+kk> саусақ ізінің фрагменті, m0=100, s0=30
+
+ru> массив 4×6
+en> 4×6 array
+kk> 4×6 массив
+
+ru> массив 3×8, m0=0, s0=1
+en> 3×8 array, m0=0, s0=1
+kk> 3×8 массив, m0=0, s0=1
+
+ru> фрагмент отпечатка, m0=128, s0=50
+en> fingerprint fragment, m0=128, s0=50
+kk> саусақ ізінің фрагменті, m0=128, s0=50
+
+ru> все пиксели одинаковы (std = 0)
+en> all pixels are equal (std = 0)
+kk> барлық пиксельдер бірдей (std = 0)
+
+ru> два значения 2×2
+en> two values 2×2
+kk> екі мән 2×2
+
+ru> отрицательное целевое среднее
+en> negative target mean
+kk> теріс мақсатты орташа
+
+ru> результат не число: {0}
+en> the result is not a number: {0}
+kk> нәтиже сан емес: {0}
+
+ru> ожидалось {0}, получено {1}
+en> expected {0}, got {1}
+kk> {0} күтілді, {1} алынды
+
+ru> пример: окончание линии
+en> example: line ending
+kk> мысал: сызық аяқталуы
+
+ru> окончание линии (CN=1)
+en> line ending (CN=1)
+kk> сызық аяқталуы (CN=1)
+
+ru> точка на линии (CN=2)
+en> a point on a line (CN=2)
+kk> сызықтағы нүкте (CN=2)
+
+ru> разветвление (CN=3)
+en> bifurcation (CN=3)
+kk> тармақталу (CN=3)
+
+ru> изолированный пиксель
+en> an isolated pixel
+kk> оқшауланған пиксель
+
+ru> случайный узор, точка (3,3)
+en> random pattern, point (3,3)
+kk> кездейсоқ өрнек, нүкте (3,3)
+
+ru> случайный узор, точка (2,4)
+en> random pattern, point (2,4)
+kk> кездейсоқ өрнек, нүкте (2,4)
+
+ru> окончание линии сверху
+en> line ending from above
+kk> жоғарыдан сызық аяқталуы
+
+ru> перекрёсток (CN=4)
+en> crossing (CN=4)
+kk> қиылыс (CN=4)
+
+ru> угол (0,0) в заполненном массиве
+en> corner (0,0) in a filled array
+kk> толтырылған массивтегі (0,0) бұрышы
+
+ru> правый нижний угол
+en> bottom right corner
+kk> төменгі оң жақ бұрыш
+
+ru> верхняя строка
+en> top row
+kk> жоғарғы жол
+
+ru> последний столбец
+en> last column
+kk> соңғы баған
+
+ru> массив 1×1
+en> 1×1 array
+kk> 1×1 массив
+
+ru> нужен кортеж (score, decision), получено {0}
+en> a tuple (score, decision) is needed, got {0}
+kk> (score, decision) кортежі қажет, {0} алынды
+
+ru> ожидалось ({0}, '{1}'), получено {2}
+en> expected ({0}, '{1}'), got {2}
+kk> ({0}, '{1}') күтілді, {2} алынды
+
+ru> случайные векторы, порог 0.5
+en> random vectors, threshold 0.5
+kk> кездейсоқ векторлар, шек 0.5
+
+ru> ортогональные векторы
+en> orthogonal vectors
+kk> ортогональ векторлар
+
+ru> противоположные векторы
+en> opposite vectors
+kk> қарама-қарсы векторлар
+
+ru> похожие векторы-списки
+en> similar vector lists
+kk> ұқсас тізім-векторлар
+
+ru> одинаковые векторы
+en> identical vectors
+kk> бірдей векторлар
+
+ru> угол 30°, порог 0.9
+en> angle 30°, threshold 0.9
+kk> бұрыш 30°, шек 0.9
+
+ru> нулевой вектор
+en> zero vector
+kk> нөлдік вектор
+
+ru> сходство ровно равно порогу
+en> the similarity is exactly equal to the threshold
+kk> ұқсастық шекке дәл тең
+
+ru> разный масштаб векторов
+en> different scale of the vectors
+kk> векторлардың әртүрлі масштабы
+
+ru> отрицательный порог
+en> negative threshold
+kk> теріс шек
+
+ru> оба вектора нулевые
+en> both vectors are zero
+kk> екі вектор да нөлдік
+
+ru> нужен кортеж (far, frr), получено {0}
+en> a tuple (far, frr) is needed, got {0}
+kk> (far, frr) кортежі қажет, {0} алынды
+
+ru> ожидалось ({0}, {1}), получено {2}
+en> expected ({0}, {1}), got {2}
+kk> ({0}, {1}) күтілді, {2} алынды
+
+ru> порог 0.5
+en> threshold 0.5
+kk> шек 0.5
+
+ru> порог 0.3
+en> threshold 0.3
+kk> шек 0.3
+
+ru> порог 0.7
+en> threshold 0.7
+kk> шек 0.7
+
+ru> малые списки
+en> small lists
+kk> шағын тізімдер
+
+ru> порог 0.1
+en> threshold 0.1
+kk> шек 0.1
+
+ru> порог 0.55
+en> threshold 0.55
+kk> шек 0.55
+
+ru> список чужих пуст
+en> the impostor list is empty
+kk> бөтендер тізімі бос
+
+ru> список своих пуст
+en> the genuine list is empty
+kk> өздер тізімі бос
+
+ru> оценка равна порогу
+en> the score is equal to the threshold
+kk> баға шекке тең
+
+ru> оба списка пусты
+en> both lists are empty
+kk> екі тізім де бос
+
+ru> все оценки выше порога
+en> all the scores are above the threshold
+kk> барлық бағалар шектен жоғары
+
+ru> случайные коды 4×16 без масок
+en> random 4×16 codes without masks
+kk> маскасыз кездейсоқ 4×16 кодтар
+
+ru> одинаковые коды
+en> identical codes
+kk> бірдей кодтар
+
+ru> противоположные коды
+en> opposite codes
+kk> қарама-қарсы кодтар
+
+ru> случайные коды с масками
+en> random codes with masks
+kk> маскалы кездейсоқ кодтар
+
+ru> маска закрывает половину бит
+en> the mask covers half of the bits
+kk> маска биттердің жартысын жабады
+
+ru> нет общих надёжных бит
+en> no common reliable bits
+kk> ортақ сенімді биттер жоқ
+
+ru> один бит, различается
+en> one bit, it differs
+kk> бір бит, ол ерекшеленеді
+
+ru> ненадёжные биты различаются, но игнорируются
+en> unreliable bits differ but are ignored
+kk> сенімсіз биттер ерекшеленеді, бірақ еленбейді
+
+ru> двумерные коды 2×3
+en> two-dimensional codes 2×3
+kk> екі өлшемді кодтар 2×3
+
+ru> нужен кортеж (eer, порог), получено {0}
+en> a tuple (eer, threshold) is needed, got {0}
+kk> (eer, шек) кортежі қажет, {0} алынды
+
+ru> случайные оценки 10 и 14
+en> random scores 10 and 14
+kk> кездейсоқ бағалар 10 және 14
+
+ru> случайные оценки 9 и 11
+en> random scores 9 and 11
+kk> кездейсоқ бағалар 9 және 11
+
+ru> случайные оценки 12 и 12
+en> random scores 12 and 12
+kk> кездейсоқ бағалар 12 және 12
+
+ru> небольшие списки
+en> small lists
+kk> шағын тізімдер
+
+ru> полное разделение (EER = 0)
+en> full separation (EER = 0)
+kk> толық бөліну (EER = 0)
+
+ru> по одной оценке в списках
+en> one score in each list
+kk> тізімдерде бір-бірден баға
+
+ru> списки совпадают целиком
+en> the lists coincide completely
+kk> тізімдер толық сәйкес келеді
+
+ru> свои оценки ниже чужих
+en> the genuine scores are below the impostor ones
+kk> өз бағалары бөтендікінен төмен
+
+ru> угол должен лежать в диапазоне [0, π), получено {0}
+en> the angle must lie in the range [0, π), got {0}
+kk> бұрыш [0, π) диапазонында болуы керек, {0} алынды
+
+ru> ожидалось {0} рад, получено {1}
+en> expected {0} rad, got {1}
+kk> {0} рад күтілді, {1} алынды
+
+ru> пример: вертикальные полосы
+en> example: vertical stripes
+kk> мысал: тік жолақтар
+
+ru> вертикальные гребни
+en> vertical ridges
+kk> тік жоталар
+
+ru> горизонтальные гребни
+en> horizontal ridges
+kk> көлденең жоталар
+
+ru> диагональ вида «\\»
+en> the diagonal of the “\\” kind
+kk> «\\» түріндегі диагональ
+
+ru> диагональ вида «/»
+en> the diagonal of the “/” kind
+kk> «/» түріндегі диагональ
+
+ru> фрагмент отпечатка
+en> fingerprint fragment
+kk> саусақ ізінің фрагменті
+
+ru> случайный блок 6×6
+en> random 6×6 block
+kk> кездейсоқ 6×6 блок
+
+ru> постоянное изображение
+en> constant image
+kk> тұрақты сурет
+
+ru> блок 2×2
+en> 2×2 block
+kk> 2×2 блок
+
+ru> блок 2×2 с диагональным перепадом
+en> 2×2 block with a diagonal drop
+kk> диагональды құламасы бар 2×2 блок
+
+ru> значения uint8 с большим перепадом
+en> uint8 values with a large drop
+kk> үлкен құламасы бар uint8 мәндері
+
+ru> случайный фрагмент 1
+en> random fragment 1
+kk> кездейсоқ фрагмент 1
+
+ru> случайный фрагмент 2
+en> random fragment 2
+kk> кездейсоқ фрагмент 2
+
+ru> случайный фрагмент 3
+en> random fragment 3
+kk> кездейсоқ фрагмент 3
+
+ru> градиент яркости слева направо
+en> brightness gradient from left to right
+kk> солдан оңға жарықтық градиенті
+
+ru> яркий верхний ряд
+en> a bright top row
+kk> жарық жоғарғы қатар
+
+ru> все пиксели равны (сосед >= центра)
+en> all pixels are equal (neighbor >= center)
+kk> барлық пиксельдер тең (көрші >= орталық)
+
+ru> центр самый яркий
+en> the center is the brightest
+kk> орталығы ең жарық
+
+ru> центр самый тёмный
+en> the center is the darkest
+kk> орталығы ең қараңғы
+
+ru> соседи ровно равны центру на одной стороне
+en> the neighbors are exactly equal to the center on one side
+kk> көршілер бір жағында орталыққа дәл тең
+
+ru> диапазон 0-8000 Гц, 10 фильтров
+en> range 0-8000 Hz, 10 filters
+kk> диапазон 0-8000 Гц, 10 сүзгі
+
+ru> телефонный диапазон 300-3400, 5 фильтров
+en> telephone range 300-3400, 5 filters
+kk> телефон диапазоны 300-3400, 5 сүзгі
+
+ru> диапазон 100-4000, 8 фильтров
+en> range 100-4000, 8 filters
+kk> диапазон 100-4000, 8 сүзгі
+
+ru> один фильтр
+en> one filter
+kk> бір сүзгі
+
+ru> нулевое число фильтров
+en> zero filters
+kk> нөл сүзгі
+
+ru> границы совпадают
+en> the borders coincide
+kk> шекаралар сәйкес келеді
+
+ru> узкий диапазон
+en> a narrow range
+kk> тар диапазон
+
+ru> много фильтров
+en> many filters
+kk> көп сүзгі
+
+ru> случайная таблица 8×5
+en> random 8×5 table
+kk> кездейсоқ 8×5 кесте
+
+ru> случайная таблица 10×4
+en> random 10×4 table
+kk> кездейсоқ 10×4 кесте
+
+ru> случайная таблица 6×6
+en> random 6×6 table
+kk> кездейсоқ 6×6 кесте
+
+ru> все пробы распознаны
+en> all probes are recognized
+kk> барлық сынамалар танылды
+
+ru> нет проб
+en> no probes
+kk> сынамалар жоқ
+
+ru> одна проба и одна запись
+en> one probe and one record
+kk> бір сынама және бір жазба
+
+ru> равные оценки: берётся первая запись
+en> equal scores: the first record is taken
+kk> тең бағалар: бірінші жазба алынады
+
+ru> ни одна проба не распознана
+en> no probe is recognized
+kk> ешбір сынама танылмады
+
+ru> отрицательные оценки
+en> negative scores
+kk> теріс бағалар
+
+ru> случайные точки, допуск 8
+en> random points, tolerance 8
+kk> кездейсоқ нүктелер, рұқсат 8
+
+ru> случайные точки, допуск 5
+en> random points, tolerance 5
+kk> кездейсоқ нүктелер, рұқсат 5
+
+ru> случайные точки, допуск 15
+en> random points, tolerance 15
+kk> кездейсоқ нүктелер, рұқсат 15
+
+ru> несколько точек B рядом с одной точкой A
+en> several points of B near one point of A
+kk> A-ның бір нүктесінің жанында B-ның бірнеше нүктесі
+
+ru> расстояние ровно равно допуску (3-4-5)
+en> the distance is exactly equal to the tolerance (3-4-5)
+kk> қашықтық рұқсатқа дәл тең (3-4-5)
+
+ru> второй набор пуст
+en> the second set is empty
+kk> екінші жиын бос
+
+ru> первый набор пуст
+en> the first set is empty
+kk> бірінші жиын бос
+
+ru> допуск 0: учитываются только совпадающие точки
+en> tolerance 0: only coinciding points are counted
+kk> рұқсат 0: тек сәйкес келетін нүктелер ескеріледі
+
+ru> одна точка B рядом с двумя точками A
+en> one point of B near two points of A
+kk> A-ның екі нүктесінің жанында B-ның бір нүктесі
+
+ru> тест выполнялся дольше {0} с
+en> the test ran longer than {0} s
+kk> тест {0} с-тан ұзақ орындалды
+
+ru> пропущен: ранее превышено время выполнения
+en> skipped: the execution time was exceeded earlier
+kk> өткізіп жіберілді: бұрын орындау уақыты асып кеткен
+
+ru> код выполнялся слишком долго (бесконечный цикл?)
+en> the code ran too long (an infinite loop?)
+kk> код тым ұзақ орындалды (шексіз цикл бе?)
+
+ru> результат не совпал с эталоном для этого случая
+en> the result did not match the reference for this case
+kk> нәтиже осы жағдай үшін эталонмен сәйкес келмеді
+
+ru> Не найдена функция {0}
+en> The function {0} was not found
+kk> {0} функциясы табылмады
+
+ru> Относительные импорты запрещены.
+en> Relative imports are forbidden.
+kk> Салыстырмалы импорттарға тыйым салынған.
+
+ru> Импорт «{0}» запрещён (доступ к файлам и системе).
+en> The import of “{0}” is forbidden (access to files and the system).
+kk> «{0}» импортына тыйым салынған (файлдар мен жүйеге қолжетімділік).
+
+ru> Использование «{0}» запрещено в учебной песочнице.
+en> The use of “{0}” is forbidden in the training sandbox.
+kk> «{0}» қолдануға оқу құмсалғышында тыйым салынған.
+
+ru> Обращение к служебным атрибутам (__...__) запрещено.
+en> Access to service attributes (__...__) is forbidden.
+kk> Қызметтік атрибуттарға (__...__) қол жеткізуге тыйым салынған.
+
+ru> Атрибут «{0}» запрещён (доступ к файлам и системе).
+en> The attribute “{0}” is forbidden (access to files and the system).
+kk> «{0}» атрибутына тыйым салынған (файлдар мен жүйеге қолжетімділік).
+
+ru> Строки с двойным подчёркиванием (__) запрещены.
+en> Strings with a double underscore (__) are forbidden.
+kk> Қос асты сызығы (__) бар жолдарға тыйым салынған.
+
+ru> Импорт модуля «{0}» запрещён. Разрешены: {1}.
+en> The import of the module “{0}” is forbidden. Allowed: {1}.
+kk> «{0}» модулін импорттауға тыйым салынған. Рұқсат етілген: {1}.
+
+ru> Импорт «{0}» запрещён.
+en> The import of “{0}” is forbidden.
+kk> «{0}» импортына тыйым салынған.
+
+ru> Нельзя закодировать значение типа {0}
+en> A value of the type {0} cannot be encoded
+kk> {0} типті мәнді кодтау мүмкін емес
+
+ru> Неизвестный формат значения
+en> Unknown value format
+kk> Мәннің белгісіз форматы
+
+ru> Неизвестное задание: {0}
+en> Unknown task: {0}
+kk> Белгісіз тапсырма: {0}
+
+ru> направление
+en> direction
+kk> бағыт
+
+ru> объяснение
+en> explanation
+kk> түсіндірме
+
+ru> фрагмент кода
+en> code fragment
+kk> код фрагменті
+
+ru> полное решение
+en> full solution
+kk> толық шешім
+
+ru> Синтаксическая ошибка{0}: {1}. Проверьте скобки, двоеточия после if/for/def и отступы.
+en> Syntax error{0}: {1}. Check the brackets, the colons after if/for/def and the indentation.
+kk> Синтаксистік қате{0}: {1}. Жақшаларды, if/for/def кейінгі қос нүктелерді және шегіністерді тексеріңіз.
+
+ru> Имя не определено{0}: {1}. Возможно, опечатка в названии переменной или забыт импорт (например, import numpy as np).
+en> The name is not defined{0}: {1}. Maybe a typo in the variable name or a forgotten import (for example, import numpy as np).
+kk> Атау анықталмаған{0}: {1}. Айнымалы атауындағы қате немесе импорт ұмытылған болуы мүмкін (мысалы, import numpy as np).
+
+ru> Несовместимые типы или неверное число аргументов{0}: {1}. Проверьте, что возвращают ваши выражения: массив, число или None.
+en> Incompatible types or a wrong number of arguments{0}: {1}. Check what your expressions return: an array, a number or None.
+kk> Үйлеспейтін типтер немесе аргументтер саны қате{0}: {1}. Өрнектеріңіз не қайтаратынын тексеріңіз: массив, сан немесе None.
+
+ru> Индекс за пределами массива{0}: {1}. Проверьте границы, особенно у краёв изображения.
+en> The index is outside the array{0}: {1}. Check the bounds, especially at the edges of the image.
+kk> Индекс массивтен тыс{0}: {1}. Шекараларды, әсіресе сурет шеттерінде тексеріңіз.
+
+ru> Неверное значение или форма данных{0}: {1}. Проверьте формы массивов и аргументы функций.
+en> A wrong value or data shape{0}: {1}. Check the array shapes and the function arguments.
+kk> Мән немесе деректер пішіні қате{0}: {1}. Массив пішіндерін және функция аргументтерін тексеріңіз.
+
+ru> Деление на ноль{0}. Добавьте проверку знаменателя перед делением.
+en> Division by zero{0}. Add a check of the denominator before the division.
+kk> Нөлге бөлу{0}. Бөлер алдында бөлгішті тексеруді қосыңыз.
+
+ru> Нет такого атрибута или метода{0}: {1}. Проверьте тип объекта (список, массив numpy, число).
+en> There is no such attribute or method{0}: {1}. Check the object type (a list, a numpy array, a number).
+kk> Мұндай атрибут немесе әдіс жоқ{0}: {1}. Объект типін тексеріңіз (тізім, numpy массиві, сан).
+
+ru> Функция не найдена. Проверьте, что вы не изменили имя и параметры функции из шаблона.
+en> The function was not found. Check that you did not change the name and the parameters of the function from the template.
+kk> Функция табылмады. Үлгідегі функция атауы мен параметрлерін өзгертпегеніңізді тексеріңіз.
+
+ru> Код выполняется слишком долго: возможно, бесконечный цикл или медленный перебор пикселей в цикле. Попробуйте векторизацию numpy.
+en> The code runs too long: maybe an infinite loop or a slow loop over pixels. Try numpy vectorization.
+kk> Код тым ұзақ орындалады: мүмкін, шексіз цикл немесе пиксельдер бойынша баяу цикл. numpy векторизациясын байқап көріңіз.
+
+ru> Код заблокирован защитой песочницы: {0}
+en> The code is blocked by the sandbox protection: {0}
+kk> Кодты құмсалғыш қорғанысы бұғаттады: {0}
+
+ru> Переполнение числа{0}: {1}. Проверьте типы данных (uint8 переполняется при вычитании).
+en> Number overflow{0}: {1}. Check the data types (uint8 overflows on subtraction).
+kk> Санның толып кетуі{0}: {1}. Деректер типтерін тексеріңіз (uint8 алу кезінде толып кетеді).
+
+ru>  (строка {0})
+en>  (line {0})
+kk>  ({0}-жол)
+
+ru> Ошибка 
+en> Error 
+kk> Қате
+
+ru> Пример выполняется верно. Нажмите «Проверить решение»: проверка включает ещё и граничные случаи.
+en> The example runs correctly. Press “Check the solution”: the check also includes the edge cases.
+kk> Мысал дұрыс орындалады. «Шешімді тексеру» батырмасын басыңыз: тексеру шеткі жағдайларды да қамтиды.
+
+ru> Результат на примере не совпал с ожидаемым. 
+en> The result on the example did not match the expected one. 
+kk> Мысалдағы нәтиже күткенмен сәйкес келмеді.
+
+ru> Во время тестов возникла ошибка: 
+en> An error occurred during the tests: 
+kk> Тесттер кезінде қате орын алды:
+
+ru> Функция возвращает None: проверьте, что есть оператор return со значением.
+en> The function returns None: check that there is a return statement with a value.
+kk> Функция None қайтарады: мән бар return операторы бар екенін тексеріңіз.
+
+ru> Не пройдены базовые тесты ({0} из {1}). Первый: «{2}» - {3}
+en> The basic tests were not passed ({0} of {1}). The first: “{2}” - {3}
+kk> Негізгі тесттер өтпеді ({1}-ден {0}). Біріншісі: «{2}» - {3}
+
+ru> Базовые тесты пройдены, но не пройдены граничные случаи: 
+en> The basic tests are passed, but the edge cases are not: 
+kk> Негізгі тесттер өтті, бірақ шеткі жағдайлар өтпеді:
+
+ru> . Подумайте, чем эти ситуации отличаются от обычных.
+en> . Think how these situations differ from the usual ones.
+kk> . Бұл жағдайлардың әдеттегілерден қалай ерекшеленетінін ойланыңыз.
+
+ru> Все тесты пройдены.
+en> All the tests are passed.
+kk> Барлық тесттер өтті.
+
+ru> Контрольный вопрос без ответа: выберите вариант, это даёт дополнительный балл.
+en> The control question is unanswered: choose an option, it gives an extra point.
+kk> Бақылау сұрағына жауап жоқ: нұсқаны таңдаңыз, бұл қосымша балл береді.
+
+ru> Ответ на контрольный вопрос неверный: вернитесь к теории задания.
+en> The answer to the control question is wrong: go back to the theory of the task.
+kk> Бақылау сұрағына жауап қате: тапсырма теориясына оралыңыз.
+
+ru> Полное решение откроется после {0} самостоятельных попыток проверки (сейчас: {1}). Попробуйте подсказки уровней 1-3.
+en> The full solution will open after {0} independent check attempts (now: {1}). Try the hints of levels 1-3.
+kk> Толық шешім {0} өз бетінше тексеру әрекетінен кейін ашылады (қазір: {1}). 1-3 деңгейлі кеңестерді байқап көріңіз.
+
+ru> Дмитрий (Piper, мужской)
+en> Dmitry (Piper, male)
+kk> Дмитрий (Piper, ер)
+
+ru> Денис (Piper, мужской)
+en> Denis (Piper, male)
+kk> Денис (Piper, ер)
+
+ru> Не удалось загрузить голос %s: %s
+en> Could not load the voice %s: %s
+kk> %s дауысын жүктеу мүмкін болмады: %s
+
+ru> Пустой текст.
+en> Empty text.
+kk> Бос мәтін.
+
+ru> Слишком длинный текст для озвучки (не больше {0} символов).
+en> The text is too long to be spoken (no more than {0} characters).
+kk> Мәтін дыбыстау үшін тым ұзын ({0} таңбадан артық емес).
+
+ru> Голос не установлен. Выполните: pip install -r requirements-tts.txt и python -m scripts.download_tts
+en> The voice is not installed. Run: pip install -r requirements-tts.txt and python -m scripts.download_tts
+kk> Дауыс орнатылмаған. Орындаңыз: pip install -r requirements-tts.txt және python -m scripts.download_tts
+
+ru> Бинаризация превращает полутоновое изображение в чёрно-белое: гребни отделяются от фона. Слишком низкий порог рвёт линии, слишком высокий сливает соседние гребни. От этого зависит скелет и число ложных minutiae.
+en> Binarization turns a grayscale image into a black-and-white one: the ridges are separated from the background. Too low a threshold breaks the lines, too high a threshold merges neighboring ridges. The skeleton and the number of false minutiae depend on it.
+kk> Бинаризация сұр реңкті суретті қара-ақ суретке айналдырады: жоталар фоннан бөлінеді. Тым төмен шек сызықтарды үзеді, тым жоғары шек көрші жоталарды біріктіреді. Қаңқа мен жалған минуциялар саны соған байланысты.
+
+ru> Similarity score показывает, насколько похожи два шаблона. Здесь это доля совпавших minutiae: 2·совпавшие / (minutiae A + minutiae B), значение от 0 до 1.
+en> The similarity score shows how alike two templates are. Here it is the fraction of matched minutiae: 2·matched / (minutiae A + minutiae B), a value from 0 to 1.
+kk> Similarity score екі шаблонның қаншалықты ұқсас екенін көрсетеді. Мұнда бұл сәйкес келген минуциялар үлесі: 2·сәйкес / (A минуциялары + B минуциялары), мәні 0-ден 1-ге дейін.
+
+ru> Threshold (порог) задаёт границу решения: score ≥ порога - MATCH, иначе NO MATCH. Повышение порога уменьшает FAR (ложные допуски), но увеличивает FRR (ложные отказы).
+en> The threshold sets the decision boundary: score ≥ threshold - MATCH, otherwise NO MATCH. Raising the threshold decreases the FAR (false accepts) but increases the FRR (false rejects).
+kk> Threshold (шек) шешім шекарасын белгілейді: score ≥ шек - MATCH, әйтпесе NO MATCH. Шекті көтеру FAR-ды (жалған қабылдауларды) азайтады, бірақ FRR-ды (жалған бас тартуларды) арттырады.
+
+ru> Minutiae - особые точки гребней: окончание (ridge ending) и разветвление (bifurcation). Шаблон отпечатка - набор (x, y, угол, тип) для каждой такой точки.
+en> Minutiae are special points of the ridges: an ending (ridge ending) and a bifurcation. A fingerprint template is a set of (x, y, angle, type) for each such point.
+kk> Минуциялар - жоталардың ерекше нүктелері: аяқталу (ridge ending) және тармақталу (bifurcation). Саусақ ізі шаблоны - осындай әр нүкте үшін (x, y, бұрыш, тип) жиыны.
+
+ru> Фильтр Габора избирательно усиливает периодическую структуру нужной ориентации и частоты. Для отпечатков он «залечивает» разрывы гребней и подавляет шум. Важно, чтобы период фильтра соответствовал расстоянию между гребнями.
+en> The Gabor filter selectively enhances the periodic structure of the needed orientation and frequency. For fingerprints it “heals” the ridge gaps and suppresses noise. It is important that the filter period corresponds to the distance between the ridges.
+kk> Габор сүзгісі қажетті бағыт пен жиіліктің периодты құрылымын таңдамалы түрде күшейтеді. Саусақ іздері үшін ол жоталардың үзілістерін «жазады» және шуды басады. Сүзгі кезеңі жоталар арасындағы қашықтыққа сәйкес болуы маңызды.
+
+ru> CLAHE выравнивает контраст локально, по небольшим областям. Это снижает влияние неравномерного давления и освещения.
+en> CLAHE equalizes the contrast locally, over small areas. This reduces the influence of uneven pressure and lighting.
+kk> CLAHE контрастты жергілікті, шағын аймақтар бойынша теңестіреді. Бұл біркелкі емес қысым мен жарықтандырудың әсерін азайтады.
+
+ru> Скелетизация утоньшает гребни до 1 пикселя. Только на тонких линиях просто определить окончания и разветвления по crossing number.
+en> Skeletonization thins the ridges to 1 pixel. Only on thin lines is it easy to determine the endings and bifurcations by the crossing number.
+kk> Скелетизация жоталарды 1 пиксельге дейін жіңішкертеді. Тек жіңішке сызықтарда ғана аяқталулар мен тармақталуларды crossing number бойынша анықтау оңай.
+
+ru> FAR (False Acceptance Rate) - доля пар разных людей, ошибочно принятых как совпадение.
+en> FAR (False Acceptance Rate) is the fraction of pairs of different people wrongly accepted as a match.
+kk> FAR (False Acceptance Rate) - әртүрлі адамдар жұптарының сәйкес деп қате қабылданған үлесі.
+
+ru> FRR (False Rejection Rate) - доля пар одного человека, ошибочно отвергнутых.
+en> FRR (False Rejection Rate) is the fraction of pairs of the same person wrongly rejected.
+kk> FRR (False Rejection Rate) - бір адам жұптарының қате қабылданбаған үлесі.
+
+ru> EER - точка, где FAR = FRR. Чем она ниже, тем лучше система различает своих и чужих.
+en> The EER is the point where FAR = FRR. The lower it is, the better the system tells genuine from impostor.
+kk> EER - FAR = FRR болатын нүкте. Ол төмен болған сайын, жүйе өз бен бөтенді жақсырақ ажыратады.
+
+ru> Face embedding - вектор чисел, в который нейросеть превращает выровненное лицо. Похожие лица дают близкие векторы, поэтому лица сравнивают не по пикселям, а по расстоянию между векторами.
+en> A face embedding is a vector of numbers into which a neural network turns the aligned face. Similar faces give close vectors, so faces are compared not by pixels but by the distance between the vectors.
+kk> Face embedding - нейрондық желі туралалған бетті айналдыратын сандар векторы. Ұқсас беттер жақын векторлар береді, сондықтан беттер пиксельдермен емес, векторлар арасындағы қашықтықпен салыстырылады.
+
+ru> Cosine similarity - косинус угла между двумя embedding-векторами: 1 - направления совпадают, около 0 - не связаны. Не зависит от длины вектора.
+en> Cosine similarity is the cosine of the angle between two embedding vectors: 1 - the directions coincide, about 0 - unrelated. It does not depend on the vector length.
+kk> Cosine similarity - екі embedding-вектор арасындағы бұрыштың косинусы: 1 - бағыттар сәйкес, шамамен 0 - байланыссыз. Вектор ұзындығына тәуелсіз.
+
+ru> Alignment поворачивает и масштабирует лицо так, чтобы глаза и рот оказались в стандартных местах. Без него наклон и разный масштаб ухудшают сравнение.
+en> Alignment rotates and scales the face so that the eyes and mouth are in the standard places. Without it, tilt and different scale worsen the comparison.
+kk> Alignment бетті бұрады және масштабтайды, сонда көздер мен ауыз стандартты орындарда болады. Онсыз көлбеу мен әртүрлі масштаб салыстыруды нашарлатады.
+
+ru> Landmarks - ключевые точки лица: глаза, нос, углы рта. По ним вычисляют преобразование для выравнивания.
+en> Landmarks are the key points of the face: the eyes, the nose, the mouth corners. They are used to compute the alignment transform.
+kk> Landmarks - беттің кілттік нүктелері: көздер, мұрын, ауыз бұрыштары. Олар бойынша туралау түрлендіруі есептеледі.
+
+ru> HOG разбивает лицо на ячейки и для каждой считает гистограмму направлений градиентов (границ). Хорошо описывает форму черт лица, но чувствителен к повороту.
+en> HOG splits the face into cells and for each computes a histogram of gradient (edge) directions. It describes the shape of the facial features well but is sensitive to rotation.
+kk> HOG бетті ұяшықтарға бөледі және әрқайсысы үшін градиент (шекаралар) бағыттарының гистограммасын есептейді. Бет сипаттарының пішінін жақсы сипаттайды, бірақ бұруға сезімтал.
+
+ru> Признаки Габора - отклики набора фильтров разных направлений и масштабов. Показывают, где на лице какие линии и текстуры.
+en> Gabor features are the responses of a set of filters of different directions and scales. They show which lines and textures are where on the face.
+kk> Габор белгілері - әртүрлі бағыттар мен масштабтардағы сүзгілер жиынының жауаптары. Олар бетте қандай сызықтар мен текстуралар қайда екенін көрсетеді.
+
+ru> DCT раскладывает изображение на волны разной частоты. Для лица берут только низкие частоты: они несут общую форму, а мелкий шум отбрасывается.
+en> DCT decomposes the image into waves of different frequency. For a face only the low frequencies are taken: they carry the general shape, and fine noise is discarded.
+kk> DCT суретті әртүрлі жиіліктегі толқындарға жіктейді. Бет үшін тек төмен жиіліктер алынады: олар жалпы пішінді тасымалдайды, ұсақ шу алынып тасталады.
+
+ru> SSD ResNet-10 - нейросетевой детектор: за один проход по изображению предсказывает рамки лиц и уверенность. Точнее каскадов Хаара при повороте и освещении.
+en> SSD ResNet-10 is a neural network detector: in one pass over the image it predicts the face boxes and the confidence. More accurate than Haar cascades under rotation and lighting changes.
+kk> SSD ResNet-10 - нейрондық желі детекторы: суретті бір рет өткенде бет рамкалары мен сенімділікті болжайды. Бұру мен жарықтандыру кезінде Хаар каскадтарынан дәлірек.
+
+ru> ArcFace - нейросеть, обученная так, чтобы embedding одного человека лежали близко, а разных далеко (угловой штраф при обучении). Даёт самое чёткое разделение «своих» и «чужих».
+en> ArcFace is a neural network trained so that the embeddings of one person lie close and those of different people far apart (an angular penalty during training). It gives the sharpest separation of “genuine” and “impostor”.
+kk> ArcFace - бір адамның embedding-дері жақын, әртүрлі адамдардыкі алыс жатуы үшін оқытылған нейрондық желі (оқыту кезіндегі бұрыштық айыппұл). «Өз» бен «бөтенді» ең анық бөледі.
+
+ru> Нормированные пиксели - простейший эталон: само уменьшенное лицо как вектор. Нужен, чтобы увидеть, сколько дают более умные признаки.
+en> Normalized pixels are the simplest baseline: the reduced face itself as a vector. It is needed to see how much smarter features give.
+kk> Нормаланған пиксельдер - ең қарапайым эталон: кішірейтілген беттің өзі вектор ретінде. Ақылды белгілердің қаншалықты пайда беретінін көру үшін қажет.
+
+ru> Расстояние Хэмминга - доля несовпавших битов двух кодов радужки (по битам, надёжным в обоих). У разных глаз около половины битов совпадает случайно (HD около 0,45-0,5), у одного глаза HD заметно меньше. Сходство в лаборатории = 1 - HD.
+en> The Hamming distance is the fraction of mismatched bits of two iris codes (over the bits reliable in both). For different eyes about half of the bits coincide by chance (HD about 0.45-0.5), for one eye the HD is noticeably smaller. The similarity in the laboratory = 1 - HD.
+kk> Хэмминг қашықтығы - екі нұрлы қабық кодының сәйкес келмеген биттерінің үлесі (екеуінде де сенімді биттер бойынша). Әртүрлі көздерде биттердің шамамен жартысы кездейсоқ сәйкес келеді (HD шамамен 0,45-0,5), бір көзде HD едәуір аз. Зертханада ұқсастық = 1 - HD.
+
+ru> Нормализация Даугмана «резиновый лист»: кольцо радужки разворачивается в прямоугольник радиус × угол. Тогда снимки с разным размером зрачка и положением глаза можно сравнивать, а поворот глаза становится циклическим сдвигом.
+en> Daugman's “rubber sheet” normalization: the iris ring is unrolled into a radius × angle rectangle. Then shots with a different pupil size and eye position can be compared, and the eye rotation becomes a cyclic shift.
+kk> Даугманның «резеңке парақ» нормалауы: нұрлы қабық сақинасы радиус × бұрыш тіктөртбұрышына жайылады. Сонда қарашық өлшемі мен көз орны әртүрлі суреттерді салыстыруға болады, ал көздің бұрылуы циклдік жылжуға айналады.
+
+ru> Iris Code - бинарный шаблон радужки: отклик фильтров (Габора и др.) в каждой точке развёртки превращается в биты по знаку или фазе. Сравнивается расстоянием Хэмминга с перебором сдвигов.
+en> Iris Code is a binary iris template: the response of filters (Gabor and others) at each point of the unrolled image is turned into bits by the sign or the phase. It is compared by the Hamming distance with a search over shifts.
+kk> Iris Code - нұрлы қабықтың бинарлы шаблоны: жайылманың әр нүктесіндегі сүзгілер (Габор және басқалар) жауабы таңба немесе фаза бойынша биттерге айналады. Жылжуларды іріктеумен Хэмминг қашықтығы арқылы салыстырылады.
+
+ru> Оператор Даугмана ищет окружность, на которой средняя яркость меняется резче всего при изменении радиуса: так находятся границы зрачка (тёмное - радужка) и радужки (радужка - светлая склера).
+en> Daugman's operator looks for the circle on which the mean brightness changes most sharply as the radius changes: this is how the boundaries of the pupil (dark - iris) and of the iris (iris - light sclera) are found.
+kk> Даугман операторы радиус өзгергенде орташа жарықтық ең күрт өзгеретін шеңберді іздейді: осылай қарашық (қара - нұрлы қабық) және нұрлы қабық (нұрлы қабық - ашық склера) шекаралары табылады.
+
+ru> Преобразование Хафа для окружностей: каждая точка границы голосует за возможные центры и радиусы; окружности с наибольшим числом голосов считаются найденными. Просто, но чувствительно к векам и ресницам.
+en> The Hough transform for circles: each boundary point votes for possible centers and radii; the circles with the most votes are considered found. Simple but sensitive to eyelids and eyelashes.
+kk> Шеңберлер үшін Хаф түрлендіруі: әр шекара нүктесі мүмкін центрлер мен радиустарға дауыс береді; ең көп дауыс жинаған шеңберлер табылған болып саналады. Қарапайым, бірақ қабақтар мен кірпіктерге сезімтал.
+
+ru> Лог-Габор (метод Masek) - фильтр, у которого частоты распределены по логарифмической шкале и нет постоянной составляющей. Применяется к каждому кольцу развёртки, фаза отклика даёт 2 бита на точку.
+en> Log-Gabor (the Masek method) is a filter whose frequencies are spread on a logarithmic scale and which has no constant component. It is applied to each ring of the unrolled image, and the phase of the response gives 2 bits per point.
+kk> Лог-Габор (Масек әдісі) - жиіліктері логарифмдік шкалада таралған және тұрақты құраушысы жоқ сүзгі. Ол жайылманың әр сақинасына қолданылады, жауап фазасы нүктеге 2 бит береді.
+
+ru> Порядковые признаки (Сунь и Тань): сравнивается, какая из двух соседних областей светлее. Устойчивы к освещению, потому что важен только знак разности.
+en> Ordinal measures (Sun and Tan): it is compared which of two neighboring areas is lighter. They are robust to lighting because only the sign of the difference matters.
+kk> Реттік белгілер (Сунь және Тань): екі көрші аймақтың қайсысы ашығырақ екені салыстырылады. Жарықтандыруға төзімді, өйткені тек айырма таңбасы маңызды.
+
+ru> Веки, ресницы и блики закрывают часть радужки. Такие точки исключаются маской, а расстояние Хэмминга считается только по открытым битам обоих снимков.
+en> Eyelids, eyelashes and glare cover a part of the iris. Such points are excluded by a mask, and the Hamming distance is computed only over the open bits of both shots.
+kk> Қабақтар, кірпіктер және жарқылдар нұрлы қабықтың бір бөлігін жабады. Мұндай нүктелер маскамен алынып тасталады, ал Хэмминг қашықтығы екі суреттің тек ашық биттері бойынша есептеледі.
+
+ru> Детектор находит рамку лица. Haar - классический каскад на простых признаках: быстрый, но чувствителен к повороту и свету. YuNet - лёгкая нейросеть: точнее и сразу выдаёт 5 ключевых точек.
+en> The detector finds the face box. Haar is a classic cascade on simple features: fast but sensitive to rotation and light. YuNet is a light neural network: more accurate and immediately gives 5 landmarks.
+kk> Детектор бет рамкасын табады. Haar - қарапайым белгілердегі классикалық каскад: жылдам, бірақ бұру мен жарыққа сезімтал. YuNet - жеңіл нейрондық желі: дәлірек және бірден 5 кілттік нүкте береді.
+
+ru> LBP кодирует каждый пиксель по сравнению с соседями, а гистограммы по ячейкам лица образуют вектор признаков. Это классический метод: проще нейросети, но слабее при смене освещения и позы.
+en> LBP encodes each pixel by comparison with its neighbors, and the histograms over the face cells form the feature vector. This is a classic method: simpler than a neural network but weaker under changes of lighting and pose.
+kk> LBP әр пиксельді көршілермен салыстыру арқылы кодтайды, ал бет ұяшықтары бойынша гистограммалар белгілер векторын құрайды. Бұл классикалық әдіс: нейрондық желіден қарапайымырақ, бірақ жарықтандыру мен поза өзгергенде әлсіздеу.
+
+ru> MFCC - коэффициенты, описывающие форму спектра голоса на мел-шкале (она ближе к слуху). Они кодируют тембр: форму речевого тракта диктора, а не то, что он говорит. Для шаблона берут среднее и разброс MFCC по всей речи записи.
+en> MFCC are the coefficients that describe the shape of the voice spectrum on the mel scale (which is closer to hearing). They encode the timbre: the shape of the speaker's vocal tract, not what they say. For the template, the mean and spread of the MFCC over all the speech of the recording are taken.
+kk> MFCC - дауыс спектрінің пішінін мел шкаласында (ол естуге жақынырақ) сипаттайтын коэффициенттер. Олар тембрді: диктордың сөйлеу жолының пішінін кодтайды, нені айтқанын емес. Шаблон үшін жазбаның бүкіл сөйлеуі бойынша MFCC орташасы мен таралуы алынады.
+
+ru> Спектрограмма показывает, какие частоты звучат в каждый момент времени: по горизонтали время, по вертикали частота, яркость - энергия. Горизонтальные полосы - гармоники голосовых складок, пятна между ними - форманты речевого тракта.
+en> The spectrogram shows which frequencies sound at each moment: time is horizontal, frequency is vertical, brightness is energy. The horizontal bands are the harmonics of the vocal folds, the spots between them are the formants of the vocal tract.
+kk> Спектрограмма әр сәтте қандай жиіліктер дыбысталатынын көрсетеді: көлденеңі - уақыт, тігінен - жиілік, жарықтық - энергия. Көлденең жолақтар - дауыс шымшықтарының гармоникалары, олардың арасындағы дақтар - сөйлеу жолының форманттары.
+
+ru> VAD отделяет речь от тишины и шума по энергии кадров. Если речь выделена плохо, в шаблон попадает тишина или шум и голоса сравниваются хуже: сравните три способа в карточке «Сравнение методов».
+en> VAD separates speech from silence and noise by the energy of the frames. If speech is detected badly, silence or noise gets into the template and voices are compared worse: compare the three ways in the “Method comparison” card.
+kk> VAD сөйлеуді тыныштық пен шудан кадрлар энергиясы бойынша бөледі. Сөйлеу нашар бөлінсе, шаблонға тыныштық немесе шу түсіп, дауыстар нашарырақ салыстырылады: «Әдістерді салыстыру» карточкасындағы үш тәсілді салыстырыңыз.
+
+ru> Высота тона (f0) - частота колебаний голосовых складок в герцах. У мужчин обычно 85-180 Гц, у женщин 165-255 Гц. Одного f0 для распознавания недостаточно: у разных людей он может совпасть, поэтому его дополняют тембром (MFCC).
+en> Pitch (f0) is the frequency of vocal fold vibration in hertz. For men it is usually 85-180 Hz, for women 165-255 Hz. f0 alone is not enough for recognition: it may coincide in different people, so it is complemented by timbre (MFCC).
+kk> Тон биіктігі (f0) - дауыс шымшықтарының тербеліс жиілігі герцпен. Ерлерде әдетте 85-180 Гц, әйелдерде 165-255 Гц. Тану үшін жалғыз f0 жеткіліксіз: әртүрлі адамдарда ол сәйкес келуі мүмкін, сондықтан оны тембрмен (MFCC) толықтырады.
+
+ru> Распознавание по голосу (диктор) сравнивает, КТО говорит, а не ЧТО. Сначала выделяется речь, потом считаются спектральные признаки и высота тона, из них собирается шаблон и сравнивается с шаблоном другой записи.
+en> Voice recognition (speaker) compares WHO is speaking, not WHAT. First the speech is detected, then the spectral features and the pitch are computed, a template is assembled from them and compared with the template of another recording.
+kk> Дауыс бойынша тану (диктор) КІМ сөйлеп тұрғанын салыстырады, НЕ айтып тұрғанын емес. Алдымен сөйлеу бөлінеді, содан кейін спектрлік белгілер мен тон биіктігі есептеледі, олардан шаблон құрастырылып, басқа жазба шаблонымен салыстырылады.
+
+ru> Поле ориентаций - направление гребней в каждой точке. По нему Gabor-фильтр выбирает, под каким углом усиливать линии.
+en> The orientation field is the direction of the ridges at each point. The Gabor filter uses it to choose at which angle to enhance the lines.
+kk> Бағыт өрісі - әр нүктедегі жоталардың бағыты. Габор сүзгісі оған сүйеніп сызықтарды қандай бұрышпен күшейтуді таңдайды.
+
+ru> Уточните, какое понятие объяснить: similarity, threshold, FAR/FRR/EER, embedding, cosine, alignment, landmarks, детектор; для отпечатков ещё бинаризация, minutiae, Gabor, CLAHE, скелетизация.
+en> Specify which concept to explain: similarity, threshold, FAR/FRR/EER, embedding, cosine, alignment, landmarks, detector; for fingerprints also binarization, minutiae, Gabor, CLAHE, skeletonization.
+kk> Қай ұғымды түсіндіру керектігін нақтылаңыз: similarity, threshold, FAR/FRR/EER, embedding, cosine, alignment, landmarks, детектор; саусақ іздері үшін тағы бинаризация, minutiae, Gabor, CLAHE, скелетизация.
+
+ru> Similarity {0} почти равна порогу {1}: решение неустойчиво.
+en> The similarity {0} is almost equal to the threshold {1}: the decision is unstable.
+kk> Similarity {0} шекке {1} дерлік тең: шешім тұрақсыз.
+
+ru> Similarity {0} не ниже порога {1}, поэтому MATCH.
+en> The similarity {0} is not below the threshold {1}, so MATCH.
+kk> Similarity {0} шектен {1} төмен емес, сондықтан MATCH.
+
+ru> Similarity {0} ниже порога {1}, поэтому NO MATCH. Если это один человек, причины могут быть в повороте головы, освещении, ошибке детекции или выключенном выравнивании.
+en> The similarity {0} is below the threshold {1}, so NO MATCH. If this is one person, the causes may be head rotation, lighting, a detection error or the alignment being off.
+kk> Similarity {0} шектен {1} төмен, сондықтан NO MATCH. Бұл бір адам болса, себептері бастың бұрылуы, жарықтандыру, табу қатесі немесе туралаудың өшірулі болуы мүмкін.
+
+ru> Используется классический LBP: он чувствителен к освещению и позе. Сравните результат с SFace, если модель доступна.
+en> The classic LBP is used: it is sensitive to lighting and pose. Compare the result with SFace if the model is available.
+kk> Классикалық LBP қолданылады: ол жарықтандыру мен позаға сезімтал. Модель қолжетімді болса, нәтижені SFace-пен салыстырыңыз.
+
+ru> Выравнивание выключено: включите его и посмотрите, как изменится similarity.
+en> Alignment is off: turn it on and see how the similarity changes.
+kk> Туралау өшірулі: оны қосып, similarity қалай өзгеретінін қараңыз.
+
+ru> Haar даёт грубые ключевые точки; YuNet обычно выравнивает точнее.
+en> Haar gives rough landmarks; YuNet usually aligns more accurately.
+kk> Haar дөрекі кілттік нүктелер береді; YuNet әдетте дәлірек туралайды.
+
+ru> Добавлен сильный шум: снижение сходства ожидаемо.
+en> Strong noise was added: the drop of the similarity is expected.
+kk> Күшті шу қосылды: ұқсастықтың төмендеуі күтілетін жағдай.
+
+ru> Сходство {0} (HD = {1}) почти равно порогу {2}: решение неустойчиво.
+en> The similarity {0} (HD = {1}) is almost equal to the threshold {2}: the decision is unstable.
+kk> Ұқсастық {0} (HD = {1}) шекке {2} дерлік тең: шешім тұрақсыз.
+
+ru> Сходство {0} не ниже порога {1} (расстояние Хэмминга {2}), поэтому MATCH.
+en> The similarity {0} is not below the threshold {1} (Hamming distance {2}), so MATCH.
+kk> Ұқсастық {0} шектен {1} төмен емес (Хэмминг қашықтығы {2}), сондықтан MATCH.
+
+ru> Сходство {0} ниже порога {1} (HD = {2}), поэтому NO MATCH. У разных глаз HD обычно около 0,45: если это один глаз, проверьте локализацию на этапах 3-4 и маску век.
+en> The similarity {0} is below the threshold {1} (HD = {2}), so NO MATCH. For different eyes the HD is usually about 0.45: if this is one eye, check the localization at steps 3-4 and the eyelid mask.
+kk> Ұқсастық {0} шектен {1} төмен (HD = {2}), сондықтан NO MATCH. Әртүрлі көздерде HD әдетте шамамен 0,45: бұл бір көз болса, 3-4 кезеңдердегі локализацияны және қабақ маскасын тексеріңіз.
+
+ru> Большая часть радужки закрыта веками или ресницами: сравнивается меньше битов, результат менее надёжен.
+en> Most of the iris is covered by eyelids or eyelashes: fewer bits are compared, the result is less reliable.
+kk> Нұрлы қабықтың көп бөлігін қабақтар немесе кірпіктер жауып тұр: аз бит салыстырылады, нәтиже сенімділеу емес.
+
+ru> Сравнивалось только {0} % битов кода: много ненадёжных или закрытых.
+en> Only {0} % of the code bits were compared: many are unreliable or covered.
+kk> Кодтың тек {0} % биті салыстырылды: көбі сенімсіз немесе жабылған.
+
+ru> Лучшее совпадение получено при повороте на {0}°: так компенсирован поворот глаза.
+en> The best match was obtained at the rotation by {0}°: this is how the eye rotation is compensated.
+kk> Ең жақсы сәйкестік {0}° бұрғанда алынды: көздің бұрылуы осылай компенсацияланған.
+
+ru> Метод Хафа грубее находит внешнюю границу радужки; сравните с оператором Даугмана.
+en> The Hough method finds the outer boundary of the iris more roughly; compare with Daugman's operator.
+kk> Хаф әдісі нұрлы қабықтың сыртқы шекарасын дөрекірек табады; Даугман операторымен салыстырыңыз.
+
+ru> Код Хаара самый простой и хуже различает глаза; сравните с фильтрами Габора.
+en> The Haar code is the simplest and tells eyes apart worse; compare with the Gabor filters.
+kk> Хаар коды ең қарапайым және көздерді нашарырақ ажыратады; Габор сүзгілерімен салыстырыңыз.
+
+ru> Добавлен сильный шум: падение сходства ожидаемо.
+en> Strong noise was added: the drop of the similarity is expected.
+kk> Күшті шу қосылды: ұқсастықтың төмендеуі күтілетін жағдай.
+
+ru> Сходство {0} почти равно порогу {1}: решение неустойчиво.
+en> The similarity {0} is almost equal to the threshold {1}: the decision is unstable.
+kk> Ұқсастық {0} шекке {1} дерлік тең: шешім тұрақсыз.
+
+ru> Сходство {0} не ниже порога {1}, поэтому MATCH: шаблоны двух записей близки.
+en> The similarity {0} is not below the threshold {1}, so MATCH: the templates of the two recordings are close.
+kk> Ұқсастық {0} шектен {1} төмен емес, сондықтан MATCH: екі жазба шаблондары жақын.
+
+ru> Сходство {0} ниже порога {1}, поэтому NO MATCH. Если это один диктор, проверьте, сколько речи в записях, нет ли шума и какой выбран метод шаблона.
+en> The similarity {0} is below the threshold {1}, so NO MATCH. If this is one speaker, check how much speech is in the recordings, whether there is noise and which template method is chosen.
+kk> Ұқсастық {0} шектен {1} төмен, сондықтан NO MATCH. Бұл бір диктор болса, жазбаларда қанша сөйлеу бар екенін, шу бар-жоғын және қандай шаблон әдісі таңдалғанын тексеріңіз.
+
+ru> Высота тона заметно различается ({0} и {1} Гц): так бывает у разных людей, а у одного при разной интонации.
+en> The pitch differs noticeably ({0} and {1} Hz): this happens with different people, and with one person at different intonation.
+kk> Тон биіктігі айтарлықтай ерекшеленеді ({0} және {1} Гц): бұл әртүрлі адамдарда, ал бір адамда әртүрлі интонацияда болады.
+
+ru> Речи в записи мало: шаблон по короткой записи нестабилен. Запишите фразу подлиннее.
+en> There is little speech in the recording: a template from a short recording is unstable. Record a longer phrase.
+kk> Жазбада сөйлеу аз: қысқа жазбадан алынған шаблон тұрақсыз. Ұзағырақ фраза жазыңыз.
+
+ru> Добавлен сильный шум: он искажает спектр, сходство одного диктора падает.
+en> Strong noise was added: it distorts the spectrum, the similarity of one speaker drops.
+kk> Күшті шу қосылды: ол спектрді бұрмалайды, бір диктордың ұқсастығы төмендейді.
+
+ru> Метод только по высоте тона грубый: голоса с близким тоном путаются. Сравните с MFCC.
+en> The pitch-only method is rough: voices with a close pitch get confused. Compare with MFCC.
+kk> Тек тон биіктігі бойынша әдіс дөрекі: тоны жақын дауыстар шатастырылады. MFCC-мен салыстырыңыз.
+
+ru> Сначала выполните сравнение двух образцов, затем я разберу результат.
+en> First compare two samples, then I will analyze the result.
+kk> Алдымен екі үлгіні салыстырыңыз, содан кейін нәтижені талдаймын.
+
+ru> Найдено мало minutiae ({0} и {1}). Возможные причины: слишком агрессивная бинаризация, малый период Gabor, большое минимальное расстояние между точками или низкое качество образца.
+en> Few minutiae found ({0} and {1}). Possible causes: too aggressive binarization, too small a Gabor period, a large minimum distance between points or low sample quality.
+kk> Минуциялар аз табылды ({0} және {1}). Мүмкін себептері: тым агрессивті бинаризация, Габор кезеңінің тым аз болуы, нүктелер арасындағы ең аз қашықтықтың үлкен болуы немесе үлгі сапасының төмендігі.
+
+ru> Найдено очень много minutiae ({0} и {1}), часть, скорее всего, ложные: шум создаёт «шипы» и разрывы. Попробуйте увеличить σ Gabor или минимальное расстояние между точками.
+en> Very many minutiae found ({0} and {1}), some of them are most likely false: noise creates “spurs” and gaps. Try increasing the Gabor σ or the minimum distance between points.
+kk> Минуциялар өте көп табылды ({0} және {1}), бір бөлігі жалған болуы мүмкін: шу «тікенектер» мен үзілістер жасайды. Габор σ мәнін немесе нүктелер арасындағы ең аз қашықтықты арттырып көріңіз.
+
+ru> Score {0} почти равен порогу {1}: решение неустойчиво, небольшое изменение параметров его перевернёт.
+en> The score {0} is almost equal to the threshold {1}: the decision is unstable, a small change of the parameters will flip it.
+kk> Score {0} шекке {1} дерлік тең: шешім тұрақсыз, параметрлердің аздаған өзгеруі оны төңкереді.
+
+ru> Score {0} не ниже порога {1}, поэтому система выдала MATCH ({2} совпавших minutiae).
+en> The score {0} is not below the threshold {1}, so the system gave MATCH ({2} matched minutiae).
+kk> Score {0} шектен {1} төмен емес, сондықтан жүйе MATCH берді ({2} сәйкес минуция).
+
+ru> Score {0} ниже порога {1}, поэтому NO MATCH. Если образцы одного пальца, это ложный отказ: проверьте качество, шум, допуск по расстоянию и угол поворота.
+en> The score {0} is below the threshold {1}, so NO MATCH. If the samples are of the same finger, this is a false reject: check the quality, the noise, the distance tolerance and the rotation angle.
+kk> Score {0} шектен {1} төмен, сондықтан NO MATCH. Үлгілер бір саусақтікі болса, бұл жалған бас тарту: сапаны, шуды, қашықтық рұқсатын және бұру бұрышын тексеріңіз.
+
+ru> Вы добавили сильный шум: падение сходства ожидаемо. Сравните результат с шумом и без него.
+en> You added strong noise: the drop of the similarity is expected. Compare the result with and without noise.
+kk> Сіз күшті шу қостыңыз: ұқсастықтың төмендеуі күтілетін жағдай. Нәтижені шумен және шусыз салыстырыңыз.
+
+ru> Выберите два образца и нажмите «Сравнить». Затем посмотрите, сколько minutiae найдено на каждом.
+en> Choose two samples and press “Compare”. Then look at how many minutiae are found in each.
+kk> Екі үлгіні таңдап, «Салыстыру» батырмасын басыңыз. Содан кейін әрқайсысында қанша минуция табылғанын қараңыз.
+
+ru> Откройте этапы «Выделение речи» и «Шаблон голоса»: сколько речи нашлось и как отличаются столбики шаблонов A и B? Что изменится, если выбрать другой метод?
+en> Open the stages “Speech detection” and “Voice template”: how much speech was found and how do the template bars of A and B differ? What will change if you choose another method?
+kk> «Сөйлеуді бөліп алу» және «Дауыс шаблоны» кезеңдерін ашыңыз: қанша сөйлеу табылды және A мен B шаблондарының бағандары қалай ерекшеленеді? Басқа әдіс таңдасаңыз не өзгереді?
+
+ru> Сходство рядом с порогом. Что изменится, если поставить компенсацию поворота 0? А если сменить кодировщик?
+en> The similarity is near the threshold. What will change if you set the rotation compensation to 0? And if you change the encoder?
+kk> Ұқсастық шектің жанында. Бұруды компенсациялауды 0 қойсаңыз не өзгереді? Ал кодтаушыны ауыстырсаңыз?
+
+ru> Откройте этапы 3-6: правильно ли найдены окружности и какая часть радужки закрыта? Как это влияет на число сравниваемых битов?
+en> Open the stages 3-6: are the circles found correctly and what part of the iris is covered? How does this affect the number of compared bits?
+kk> 3-6 кезеңдерін ашыңыз: шеңберлер дұрыс табылған ба және нұрлы қабықтың қай бөлігі жабылған? Бұл салыстырылатын биттер санына қалай әсер етеді?
+
+ru> Similarity рядом с порогом. Что произойдёт с решением, если чуть сдвинуть порог? Проверьте ползунком.
+en> The similarity is near the threshold. What will happen to the decision if you shift the threshold a little? Check with the slider.
+kk> Similarity шектің жанында. Шекті сәл жылжытсаңыз, шешімге не болады? Жүгірткімен тексеріңіз.
+
+ru> Посмотрите на этапы детекции и выравнивания: правильно ли найдены глаза и рамка? Как это могло повлиять на embedding?
+en> Look at the detection and alignment stages: are the eyes and the box found correctly? How could this have affected the embedding?
+kk> Табу және туралау кезеңдеріне қараңыз: көздер мен рамка дұрыс табылған ба? Бұл embedding-ке қалай әсер етуі мүмкін?
+
+ru> Посмотрите на этапы бинаризации и скелета: все ли гребни сохранились? Какой параметр на них влияет?
+en> Look at the binarization and skeleton stages: are all the ridges preserved? Which parameter affects them?
+kk> Бинаризация және қаңқа кезеңдеріне қараңыз: барлық жоталар сақталған ба? Оларға қандай параметр әсер етеді?
+
+ru> Score рядом с порогом. Что произойдёт с решением, если чуть сдвинуть порог? Проверьте ползунком.
+en> The score is near the threshold. What will happen to the decision if you shift the threshold a little? Check with the slider.
+kk> Score шектің жанында. Шекті сәл жылжытсаңыз, шешімге не болады? Жүгірткімен тексеріңіз.
+
+ru> Измените один параметр и сравните результат с предыдущим экспериментом в журнале. Что изменилось сильнее всего?
+en> Change one parameter and compare the result with the previous experiment in the log. What changed the most?
+kk> Бір параметрді өзгертіп, нәтижені журналдағы алдыңғы тәжірибемен салыстырыңыз. Не ең көп өзгерді?
+
+ru> Режим: {0}\nВопрос: {1}\nКонтекст: {2}
+en> Mode: {0}\nQuestion: {1}\nContext: {2}
+kk> Режим: {0}\nСұрақ: {1}\nКонтекст: {2}
+
+ru> {0} мин.
+en> {0} min.
+kk> {0} мин.
+
+ru> меньше минуты
+en> less than a minute
+kk> бір минуттан аз
+
+ru> Достигнут лимит вопросов к наставнику: не больше {0} в час. Попробуйте снова через {1}
+en> The limit of questions to the tutor is reached: no more than {0} per hour. Try again in {1}
+kk> Тәлімгерге сұрақтар шегіне жетілді: сағатына {0}-дан артық емес. {1} кейін қайталап көріңіз
+
+ru> Для обучения подходят синтетика и наборы FVC. В SOCOFing по одному снимку на палец, различать пальцы по ним нельзя.
+en> The synthetic data and the FVC sets are suitable for training. SOCOFing has one shot per finger, so fingers cannot be told apart by them.
+kk> Оқыту үшін синтетика мен FVC жиындары жарайды. SOCOFing-те әр саусаққа бір сурет бар, сондықтан саусақтарды олар бойынша ажыратуға болмайды.
+
+ru> В наборе меньше трёх пальцев с тремя и более оттисками.
+en> The set has fewer than three fingers with three or more impressions.
+kk> Жиында үш және одан көп таңбасы бар үш саусақтан аз.
+
+ru> Палец {0}
+en> Finger {0}
+kk> Саусақ {0}
+
+ru> Для обучения на лицах нужны минимум 2 человека, у каждого 2+ фото с найденным лицом в datasets/faces/<имя>/.
+en> For training on faces you need at least 2 people, each with 2+ photos with a detected face in datasets/faces/<name>/.
+kk> Беттерде оқыту үшін кемінде 2 адам қажет, әрқайсысының datasets/faces/<аты>/ ішінде беті табылған 2+ фотосы болуы керек.
+
+ru> Глаз {0}
+en> Eye {0}
+kk> Көз {0}
+
+ru> Набор CASIA не найден в datasets/real/. Подготовьте данные: python -m scripts.prepare_real
+en> The CASIA set was not found in datasets/real/. Prepare the data: python -m scripts.prepare_real
+kk> CASIA жиыны datasets/real/ ішінде табылмады. Деректерді дайындаңыз: python -m scripts.prepare_real
+
+ru> Не удалось найти радужку на достаточном числе снимков набора.
+en> Could not find the iris in a sufficient number of shots of the set.
+kk> Жиынның жеткілікті санды суретінде нұрлы қабықты табу мүмкін болмады.
+
+ru> Синтетика (12 пальцев × 3 оттиска)
+en> Synthetic (12 fingers × 3 impressions)
+kk> Синтетика (12 саусақ × 3 таңба)
+
+ru> Синтетика (12 глаз × 3 снимка)
+en> Synthetic (12 eyes × 3 shots)
+kk> Синтетика (12 көз × 3 сурет)
+
+ru> Неизвестная биометрия: {0}
+en> Unknown biometric: {0}
+kk> Белгісіз биометрия: {0}
+
+ru> Сеть для «{0}» ещё не обучена или была потеряна при перезапуске сервера (на временном диске сохранённые сети пропадают). Откройте вкладку «Обучение распознаванию», выберите эти данные и нажмите «Начать обучение».
+en> The network for “{0}” is not trained yet or was lost on the server restart (on a temporary disk the saved networks disappear). Open the “Training recognition” tab, choose this data and press “Start training”.
+kk> «{0}» желісі әлі оқытылмаған немесе сервер қайта іске қосылғанда жоғалған (уақытша дискіде сақталған желілер жоғалады). «Тануды оқыту» қойындысын ашып, осы деректерді таңдап, «Оқытуды бастау» батырмасын басыңыз.
+
+ru> Сеть для «{0}» обучена на наборе «{1}», а выбран «{2}». Обучите сеть на выбранном наборе (вкладка «Обучение распознаванию») или выберите набор, на котором она обучена.
+en> The network for “{0}” is trained on the set “{1}”, and “{2}” is selected. Train the network on the selected set (the “Training recognition” tab) or choose the set it was trained on.
+kk> «{0}» желісі «{1}» жиынында оқытылған, ал «{2}» таңдалған. Желіні таңдалған жиында оқытыңыз («Тануды оқыту» қойындысы) немесе ол оқытылған жиынды таңдаңыз.
+
+ru> Обучение уже идёт. Остановите его или дождитесь конца.
+en> Training is already running. Stop it or wait for the end.
+kk> Оқыту қазірдің өзінде жүріп жатыр. Оны тоқтатыңыз немесе аяқталуын күтіңіз.
+
+ru> Сеть обучена, но не сохранена на диск: {0}
+en> The network is trained but not saved to disk: {0}
+kk> Желі оқытылды, бірақ дискіге сақталмады: {0}
+
+ru> Сеть обучена, но запуск не записан в журнал: {0}
+en> The network is trained but the run was not recorded in the log: {0}
+kk> Желі оқытылды, бірақ іске қосу журналға жазылмады: {0}
+
+ru> Неизвестный способ сравнения: {0}
+en> Unknown comparison way: {0}
+kk> Салыстырудың белгісіз тәсілі: {0}
+
+ru> Не удалось прочитать WAV. Запись должна идти с кнопки на странице.
+en> Could not read the WAV. The recording must come from the button on the page.
+kk> WAV оқу мүмкін болмады. Жазба беттегі батырмадан келуі керек.
+
+ru> Неподдерживаемая разрядность WAV.
+en> Unsupported WAV bit depth.
+kk> WAV разрядтылығы қолдау таппайды.
+
+ru> Запись слишком короткая (меньше 0,5 с).
+en> The recording is too short (less than 0.5 s).
+kk> Жазба тым қысқа (0,5 с-тан аз).
+
+ru> Запись почти беззвучна. Проверьте микрофон.
+en> The recording is almost silent. Check the microphone.
+kk> Жазба дерлік дыбыссыз. Микрофонды тексеріңіз.
+
+ru> Речи мало: {0} с, нужно хотя бы {1} с. Говорите чуть дольше и громче.
+en> Little speech: {0} s, at least {1} s are needed. Speak a bit longer and louder.
+kk> Сөйлеу аз: {0} с, кемінде {1} с қажет. Сәл ұзағырақ және дауыстырақ сөйлеңіз.
+
+ru> Шум в помещении
+en> Room noise
+kk> Бөлмедегі шу
+
+ru> Телефонный канал 300–3400 Гц
+en> Telephone channel 300–3400 Hz
+kk> Телефон арнасы 300–3400 Гц
+
+ru> степень
+en> degree
+kk> дәреже
+
+ru> Эхо (реверберация)
+en> Echo (reverberation)
+kk> Жаңғырық (реверберация)
+
+ru> Повторное воспроизведение с динамика (имитация)
+en> Replay from a speaker (imitation)
+kk> Динамиктен қайта ойнату (имитация)
+
+ru> жёсткость
+en> hardness
+kk> қаттылық
+
+ru> Неизвестный тип искажения.
+en> Unknown type of distortion.
+kk> Бұрмалаудың белгісіз түрі.
+
+ru> Сначала запишите голос и выполните проверку.
+en> First record a voice and run the check.
+kk> Алдымен дауысты жазып, тексеруді орындаңыз.
+
+ru>  Запас небольшой, решение неустойчиво.
+en>  The margin is small, the decision is unstable.
+kk>  Қор аз, шешім тұрақсыз.
+
+ru> Оценка сходства {0} не ниже порога {1}, поэтому голос принят.{2}
+en> The similarity score {0} is not below the threshold {1}, so the voice is accepted.{2}
+kk> Ұқсастық бағасы {0} шектен {1} төмен емес, сондықтан дауыс қабылданды.{2}
+
+ru> Это значит, что признаки записи близки к шаблону: похожи тембр и высота тона.
+en> This means that the features of the recording are close to the template: the timbre and the pitch are similar.
+kk> Бұл жазба белгілері шаблонға жақын екенін білдіреді: тембр мен тон биіктігі ұқсас.
+
+ru> Проверьте тот же голос с шумом или через динамик телефона и посмотрите, при каком искажении оценка упадёт ниже порога.
+en> Check the same voice with noise or through a phone speaker and see at which distortion the score falls below the threshold.
+kk> Сол дауысты шумен немесе телефон динамигі арқылы тексеріп, бұрмалаудың қай деңгейінде баға шектен төмен түсетінін қараңыз.
+
+ru>  Речи в записи мало.
+en>  There is little speech in the recording.
+kk>  Жазбада сөйлеу аз.
+
+ru>  Есть перегрузка микрофона.
+en>  The microphone is overloaded.
+kk>  Микрофон шамадан тыс жүктелген.
+
+ru> Оценка {0} ниже порога {1}, голос не принят.{2}
+en> The score {0} is below the threshold {1}, the voice is not accepted.{2}
+kk> Баға {0} шектен {1} төмен, дауыс қабылданбады.{2}
+
+ru> Причины: другой говорящий, шум, другая интонация или расстояние до микрофона.
+en> Causes: another speaker, noise, another intonation or the distance to the microphone.
+kk> Себептері: басқа сөйлеуші, шу, басқа интонация немесе микрофонға дейінгі қашықтық.
+
+ru> Запишите ту же фразу ближе к микрофону в тишине. Если это ваш голос, добавьте в шаблон ещё 2–3 фразы или немного снизьте порог, но помните, что ложные допуски вырастут.
+en> Record the same phrase closer to the microphone in silence. If this is your voice, add 2–3 more phrases to the template or lower the threshold a little, but remember that the false accepts will grow.
+kk> Сол фразаны микрофонға жақынырақ тыныштықта жазыңыз. Бұл сіздің дауысыңыз болса, шаблонға тағы 2–3 фраза қосыңыз немесе шекті сәл төмендетіңіз, бірақ жалған қабылдаулар артатынын ұмытпаңыз.
+
+ru> Сначала постройте кривые.
+en> First build the curves.
+kk> Алдымен қисықтарды құрыңыз.
+
+ru> Равная ошибка EER = {0} %, AUC = {1}, d′ = {2}.
+en> Equal error EER = {0} %, AUC = {1}, d′ = {2}.
+kk> Тең қате EER = {0} %, AUC = {1}, d′ = {2}.
+
+ru>  При выбранном пороге FMR = {0} %, FNMR = {1} %.
+en>  At the chosen threshold FMR = {0} %, FNMR = {1} %.
+kk>  Таңдалған шекте FMR = {0} %, FNMR = {1} %.
+
+ru> очень хорошо разделяет
+en> separates very well
+kk> өте жақсы ажыратады
+
+ru> в целом разделяет
+en> separates in general
+kk> жалпы алғанда ажыратады
+
+ru> плохо разделяет
+en> separates poorly
+kk> нашар ажыратады
+
+ru> Система {0} свои и чужие пары: чем меньше перекрытие гистограмм, тем ниже EER. Повышение порога снижает FMR (меньше ложных допусков), но повышает FNMR (больше ложных отказов).
+en> The system {0} the genuine and impostor pairs: the smaller the overlap of the histograms, the lower the EER. Raising the threshold lowers the FMR (fewer false accepts) but raises the FNMR (more false rejects).
+kk> Жүйе өз және бөтен жұптарды {0}: гистограммалар қабаттасуы аз болған сайын, EER төмен. Шекті көтеру FMR-ды (жалған қабылдаулар азаяды) төмендетеді, бірақ FNMR-ды (жалған бас тартулар көбейеді) арттырады.
+
+ru> Выберите порог по требованию: для доступа к важным данным берите малый FMR, для удобства — малый FNMR. 
+en> Choose the threshold by the requirement: for access to important data take a small FMR, for convenience a small FNMR. 
+kk> Шекті талап бойынша таңдаңыз: маңызды деректерге қол жеткізу үшін шағын FMR, ыңғайлылық үшін шағын FNMR алыңыз.
+
+ru> Для FMR = {0} данных мало: нужно хотя бы {1} чужих сравнений (правило трёх). 
+en> For FMR = {0} there is too little data: at least {1} impostor comparisons are needed (the rule of three). 
+kk> FMR = {0} үшін деректер аз: кемінде {1} бөтен салыстыру қажет (үш ережесі).
+
+ru> Сравните ROC и DET двух систем: кривая ближе к левому нижнему углу — лучше.
+en> Compare the ROC and DET of two systems: the curve closer to the bottom-left corner is better.
+kk> Екі жүйенің ROC және DET қисықтарын салыстырыңыз: сол жақ төменгі бұрышқа жақын қисық жақсырақ.
+
+ru> Сначала запустите проверку устойчивости.
+en> First run the robustness check.
+kk> Алдымен төзімділікті тексеруді іске қосыңыз.
+
+ru> При пороге {0} система ошибается при искажении «{1}» уже на уровне {2} ({3}).
+en> At the threshold {0} the system makes errors at the distortion “{1}” already at the level {2} ({3}).
+kk> {0} шегінде жүйе «{1}» бұрмалауында {2} деңгейінде ({3}) қателеседі.
+
+ru> При пороге {0} ни одно искажение не сломало сопоставление до максимального уровня.
+en> At the threshold {0} no distortion broke the matching up to the maximum level.
+kk> {0} шегінде ешбір бұрмалау максималды деңгейге дейін салыстыруды бұзған жоқ.
+
+ru> Оценка падает, когда искажение разрушает признаки, по которым идёт сравнение. 
+en> The score falls when a distortion destroys the features by which the comparison goes. 
+kk> Бұрмалау салыстыру жүретін белгілерді бұзғанда баға төмендейді.
+
+ru> Устойчиво к: {0}. 
+en> Robust to: {0}. 
+kk> Төзімді: {0}.
+
+ru> Добавьте предобработку (нормализация контраста, шумоподавление, выравнивание по повороту), либо подключите другой сопоставитель и сравните кривые. Для отчёта по стандарту ISO/IEC 19795-1 фиксируйте условия и размер выборки.
+en> Add preprocessing (contrast normalization, noise suppression, rotation alignment), or connect another matcher and compare the curves. For a report under the standard ISO/IEC 19795-1, record the conditions and the sample size.
+kk> Алдын ала өңдеуді қосыңыз (контрастты нормалау, шуды басу, бұру бойынша туралау) немесе басқа салыстырғышты қосып, қисықтарды салыстырыңыз. ISO/IEC 19795-1 стандарты бойынша есеп үшін шарттар мен таңдама өлшемін тіркеңіз.
+
+ru> Не знаю, какой результат объяснять. Запустите эксперимент и повторите.
+en> I do not know which result to explain. Run an experiment and repeat.
+kk> Қай нәтижені түсіндіру керектігін білмеймін. Эксперимент іске қосып, қайталаңыз.
+
+ru> Не удалось прочитать изображение (PNG/JPG/BMP).
+en> Could not read the image (PNG/JPG/BMP).
+kk> Суретті оқу мүмкін болмады (PNG/JPG/BMP).
+
+ru> Изображение слишком маленькое.
+en> The image is too small.
+kk> Сурет тым кішкентай.
+
+ru> Гауссов шум
+en> Gaussian noise
+kk> Гаусс шуы
+
+ru> Размытие
+en> Blur
+kk> Бұлдырау
+
+ru> градусы
+en> degrees
+kk> градус
+
+ru> Смена яркости
+en> Brightness shift
+kk> Жарықтық ығысуы
+
+ru> сдвиг
+en> shift
+kk> ығысу
+
+ru> Потеря контраста
+en> Contrast loss
+kk> Контраст жоғалуы
+
+ru> множитель
+en> multiplier
+kk> көбейткіш
+
+ru> Закрытая область
+en> Occluded area
+kk> Жабылған аймақ
+
+ru> доля площади
+en> share of the area
+kk> аудан үлесі
+
+ru> Сжатие JPEG
+en> JPEG compression
+kk> JPEG сығу
+
+ru> качество
+en> quality
+kk> сапа
+
+ru> Низкое разрешение
+en> Low resolution
+kk> Төмен ажыратымдылық
+
+ru> масштаб
+en> scale
+kk> масштаб
+
+ru> HOG-корреляция (базовый)
+en> HOG correlation (baseline)
+kk> HOG корреляциясы (базалық)
+
+ru> Корреляция пикселей (простейший)
+en> Pixel correlation (the simplest)
+kk> Пиксельдер корреляциясы (ең қарапайымы)
+
+ru> Неизвестный сопоставитель.
+en> Unknown matcher.
+kk> Белгісіз салыстырғыш.
+
+ru> Нужно минимум по 5 оценок «своих» и «чужих».
+en> At least 5 “genuine” and 5 “impostor” scores are needed.
+kk> Кемінде 5 «өз» және 5 «бөтен» баға қажет.
+
+ru> Слишком много оценок (максимум {0} в каждой группе).
+en> Too many scores (at most {0} in each group).
+kk> Бағалар тым көп (әр топта ең көбі {0}).
+
+ru> В оценках есть нечисловые значения.
+en> There are non-numeric values among the scores.
+kk> Бағалар арасында сандық емес мәндер бар.
+
+ru> Размер выборки вне допустимых пределов.
+en> The sample size is out of the allowed limits.
+kk> Таңдама өлшемі рұқсат етілген шектен тыс.
+
+ru> тип
+en> type
+kk> түрі
+
+ru> Строка {0}: нужен формат «метка,оценка».
+en> Line {0}: the format “label,score” is needed.
+kk> {0}-жол: «белгі,баға» форматы қажет.
+
+ru> Строка {0}: «{1}» — не число.
+en> Line {0}: “{1}” is not a number.
+kk> {0}-жол: «{1}» сан емес.
+
+ru> свой
+en> genuine
+kk> өз
+
+ru> своя
+en> genuine
+kk> өз
+
+ru> чужой
+en> impostor
+kk> бөтен
+
+ru> чужая
+en> impostor
+kk> бөтен
+
+ru> Строка {0}: метка «{1}» не распознана (genuine/impostor).
+en> Line {0}: the label “{1}” is not recognized (genuine/impostor).
+kk> {0}-жол: «{1}» белгісі танылмады (genuine/impostor).
+
+ru> Все оценки одинаковы, кривые построить нельзя.
+en> All the scores are equal, curves cannot be built.
+kk> Барлық бағалар бірдей, қисықтарды құру мүмкін емес.
+
+ru> Тестирование и отчётность по характеристикам биометрических систем. Часть 1: принципы и структура
+en> Testing and reporting of biometric system performance. Part 1: principles and framework
+kk> Биометриялық жүйелердің сипаттамаларын тестілеу және есеп беру. 1-бөлім: принциптер мен құрылым
+
+ru> Оценка качества
+en> Quality evaluation
+kk> Сапаны бағалау
+
+ru> Метрики ошибок и скорости, требования к протоколу теста и отчёту. Основа для FMR/FNMR, EER, ROC/DET, размера выборки и доверительных интервалов. Атаки на предъявление вне области действия.
+en> Error and speed metrics, requirements for the test protocol and the report. The basis for FMR/FNMR, EER, ROC/DET, sample size and confidence intervals. Presentation attacks are out of scope.
+kk> Қате және жылдамдық метрикалары, тест хаттамасы мен есепке қойылатын талаптар. FMR/FNMR, EER, ROC/DET, таңдама өлшемі және сенімділік интервалдарының негізі. Көрсету шабуылдары қолдану аясынан тыс.
+
+ru> В 2026 г. идёт работа над пересмотром (проект редакции), пока действует издание 2021 г.
+en> In 2026 work is under way on a revision (a draft edition); the 2021 edition is in force for now.
+kk> 2026 жылы қайта қарау (жоба редакциясы) бойынша жұмыс жүріп жатыр, әзірге 2021 жылғы басылым қолданыста.
+
+ru> Обнаружение атак на предъявление (PAD). Часть 3: тестирование и отчётность
+en> Presentation attack detection (PAD). Part 3: testing and reporting
+kk> Көрсету шабуылдарын анықтау (PAD). 3-бөлім: тестілеу және есеп беру
+
+ru> Атаки
+en> Attacks
+kk> Шабуылдар
+
+ru> Методы оценки PAD, форма отчёта и классификация известных атак (APCER, BPCER). Атаки происходят на устройстве захвата при предъявлении образца.
+en> PAD evaluation methods, the report form and the classification of known attacks (APCER, BPCER). The attacks happen on the capture device when a sample is presented.
+kk> PAD бағалау әдістері, есеп нысаны және белгілі шабуылдардың жіктелуі (APCER, BPCER). Шабуылдар үлгіні көрсету кезінде түсіру құрылғысында болады.
+
+ru> Наши искажения — это ухудшение входа, а не полноценные PAD-атаки: фото, маска, муляж пальца тестируются отдельно.
+en> Our distortions are a degradation of the input, not full-fledged PAD attacks: a photo, a mask, a fake finger are tested separately.
+kk> Біздің бұрмалаулар - кіріс сапасының нашарлауы, толыққанды PAD шабуылдары емес: фото, маска, саусақ муляжы бөлек тестіленеді.
+
+ru> Защита биометрической информации
+en> Protection of biometric information
+kk> Биометриялық ақпаратты қорғау
+
+ru> Защита данных
+en> Data protection
+kk> Деректерді қорғау
+
+ru> Конфиденциальность, целостность и отзываемость шаблонов при хранении и передаче; модели хранения и сравнения; защита приватности.
+en> Confidentiality, integrity and revocability of templates in storage and transfer; storage and comparison models; privacy protection.
+kk> Шаблондарды сақтау және жіберу кезіндегі құпиялылық, тұтастық және қайтарып алынатындық; сақтау және салыстыру модельдері; жекелікті қорғау.
+
+ru> Шаблон голоса - 28 чисел; записи фраз хранятся отдельными файлами для прослушивания; профиль и записи удаляются вместе.
+en> A voice template is 28 numbers; phrase recordings are kept as separate files for listening; the profile and the recordings are deleted together.
+kk> Дауыс шаблоны - 28 сан; фразалар жазбалары тыңдау үшін бөлек файлдар болып сақталады; профиль мен жазбалар бірге жойылады.
+
+ru> Расширяемые форматы обмена биометрическими данными. Часть 1: общая структура
+en> Extensible biometric data interchange formats. Part 1: framework
+kk> Кеңейтілетін биометриялық деректер алмасу форматтары. 1-бөлім: жалпы құрылым
+
+ru> Форматы данных
+en> Data formats
+kk> Деректер форматтары
+
+ru> Общая основа формата обмена биометрическими данными (семейство 39794 заменяет ранее действовавшее 19794).
+en> The common basis of the biometric data interchange format (the 39794 family replaces the earlier 19794).
+kk> Биометриялық деректер алмасу форматының ортақ негізі (39794 отбасы бұрын қолданылған 19794-ті ауыстырады).
+
+ru> Для коммерческой версии: экспорт шаблонов в стандартные форматы.
+en> For the commercial version: export of templates to the standard formats.
+kk> Коммерциялық нұсқа үшін: шаблондарды стандартты форматтарға экспорттау.
+
+ru> Форматы обмена: данные минуций отпечатков пальцев
+en> Interchange formats: fingerprint minutiae data
+kk> Алмасу форматтары: саусақ ізі минуциялары деректері
+
+ru> Представление минуций (тип, координаты, угол).
+en> Representation of minutiae (type, coordinates, angle).
+kk> Минуциялардың көрінісі (тип, координаттар, бұрыш).
+
+ru> Форматы обмена: изображение отпечатка пальца
+en> Interchange formats: fingerprint image
+kk> Алмасу форматтары: саусақ ізі суреті
+
+ru> Формат изображения отпечатка.
+en> The fingerprint image format.
+kk> Саусақ ізі суретінің форматы.
+
+ru> Форматы обмена: изображение лица
+en> Interchange formats: face image
+kk> Алмасу форматтары: бет суреті
+
+ru> Формат и требования к изображению лица.
+en> The format and requirements for a face image.
+kk> Бет суретінің форматы және оған қойылатын талаптар.
+
+ru> Форматы обмена: изображение радужки
+en> Interchange formats: iris image
+kk> Алмасу форматтары: нұрлы қабық суреті
+
+ru> Формат изображения радужки, область интереса.
+en> The iris image format, the region of interest.
+kk> Нұрлы қабық суретінің форматы, қызығушылық аймағы.
+
+ru> Форматы обмена: сосудистые изображения
+en> Interchange formats: vascular images
+kk> Алмасу форматтары: тамыр суреттері
+
+ru> Формат сосудистых биометрических изображений (сетчатка, вены).
+en> The format of vascular biometric images (retina, veins).
+kk> Тамырлы биометриялық суреттердің форматы (торлы қабық, веналар).
+
+ru> Пригодится при добавлении модуля сетчатки.
+en> Will be useful when a retina module is added.
+kk> Торлы қабық модулі қосылғанда пайдалы болады.
+
+ru> Качество биометрических образцов. Часть 5: изображение лица
+en> Biometric sample quality. Part 5: face image data
+kk> Биометриялық үлгілер сапасы. 5-бөлім: бет суреті деректері
+
+ru> Качество образца
+en> Sample quality
+kk> Үлгі сапасы
+
+ru> Количественная оценка качества изображения лица при регистрации и проверке.
+en> Quantitative assessment of the face image quality at enrollment and verification.
+kk> Тіркеу және тексеру кезінде бет суреті сапасын сандық бағалау.
+
+ru> Идея для развития: показывать оценку качества перед сравнением.
+en> An idea for development: show the quality score before the comparison.
+kk> Дамыту идеясы: салыстырар алдында сапа бағасын көрсету.
+
+ru> Словарь: биометрия
+en> Vocabulary: biometrics
+kk> Сөздік: биометрия
+
+ru> Терминология
+en> Terminology
+kk> Терминология
+
+ru> Единая терминология по распознаванию людей: сводит разные термины прежних стандартов к предпочтительным. Издание 3, март 2022 г.
+en> A single terminology for recognition of people: it reduces the different terms of earlier standards to the preferred ones. Edition 3, March 2022.
+kk> Адамдарды тану бойынша бірыңғай терминология: бұрынғы стандарттардың әртүрлі терминдерін қолайлыларына келтіреді. 3-басылым, 2022 жылғы наурыз.
+
+ru> ISO отмечает статус «подлежит пересмотру».
+en> ISO notes the status “under revision”.
+kk> ISO «қайта қарауға жатады» мәртебесін көрсетеді.
+
+ru> PAD. Часть 1: общая структура
+en> PAD. Part 1: framework
+kk> PAD. 1-бөлім: жалпы құрылым
+
+ru> Терминология и общая модель обнаружения атак на предъявление.
+en> Terminology and the general model of presentation attack detection.
+kk> Көрсету шабуылдарын анықтаудың терминологиясы және жалпы моделі.
+
+ru> Проверьте актуальное издание на iso.org.
+en> Check the current edition at iso.org.
+kk> Ағымдағы басылымды iso.org сайтында тексеріңіз.
+
+ru> Оценка алгоритмов верификации по лицу (NIST)
+en> Evaluation of face verification algorithms (NIST)
+kk> Бет бойынша верификация алгоритмдерін бағалау (NIST)
+
+ru> Методики оценки
+en> Evaluation methodologies
+kk> Бағалау әдістемелері
+
+ru> Постоянная независимая оценка алгоритмов; в NIST используют FMR и FNMR.
+en> A continuous independent evaluation of algorithms; NIST uses FMR and FNMR.
+kk> Алгоритмдерді үздіксіз тәуелсіз бағалау; NIST FMR және FNMR қолданады.
+
+ru> Оценка совместимости шаблонов отпечатков
+en> Evaluation of fingerprint template interoperability
+kk> Саусақ ізі шаблондарының үйлесімділігін бағалау
+
+ru> Оценка interoperable-шаблонов отпечатков пальцев.
+en> Evaluation of interoperable fingerprint templates.
+kk> Interoperable саусақ ізі шаблондарын бағалау.
+
+ru> Особые категории персональных данных
+en> Special categories of personal data
+kk> Дербес деректердің ерекше санаттары
+
+ru> Право
+en> Law
+kk> Құқық
+
+ru> Биометрические данные для однозначной идентификации относятся к особым категориям, обработка требует отдельных оснований.
+en> Biometric data for unique identification belong to special categories; processing requires separate grounds.
+kk> Бірегей сәйкестендіруге арналған биометриялық деректер ерекше санаттарға жатады, оларды өңдеу жеке негіздемелерді талап етеді.
+
+ru> Если система будет использоваться в ЕС.
+en> If the system will be used in the EU.
+kk> Жүйе ЕО-да қолданылатын болса.
+
+ru> Закон РК от 21.05.2013 № 94-V «О персональных данных и их защите»
+en> Law of the Republic of Kazakhstan of 21.05.2013 No. 94-V “On personal data and their protection”
+kk> Қазақстан Республикасының 2013 жылғы 21 мамырдағы № 94-V «Дербес деректер және оларды қорғау туралы» Заңы
+
+ru> Национальное законодательство Казахстана
+en> National legislation of Kazakhstan
+kk> Қазақстанның ұлттық заңнамасы
+
+ru> Определяет биометрические данные как персональные данные о физиологических и биологических особенностях, по которым можно установить личность; регулирует сбор, накопление и уничтожение.
+en> It defines biometric data as personal data on physiological and biological features by which a person can be identified; it regulates collection, accumulation and destruction.
+kk> Ол биометриялық деректерді тұлғаны анықтауға болатын физиологиялық және биологиялық ерекшеліктер туралы дербес деректер ретінде анықтайды; жинауды, жинақтауды және жоюды реттейді.
+
+ru> Проверьте действующую редакцию и разъяснения на adilet.zan.kz перед ссылкой в дипломе.
+en> Check the current edition and the clarifications at adilet.zan.kz before citing it in the diploma.
+kk> Дипломда сілтеме жасамас бұрын ағымдағы редакция мен түсініктемелерді adilet.zan.kz сайтында тексеріңіз.
+
+ru> Доля ложных совпадений / ложных несовпадений на уровне сравнения оценок (алгоритм).
+en> The share of false matches / false non-matches at the score comparison level (the algorithm).
+kk> Бағаларды салыстыру деңгейіндегі (алгоритм) жалған сәйкестіктер / жалған сәйкес еместіктер үлесі.
+
+ru> Используются в ISO/IEC 19795-1 и NIST.
+en> Used in ISO/IEC 19795-1 and NIST.
+kk> ISO/IEC 19795-1 және NIST-те қолданылады.
+
+ru> Ложный допуск / ложный отказ на уровне системы с учётом сбоев регистрации и захвата.
+en> A false accept / false reject at the system level, taking into account enrollment and capture failures.
+kk> Тіркеу және түсіру сәтсіздіктерін ескеретін жүйе деңгейіндегі жалған қабылдау / жалған бас тарту.
+
+ru> В учебных материалах часто употребляются как синонимы FMR/FNMR. В лаборатории показаны оба обозначения.
+en> In teaching materials they are often used as synonyms of FMR/FNMR. The laboratory shows both notations.
+kk> Оқу материалдарында олар жиі FMR/FNMR синонимдері ретінде қолданылады. Зертханада екі белгілеу де көрсетілген.
+
+ru> Равная ошибка: значение, при котором FMR = FNMR.
+en> Equal error rate: the value at which FMR = FNMR.
+kk> Тең қате: FMR = FNMR болатын мән.
+
+ru> Удобно для сравнения, но не заменяет работу в нужной рабочей точке.
+en> It is convenient for comparison but does not replace working at the needed operating point.
+kk> Салыстыру үшін ыңғайлы, бірақ қажетті жұмыс нүктесінде жұмыс істеуді алмастырмайды.
+
+ru> Сбой регистрации / сбой захвата образца.
+en> Failure to enroll / failure to acquire a sample.
+kk> Тіркеу сәтсіздігі / үлгіні түсіру сәтсіздігі.
+
+ru> В лаборатории пока не моделируются.
+en> Not modeled in the laboratory yet.
+kk> Зертханада әзірге модельденбейді.
+
+ru> Доля пропущенных атак / доля ошибочно отклонённых честных предъявлений (PAD, ISO/IEC 30107-3).
+en> The share of missed attacks / the share of wrongly rejected bona fide presentations (PAD, ISO/IEC 30107-3).
+kk> Өткізіп алынған шабуылдар үлесі / қате қабылданбаған адал көрсетулер үлесі (PAD, ISO/IEC 30107-3).
+
+ru> Пригодятся при добавлении liveness.
+en> Will be useful when liveness is added.
+kk> Liveness қосылғанда пайдалы болады.
+
+ru> Раздельные выборки «свои» и «чужие» пары, указан размер каждой
+en> Separate samples of “genuine” and “impostor” pairs, the size of each is indicated
+kk> «Өз» және «бөтен» жұптардың жеке таңдамалары, әрқайсысының өлшемі көрсетілген
+
+ru> Метрики
+en> Metrics
+kk> Метрикалар
+
+ru> FMR/FNMR, EER, ROC и DET по методике оценки
+en> FMR/FNMR, EER, ROC and DET according to the evaluation methodology
+kk> Бағалау әдістемесі бойынша FMR/FNMR, EER, ROC және DET
+
+ru> Доверительный интервал EER и предупреждение о малой выборке (правило трёх)
+en> The EER confidence interval and a warning about a small sample (the rule of three)
+kk> EER сенімділік интервалы және шағын таңдама туралы ескерту (үш ережесі)
+
+ru> Хранение шаблона вместо исходного образца
+en> Storing a template instead of the source sample
+kk> Бастапқы үлгінің орнына шаблонды сақтау
+
+ru> Голос
+en> Voice
+kk> Дауыс
+
+ru> Удаление профиля по запросу пользователя
+en> Deleting a profile at the user's request
+kk> Профильді пайдаланушы сұрауы бойынша жою
+
+ru> Проверка устойчивости к ухудшению входных данных с фиксацией условий
+en> A robustness check against degradation of the input data with the conditions recorded
+kk> Шарттарды тіркей отырып, кіріс деректерінің нашарлауына төзімділікті тексеру
+
+ru> Устойчивость
+en> Robustness
+kk> Төзімділік
+
+ru> Реальные PAD-атаки (фото, маска, муляж), APCER/BPCER
+en> Real PAD attacks (photo, mask, fake), APCER/BPCER
+kk> Нақты PAD шабуылдары (фото, маска, муляж), APCER/BPCER
+
+ru> Развитие
+en> Development
+kk> Даму
+
+ru> Оценка качества образца по ISO/IEC 29794 перед сравнением
+en> Sample quality assessment under ISO/IEC 29794 before comparison
+kk> Салыстырар алдында ISO/IEC 29794 бойынша үлгі сапасын бағалау
+
+ru> Шифрование шаблонов, отзываемые шаблоны (ISO/IEC 24745)
+en> Template encryption, revocable templates (ISO/IEC 24745)
+kk> Шаблондарды шифрлау, қайтарып алынатын шаблондар (ISO/IEC 24745)
+
+ru> Экспорт в форматы ISO/IEC 39794
+en> Export to the ISO/IEC 39794 formats
+kk> ISO/IEC 39794 форматтарына экспорттау
+
+ru> Сертификация системы по стандартам
+en> Certification of the system against the standards
+kk> Жүйені стандарттар бойынша сертификаттау
+
+ru> Не заявляется
+en> Not claimed
+kk> Мәлімделмейді
+
+ru> Лаборатория учебная: она иллюстрирует методики стандартов и использует их терминологию, но не сертифицирована и не заявляет соответствия стандартам. Тексты стандартов платные: в документах давайте ссылку на номер и год, а пересказ сверяйте с официальным изданием. Статус «сверено» означает, что номер, год и область применения проверены в каталогах ISO/IEC 26.10.2026.
+en> The laboratory is educational: it illustrates the methodologies of the standards and uses their terminology but is not certified and does not claim conformity to the standards. The texts of the standards are paid: in documents give a reference to the number and the year, and check any paraphrase against the official edition. The status “verified” means that the number, the year and the scope were checked in the ISO/IEC catalogs on 26.10.2026.
+kk> Зертхана оқу мақсатында: ол стандарттар әдістемелерін көрсетеді және олардың терминологиясын қолданады, бірақ сертификатталмаған және стандарттарға сәйкестікті мәлімдемейді. Стандарттар мәтіндері ақылы: құжаттарда нөмірі мен жылына сілтеме беріңіз, ал мазмұндауды ресми басылыммен салыстырып тексеріңіз. «Салыстырылған» мәртебесі нөмір, жыл және қолдану аясы ISO/IEC каталогтарында 26.10.2026 тексерілгенін білдіреді.
+
+ru> сверено 26.10.2026
+en> verified on 26.10.2026
+kk> 26.10.2026 салыстырылған
+
+ru> по документам проекта
+en> according to the project documents
+kk> жоба құжаттары бойынша
+
+ru> проверьте на iso.org
+en> check at iso.org
+kk> iso.org сайтында тексеріңіз
+
+ru> Имя профиля: 1–32 символа (буквы, цифры, пробел, дефис). Лучше псевдоним, не ФИО.
+en> Profile name: 1–32 characters (letters, digits, space, hyphen). A pseudonym is better than a full name.
+kk> Профиль аты: 1–32 таңба (әріптер, сандар, бос орын, дефис). Лақап атау толық атаудан жақсырақ.
+
+ru> Для шаблона нужно минимум {0} фразы, получено {1}.
+en> A template needs at least {0} phrases, got {1}.
+kk> Шаблон үшін кемінде {0} фраза қажет, {1} алынды.
+
+ru> Слишком много фраз (максимум {0}).
+en> Too many phrases (at most {0}).
+kk> Фразалар тым көп (ең көбі {0}).
+
+ru> Профиль не найден. Сначала зарегистрируйте голос.
+en> The profile was not found. First enroll a voice.
+kk> Профиль табылмады. Алдымен дауысты тіркеңіз.
+
+ru> Шаблон создан другой версией алгоритма. Зарегистрируйте голос заново.
+en> The template was created by another version of the algorithm. Enroll the voice again.
+kk> Шаблонды алгоритмнің басқа нұсқасы жасаған. Дауысты қайта тіркеңіз.
+
+ru> Файл слишком большой.
+en> The file is too large.
+kk> Файл тым үлкен.
+
+ru> Пустой файл.
+en> The file is empty.
+kk> Файл бос.
+
+ru> Фраза {0}: {1}
+en> Phrase {0}: {1}
+kk> Фраза {0}: {1}
+
+ru> Запись не найдена.
+en> The recording was not found.
+kk> Жазба табылмады.
+
+ru> Профиль не найден.
+en> The profile was not found.
+kk> Профиль табылмады.
+
+ru> Нет записи голоса для проверки говорящего.
+en> No voice recording for the speaker check.
+kk> Сөйлеушіні тексеру үшін дауыс жазбасы жоқ.
+
+ru> Голос не узнан, команда не выполнена. Попробуйте ещё раз или отключите проверку говорящего.
+en> The voice was not recognized, the command was not executed. Try again or turn off the speaker check.
+kk> Дауыс танылмады, команда орындалмады. Қайталап көріңіз немесе сөйлеушіні тексеруді өшіріңіз.
+
+ru> Функция вернула None (забыт return?)
+en> The function returned None (forgot return?)
+kk> Функция None қайтарды (return ұмытылды ма?)
+
+ru> Результат не является массивом: {0}
+en> The result is not an array: {0}
+kk> Нәтиже массив емес: {0}
+
+ru> Неверная форма результата: ожидалась {0}, получена {1}
+en> Wrong shape of the result: expected {0}, got {1}
+kk> Нәтиженің пішіні қате: {0} күтілді, {1} алынды
+
+ru> Неверный тип данных: ожидался {0}, получен {1}
+en> Wrong data type: expected {0}, got {1}
+kk> Деректер түрі қате: {0} күтілді, {1} алынды
+
+ru> Значения не совпадают: ожидалось {0}, получено {1}
+en> The values do not match: expected {0}, got {1}
+kk> Мәндер сәйкес келмейді: {0} күтілді, {1} алынды
+
+ru> Результат не число: {0}
+en> The result is not a number: {0}
+kk> Нәтиже сан емес: {0}
+
+ru> Ожидалось {0}, получено {1}
+en> Expected {0}, got {1}
+kk> {0} күтілді, {1} алынды

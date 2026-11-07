@@ -1,0 +1,35 @@
+{
+  "id": "mel",
+  "order": 10,
+  "title": "Точки мел-шкалы для голоса",
+  "topic": "Голос",
+  "difficulty": "средний",
+  "spec": "mel",
+  "function": "mel_points",
+  "theory": "Слух человека различает низкие частоты точнее высоких, поэтому в распознавании речи частоты переводят в мел-шкалу: mel = 2595 · log10(1 + f / 700). Края фильтров для MFCC берут равномерно по мелам, а затем возвращают в герцы: f = 700 · (10^(mel / 2595) − 1).",
+  "description": "Реализуйте функцию mel_points(f_min, f_max, n).\n\n• f_min, f_max - границы диапазона в герцах;\n• n - число фильтров.\n\nВерните массив numpy из n + 2 частот в герцах, равномерно расположенных между f_min и f_max на мел-шкале (первая точка равна f_min, последняя - f_max).",
+  "starter_code": "import numpy as np\n\n\ndef mel_points(f_min, f_max, n):\n    # TODO: верните массив из n + 2 частот в герцах\n    pass\n",
+  "hints": [
+    "Работайте в три шага: перевести f_min и f_max в мелы, равномерно разбить отрезок между ними, перевести точки обратно в герцы.",
+    "Равномерно разбить отрезок поможет np.linspace(mel_min, mel_max, n + 2). Формулы перевода записаны в теории.",
+    "Формулы удобно оформить как две маленькие функции: to_mel(f) = 2595 * np.log10(1 + f / 700) и to_hz(m) = 700 * (10 ** (m / 2595) - 1).",
+    "Полное решение:\n\nimport numpy as np\n\n\ndef mel_points(f_min, f_max, n):\n    def to_mel(f):\n        return 2595 * np.log10(1 + f / 700)\n\n    def to_hz(m):\n        return 700 * (10 ** (m / 2595) - 1)\n\n    return to_hz(np.linspace(to_mel(f_min), to_mel(f_max), n + 2))"
+  ],
+  "solution": "import numpy as np\n\n\ndef mel_points(f_min, f_max, n):\n    def to_mel(f):\n        return 2595 * np.log10(1 + f / 700)\n\n    def to_hz(m):\n        return 700 * (10 ** (m / 2595) - 1)\n\n    return to_hz(np.linspace(to_mel(f_min), to_mel(f_max), n + 2))\n",
+  "question": {
+    "text": "Почему для речи используют мел-шкалу?",
+    "options": [
+      "Она приближает восприятие высоты звука человеком: низкие частоты различаются тоньше высоких",
+      "Она ускоряет запись звука",
+      "Она убирает шум из записи",
+      "Она повышает частоту дискретизации"
+    ],
+    "correct": 0
+  },
+  "rubric": {
+    "run": 2,
+    "basic": 4,
+    "edge": 3,
+    "question": 1
+  }
+}

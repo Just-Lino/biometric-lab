@@ -17,14 +17,17 @@
     // необязательно: window.LABPLUS_EXPLAIN = async (parsed, lastResult) => 'текст от вашего ИИ-наставника'
   }, LAB.config || {});
 
-  const NAV = [['voice', 'Голос'], ['metrics', 'Метрики и ROC/DET'], ['robustness', 'Устойчивость'], ['standards', 'Стандарты']];
+  const NAV = [['voice', LT('Голос')], ['metrics', LT('Метрики и ROC/DET')], ['robustness', LT('Устойчивость')], ['standards', LT('Стандарты')]];
   LAB.nav = function (active) {
     const n = document.createElement('div');
     n.className = 'nav';
     n.innerHTML = '<b>LAB+</b>' + NAV.map(([k, t]) => `<a href="/labplus/${k}" class="${k === active ? 'on' : ''}">${t}</a>`).join('') +
-      `<a href="${LAB.config.homeUrl}" style="margin-left:auto">← в лабораторию</a>`;
+      LT(`<a href="{0}" style="margin-left:auto">← в лабораторию</a>`,[LAB.config.homeUrl]) + '<span id="lpLang"></span>';
     document.body.prepend(n);
+    if (window.LABI18N) LABI18N.mount(n.querySelector('#lpLang'));
   };
+
+  document.addEventListener('DOMContentLoaded', () => { if (window.LABI18N) LABI18N.translateDOM(document.body); document.title = LTX(document.title); });
 
   LAB.store = {
     get(k, d) { try { const v = localStorage.getItem('labplus.' + k); return v === null ? d : JSON.parse(v); } catch (e) { return d; } },
@@ -35,10 +38,10 @@
 
   LAB.api = async function (path, opts) {
     let r;
-    try { r = await fetch(path, opts); } catch (e) { throw new Error('Нет связи с сервером. Он запущен?'); }
+    try { r = await fetch(path, opts); } catch (e) { throw new Error(LT('Нет связи с сервером. Он запущен?')); }
     let data = null;
     try { data = await r.json(); } catch (e) { /* не JSON */ }
-    if (!r.ok) throw new Error((data && data.detail && (typeof data.detail === 'string' ? data.detail : JSON.stringify(data.detail))) || ('Ошибка ' + r.status));
+    if (!r.ok) throw new Error((data && data.detail && (typeof data.detail === 'string' ? data.detail : JSON.stringify(data.detail))) || (LT('Ошибка ') + r.status));
     return data;
   };
   LAB.post = (p, obj) => LAB.api(p, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(obj) });
@@ -139,9 +142,9 @@
   LAB.Recorder = function () {
     let ctx, stream, node, src, chunks = [], rate = 16000, on = false, onLevel = null;
     this.start = async function (levelCb) {
-      if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) throw new Error('Микрофон недоступен: откройте страницу через localhost или HTTPS.');
+      if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) throw new Error(LT('Микрофон недоступен: откройте страницу через localhost или HTTPS.'));
       try { stream = await navigator.mediaDevices.getUserMedia({ audio: { channelCount: 1, echoCancellation: false, noiseSuppression: false } }); }
-      catch (e) { throw new Error('Нет доступа к микрофону. Разрешите его в браузере.'); }
+      catch (e) { throw new Error(LT('Нет доступа к микрофону. Разрешите его в браузере.')); }
       ctx = new (window.AudioContext || window.webkitAudioContext)();
       rate = ctx.sampleRate; chunks = []; onLevel = levelCb; on = true;
       src = ctx.createMediaStreamSource(stream);
@@ -185,6 +188,7 @@
 
   /* ───────── синтез речи ───────── */
   /* Голос лаборатории (Piper на сервере) общий с главной страницей: выбор хранится в localStorage под ключом lab_tts */
+  LAB.SPEECH = ({ ru: 'ru-RU', kk: 'kk-KZ', en: 'en-US' })[window.LAB_LANG || 'ru'] || 'ru-RU';  // язык распознавания и озвучки браузера = язык интерфейса
   LAB.tts = { server: null, audio: null };
   LAB.ttsPrefs = function () { try { return JSON.parse(localStorage.getItem('lab_tts') || '{}'); } catch (e) { return {}; } };
   LAB.ttsSave = function (patch) { try { localStorage.setItem('lab_tts', JSON.stringify(Object.assign({ on: true, rate: 1.05, voice: '' }, LAB.ttsPrefs(), patch))); } catch (e) { /* ничего */ } };
@@ -196,8 +200,8 @@
   LAB.speak = async function (text) {
     const pref = LAB.ttsPrefs();
     if (!text || pref.on === false) return;
-    const vs = await LAB.ttsServer(), v = pref.voice || '';
-    const id = v.startsWith('srv:') && vs.some(x => 'srv:' + x.id === v) ? v.slice(4) : (!v && vs.length ? vs[0].id : null);
+    const vs = LAB.SPEECH === 'ru-RU' ? await LAB.ttsServer() : [], v = pref.voice || '';  // серверные голоса Piper русские
+    const id =v.startsWith('srv:') && vs.some(x => 'srv:' + x.id === v) ? v.slice(4) : (!v && vs.length ? vs[0].id : null);
     if (id) {
       try {
         const parts = (String(text).match(/[^.!?;:]+[.!?;:]?/g) || [String(text)]).map(x => x.trim()).filter(Boolean).flatMap(x => x.match(/.{1,500}/g));
@@ -219,8 +223,8 @@
       if (!text || !('speechSynthesis' in window)) return res();
       try {
         speechSynthesis.cancel();
-        const u = new SpeechSynthesisUtterance(text); u.lang = 'ru-RU'; u.rate = 1.0;
-        const v = speechSynthesis.getVoices().find(x => /^ru/i.test(x.lang)); if (v) u.voice = v;
+        const u = new SpeechSynthesisUtterance(text); u.lang = LAB.SPEECH; u.rate = 1.0;
+        const v = speechSynthesis.getVoices().find(x => x.lang && x.lang.toLowerCase().startsWith(LAB.SPEECH.slice(0, 2))); if (v) u.voice = v;
         let done = false; const fin = () => { if (!done) { done = true; res(); } };
         u.onend = fin; u.onerror = fin; setTimeout(fin, Math.max(3000, text.length * 90));
         speechSynthesis.speak(u);
@@ -231,26 +235,26 @@
   /* ───────── голосовой помощник (плавающая кнопка) ───────── */
   LAB.assistant = function () {
     if (document.getElementById('lp-fab')) return;
-    const fab = document.createElement('button'); fab.id = 'lp-fab'; fab.title = 'Голосовая команда'; fab.textContent = '🎤';
+    const fab = document.createElement('button'); fab.id = 'lp-fab'; fab.title = LT('Голосовая команда'); fab.textContent = '🎤';
     const panel = document.createElement('div'); panel.id = 'lp-panel';
     const name = LAB.store.get('voiceName', '');
-    panel.innerHTML = `<div class="row"><b>Голосовой помощник</b><button id="lp-x" style="margin-left:auto">×</button></div>
+    panel.innerHTML = LT(`<div class="row"><b>Голосовой помощник</b><button id="lp-x" style="margin-left:auto">×</button></div>
       <label>Режим</label><select id="lp-mode"><option value="auto">Автозапуск: сам запускает</option><option value="hint">Подсказка: объясняет, я нажимаю</option><option value="confirm">Спрашивать подтверждение</option></select>
-      <label><input type="checkbox" id="lp-spk"> Проверять мой голос (профиль: <span id="lp-name">${name || 'нет'}</span>)</label>
+      <label><input type="checkbox" id="lp-spk"> Проверять мой голос (профиль: <span id="lp-name">{0}</span>)</label>
       <label>Голос озвучки</label><select id="lp-voice"></select>
       <div class="row" style="margin-top:8px"><button class="pri" id="lp-go">🎤 Сказать команду</button></div>
       <div class="row" style="margin-top:8px"><input type="text" id="lp-txt" placeholder="или напишите команду" style="flex:1"><button id="lp-send">▶</button></div>
       <div id="lp-log" style="margin-top:8px"></div>
-      <div class="note">Примеры: «покажи распознавание отпечатков пальцев по датасету FVC2004», «покажи кривые ROC», «проверь устойчивость к шуму», «объясни результат», «помощь».</div>`;
+      <div class="note">Примеры: «покажи распознавание отпечатков пальцев по датасету FVC2004», «покажи кривые ROC», «проверь устойчивость к шуму», «объясни результат», «помощь».</div>`,[name || LT('нет')]);
     document.body.append(fab, panel);
     const $ = s => panel.querySelector(s), log = $('#lp-log');
     const fillVoices = async () => {  // список голосов: «Голос лаборатории» (сервер) и голоса браузера; выбор общий с главной страницей
       const sel = $('#lp-voice'), vs = await LAB.ttsServer();
-      const br = ('speechSynthesis' in window ? speechSynthesis.getVoices() : []).filter(x => /^ru/i.test(x.lang));
-      sel.innerHTML = '<option value="">Автоматически' + (vs.length ? ' (голос лаборатории: ' + vs[0].title + ')' : '') + '</option>' +
-        vs.map(x => `<option value="srv:${x.id}">Голос лаборатории: ${x.title}</option>`).join('') +
-        br.map(x => `<option value="${x.name}">Браузер: ${x.name}</option>`).join('') +
-        (vs.length ? '' : '<option value="" disabled>Голос лаборатории не установлен (см. README)</option>');
+      const br = ('speechSynthesis' in window ? speechSynthesis.getVoices() : []).filter(x => x.lang && x.lang.toLowerCase().startsWith(LAB.SPEECH.slice(0, 2)));
+      sel.innerHTML = LT('<option value="">Автоматически') + (vs.length ? LT(' (голос лаборатории: ') + vs[0].title + ')' : '') + '</option>' +
+        vs.map(x => LT(`<option value="srv:{0}">Голос лаборатории: {1}</option>`,[x.id,x.title])).join('') +
+        br.map(x => LT(`<option value="{0}">Браузер: {1}</option>`,[x.name,x.name])).join('') +
+        (vs.length ? '' : LT('<option value="" disabled>Голос лаборатории не установлен (см. README)</option>'));
       const cur = LAB.ttsPrefs().voice || ''; sel.value = [...sel.options].some(o => o.value === cur) ? cur : '';
       sel.onchange = e => { LAB.ttsSave({ voice: e.target.value }); };
     };
@@ -272,12 +276,12 @@
       if (wavBlob && req) fd.append('file', wavBlob, 'cmd.wav');
       const r = await LAB.api('/api/labplus/voice/command', { method: 'POST', body: fd });
       const p = r.parsed;
-      if (r.speaker && r.speaker.score !== undefined) say('', `Голос: сходство ${r.speaker.score}, ${r.speaker.decision === 'MATCH' ? 'узнан' : 'не узнан'}`);
+      if (r.speaker && r.speaker.score !== undefined) say('', LT(`Голос: сходство {0}, {1}`,[r.speaker.score,r.speaker.decision === 'MATCH' ? LT('узнан') : LT('не узнан')]));
       if (!r.allowed) { say('', '🔒 ' + r.reply); await LAB.speak(r.reply); return; }
       if (pending && (p.intent === 'yes' || p.intent === 'no')) {
         const act = pending; pending = null;
-        if (p.intent === 'yes') { say('', '✅ Выполняю'); await LAB.speak('Хорошо, запускаю.'); return LAB.runAction(act); }
-        say('', 'Отменено'); return LAB.speak('Хорошо, не буду.');
+        if (p.intent === 'yes') { say('', LT('✅ Выполняю')); await LAB.speak(LT('Хорошо, запускаю.')); return LAB.runAction(act); }
+        say('', LT('Отменено')); return LAB.speak(LT('Хорошо, не буду.'));
       }
       if (p.intent === 'explain') {
         const t = p.target ? r.reply : await LAB.explainLast(p); say('', '🤖 ' + t); return LAB.speak(t);
@@ -297,15 +301,15 @@
     $('#lp-txt').onkeydown = e => { if (e.key === 'Enter') $('#lp-send').click(); };
     $('#lp-go').onclick = () => guarded(async () => {
       const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-      if (!SR) throw new Error('Распознавание речи этим браузером не поддерживается. Откройте Chrome или введите команду текстом.');
-      const rec = new LAB.Recorder(); await rec.start(); fab.classList.add('live'); panel.classList.add('open'); say('', '🎤 Слушаю…');
+      if (!SR) throw new Error(LT('Распознавание речи этим браузером не поддерживается. Откройте Chrome или введите команду текстом.'));
+      const rec = new LAB.Recorder(); await rec.start(); fab.classList.add('live'); panel.classList.add('open'); say('', LT('🎤 Слушаю…'));
       const text = await new Promise((res) => {
-        const sr = new SR(); sr.lang = 'ru-RU'; sr.interimResults = false; sr.maxAlternatives = 1; let t = '';
+        const sr = new SR(); sr.lang = LAB.SPEECH; sr.interimResults = false; sr.maxAlternatives = 1; let t = '';
         sr.onresult = e => { t = e.results[0][0].transcript; }; sr.onerror = () => res(''); sr.onend = () => res(t);
         setTimeout(() => { try { sr.stop(); } catch (e) { /* ничего */ } }, 9000); sr.start();
       });
       const blob = await rec.stop();
-      if (!text) { say('', 'Не расслышала.'); return LAB.speak('Не расслышала. Повторите, пожалуйста.'); }
+      if (!text) { say('', LT('Не расслышала.')); return LAB.speak(LT('Не расслышала. Повторите, пожалуйста.')); }
       await handle(text, blob);
     });
     LAB._assistantSay = say;
@@ -314,7 +318,7 @@
   LAB.explainLast = async function (parsed) {
     const last = LAB.getLast();
     if (typeof window.LABPLUS_EXPLAIN === 'function') { try { return await window.LABPLUS_EXPLAIN(parsed, last); } catch (e) { /* падаем на встроенного наставника */ } }
-    if (!last) return 'Пока нет результата для объяснения. Запустите эксперимент и повторите.';
+    if (!last) return LT('Пока нет результата для объяснения. Запустите эксперимент и повторите.');
     return (await LAB.post('/api/labplus/explain', { kind: last.kind, payload: last.payload, level: 2 })).text;
   };
 
@@ -323,7 +327,7 @@
     Object.entries(p.slots || {}).forEach(([k, v]) => q.set(k, v));
     if (typeof window.LABPLUS_OPEN === 'function' && window.LABPLUS_OPEN(p.target, p.slots || {}) !== false) return;
     const base = LAB.config.routes[p.target];
-    if (!base) { if (LAB._assistantSay) LAB._assistantSay('', 'Для этого раздела не настроен переход (см. LAB.config.routes).'); return; }
+    if (!base) { if (LAB._assistantSay) LAB._assistantSay('', LT('Для этого раздела не настроен переход (см. LAB.config.routes).')); return; }
     const [path, hash] = base.split('#');
     location.href = path + '?' + q.toString() + (hash ? '#' + hash : '');
   };

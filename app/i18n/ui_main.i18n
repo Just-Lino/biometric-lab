@@ -1,0 +1,2665 @@
+# Интерфейс: тексты главной страницы и страниц LAB+ (собрано из исходного кода, переводы казахского проверить носителем).
+
+ru> Виртуальная лаборатория «Биометрия»
+en> Virtual Laboratory “Biometrics”
+kk> «Биометрия» виртуалды зертханасы
+
+ru> Отпечатки пальцев
+en> Fingerprints
+kk> Саусақ іздері
+
+ru> Лицо
+en> Face
+kk> Бет
+
+ru> Практикум: код
+en> Practicum: code
+kk> Практикум: код
+
+ru> Обучение распознаванию
+en> Recognition training
+kk> Тануды оқыту
+
+ru> Площадка нейросети
+en> Neural network playground
+kk> Нейрондық желі алаңы
+
+ru> Радужка
+en> Iris
+kk> Көздің нұрлы қабығы
+
+ru> Голос
+en> Voice
+kk> Дауыс
+
+ru> Дополнение LAB+: голос, метрики ROC/DET, устойчивость к искажениям, стандарты ISO/IEC
+en> LAB+ add-on: voice, ROC/DET metrics, robustness to distortions, ISO/IEC standards
+kk> LAB+ қосымшасы: дауыс, ROC/DET метрикалары, бұрмалауларға төзімділік, ISO/IEC стандарттары
+
+ru> Короткая инструкция по текущей вкладке
+en> Short instructions for the current tab
+kk> Ағымдағы қойындыға қысқаша нұсқаулық
+
+ru> ? Как работать
+en> ? How to work
+kk> ? Қалай жұмыс істеу керек
+
+ru> Понятно
+en> Got it
+kk> Түсінікті
+
+ru> 1. Образцы
+en> 1. Samples
+kk> 1. Үлгілер
+
+ru> Набор данных
+en> Dataset
+kk> Деректер жиыны
+
+ru> Поиск образца
+en> Search for a sample
+kk> Үлгіні іздеу
+
+ru> например: 101 или Bush
+en> for example: 101 or Bush
+kk> мысалы: 101 немесе Bush
+
+ru> Образец A (эталон)
+en> Sample A (reference)
+kk> A үлгісі (эталон)
+
+ru> Образец B (проверяемый)
+en> Sample B (probe)
+kk> B үлгісі (тексерілетін)
+
+ru> образец A
+en> sample A
+kk> A үлгісі
+
+ru> A (эталон)
+en> A (reference)
+kk> A (эталон)
+
+ru> образец B
+en> sample B
+kk> B үлгісі
+
+ru> B (проверяемый)
+en> B (probe)
+kk> B (тексерілетін)
+
+ru> Загрузить своё изображение в A / в B
+en> Upload your own image into A / into B
+kk> Өз суретіңізді A / B үлгісіне жүктеңіз
+
+ru> в A
+en> into A
+kk> A-ға
+
+ru> в B
+en> into B
+kk> B-ға
+
+ru> Записать голос с микрофона (4 секунды)
+en> Record your voice with a microphone (4 seconds)
+kk> Дауысыңызды микрофонмен жазыңыз (4 секунд)
+
+ru> 🎙 Записать в A
+en> 🎙 Record into A
+kk> 🎙 A-ға жазу
+
+ru> 🎙 Записать в B
+en> 🎙 Record into B
+kk> 🎙 B-ға жазу
+
+ru> Прослушать
+en> Listen
+kk> Тыңдау
+
+ru> 2. Параметры алгоритма
+en> 2. Algorithm parameters
+kk> 2. Алгоритм параметрлері
+
+ru> Сбросить параметры
+en> Reset parameters
+kk> Параметрлерді қалпына келтіру
+
+ru> 3. Решение
+en> 3. Decision
+kk> 3. Шешім
+
+ru> Показать этапы для A
+en> Show steps for A
+kk> A үшін кезеңдерді көрсету
+
+ru> Показать этапы для B
+en> Show steps for B
+kk> B үшін кезеңдерді көрсету
+
+ru> Сравнить A и B
+en> Compare A and B
+kk> A мен B-ны салыстыру
+
+ru> Пошаговая обработка образца
+en> Step-by-step processing of the sample
+kk> Үлгіні кезең-кезеңімен өңдеу
+
+ru> Нажмите «Показать этапы для A» или «для B».
+en> Press “Show steps for A” or “for B”.
+kk> «A үшін кезеңдерді көрсету» немесе «B үшін» батырмасын басыңыз.
+
+ru> 3D-конвейер: как изображение превращается в решение
+en> 3D pipeline: how an image turns into a decision
+kk> 3D конвейер: сурет қалай шешімге айналады
+
+ru> Построить 3D-конвейер для образца A
+en> Build the 3D pipeline for sample A
+kk> A үлгісі үшін 3D конвейерді құру
+
+ru> Предыдущий этап
+en> Previous step
+kk> Алдыңғы кезең
+
+ru> ▶ Воспроизвести
+en> ▶ Play
+kk> ▶ Ойнату
+
+ru> Следующий этап
+en> Next step
+kk> Келесі кезең
+
+ru> Показать все этапы
+en> Show all steps
+kk> Барлық кезеңді көрсету
+
+ru> Камера делает полный оборот вокруг сцены
+en> The camera makes a full turn around the scene
+kk> Камера сахнаны толық айналып шығады
+
+ru> ⟳ Облёт 360°
+en> ⟳ Fly around 360°
+kk> ⟳ 360° айналып ұшу
+
+ru> Вернуть камеру, размер и сдвиг в исходное положение
+en> Return the camera, size and shift to the initial position
+kk> Камераны, өлшемді және ығысуды бастапқы қалпына келтіру
+
+ru> Сбросить вид
+en> Reset view
+kk> Көріністі қалпына келтіру
+
+ru> Нажмите «Построить 3D-конвейер». Каждый слой - результат одного этапа алгоритма. Вращение: мышь или ползунки ниже, масштаб: колесо.
+en> Press “Build the 3D pipeline”. Each layer is the result of one algorithm step. Rotation: mouse or the sliders below, zoom: wheel.
+kk> «3D конвейерді құру» батырмасын басыңыз. Әр қабат алгоритмнің бір кезеңінің нәтижесі. Айналдыру: тышқан немесе төмендегі жүгірткілер, масштаб: дөңгелек.
+
+ru> Раскладка
+en> Layout
+kk> Орналасу
+
+ru> Лента (слева направо)
+en> Strip (left to right)
+kk> Лента (солдан оңға)
+
+ru> Стопка слоёв (снизу вверх)
+en> Stack of layers (bottom to top)
+kk> Қабаттар үйіндісі (төменнен жоғары)
+
+ru> Карусель (по кругу, 360°)
+en> Carousel (in a circle, 360°)
+kk> Карусель (шеңбер бойымен, 360°)
+
+ru> Расстояние между этапами:
+en> Distance between steps:
+kk> Кезеңдер арасындағы қашықтық:
+
+ru> Этап:
+en> Step:
+kk> Кезең:
+
+ru> все
+en> all
+kk> барлығы
+
+ru> Поворот вокруг сцены (0-360°):
+en> Rotation around the scene (0-360°):
+kk> Сахнаны айналдыру (0-360°):
+
+ru> Наклон камеры (сверху - снизу):
+en> Camera tilt (from above - from below):
+kk> Камера еңкеюі (жоғарыдан - төменнен):
+
+ru> Приближение:
+en> Zoom:
+kk> Жақындату:
+
+ru> Сдвиг вдоль сцены:
+en> Shift along the scene:
+kk> Сахна бойымен жылжыту:
+
+ru> Размер слоёв:
+en> Layer size:
+kk> Қабат өлшемі:
+
+ru> Скорость облёта:
+en> Fly-around speed:
+kk> Айналып ұшу жылдамдығы:
+
+ru> 30°/с
+en> 30°/s
+kk> 30°/с
+
+ru> Желтая рамка - текущий этап, остальные притемнены. Камеру можно двигать мышью, колесом или ползунками: «Поворот» делает полный круг 0-360°, «Облёт 360°» вращает сцену сам. В «Ленте» и «Стопке» слои сбоку видны ребром, для круговой прокрутки выберите «Карусель». Нейросеть SFace в лаборатории не обучается: используется готовая модель, а здесь показан путь данных через алгоритм.
+en> The yellow frame is the current step, the others are dimmed. You can move the camera with the mouse, the wheel or the sliders: “Rotation” makes a full 0-360° turn, “Fly around 360°” rotates the scene by itself. In “Strip” and “Stack” the layers are seen edge-on from the side; for circular scrolling choose “Carousel”. The SFace neural network is not trained in the laboratory: a ready-made model is used, and here the path of the data through the algorithm is shown.
+kk> Сары жиек - ағымдағы кезең, қалғандары күңгірттелген. Камераны тышқанмен, дөңгелекпен немесе жүгірткілермен жылжытуға болады: «Айналдыру» 0-360° толық айналым жасайды, «360° айналып ұшу» сахнаны өзі айналдырады. «Лента» мен «Үйінді» режимдерінде қабаттар қырынан көрінеді; дөңгелек айналдыру үшін «Карусель» таңдаңыз. SFace нейрондық желісі зертханада оқытылмайды: дайын модель қолданылады, ал мұнда деректердің алгоритм арқылы өтуі көрсетіледі.
+
+ru> 3D-визуализация отпечатка
+en> 3D visualization of the fingerprint
+kk> Саусақ ізінің 3D визуализациясы
+
+ru> Построить 3D для образца A
+en> Build 3D for sample A
+kk> A үлгісі үшін 3D құру
+
+ru> Нажмите «Построить 3D». Вращение: перетаскивание мышью, масштаб: колесо.
+en> Press “Build 3D”. Rotation: drag with the mouse, zoom: wheel.
+kk> «3D құру» батырмасын басыңыз. Айналдыру: тышқанмен сүйреу, масштаб: дөңгелек.
+
+ru> Текстура
+en> Texture
+kk> Текстура
+
+ru> Исходное изображение
+en> Original image
+kk> Бастапқы сурет
+
+ru> После Gabor
+en> After Gabor
+kk> Габордан кейін
+
+ru> Бинаризация
+en> Binarization
+kk> Бинаризация
+
+ru> Скелет
+en> Skeleton
+kk> Қаңқа
+
+ru> Без текстуры (рельеф)
+en> No texture (relief)
+kk> Текстурасыз (бедер)
+
+ru> Высота гребней:
+en> Ridge height:
+kk> Жота биіктігі:
+
+ru> Кривизна пальца:
+en> Finger curvature:
+kk> Саусақ қисықтығы:
+
+ru> сетка
+en> grid
+kk> тор
+
+ru> вращение
+en> rotation
+kk> айналу
+
+ru> Высота поверхности - выраженность гребня (из этапа Gabor). Красные шары - окончания, синие конусы - разветвления.
+en> The surface height is the ridge strength (from the Gabor step). Red spheres are endings, blue cones are bifurcations.
+kk> Бет биіктігі - жотаның айқындылығы (Габор кезеңінен). Қызыл шарлар - аяқталулар, көк конустар - тарамдалулар.
+
+ru> Сравнение двух образцов
+en> Comparison of two samples
+kk> Екі үлгіні салыстыру
+
+ru> Нажмите «Сравнить A и B».
+en> Press “Compare A and B”.
+kk> «A мен B-ны салыстыру» батырмасын басыңыз.
+
+ru> Сравнение детекторов и признаков
+en> Comparison of detectors and features
+kk> Детекторлар мен белгілерді салыстыру
+
+ru> Сравнить детекторы на образце A
+en> Compare detectors on sample A
+kk> Детекторларды A үлгісінде салыстыру
+
+ru> Сравнить признаки на паре A и B
+en> Compare features on the pair A and B
+kk> Белгілерді A және B жұбында салыстыру
+
+ru> Оценить признаки на галерее (EER)
+en> Evaluate features on the gallery (EER)
+kk> Белгілерді галереяда бағалау (EER)
+
+ru> Детекторы: рамки разных цветов на одном изображении, время и уверенность. Признаки: одна и та же пара лиц, но разные способы превратить лицо в вектор. Шкалы сходства у разных признаков разные, поэтому числа напрямую сравнивать нельзя: судить о качестве метода нужно по EER на галерее (чем ниже, тем лучше).
+en> Detectors: frames of different colors on one image, time and confidence. Features: the same pair of faces, but different ways to turn a face into a vector. The similarity scales of different features differ, so the numbers cannot be compared directly: judge the quality of a method by the EER on the gallery (the lower the better).
+kk> Детекторлар: бір суреттегі әртүрлі түсті жақтаулар, уақыт және сенімділік. Белгілер: бір жұп бет, бірақ бетті векторға айналдырудың әртүрлі тәсілдері. Әртүрлі белгілердің ұқсастық шкалалары бөлек, сондықтан сандарды тікелей салыстыруға болмайды: әдіс сапасын галереядағы EER бойынша бағалаңыз (төмен болған сайын жақсы).
+
+ru> Оценка качества: FAR / FRR / EER
+en> Quality assessment: FAR / FRR / EER
+kk> Сапаны бағалау: FAR / FRR / EER
+
+ru> Рассчитать на наборе пар
+en> Calculate on a set of pairs
+kk> Жұптар жиынында есептеу
+
+ru> Стресс-тест искажений (SOCOFing)
+en> Distortion stress test (SOCOFing)
+kk> Бұрмалау стресс-тесті (SOCOFing)
+
+ru> Запустить стресс-тест
+en> Run the stress test
+kk> Стресс-тестті іске қосу
+
+ru> Журнал экспериментов
+en> Experiment log
+kk> Эксперименттер журналы
+
+ru> Скачать CSV
+en> Download CSV
+kk> CSV жүктеп алу
+
+ru> Очистить
+en> Clear
+kk> Тазалау
+
+ru> ИИ-наставник
+en> AI tutor
+kk> ЖИ-тәлімгер
+
+ru> Выполните сравнение, затем выберите режим: подсказка, объяснение понятия или разбор результата.
+en> Run a comparison, then choose a mode: hint, explanation of a concept or analysis of the result.
+kk> Салыстыруды орындап, режимді таңдаңыз: кеңес, ұғымды түсіндіру немесе нәтижені талдау.
+
+ru> Наставник
+en> Tutor
+kk> Тәлімгер
+
+ru> Режим
+en> Mode
+kk> Режим
+
+ru> Hint - подсказка
+en> Hint - a hint
+kk> Hint - кеңес
+
+ru> Explain - объяснить понятие
+en> Explain - explain a concept
+kk> Explain - ұғымды түсіндіру
+
+ru> Diagnose - разобрать результат
+en> Diagnose - analyze the result
+kk> Diagnose - нәтижені талдау
+
+ru> Вопрос (для режима Explain)
+en> Question (for the Explain mode)
+kk> Сұрақ (Explain режимі үшін)
+
+ru> Например: зачем нужно выравнивание лица?
+en> For example: why is face alignment needed?
+kk> Мысалы: бетті туралау не үшін қажет?
+
+ru> Спросить
+en> Ask
+kk> Сұрау
+
+ru> Задания
+en> Tasks
+kk> Тапсырмалар
+
+ru> Мои попытки
+en> My attempts
+kk> Менің әрекеттерім
+
+ru> Выберите задание
+en> Choose a task
+kk> Тапсырманы таңдаңыз
+
+ru> Редактор кода (Python)
+en> Code editor (Python)
+kk> Код редакторы (Python)
+
+ru> ▶ Запустить на примере
+en> ▶ Run on the example
+kk> ▶ Мысалда іске қосу
+
+ru> ✔ Проверить решение
+en> ✔ Check the solution
+kk> ✔ Шешімді тексеру
+
+ru> ↺ Начальный код
+en> ↺ Starter code
+kk> ↺ Бастапқы код
+
+ru> Разрешены импорты: numpy, cv2, skimage, math и др. Доступ к файлам и системе заблокирован. Время выполнения ограничено.
+en> Allowed imports: numpy, cv2, skimage, math and others. Access to files and the system is blocked. Execution time is limited.
+kk> Рұқсат етілген импорт: numpy, cv2, skimage, math және басқалар. Файлдар мен жүйеге қол жеткізу бұғатталған. Орындалу уақыты шектеулі.
+
+ru> Контрольный вопрос
+en> Quiz question
+kk> Бақылау сұрағы
+
+ru> Результат
+en> Result
+kk> Нәтиже
+
+ru> ИИ-наставник по коду
+en> AI code tutor
+kk> Код бойынша ЖИ-тәлімгер
+
+ru> Подсказки идут по уровням и не выдают решение сразу. Полное решение открывается после 3 попыток проверки.
+en> Hints go by levels and do not give the solution at once. The full solution opens after 3 check attempts.
+kk> Кеңестер деңгей бойынша беріледі және шешімді бірден бермейді. Толық шешім тексерудің 3 әрекетінен кейін ашылады.
+
+ru> 1 Направление
+en> 1 Direction
+kk> 1 Бағыт
+
+ru> 2 Объяснение
+en> 2 Explanation
+kk> 2 Түсіндірме
+
+ru> 3 Фрагмент кода
+en> 3 Code fragment
+kk> 3 Код үзіндісі
+
+ru> 4 Решение
+en> 4 Solution
+kk> 4 Шешім
+
+ru> Объяснить последний результат
+en> Explain the last result
+kk> Соңғы нәтижені түсіндіру
+
+ru> Обучение нейросети распознаванию
+en> Neural network training for recognition
+kk> Нейрондық желіні тануға оқыту
+
+ru> - маленькая CNN учится на сервере, а здесь виден каждый этап
+en> - a small CNN learns on the server, and here every step is visible
+kk> - шағын CNN серверде оқиды, ал мұнда әр кезең көрінеді
+
+ru> Что распознаём
+en> What we recognize
+kk> Нені танимыз
+
+ru> Лица (галерея datasets/faces)
+en> Faces (gallery datasets/faces)
+kk> Беттер (datasets/faces галереясы)
+
+ru> Эпох
+en> Epochs
+kk> Эпохалар
+
+ru> Размер сети
+en> Network size
+kk> Желі өлшемі
+
+ru> Малая (8-16-16 фильтров)
+en> Small (8-16-16 filters)
+kk> Шағын (8-16-16 сүзгі)
+
+ru> Средняя (12-24-24)
+en> Medium (12-24-24)
+kk> Орташа (12-24-24)
+
+ru> Большая (16-32-32)
+en> Large (16-32-32)
+kk> Үлкен (16-32-32)
+
+ru> Оптимизатор
+en> Optimizer
+kk> Оңтайландырғыш
+
+ru> SGD с моментом
+en> SGD with momentum
+kk> Импульсті SGD
+
+ru> Снимок для проверки
+en> Held-out shot
+kk> Тексеруге арналған сурет
+
+ru> 3 (самый сложный)
+en> 3 (the hardest)
+kk> 3 (ең қиын)
+
+ru> 1 (самый лёгкий)
+en> 1 (the easiest)
+kk> 1 (ең оңай)
+
+ru> Размер батча
+en> Batch size
+kk> Батч өлшемі
+
+ru> Объектов (пальцев / людей)
+en> Objects (fingers / people)
+kk> Объектілер (саусақтар / адамдар)
+
+ru> Аугментация:
+en> Augmentation:
+kk> Аугментация:
+
+ru> ▶ Начать обучение
+en> ▶ Start training
+kk> ▶ Оқытуды бастау
+
+ru> ■ Остановить
+en> ■ Stop
+kk> ■ Тоқтату
+
+ru> - один клик: настройки выставляются сами и обучение запускается (отпечатки пальцев, 20 эпох):
+en> - one click: the settings are set automatically and training starts (fingerprints, 20 epochs):
+kk> - бір рет басу: параметрлер өздігінен қойылып, оқыту басталады (саусақ іздері, 20 эпоха):
+
+ru> Готовые эксперименты
+en> Ready-made experiments
+kk> Дайын эксперименттер
+
+ru> Сеть из трёх свёрточных слоёв учится отличать объекты друг от друга. Каждую эпоху она видит искажённые копии образцов (поворот, сдвиг, шум), а проверяется на образце, которого не видела. Ползунком эпох можно вернуться к любому моменту обучения. Это обучение с нуля маленькой сети, а не готовая модель SFace из раздела «Лицо».
+en> A network of three convolutional layers learns to tell objects apart. In every epoch it sees distorted copies of the samples (rotation, shift, noise) and is tested on a sample it has not seen. With the epoch slider you can go back to any moment of the training. This is training a small network from scratch, not the ready-made SFace model from the “Face” section.
+kk> Үш конволюциялық қабаттан тұратын желі объектілерді бір-бірінен ажыратуды үйренеді. Әр эпохада ол үлгілердің бұрмаланған көшірмелерін көреді (бұру, жылжыту, шу), ал тексеру өзі көрмеген үлгіде жасалады. Эпоха жүгірткісімен оқытудың кез келген сәтіне оралуға болады. Бұл — «Бет» бөліміндегі дайын SFace моделі емес, шағын желіні нөлден оқыту.
+
+ru> Итоги и выводы
+en> Results and conclusions
+kk> Қорытындылар
+
+ru> сеть сохранена на диск и останется после перезапуска сервера.
+en> the network is saved to disk and will remain after the server restart.
+kk> желі дискіге сақталды және сервер қайта іске қосылғаннан кейін де қалады.
+
+ru> Использовать обученную сеть как метод распознавания:
+en> Use the trained network as a recognition method:
+kk> Оқытылған желіні тану әдісі ретінде пайдалану:
+
+ru> Журнал запусков
+en> Run log
+kk> Іске қосулар журналы
+
+ru> - сравните настройки и результаты разных запусков
+en> - compare the settings and results of different runs
+kk> - әртүрлі іске қосулардың параметрлері мен нәтижелерін салыстырыңыз
+
+ru> Сравнить выбранные
+en> Compare selected
+kk> Таңдалғандарды салыстыру
+
+ru> Очистить журнал
+en> Clear the log
+kk> Журналды тазалау
+
+ru> Loss выбранных запусков
+en> Loss of the selected runs
+kk> Таңдалған іске қосулардың loss мәні
+
+ru> Точность на новых снимках
+en> Accuracy on new shots
+kk> Жаңа суреттердегі дәлдік
+
+ru> Loss (ошибка обучения)
+en> Loss (training error)
+kk> Loss (оқыту қатесі)
+
+ru> Точность и EER
+en> Accuracy and EER
+kk> Дәлдік және EER
+
+ru> Эпоха
+en> Epoch
+kk> Дәуір
+
+ru> ⟲ Показать обучение с начала
+en> ⟲ Replay the training from the start
+kk> ⟲ Оқытуды басынан қайта көрсету
+
+ru> Структура сети: как слои обучаются
+en> Network structure: how the layers learn
+kk> Желі құрылымы: қабаттар қалай оқиды
+
+ru> Слева направо: изображение проходит через три свёрточных слоя, превращается в embedding и даёт ответ. В квадратах - карты признаков каждого фильтра для тестового образца. Толщина линий - сила связи (средний модуль веса). Цвет рамок и линий - насколько вес изменился с начала обучения: серый - почти не менялся, оранжевый - сильно. Двигайте ползунок эпох или нажмите «Показать обучение с начала», чтобы увидеть, как слои «нагреваются».
+en> From left to right: the image passes through three convolutional layers, turns into an embedding and gives an answer. The squares are the feature maps of each filter for the test sample. Line thickness is the connection strength (mean weight magnitude). The color of frames and lines shows how much the weight has changed since the start of training: gray - almost unchanged, orange - a lot. Move the epoch slider or press “Replay the training from the start” to see the layers “heat up”.
+kk> Солдан оңға: сурет үш конволюциялық қабаттан өтіп, embedding-ке айналады және жауап береді. Шаршылар - сынақ үлгісі үшін әр сүзгінің белгілер карталары. Сызық қалыңдығы - байланыс күші (салмақтың орташа модулі). Жақтаулар мен сызықтардың түсі салмақтың оқыту басынан бері қаншалықты өзгергенін көрсетеді: сұр - дерлік өзгермеген, қызғылт сары - қатты өзгерген. Қабаттардың «қызуын» көру үшін эпоха жүгірткісін жылжытыңыз немесе «Оқытуды басынан қайта көрсету» батырмасын басыңыз.
+
+ru> Подробно: вход, фильтры и карты признаков
+en> In detail: input, filters and feature maps
+kk> Толығырақ: кіріс, сүзгілер және белгілер карталары
+
+ru> Вход (тестовый образец)
+en> Input (test sample)
+kk> Кіріс (сынақ үлгісі)
+
+ru> Фильтры 1-го слоя (3×3)
+en> Filters of the 1st layer (3×3)
+kk> 1-қабаттың сүзгілері (3×3)
+
+ru> Изменение фильтров с начала обучения
+en> Change of the filters since the start of training
+kk> Сүзгілердің оқыту басынан бергі өзгерісі
+
+ru> Слой 1: карты признаков (линии и края)
+en> Layer 1: feature maps (lines and edges)
+kk> 1-қабат: белгілер карталары (сызықтар мен жиектер)
+
+ru> Слой 2: более сложные узоры
+en> Layer 2: more complex patterns
+kk> 2-қабат: күрделірек өрнектер
+
+ru> Слой 3: крупные признаки
+en> Layer 3: large features
+kk> 3-қабат: ірі белгілер
+
+ru> В начале веса случайные. Фильтры первого слоя меняются медленно: сеть в основном настраивает более глубокие слои и embedding, поэтому справа показано именно изменение. Карты глубоких слоёв и embedding меняются заметнее: сравните эпохи ползунком.
+en> At the start the weights are random. The filters of the first layer change slowly: the network mostly tunes the deeper layers and the embedding, so what is shown on the right is exactly the change. The maps of the deep layers and the embedding change more noticeably: compare the epochs with the slider.
+kk> Басында салмақтар кездейсоқ. Бірінші қабаттың сүзгілері баяу өзгереді: желі негізінен терең қабаттар мен embedding-ті баптайды, сондықтан оң жақта дәл өзгеріс көрсетілген. Терең қабаттар мен embedding карталары айқынырақ өзгереді: эпохаларды жүгірткімен салыстырыңыз.
+
+ru> Насколько изменились веса слоёв (относительно начала обучения)
+en> How much the layer weights changed (relative to the start of training)
+kk> Қабат салмақтары қаншалықты өзгерді (оқыту басына қатысты)
+
+ru> Показывает, какие слои реально учатся. Чем выше линия, тем сильнее слой отошёл от случайных начальных весов.
+en> Shows which layers really learn. The higher the line, the further the layer has moved from the random initial weights.
+kk> Қай қабаттар шынымен оқитынын көрсетеді. Сызық жоғары болған сайын, қабат кездейсоқ бастапқы салмақтардан соғұрлым алыстаған.
+
+ru> Пространство признаков (embedding)
+en> Feature space (embedding)
+kk> Белгілер кеңістігі (embedding)
+
+ru> Каждая точка - образец, цвет - кто это. Кружки: обучающие и искажённые копии, ромбы: тестовые образцы. Чем дальше обучение, тем плотнее кластеры одного объекта.
+en> Each point is a sample, the color shows who it is. Circles: training and distorted copies, diamonds: test samples. The further the training goes, the denser the clusters of one object.
+kk> Әр нүкте - үлгі, түсі - кім екенін көрсетеді. Шеңберлер: оқыту және бұрмаланған көшірмелер, ромбылар: сынақ үлгілері. Оқыту ілгерілеген сайын бір объектінің кластерлері тығыздала түседі.
+
+ru> «Свои» и «чужие»
+en> “Genuine” and “impostor”
+kk> «Өз» және «бөтен»
+
+ru> Проверка на образцах, которых сеть не видела
+en> Check on samples the network has not seen
+kk> Желі көрмеген үлгілерде тексеру
+
+ru> Зелёная рамка - сеть узнала объект, красная - ошиблась. Под картинкой: кто это на самом деле → что ответила сеть (уверенность).
+en> A green frame means the network recognized the object, a red one means it was wrong. Under the picture: who it actually is → what the network answered (confidence).
+kk> Жасыл жиек - желі объектіні таныды, қызыл - қателесті. Сурет астында: шын мәнінде кім → желі не жауап берді (сенімділік).
+
+ru> Задания для исследования
+en> Research tasks
+kk> Зерттеу тапсырмалары
+
+ru> Запустите обучение отпечатков с аугментацией 0 и затем 1.0. Сравните точность на тестовых образцах и объясните разницу (переобучение).
+en> Run fingerprint training with augmentation 0 and then 1.0. Compare the accuracy on the test samples and explain the difference (overfitting).
+kk> Саусақ іздерін оқытуды аугментация 0, содан кейін 1.0 болғанда іске қосыңыз. Сынақ үлгілеріндегі дәлдікті салыстырып, айырмашылықты түсіндіріңіз (қайта үйрену).
+
+ru> Поставьте слишком большой learning rate (0.01). Что происходит с loss? А слишком маленький?
+en> Set a too large learning rate (0.01). What happens to the loss? And a too small one?
+kk> Тым үлкен learning rate (0.01) қойыңыз. Loss-қа не болады? Ал тым кішісінде ше?
+
+ru> Следите за гистограммой «свои / чужие» и EER: как они меняются по эпохам и почему это важно для биометрической системы?
+en> Watch the “genuine / impostor” histogram and the EER: how do they change over the epochs and why does it matter for a biometric system?
+kk> «Өз / бөтен» гистограммасы мен EER-ді бақылаңыз: олар эпохалар бойынша қалай өзгереді және бұл биометриялық жүйе үшін неге маңызды?
+
+ru> По графику изменения весов определите, какой слой меняется сильнее всего. Почему первый слой меняется меньше остальных?
+en> From the weight change chart, determine which layer changes the most. Why does the first layer change less than the others?
+kk> Салмақ өзгерісі графигі бойынша қай қабат ең көп өзгеретінін анықтаңыз. Неге бірінші қабат қалғандарынан аз өзгереді?
+
+ru> Лица: положите в datasets/faces 5-8 человек по 3+ фото, обучите сеть и сравните с готовой SFace из раздела «Лицо». Почему маленькой сети с нуля данных не хватает?
+en> Faces: put 5-8 people with 3+ photos each into datasets/faces, train the network and compare it with the ready-made SFace from the “Face” section. Why is the data not enough for a small network from scratch?
+kk> Беттер: datasets/faces ішіне 3+ фотодан тұратын 5-8 адамды салыңыз, желіні оқытып, «Бет» бөліміндегі дайын SFace-пен салыстырыңыз. Нөлден оқитын шағын желіге деректер неге жетпейді?
+
+ru> Нейросеть: как модель обучается
+en> Neural network: how a model learns
+kk> Нейрондық желі: модель қалай оқиды
+
+ru> - интерактивная площадка, всё считается прямо в браузере
+en> - an interactive playground, everything is computed right in the browser
+kk> - интерактивті алаң, барлығы тікелей браузерде есептеледі
+
+ru> ▶ Обучать
+en> ▶ Train
+kk> ▶ Оқыту
+
+ru> Шаг (1 эпоха)
+en> Step (1 epoch)
+kk> Қадам (1 эпоха)
+
+ru> ↺ Сбросить
+en> ↺ Reset
+kk> ↺ Қалпына келтіру
+
+ru> Эпоха:
+en> Epoch:
+kk> Дәуір:
+
+ru> Скорость обучения (learning rate)
+en> Learning rate
+kk> Оқыту жылдамдығы (learning rate)
+
+ru> Функция активации
+en> Activation function
+kk> Активация функциясы
+
+ru> Регуляризация
+en> Regularization
+kk> Регуляризация
+
+ru> Сила регуляризации
+en> Regularization strength
+kk> Регуляризация күші
+
+ru> Скорость показа
+en> Display speed
+kk> Көрсету жылдамдығы
+
+ru> Данные
+en> Data
+kk> Деректер
+
+ru> Доля обучающей выборки:
+en> Share of the training set:
+kk> Оқыту жиынының үлесі:
+
+ru> Шум:
+en> Noise:
+kk> Шу:
+
+ru> Размер батча:
+en> Batch size:
+kk> Батч өлшемі:
+
+ru> Новые данные
+en> New data
+kk> Жаңа деректер
+
+ru> Структура сети
+en> Network structure
+kk> Желі құрылымы
+
+ru> Скрытых слоёв:
+en> Hidden layers:
+kk> Жасырын қабаттар:
+
+ru> нейроны: кнопки над столбцами; признаки: клик по квадратам слева
+en> neurons: buttons above the columns; features: click the squares on the left
+kk> нейрондар: бағандардың үстіндегі батырмалар; белгілер: сол жақтағы шаршыларды басыңыз
+
+ru> Цвет и толщина линий - знак и величина весов (синий положительный, оранжевый отрицательный). В квадратах - что «видит» каждый нейрон на плоскости (X₁, X₂).
+en> The color and thickness of lines are the sign and magnitude of the weights (blue positive, orange negative). The squares show what each neuron “sees” on the plane (X₁, X₂).
+kk> Сызықтардың түсі мен қалыңдығы - салмақтардың таңбасы мен шамасы (көк оң, қызғылт сары теріс). Шаршыларда әр нейрон жазықтықта (X₁, X₂) нені «көретіні» бейнеленген.
+
+ru> Точность на тесте:
+en> Accuracy on the test:
+kk> Сынақтағы дәлдік:
+
+ru> Показать тестовые данные
+en> Show test data
+kk> Сынақ деректерін көрсету
+
+ru> Дискретный вывод
+en> Discrete output
+kk> Дискретті шығыс
+
+ru> Кривые loss: синяя - обучение, оранжевая пунктирная - тест. Если тест растёт, а обучение падает, это переобучение.
+en> Loss curves: blue - training, orange dashed - test. If the test grows while the training falls, it is overfitting.
+kk> Loss қисықтары: көк - оқыту, қызғылт сары үзік сызық - сынақ. Егер сынақ өсіп, оқыту төмендесе, бұл қайта үйрену.
+
+ru> Журнал экспериментов с сетью
+en> Network experiment log
+kk> Желімен жүргізілген эксперименттер журналы
+
+ru> Зафиксировать текущий результат
+en> Record the current result
+kk> Ағымдағы нәтижені тіркеу
+
+ru> Набор «Биометрия: свой / чужой», 0 скрытых слоёв: обучите модель и найдите границу решения. Это аналог порога threshold. Сколько ошибок остаётся и почему классы нельзя разделить идеально?
+en> “Biometrics: genuine / impostor” set, 0 hidden layers: train the model and find the decision boundary. It is an analogue of the threshold. How many errors remain and why can the classes not be separated perfectly?
+kk> «Биометрия: өз / бөтен» жиыны, 0 жасырын қабат: модельді оқытып, шешім шекарасын табыңыз. Бұл threshold шегінің аналогы. Қанша қате қалады және кластарды неге мінсіз бөлуге болмайды?
+
+ru> Добавьте шум и сравните кривые train и test loss. Когда сеть начинает переобучаться? Поможет ли регуляризация L2?
+en> Add noise and compare the train and test loss curves. When does the network start to overfit? Will L2 regularization help?
+kk> Шу қосып, train және test loss қисықтарын салыстырыңыз. Желі қашан қайта үйрене бастайды? L2 регуляризациясы көмектесе ме?
+
+ru> Наборы «Круг» и XOR: подберите минимальную структуру или признаки, при которых точность на тесте не ниже 95%.
+en> “Circle” and XOR sets: find the minimal structure or features for which the test accuracy is at least 95%.
+kk> «Шеңбер» және XOR жиындары: сынақтағы дәлдік 95%-дан кем болмайтын ең аз құрылымды немесе белгілерді табыңыз.
+
+ru> «Спираль»: какие признаки и слои нужны? Как learning rate влияет на скорость и устойчивость обучения?
+en> “Spiral”: what features and layers are needed? How does the learning rate affect the speed and stability of training?
+kk> «Спираль»: қандай белгілер мен қабаттар қажет? Learning rate оқыту жылдамдығы мен тұрақтылығына қалай әсер етеді?
+
+ru> Зафиксируйте 3-5 экспериментов в журнале и сделайте вывод о влиянии гиперпараметров.
+en> Record 3-5 experiments in the log and draw a conclusion about the influence of the hyperparameters.
+kk> Журналға 3-5 эксперимент тіркеп, гиперпараметрлердің әсері туралы қорытынды жасаңыз.
+
+ru> Датасет синтетический: реальные биометрические данные людей не используются.
+en> The dataset is synthetic: real biometric data of people are not used.
+kk> Деректер жиыны синтетикалық: адамдардың нақты биометриялық деректері қолданылмайды.
+
+ru> Минуции: ● окончание, ▲ разветвление; зелёные - совпавшие, серые - без пары, жёлтые линии - соответствия. POC: слева A, в центре B после совмещения, справа наложение. SIFT: зелёные линии - согласованные пары точек.
+en> Minutiae: ● ending, ▲ bifurcation; green - matched, gray - unpaired, yellow lines - correspondences. POC: A on the left, B after alignment in the center, the overlay on the right. SIFT: green lines are the consistent point pairs.
+kk> Минуциялар: ● аяқталу, ▲ тарамдалу; жасыл - сәйкес келгендер, сұр - жұбы жоқтар, сары сызықтар - сәйкестіктер. POC: сол жақта A, ортада туралаудан кейінгі B, оң жақта беттестіру. SIFT: жасыл сызықтар - келісілген нүкте жұптары.
+
+ru> Метод сопоставления
+en> Matching method
+kk> Салыстыру әдісі
+
+ru> Минуции + голосование (основной)
+en> Minutiae + voting (main)
+kk> Минуциялар + дауыс беру (негізгі)
+
+ru> Минуции + локальные структуры
+en> Minutiae + local structures
+kk> Минуциялар + жергілікті құрылымдар
+
+ru> Фазовая корреляция (POC)
+en> Phase correlation (POC)
+kk> Фазалық корреляция (POC)
+
+ru> Ключевые точки SIFT
+en> SIFT keypoints
+kk> SIFT кілт нүктелері
+
+ru> Нейросеть, обученная вами
+en> The network you trained
+kk> Өзіңіз оқытқан желі
+
+ru> Метод бинаризации
+en> Binarization method
+kk> Бинаризация әдісі
+
+ru> fixed (порог ниже)
+en> fixed (lower threshold)
+kk> fixed (төмен шек)
+
+ru> Сглаживание поля ориентаций (σ)
+en> Orientation field smoothing (σ)
+kk> Бағыт өрісін тегістеу (σ)
+
+ru> Gabor: период гребней (px)
+en> Gabor: ridge period (px)
+kk> Габор: жота кезеңі (px)
+
+ru> Порог бинаризации (для fixed)
+en> Binarization threshold (for fixed)
+kk> Бинаризация шегі (fixed үшін)
+
+ru> Мин. расстояние между minutiae (px)
+en> Min. distance between minutiae (px)
+kk> Минуциялар арасындағы ең аз қашықтық (px)
+
+ru> Допуск matching по расстоянию (px)
+en> Matching distance tolerance (px)
+kk> Салыстыру қашықтығының рұқсаты (px)
+
+ru> Добавочный шум (σ)
+en> Added noise (σ)
+kk> Қосылған шу (σ)
+
+ru> Образец A с минуциями
+en> Sample A with minutiae
+kk> Минуциялары бар A үлгісі
+
+ru> Образец B с минуциями
+en> Sample B with minutiae
+kk> Минуциялары бар B үлгісі
+
+ru> извлечение
+en> extraction
+kk> бөліп алу
+
+ru> Качество методов сопоставления на синтетическом наборе
+en> Quality of the matching methods on the synthetic set
+kk> Синтетикалық жиындағы салыстыру әдістерінің сапасы
+
+ru> Сравнение методов бинаризации и сопоставления
+en> Comparison of binarization and matching methods
+kk> Бинаризация және салыстыру әдістерін салыстыру
+
+ru> Сравнить бинаризации на образце A
+en> Compare binarizations on sample A
+kk> Бинаризацияларды A үлгісінде салыстыру
+
+ru> Сравнить методы сопоставления на паре A и B
+en> Compare matching methods on the pair A and B
+kk> Салыстыру әдістерін A және B жұбында салыстыру
+
+ru> Оценить методы сопоставления (EER)
+en> Evaluate the matching methods (EER)
+kk> Салыстыру әдістерін бағалау (EER)
+
+ru> Бинаризации: один и тот же отпечаток тремя способами, число найденных минуций и их качество. Методы сопоставления: одна и та же пара отпечатков, сходство и решение при рекомендуемом пороге каждого метода. Шкалы сходства у методов разные (у POC свои около 0,23, у минуций около 0,85), поэтому качество методов сравнивайте по EER и по запасу «худший свой минус лучший чужой» (больше нуля - ошибок нет).
+en> Binarizations: the same fingerprint in three ways, the number of minutiae found and their quality. Matching methods: the same pair of fingerprints, the similarity and the decision at the recommended threshold of each method. The similarity scales of the methods differ (POC has its own about 0.23, minutiae about 0.85), so compare the quality of the methods by the EER and by the margin “worst genuine minus best impostor” (above zero means no errors).
+kk> Бинаризациялар: бір саусақ ізі үш тәсілмен, табылған минуциялар саны және олардың сапасы. Салыстыру әдістері: бір жұп саусақ ізі, әр әдістің ұсынылатын шегіндегі ұқсастық пен шешім. Әдістердің ұқсастық шкалалары әртүрлі (POC-та өзінікі шамамен 0,23, минуцияларда шамамен 0,85), сондықтан әдістердің сапасын EER бойынша және «ең нашар өз минус ең жақсы бөтен» қоры бойынша салыстырыңыз (нөлден жоғары болса, қате жоқ).
+
+ru> Используйте открытые наборы (например LFW) или фото с согласия людей. Фото студентов без необходимости не собирайте.
+en> Use open datasets (for example LFW) or photos taken with people's consent. Do not collect photos of students unless necessary.
+kk> Ашық деректер жиындарын (мысалы, LFW) немесе адамдардың келісімімен түсірілген фотоларды пайдаланыңыз. Қажет болмаса, студенттердің фотоларын жинамаңыз.
+
+ru> Сверху - найденное лицо с ключевыми точками, снизу - выровненное лицо (вход для embedding).
+en> Top: the detected face with key points, bottom: the aligned face (the input for the embedding).
+kk> Жоғарыда: кілт нүктелері бар табылған бет, төменде: туралған бет (embedding кірісі).
+
+ru> Детектор лица
+en> Face detector
+kk> Бет детекторы
+
+ru> авто (лучший из доступных)
+en> auto (the best available)
+kk> авто (қолжетімдінің ең жақсысы)
+
+ru> Haar: frontalface_default (классика)
+en> Haar: frontalface_default (classic)
+kk> Haar: frontalface_default (классикалық)
+
+ru> Haar: frontalface_alt2 (классика)
+en> Haar: frontalface_alt2 (classic)
+kk> Haar: frontalface_alt2 (классикалық)
+
+ru> Haar: frontalface_alt (классика)
+en> Haar: frontalface_alt (classic)
+kk> Haar: frontalface_alt (классикалық)
+
+ru> Haar: профиль лица (классика)
+en> Haar: face profile (classic)
+kk> Haar: бет профилі (классика)
+
+ru> SSD ResNet-10 (нейросеть)
+en> SSD ResNet-10 (neural network)
+kk> SSD ResNet-10 (нейрондық желі)
+
+ru> UltraFace RFB-320 (лёгкая нейросеть)
+en> UltraFace RFB-320 (light neural network)
+kk> UltraFace RFB-320 (жеңіл нейрондық желі)
+
+ru> YuNet (нейросеть)
+en> YuNet (neural network)
+kk> YuNet (нейрондық желі)
+
+ru> Признаки (embedding)
+en> Features (embedding)
+kk> Белгілер (embedding)
+
+ru> авто (нейросеть, если есть)
+en> auto (neural network, if available)
+kk> авто (нейрондық желі, болса)
+
+ru> SFace (нейросеть)
+en> SFace (neural network)
+kk> SFace (нейрондық желі)
+
+ru> ArcFace MobileFaceNet (нейросеть)
+en> ArcFace MobileFaceNet (neural network)
+kk> ArcFace MobileFaceNet (нейрондық желі)
+
+ru> LBP (классика)
+en> LBP (classic)
+kk> LBP (классикалық)
+
+ru> HOG (классика)
+en> HOG (classic)
+kk> HOG (классикалық)
+
+ru> Габор (классика)
+en> Gabor (classic)
+kk> Габор (классикалық)
+
+ru> DCT (классика)
+en> DCT (classic)
+kk> DCT (классикалық)
+
+ru> Пиксели (простейший эталон)
+en> Pixels (the simplest baseline)
+kk> Пикселдер (ең қарапайым эталон)
+
+ru> Eigenfaces (PCA по галерее)
+en> Eigenfaces (PCA over the gallery)
+kk> Eigenfaces (галерея бойынша PCA)
+
+ru> Выравнивание лица
+en> Face alignment
+kk> Бетті туралау
+
+ru> включено
+en> on
+kk> қосулы
+
+ru> выключено
+en> off
+kk> өшірулі
+
+ru> Мин. размер лица (px)
+en> Min. face size (px)
+kk> Беттің ең аз өлшемі (px)
+
+ru> Порог уверенности YuNet / SSD
+en> YuNet / SSD confidence threshold
+kk> YuNet / SSD сенімділік шегі
+
+ru> Выровненное лицо A
+en> Aligned face A
+kk> Туралған A беті
+
+ru> Выровненное лицо B
+en> Aligned face B
+kk> Туралған B беті
+
+ru> детектор
+en> detector
+kk> детектор
+
+ru> Качество признаков на галерее
+en> Feature quality on the gallery
+kk> Галереядағы белгілер сапасы
+
+ru> Признаки
+en> Features
+kk> Белгілер
+
+ru> Датасет синтетический: 12 глаз по 3 снимка, реальные биометрические данные людей не используются. Для синтетики известны истинные окружности, поэтому видна ошибка локализации.
+en> The dataset is synthetic: 12 eyes with 3 shots each, real biometric data of people are not used. For synthetic data the true circles are known, so the localization error is visible.
+kk> Деректер жиыны синтетикалық: әрқайсысы 3 суреттен тұратын 12 көз, адамдардың нақты биометриялық деректері қолданылмайды. Синтетика үшін нақты шеңберлер белгілі, сондықтан локализация қатесі көрінеді.
+
+ru> Сверху - найденные зрачок (красный) и радужка (зелёный); ниже - развёртки A и B (B сдвинута на найденный поворот) и карта битов: белый - совпали, красный - не совпали, серый - не сравнивались.
+en> Top: the detected pupil (red) and iris (green); below: the unwrapped A and B (B is shifted by the found rotation) and the bit map: white - matched, red - not matched, gray - not compared.
+kk> Жоғарыда: табылған қарашық (қызыл) және нұрлы қабық (жасыл); төменде: A және B жазбалары (B табылған бұрылысқа ығыстырылған) және биттер картасы: ақ - сәйкес, қызыл - сәйкес емес, сұр - салыстырылмаған.
+
+ru> Метод локализации
+en> Localization method
+kk> Локализация әдісі
+
+ru> авто (Даугман, при неудаче - другие)
+en> auto (Daugman, others on failure)
+kk> авто (Даугман, сәтсіз болса - басқалары)
+
+ru> Интегро-дифференциальный оператор Даугмана
+en> Daugman integro-differential operator
+kk> Даугманның интегро-дифференциалдық операторы
+
+ru> Преобразование Хафа
+en> Hough transform
+kk> Хаф түрлендіруі
+
+ru> Порог + радиальный поиск границы
+en> Threshold + radial boundary search
+kk> Шек + шекараны радиалды іздеу
+
+ru> Кодировщик (признаки)
+en> Encoder (features)
+kk> Кодтаушы (белгілер)
+
+ru> 2D-фильтры Габора (Даугман)
+en> 2D Gabor filters (Daugman)
+kk> 2D Габор сүзгілері (Даугман)
+
+ru> 1D лог-Габор (Masek)
+en> 1D log-Gabor (Masek)
+kk> 1D лог-Габор (Масек)
+
+ru> Порядковые признаки (ordinal)
+en> Ordinal features
+kk> Реттік белгілер (ordinal)
+
+ru> Косинусное преобразование (DCT)
+en> Cosine transform (DCT)
+kk> Косинустық түрлендіру (DCT)
+
+ru> Вейвлет Хаара
+en> Haar wavelet
+kk> Хаар вейвлеті
+
+ru> Маска век, ресниц и бликов
+en> Mask of eyelids, eyelashes and glare
+kk> Қабақ, кірпік және жарқыл маскасы
+
+ru> включена
+en> on
+kk> қосулы
+
+ru> выключена
+en> off
+kk> өшірулі
+
+ru> Сглаживание перед поиском границ (σ)
+en> Smoothing before edge search (σ)
+kk> Шекараларды іздеу алдындағы тегістеу (σ)
+
+ru> Хаф: порог совершенства окружности
+en> Hough: circle perfection threshold
+kk> Хаф: шеңбердің кемелдік шегі
+
+ru> Длина волны фильтров (px развёртки)
+en> Filter wavelength (px of the unwrapped image)
+kk> Сүзгі толқын ұзындығы (жазбаның px)
+
+ru> Компенсация поворота: сдвиг до ± (px)
+en> Rotation compensation: shift up to ± (px)
+kk> Бұрылысты өтеу: ығысу ± дейін (px)
+
+ru> Развёртка A
+en> Unwrapped A
+kk> A жазбасы
+
+ru> Развёртка B
+en> Unwrapped B
+kk> B жазбасы
+
+ru> локализация
+en> localization
+kk> локализация
+
+ru> Качество кодировщиков на 12 синтетических глазах
+en> Quality of the encoders on 12 synthetic eyes
+kk> 12 синтетикалық көздегі кодтаушылар сапасы
+
+ru> Кодировщик
+en> Encoder
+kk> Кодтаушы
+
+ru> Сравнение методов локализации и кодирования
+en> Comparison of localization and encoding methods
+kk> Локализация және кодтау әдістерін салыстыру
+
+ru> Сравнить локализаторы на образце A
+en> Compare localizers on sample A
+kk> Локализаторларды A үлгісінде салыстыру
+
+ru> Сравнить кодировщики на паре A и B
+en> Compare encoders on the pair A and B
+kk> Кодтаушыларды A және B жұбында салыстыру
+
+ru> Оценить кодировщики (EER)
+en> Evaluate the encoders (EER)
+kk> Кодтаушыларды бағалау (EER)
+
+ru> Локализаторы: окружности разных цветов на одном снимке, время и ошибка относительно истинных окружностей (известны для синтетики). Кодировщики: одна и та же пара развёрток, разные способы получить Iris Code; сходство = 1 - расстояние Хэмминга. Качество метода сравнивайте по EER и по запасу «худший свой минус лучший чужой» (больше нуля - глаза разделяются без ошибок).
+en> Localizers: circles of different colors on one shot, the time and the error relative to the true circles (known for synthetic data). Encoders: the same pair of unwrapped images, different ways to get an Iris Code; similarity = 1 - Hamming distance. Compare the quality of a method by the EER and by the margin “worst genuine minus best impostor” (above zero means the eyes are separated without errors).
+kk> Локализаторлар: бір суреттегі әртүрлі түсті шеңберлер, уақыт және нақты шеңберлерге қатысты қате (синтетика үшін белгілі). Кодтаушылар: бір жұп жазба, Iris Code алудың әртүрлі тәсілдері; ұқсастық = 1 - Хэмминг қашықтығы. Әдіс сапасын EER бойынша және «ең нашар өз минус ең жақсы бөтен» қоры бойынша салыстырыңыз (нөлден жоғары болса, көздер қатесіз ажыратылады).
+
+ru> Голоса синтетические: 12 дикторов говорят одну и ту же фразу по 3 раза, реальные записи людей не используются. Свой голос можно записать с микрофона или загрузить файл: запись хранится только в памяти сервера и видна только вам.
+en> The voices are synthetic: 12 speakers say the same phrase 3 times each, real recordings of people are not used. You can record your own voice with a microphone or upload a file: the recording is kept only in the server memory and is visible only to you.
+kk> Дауыстар синтетикалық: 12 диктор бір фразаны 3 реттен айтады, адамдардың нақты жазбалары қолданылмайды. Өз дауысыңызды микрофонмен жазуға немесе файл жүктеуге болады: жазба тек сервер жадында сақталады және тек сізге көрінеді.
+
+ru> Сверху спектрограммы A и B (светлее - громче). Снизу столбики шаблонов в z-оценках: оранжевые - запись A, синие - запись B. Чем ближе столбики, тем выше сходство голосов.
+en> Top: spectrograms of A and B (lighter - louder). Bottom: template bars in z-scores: orange - recording A, blue - recording B. The closer the bars, the higher the similarity of the voices.
+kk> Жоғарыда: A және B спектрограммалары (ашығырақ - қаттырақ). Төменде: z-бағалардағы үлгі бағандары: қызғылт сары - A жазбасы, көк - B жазбасы. Бағандар жақын болған сайын, дауыстардың ұқсастығы жоғары.
+
+ru> Метод шаблона голоса
+en> Voice template method
+kk> Дауыс үлгісінің әдісі
+
+ru> MFCC: тембр голоса
+en> MFCC: voice timbre
+kk> MFCC: дауыс тембрі
+
+ru> MFCC + динамика
+en> MFCC + dynamics
+kk> MFCC + динамика
+
+ru> Только высота тона
+en> Pitch only
+kk> Тек негізгі тон биіктігі
+
+ru> MFCC + высота тона
+en> MFCC + pitch
+kk> MFCC + тон биіктігі
+
+ru> Выделение речи (VAD)
+en> Speech detection (VAD)
+kk> Сөйлеуді бөліп алу (VAD)
+
+ru> Адаптивный порог по энергии
+en> Adaptive energy threshold
+kk> Бейімделгіш энергия шегі
+
+ru> Фиксированный порог (ползунок ниже)
+en> Fixed threshold (slider below)
+kk> Тұрақты шек (төмендегі жүгірткі)
+
+ru> Энергия + пересечения нуля
+en> Energy + zero crossings
+kk> Энергия + нөлден өтулер
+
+ru> VAD: порог, дБ ниже пика (для фиксированного)
+en> VAD: threshold, dB below the peak (for fixed)
+kk> VAD: шек, шыңнан төмен дБ (тұрақты үшін)
+
+ru> Число коэффициентов MFCC
+en> Number of MFCC coefficients
+kk> MFCC коэффициенттерінің саны
+
+ru> Добавочный шум, % от громкости
+en> Added noise, % of the loudness
+kk> Қосылған шу, дыбыс қаттылығының %
+
+ru> Спектрограмма A
+en> Spectrogram A
+kk> A спектрограммасы
+
+ru> Спектрограмма B
+en> Spectrogram B
+kk> B спектрограммасы
+
+ru> выделение речи
+en> speech detection
+kk> сөйлеуді бөліп алу
+
+ru> Качество методов шаблона на 12 синтетических дикторах
+en> Quality of the template methods on 12 synthetic speakers
+kk> 12 синтетикалық дикторлардағы үлгі әдістерінің сапасы
+
+ru> Метод шаблона
+en> Template method
+kk> Үлгі әдісі
+
+ru> Сравнение способов выделения речи и методов шаблона
+en> Comparison of speech detection ways and template methods
+kk> Сөйлеуді бөлу тәсілдері мен үлгі әдістерін салыстыру
+
+ru> Сравнить способы выделения речи на записи A
+en> Compare speech detection ways on recording A
+kk> Сөйлеуді бөлу тәсілдерін A жазбасында салыстыру
+
+ru> Сравнить методы шаблона на паре A и B
+en> Compare template methods on the pair A and B
+kk> Үлгі әдістерін A және B жұбында салыстыру
+
+ru> Оценить методы шаблона (EER)
+en> Evaluate the template methods (EER)
+kk> Үлгі әдістерін бағалау (EER)
+
+ru> Способы выделения речи: зелёным отмечено, что каждый способ считает речью, и сколько это занимает времени. Методы шаблона: одна и та же пара записей, разные способы описать голос числами. Шкалы сходства у методов разные, поэтому судить о качестве нужно по EER на всех дикторах (чем ниже, тем лучше).
+en> Speech detection ways: green marks what each way considers speech and how long it takes. Template methods: the same pair of recordings, different ways to describe a voice with numbers. The similarity scales of the methods differ, so judge the quality by the EER over all speakers (the lower the better).
+kk> Сөйлеуді бөлу тәсілдері: жасыл түспен әр тәсіл сөйлеу деп санайтыны және қанша уақыт алатыны белгіленген. Үлгі әдістері: бір жұп жазба, дауысты сандармен сипаттаудың әртүрлі тәсілдері. Әдістердің ұқсастық шкалалары әртүрлі, сондықтан сапаны барлық дикторлар бойынша EER арқылы бағалаңыз (төмен болған сайын жақсы).
+
+ru> Основной метод. Каждая пара минуций голосует за поворот и сдвиг, затем считаются согласованные пары. Различает все синтетические отпечатки (EER 0 %), работает за доли секунды.
+en> The main method. Each pair of minutiae votes for a rotation and a shift, then the consistent pairs are counted. It distinguishes all synthetic fingerprints (EER 0%) and works in a fraction of a second.
+kk> Негізгі әдіс. Минуциялардың әр жұбы бұрылыс пен ығысуға дауыс береді, содан кейін келісілген жұптар саналады. Барлық синтетикалық саусақ іздерін ажыратады (EER 0 %), секундтың бір бөлігінде жұмыс істейді.
+
+ru> Каждая минуция описывается расстояниями и углами до пяти соседей; сравниваются эти описания, общее совмещение не нужно. Устойчив к поворотам; EER 0 % на синтетике, но у чужих сходство чуть выше, чем у голосования.
+en> Each minutia is described by the distances and angles to its five neighbors; these descriptions are compared, no global alignment is needed. Robust to rotations; EER 0% on synthetic data, but the similarity of impostors is slightly higher than for voting.
+kk> Әр минуция бес көршіге дейінгі қашықтықтар мен бұрыштармен сипатталады; осы сипаттамалар салыстырылады, жалпы туралау қажет емес. Бұрылыстарға төзімді; синтетикада EER 0 %, бірақ бөтендердің ұқсастығы дауыс беруден сәл жоғары.
+
+ru> Фазовая корреляция усиленных изображений: сравнивается всё изображение, а не отдельные точки. Перебирает повороты ±40°. Шкала низкая (свои около 0,23, чужие около 0,05), порог около 0,13.
+en> Phase correlation of enhanced images: the whole image is compared, not individual points. It tries rotations of ±40°. The scale is low (genuine about 0.23, impostor about 0.05), the threshold is about 0.13.
+kk> Күшейтілген суреттердің фазалық корреляциясы: жеке нүктелер емес, бүкіл сурет салыстырылады. ±40° бұрылыстарды сынайды. Шкала төмен (өз шамамен 0,23, бөтен шамамен 0,05), шек шамамен 0,13.
+
+ru> Сеть, которую вы обучили на вкладке «Обучение распознаванию»: embedding образца и косинусное сходство. Оценка EER считается только по снимкам, которых сеть не видела при обучении. У каждой сети свой порог: он подставляется сам.
+en> The network you trained on the “Recognition training” tab: the sample embedding and cosine similarity. The EER is computed only on shots the network did not see during training. Each network has its own threshold: it is filled in automatically.
+kk> «Тануды оқыту» қойындысында өзіңіз оқытқан желі: үлгінің embedding-і және косинустық ұқсастық. EER тек желі оқыту кезінде көрмеген суреттер бойынша есептеледі. Әр желінің өз шегі бар: ол өздігінен қойылады.
+
+ru> Универсальные ключевые точки SIFT и RANSAC. Не рассчитан на отпечатки: гребни похожи друг на друга, поэтому ошибок заметно больше (EER около 13 % на синтетике). Нужен как пример неспециализированного метода.
+en> Universal SIFT keypoints and RANSAC. It is not designed for fingerprints: the ridges look alike, so there are noticeably more errors (EER about 13% on synthetic data). It is needed as an example of a non-specialized method.
+kk> Әмбебап SIFT кілт нүктелері және RANSAC. Саусақ іздеріне арналмаған: жоталар бір-біріне ұқсас, сондықтан қателер айтарлықтай көп (синтетикада EER шамамен 13 %). Мамандандырылмаған әдіске мысал ретінде қажет.
+
+ru> Пиксель считается гребнем, если он темнее своей окрестности. Устойчив к неравномерной яркости, даёт сбалансированный набор окончаний и разветвлений.
+en> A pixel is considered a ridge if it is darker than its neighborhood. Robust to uneven brightness, gives a balanced set of endings and bifurcations.
+kk> Пиксель өз төңірегінен қараңғырақ болса, жота деп саналады. Біркелкі емес жарықтыққа төзімді, аяқталулар мен тарамдалулардың теңдестірілген жиынын береді.
+
+ru> Один общий порог по гистограмме. Быстрый, но рвёт гребни там, где контраст ниже: на наших образцах получается много ложных окончаний (до 80 % всех минуций).
+en> One common threshold from the histogram. Fast, but it breaks the ridges where the contrast is lower: on our samples this gives many false endings (up to 80% of all minutiae).
+kk> Гистограммадан алынған бір ортақ шек. Жылдам, бірақ контраст төмен жерлерде жоталарды үзеді: біздің үлгілерде жалған аяқталулар көп (барлық минуциялардың 80 %-на дейін).
+
+ru> Порог задаётся ползунком «Порог бинаризации». Показывает, как неудачный порог рвёт или склеивает гребни; удобен для экспериментов.
+en> The threshold is set by the “Binarization threshold” slider. Shows how a poor threshold breaks or merges ridges; convenient for experiments.
+kk> Шек «Бинаризация шегі» жүгірткісімен беріледі. Нашар шектің жоталарды қалай үзетінін немесе жабыстыратынын көрсетеді; эксперименттерге ыңғайлы.
+
+ru> Выбирает лучший из доступных: YuNet, затем SSD, затем UltraFace, иначе каскад Хаара.
+en> Chooses the best of the available: YuNet, then SSD, then UltraFace, otherwise the Haar cascade.
+kk> Қолжетімдінің ең жақсысын таңдайды: YuNet, содан кейін SSD, содан кейін UltraFace, әйтпесе Хаар каскады.
+
+ru> Классический каскад по умолчанию: находит фронтальные лица, чувствителен к наклону и освещению. Скачивать ничего не нужно.
+en> The classic cascade by default: finds frontal faces, sensitive to tilt and lighting. Nothing needs to be downloaded.
+kk> Әдепкі классикалық каскад: фронталь беттерді табады, еңкеюге және жарыққа сезімтал. Ештеңе жүктеудің қажеті жоқ.
+
+ru> Другой обучающий набор каскада Хаара. Сравните его рамки с frontalface_default в карточке сравнения.
+en> Another training set of the Haar cascade. Compare its frames with frontalface_default in the comparison card.
+kk> Хаар каскадының басқа оқыту жиыны. Оның жақтауларын салыстыру картасында frontalface_default-пен салыстырыңыз.
+
+ru> Ещё один вариант каскада Хаара; на сложных снимках рамка может отличаться от других.
+en> Yet another variant of the Haar cascade; on difficult shots the frame may differ from the others.
+kk> Хаар каскадының тағы бір нұсқасы; қиын суреттерде жақтау басқаларынан өзгеше болуы мүмкін.
+
+ru> Ищет лица в профиль (проверяет и зеркальное отражение). На фронтальных лицах обычно ничего не находит.
+en> Looks for faces in profile (also checks the mirror image). On frontal faces it usually finds nothing.
+kk> Профильдегі беттерді іздейді (айна бейнесін де тексереді). Фронталь беттерде әдетте ештеңе таппайды.
+
+ru> Нейросеть SSD ResNet-10 (OpenCV): точнее каскадов при повороте и освещении, около 100-150 мс. Нужна скачанная модель (10 МБ).
+en> SSD ResNet-10 neural network (OpenCV): more accurate than the cascades under rotation and lighting changes, about 100-150 ms. A downloaded model is required (10 MB).
+kk> SSD ResNet-10 нейрондық желісі (OpenCV): бұрылыс пен жарық өзгергенде каскадтардан дәлірек, шамамен 100-150 мс. Жүктелген модель қажет (10 МБ).
+
+ru> Очень лёгкая нейросеть (1 МБ): самая быстрая из нейросетевых (около 15-50 мс), рамка чуть грубее. Нужна скачанная модель.
+en> A very light neural network (1 MB): the fastest of the neural ones (about 15-50 ms), the frame is a bit rougher. A downloaded model is required.
+kk> Өте жеңіл нейрондық желі (1 МБ): нейрондықтардың ең жылдамы (шамамен 15-50 мс), жақтау сәл дөрекірек. Жүктелген модель қажет.
+
+ru> Нейросеть YuNet выдаёт и рамку, и 5 ключевых точек лица, поэтому выравнивание точнее, чем по пропорциям рамки.
+en> The YuNet neural network gives both a frame and 5 key points of the face, so the alignment is more accurate than from the frame proportions.
+kk> YuNet нейрондық желісі жақтауды да, беттің 5 кілт нүктесін де береді, сондықтан туралау жақтау пропорцияларынан гөрі дәлірек.
+
+ru> Нейросеть, если модель скачана (SFace, затем ArcFace), иначе LBP.
+en> A neural network if the model is downloaded (SFace, then ArcFace), otherwise LBP.
+kk> Модель жүктелген болса нейрондық желі (SFace, содан кейін ArcFace), әйтпесе LBP.
+
+ru> Нейросеть SFace: 128 чисел, косинусное сходство, типичный порог около 0,36.
+en> SFace neural network: 128 numbers, cosine similarity, a typical threshold of about 0.36.
+kk> SFace нейрондық желісі: 128 сан, косинустық ұқсастық, әдеттегі шек шамамен 0,36.
+
+ru> Нейросеть ArcFace MobileFaceNet: 512 чисел. На тестовых лицах один человек даёт сходство около 0,95-0,98, разные люди около 0. Лицензия модели: только исследования и обучение.
+en> ArcFace MobileFaceNet neural network: 512 numbers. On test faces the same person gives a similarity of about 0.95-0.98, different people about 0. Model license: research and education only.
+kk> ArcFace MobileFaceNet нейрондық желісі: 512 сан. Сынақ беттерінде бір адам шамамен 0,95-0,98 ұқсастық береді, әртүрлі адамдар шамамен 0. Модель лицензиясы: тек зерттеу және оқыту.
+
+ru> Гистограммы локальных бинарных шаблонов по сетке: классика, чувствительна к освещению. Для вычитания «среднего лица» нужна галерея из 3 и более людей.
+en> Histograms of local binary patterns over a grid: a classic, sensitive to lighting. Subtracting the “mean face” needs a gallery of 3 or more people.
+kk> Тор бойынша жергілікті бинарлық үлгілер гистограммалары: классика, жарыққа сезімтал. «Орташа бетті» алу үшін 3 және одан көп адамнан тұратын галерея қажет.
+
+ru> Гистограммы направлений градиентов: описывают форму черт лица, чувствительны к повороту головы. 1764 числа.
+en> Histograms of gradient directions: they describe the shape of facial features, sensitive to head rotation. 1764 numbers.
+kk> Градиент бағыттарының гистограммалары: бет белгілерінің пішінін сипаттайды, бас бұруына сезімтал. 1764 сан.
+
+ru> Отклики банка фильтров Габора: текстура и линии лица. 576 чисел.
+en> Responses of a bank of Gabor filters: the texture and lines of the face. 576 numbers.
+kk> Габор сүзгілері банкінің жауаптары: беттің текстурасы мен сызықтары. 576 сан.
+
+ru> Низкие частоты косинусного преобразования: общая форма без мелких деталей. Всего 63 числа.
+en> Low frequencies of the cosine transform: the general shape without fine details. Only 63 numbers.
+kk> Косинустық түрлендірудің төмен жиіліктері: ұсақ бөлшектерсіз жалпы пішін. Барлығы 63 сан.
+
+ru> Само уменьшенное лицо как вектор: простейший эталон, чтобы увидеть, что дают более умные признаки.
+en> The downscaled face itself as a vector: the simplest baseline, to see what smarter features give.
+kk> Кішірейтілген беттің өзі вектор ретінде: ақылдырақ белгілердің не беретінін көру үшін ең қарапайым эталон.
+
+ru> Сеть, обученная вами на лицах из галереи (вкладка «Обучение распознаванию»). Галерея входила в обучение, поэтому EER в таблице завышен.
+en> The network you trained on faces from the gallery (the “Recognition training” tab). The gallery was part of the training, so the EER in the table is overestimated.
+kk> Галереядағы беттерде өзіңіз оқытқан желі («Тануды оқыту» қойындысы). Галерея оқытуға қатысты, сондықтан кестедегі EER жоғары бағаланған.
+
+ru> Метод главных компонент по галерее («собственные лица»). Нужна галерея минимум из 6 фото; метки людей не используются.
+en> Principal component analysis over the gallery (“eigenfaces”). A gallery of at least 6 photos is needed; the people's labels are not used.
+kk> Галерея бойынша бас компоненттер әдісі («меншікті беттер»). Кемінде 6 фотодан тұратын галерея қажет; адамдардың жапсырмалары қолданылмайды.
+
+ru> Выравнивание поворачивает лицо так, чтобы глаза лежали на горизонтали; без него сходство падает при наклоне головы.
+en> Alignment rotates the face so that the eyes lie on a horizontal line; without it the similarity drops when the head is tilted.
+kk> Туралау бетті көздер көлденең сызықта жататындай бұрады; онсыз бас еңкейгенде ұқсастық төмендейді.
+
+ru> Лицо подаётся как есть: сравните сходство с включённым выравниванием на снимках с наклоном.
+en> The face is passed as is: compare the similarity with alignment on, on tilted shots.
+kk> Бет өзгеріссіз беріледі: еңкейген суреттерде туралау қосулы кезіндегі ұқсастықпен салыстырыңыз.
+
+ru> Сначала оператор Даугмана; если он не нашёл окружности, контурный метод, затем Хаф.
+en> First the Daugman operator; if it did not find circles, the contour method, then Hough.
+kk> Алдымен Даугман операторы; егер ол шеңберлерді таппаса, контур әдісі, содан кейін Хаф.
+
+ru> Ищет окружность, на которой средняя яркость меняется резче всего. Самый точный на синтетике (ошибка около 1 px).
+en> Looks for the circle on which the mean brightness changes the most sharply. The most accurate on synthetic data (error about 1 px).
+kk> Орташа жарықтық ең күрт өзгеретін шеңберді іздейді. Синтетикада ең дәл (қате шамамен 1 px).
+
+ru> Голосование за окружности по границам. Чувствителен к векам и бликам: на синтетике иногда не находит радужку (около 1 снимка из 36) и ошибается сильнее.
+en> Voting for circles by edges. Sensitive to eyelids and glare: on synthetic data it sometimes does not find the iris (about 1 shot of 36) and errs more.
+kk> Шекаралар бойынша шеңберлерге дауыс беру. Қабақтар мен жарқылға сезімтал: синтетикада кейде нұрлы қабықты таппайды (36 суреттің шамамен біреуі) және көбірек қателеседі.
+
+ru> Порог по яркости для зрачка и поиск перепада яркости вдоль лучей для границы радужки. Самый быстрый (несколько мс) и на синтетике точный.
+en> A brightness threshold for the pupil and a search for a brightness step along rays for the iris boundary. The fastest (a few ms) and accurate on synthetic data.
+kk> Қарашық үшін жарықтық шегі және нұрлы қабық шекарасы үшін сәулелер бойымен жарықтық секірісін іздеу. Ең жылдамы (бірнеше мс) және синтетикада дәл.
+
+ru> 2D-фильтры Габора, фаза в 2 бита (Даугман): основной метод. На синтетике EER 0 %, запас между «своими» и «чужими» самый большой.
+en> 2D Gabor filters, a 2-bit phase (Daugman): the main method. On synthetic data EER 0%, the margin between “genuine” and “impostor” is the largest.
+kk> 2D Габор сүзгілері, 2 биттік фаза (Даугман): негізгі әдіс. Синтетикада EER 0 %, «өз» бен «бөтен» арасындағы қор ең үлкен.
+
+ru> 1D лог-Габор по каждому кольцу развёртки (Masek): быстрый, запас меньше, чем у Габора.
+en> 1D log-Gabor over each ring of the unwrapped image (Masek): fast, the margin is smaller than for Gabor.
+kk> Жазбаның әр сақинасы бойынша 1D лог-Габор (Масек): жылдам, қоры Габорға қарағанда аз.
+
+ru> Знак разности соседних областей: устойчив к освещению; по запасу второй после Габора.
+en> The sign of the difference of neighboring regions: robust to lighting; second after Gabor by the margin.
+kk> Көрші аймақтар айырмасының таңбасы: жарыққа төзімді; қор бойынша Габордан кейінгі екінші.
+
+ru> Косинусные коэффициенты окон (Monro): проще Габора, запас меньше.
+en> Cosine coefficients of windows (Monro): simpler than Gabor, the margin is smaller.
+kk> Терезелердің косинустық коэффициенттері (Монро): Габордан қарапайым, қоры аз.
+
+ru> Сеть, обученная вами на вкладке «Обучение распознаванию» (вход - вырезка вокруг радужки). Сходство - косинус embedding. Обычно хуже кода Габора, но показывает, чем нейросеть отличается от классики.
+en> The network you trained on the “Recognition training” tab (the input is a crop around the iris). The similarity is the cosine of the embeddings. Usually worse than the Gabor code, but shows how a neural network differs from the classics.
+kk> «Тануды оқыту» қойындысында өзіңіз оқытқан желі (кіріс - нұрлы қабық айналасындағы қиынды). Ұқсастық - embedding косинусы. Әдетте Габор кодынан нашар, бірақ нейрондық желінің классикадан несімен ерекшеленетінін көрсетеді.
+
+ru> Самый простой код: знаки вейвлета Хаара. Различает глаза хуже остальных (EER около 16 % на синтетике).
+en> The simplest code: the signs of the Haar wavelet. Distinguishes eyes worse than the others (EER about 16% on synthetic data).
+kk> Ең қарапайым код: Хаар вейвлетінің таңбалары. Көздерді басқаларынан нашар ажыратады (синтетикада EER шамамен 16 %).
+
+ru> Из сравнения исключаются веки, ресницы и блики: сравниваются только открытые биты обоих снимков.
+en> Eyelids, eyelashes and glare are excluded from the comparison: only the open bits of both shots are compared.
+kk> Қабақтар, кірпіктер және жарқыл салыстырудан шығарылады: екі суреттің тек ашық биттері салыстырылады.
+
+ru> Маска выключена: сравниваются все биты. На синтетике результат почти не меняется, на реальных снимках с веками и ресницами это важно.
+en> The mask is off: all bits are compared. On synthetic data the result almost does not change, on real shots with eyelids and eyelashes it matters.
+kk> Маска өшірулі: барлық биттер салыстырылады. Синтетикада нәтиже дерлік өзгермейді, қабақтары мен кірпіктері бар нақты суреттерде бұл маңызды.
+
+ru> MFCC: средние и разброс спектральной огибающей по речи записи. Описывает тембр, то есть форму речевого тракта диктора. На синтетических голосах EER около 5 %.
+en> MFCC: the mean and spread of the spectral envelope over the speech of the recording. It describes the timbre, that is the shape of the speaker's vocal tract. On synthetic voices the EER is about 5%.
+kk> MFCC: жазбаның сөйлеуі бойынша спектрлік қабықшаның орташасы мен шашырауы. Тембрді, яғни диктордың дауыс жолының пішінін сипаттайды. Синтетикалық дауыстарда EER шамамен 5 %.
+
+ru> К MFCC добавлена скорость их изменения (дельта-коэффициенты): учитывается манера говорить, но шаблон длиннее, а шум влияет сильнее.
+en> The rate of change of the MFCC (delta coefficients) is added: the manner of speaking is taken into account, but the template is longer and noise has a stronger effect.
+kk> MFCC-ге олардың өзгеру жылдамдығы (дельта-коэффициенттер) қосылады: сөйлеу мәнері ескеріледі, бірақ үлгі ұзынырақ және шу күштірек әсер етеді.
+
+ru> Только высота тона: медиана, диапазон и разброс. Просто и наглядно, но голоса с близкой высотой путаются (EER около 25 %): у женщин и мужчин высота разная, а у двух мужчин может совпасть.
+en> Pitch only: median, range and spread. Simple and illustrative, but voices with a similar pitch get confused (EER about 25%): women and men have different pitch, while two men may coincide.
+kk> Тек тон биіктігі: медиана, диапазон және шашырау. Қарапайым және көрнекі, бірақ тон биіктігі жақын дауыстар шатасады (EER шамамен 25 %): әйелдер мен ер адамдарда тон биіктігі әртүрлі, ал екі ер адамда сәйкес келуі мүмкін.
+
+ru> MFCC вместе с высотой тона: тембр и высота вместе. Полезно, когда тембры похожи, а высота различается.
+en> MFCC together with pitch: timbre and pitch together. Useful when the timbres are similar but the pitch differs.
+kk> MFCC тон биіктігімен бірге: тембр мен биіктік қосақталған. Тембрлер ұқсас, бірақ биіктік әртүрлі болғанда пайдалы.
+
+ru> Порог берётся между уровнем тишины и громкими кадрами этой записи, поэтому работает при разной громкости.
+en> The threshold is taken between the silence level and the loud frames of this recording, so it works at different loudness.
+kk> Шек осы жазбаның тыныштық деңгейі мен қатты кадрлары арасынан алынады, сондықтан әртүрлі дыбыс қаттылығында жұмыс істейді.
+
+ru> Речью считается всё, что не тише самого громкого кадра более чем на заданное число дБ (ползунок). Показывает, как неверный порог захватывает шум или отрезает тихие слова.
+en> Speech is everything that is not quieter than the loudest frame by more than the given number of dB (slider). Shows how a wrong threshold captures noise or cuts off quiet words.
+kk> Сөйлеу - ең қатты кадрдан берілген дБ санынан артық тыныш емес барлық нәрсе (жүгірткі). Қате шектің шуды қалай қамтитынын немесе тыныш сөздерді қалай кесетінін көрсетеді.
+
+ru> Как адаптивный, но кадры с очень частыми пересечениями нуля (шипение, шум) не считаются речью.
+en> Like the adaptive one, but frames with very frequent zero crossings (hissing, noise) are not considered speech.
+kk> Бейімделгіш сияқты, бірақ нөлден өтулері өте жиі кадрлар (ысқыру, шу) сөйлеу болып саналмайды.
+
+ru> <details class="adv"><summary>Дополнительные параметры (для экспериментов)</summary>{0}</details>
+en> <details class="adv"><summary>Additional parameters (for experiments)</summary>{0}</details>
+kk> <details class="adv"><summary>Қосымша параметрлер (эксперименттер үшін)</summary>{0}</details>
+
+ru> <h3>Отпечатки пальцев</h3><ol><li>Выберите набор данных (синтетика или реальные FVC и SOCOFing, если они подготовлены) и образцы A и B: миниатюры показывают, что выбрано, а поиск помогает найти нужный. Оттиски одного пальца отличаются поворотом, шумом и размытием.</li><li>Нажмите «Показать этапы для A» (или «для B», чтобы посмотреть второй образец): пройдите по восьми этапам и посмотрите найденные минуции.</li><li>Нажмите «Сравнить A и B»: получите сходство и решение. Двигайте порог Threshold: решение меняется сразу.</li><li>В карточке «Оценка качества» посчитайте FAR, FRR и EER, а в карточке «Сравнение методов» сравните методы друг с другом.</li></ol><p>Метод сопоставления и бинаризации выбирается в списках слева; под каждым списком есть пояснение. Остальные параметры спрятаны в «Дополнительных параметрах».</p>
+en> <h3>Fingerprints</h3><ol><li>Choose a dataset (synthetic or real FVC and SOCOFing, if they are prepared) and samples A and B: the thumbnails show what is chosen, and the search helps to find the right one. Impressions of one finger differ in rotation, noise and blur.</li><li>Press “Show steps for A” (or “for B” to look at the second sample): go through the eight steps and look at the minutiae found.</li><li>Press “Compare A and B”: you get the similarity and the decision. Move the Threshold: the decision changes at once.</li><li>In the “Quality assessment” card calculate FAR, FRR and EER, and in the “Method comparison” card compare the methods with each other.</li></ol><p>The matching and binarization method is chosen in the lists on the left; there is an explanation under each list. The other parameters are hidden in “Additional parameters”.</p>
+kk> <h3>Саусақ іздері</h3><ol><li>Деректер жиынын (синтетика немесе нақты FVC және SOCOFing, егер дайындалған болса) және A мен B үлгілерін таңдаңыз: нобайлар не таңдалғанын көрсетеді, ал іздеу керегін табуға көмектеседі. Бір саусақтың таңбалары бұрылысымен, шуымен және бұлыңғырлығымен ерекшеленеді.</li><li>«A үшін кезеңдерді көрсету» (немесе екінші үлгіні көру үшін «B үшін») батырмасын басыңыз: сегіз кезеңнен өтіп, табылған минуцияларды қараңыз.</li><li>«A мен B-ны салыстыру» батырмасын басыңыз: ұқсастық пен шешім аласыз. Threshold шегін жылжытыңыз: шешім бірден өзгереді.</li><li>«Сапаны бағалау» картасында FAR, FRR және EER есептеңіз, ал «Әдістерді салыстыру» картасында әдістерді бір-бірімен салыстырыңыз.</li></ol><p>Салыстыру және бинаризация әдісі сол жақтағы тізімдерде таңдалады; әр тізімнің астында түсініктеме бар. Қалған параметрлер «Қосымша параметрлерде» жасырылған.</p>
+
+ru> <h3>Лицо</h3><ol><li>Фото лежат в <code>datasets/faces/&lt;набор&gt;/&lt;имя_человека&gt;/</code> (например, LFW) или в <code>datasets/faces/&lt;имя_человека&gt;/</code>; выберите набор и найдите человека поиском. Своё изображение можно загрузить кнопками «в A» и «в B»: оно видно только вам и пропадёт после перезапуска сервера.</li><li>Выберите детектор лица и признаки. Нейросетевые модели скачиваются командой <code>python -m scripts.download_models</code>; без них работают каскады Хаара и классические признаки.</li><li>Покажите этапы, сравните лица, затем в карточке «Сравнение детекторов и признаков» оцените все методы по EER.</li></ol><p>Классическим признакам нужна галерея из 3 и более людей. Сеть, обученная вами, выбирается как метод «Нейросеть, обученная вами».</p>
+en> <h3>Face</h3><ol><li>Photos are in <code>datasets/faces/&lt;set&gt;/&lt;person_name&gt;/</code> (for example, LFW) or in <code>datasets/faces/&lt;person_name&gt;/</code>; choose a set and find a person with the search. You can upload your own image with the “into A” and “into B” buttons: it is visible only to you and disappears after the server restart.</li><li>Choose the face detector and the features. Neural models are downloaded with the command <code>python -m scripts.download_models</code>; without them the Haar cascades and classic features work.</li><li>Show the steps, compare the faces, then in the “Comparison of detectors and features” card evaluate all methods by the EER.</li></ol><p>Classic features need a gallery of 3 or more people. The network you trained is chosen as the “The network you trained” method.</p>
+kk> <h3>Бет</h3><ol><li>Фотолар <code>datasets/faces/&lt;жиын&gt;/&lt;адам_аты&gt;/</code> ішінде (мысалы, LFW) немесе <code>datasets/faces/&lt;адам_аты&gt;/</code> ішінде жатады; жиынды таңдап, адамды іздеу арқылы табыңыз. Өз суретіңізді «A-ға» және «B-ға» батырмаларымен жүктеуге болады: ол тек сізге көрінеді және сервер қайта іске қосылғаннан кейін жоғалады.</li><li>Бет детекторы мен белгілерді таңдаңыз. Нейрондық модельдер <code>python -m scripts.download_models</code> командасымен жүктеледі; онсыз Хаар каскадтары мен классикалық белгілер жұмыс істейді.</li><li>Кезеңдерді көрсетіңіз, беттерді салыстырыңыз, содан кейін «Детекторлар мен белгілерді салыстыру» картасында барлық әдісті EER бойынша бағалаңыз.</li></ol><p>Классикалық белгілерге 3 және одан көп адамнан тұратын галерея қажет. Өзіңіз оқытқан желі «Өзіңіз оқытқан желі» әдісі ретінде таңдалады.</p>
+
+ru> <h3>Радужка</h3><ol><li>Выберите набор данных (12 синтетических глаз по 3 снимка или реальный CASIA-Iris-Interval, если он подготовлен) и два снимка глаза.</li><li>Покажите этапы: зрачок, граница радужки, маска век, развёртка и Iris Code.</li><li>Сравните: сходство равно 1 минус расстояние Хэмминга; поворот глаза компенсируется сдвигом кода.</li><li>В карточке «Сравнение методов» сравните локализаторы и кодировщики; для синтетики видна ошибка относительно истинных окружностей.</li></ol>
+en> <h3>Iris</h3><ol><li>Choose a dataset (12 synthetic eyes with 3 shots each or the real CASIA-Iris-Interval, if it is prepared) and two shots of an eye.</li><li>Show the steps: the pupil, the iris boundary, the eyelid mask, the unwrapped image and the Iris Code.</li><li>Compare: the similarity equals 1 minus the Hamming distance; the eye rotation is compensated by a shift of the code.</li><li>In the “Method comparison” card compare the localizers and the encoders; for synthetic data the error relative to the true circles is visible.</li></ol>
+kk> <h3>Көздің нұрлы қабығы</h3><ol><li>Деректер жиынын (әрқайсысы 3 суреттен тұратын 12 синтетикалық көз немесе нақты CASIA-Iris-Interval, егер дайындалған болса) және көздің екі суретін таңдаңыз.</li><li>Кезеңдерді көрсетіңіз: қарашық, нұрлы қабық шекарасы, қабақ маскасы, жазба және Iris Code.</li><li>Салыстырыңыз: ұқсастық 1 минус Хэмминг қашықтығына тең; көздің бұрылысы кодты ығыстыру арқылы өтеледі.</li><li>«Әдістерді салыстыру» картасында локализаторлар мен кодтаушыларды салыстырыңыз; синтетика үшін нақты шеңберлерге қатысты қате көрінеді.</li></ol>
+
+ru> <h3>Практикум: код</h3><ol><li>Выберите задание слева и прочитайте условие.</li><li>Напишите функцию в редакторе и нажмите «Запустить на примере».</li><li>«Проверить решение» запускает все тесты и ставит баллы; подсказки идут по уровням, полное решение открывается после 3 попыток.</li></ol>
+en> <h3>Practicum: code</h3><ol><li>Choose a task on the left and read the statement.</li><li>Write a function in the editor and press “Run on the example”.</li><li>“Check the solution” runs all the tests and gives the points; hints go by levels, the full solution opens after 3 attempts.</li></ol>
+kk> <h3>Практикум: код</h3><ol><li>Сол жақтан тапсырманы таңдап, шартын оқыңыз.</li><li>Редакторда функция жазып, «Мысалда іске қосу» батырмасын басыңыз.</li><li>«Шешімді тексеру» барлық тестті іске қосып, ұпай қояды; кеңестер деңгей бойынша беріледі, толық шешім 3 әрекеттен кейін ашылады.</li></ol>
+
+ru> <h3>Обучение распознаванию</h3><ol><li>Выберите, что распознаём и на каком наборе данных учим сеть (синтетика или реальные FVC и CASIA), затем нажмите один из «Готовых экспериментов» или «Начать обучение».</li><li>Смотрите кривые Loss и точности, схему сети и изменение весов; ползунком можно вернуться к любой эпохе.</li><li>В «Итогах» сеть сама объяснит результат (переобучение, слишком большой шаг и т. д.).</li><li>Обученную сеть можно выбрать как метод распознавания на вкладках отпечатков, радужки и лица.</li><li>Журнал запусков хранит все эксперименты: отметьте несколько и нажмите «Сравнить выбранные».</li></ol>
+en> <h3>Recognition training</h3><ol><li>Choose what we recognize and on which dataset we train the network (synthetic or real FVC and CASIA), then press one of the “Ready-made experiments” or “Start training”.</li><li>Watch the Loss and accuracy curves, the network diagram and the weight change; with the slider you can go back to any epoch.</li><li>In the “Results” the network explains the outcome by itself (overfitting, a too large step and so on).</li><li>The trained network can be chosen as a recognition method on the fingerprint, iris and face tabs.</li><li>The run log keeps all experiments: mark several and press “Compare selected”.</li></ol>
+kk> <h3>Тануды оқыту</h3><ol><li>Нені танитынымызды және желіні қай деректер жиынында оқытатынымызды таңдаңыз (синтетика немесе нақты FVC және CASIA), содан кейін «Дайын эксперименттердің» біреуін немесе «Оқытуды бастау» батырмасын басыңыз.</li><li>Loss және дәлдік қисықтарын, желі сызбасын және салмақтардың өзгерісін қараңыз; жүгірткімен кез келген эпохаға оралуға болады.</li><li>«Қорытындыларда» желі нәтижені өзі түсіндіреді (қайта үйрену, тым үлкен қадам және т.б.).</li><li>Оқытылған желіні саусақ іздері, нұрлы қабық және бет қойындыларында тану әдісі ретінде таңдауға болады.</li><li>Іске қосулар журналы барлық эксперименттерді сақтайды: бірнешеуін белгілеп, «Таңдалғандарды салыстыру» батырмасын басыңыз.</li></ol>
+
+ru> <h3>Площадка нейросети</h3><p>Выберите набор данных, слои и нейроны, нажмите «Обучить» и смотрите, как меняется граница решения и ошибка. Набор «Биометрия: свой / чужой» показывает, как порог создаёт ошибки FAR и FRR.</p>
+en> <h3>Neural network playground</h3><p>Choose a dataset, layers and neurons, press “Train” and watch how the decision boundary and the error change. The “Biometrics: genuine / impostor” set shows how a threshold creates the FAR and FRR errors.</p>
+kk> <h3>Нейрондық желі алаңы</h3><p>Деректер жиынын, қабаттар мен нейрондарды таңдап, «Оқыту» батырмасын басыңыз да, шешім шекарасы мен қателіктің қалай өзгеретінін қараңыз. «Биометрия: өз / бөтен» жиыны шектің FAR және FRR қателерін қалай тудыратынын көрсетеді.</p>
+
+ru> <h3>Голос</h3><ol><li>Выберите два образца: диктор и запись (12 синтетических дикторов по 3 записи) или запишите свой голос кнопкой «Записать в A» и «Записать в B» (4 секунды, нужен микрофон и localhost или HTTPS). Кнопки «▶ A» и «▶ B» проигрывают записи.</li><li>«Показать этапы для A»: сигнал, выделение речи, спектрограмма, мел-спектрограмма, MFCC, высота тона и шаблон голоса.</li><li>«Сравнить A и B»: сходство и решение MATCH / NO MATCH по порогу. Записи одного диктора дают высокое сходство, разных низкое.</li><li>В карточках «Оценка качества» и «Сравнение методов» посчитайте FAR, FRR, EER и сравните методы шаблона. Ползунок шума показывает, как помехи портят распознавание.</li></ol><p>Все дикторы говорят одну и ту же фразу: сравнивается голос, а не содержание речи.</p>
+en> <h3>Voice</h3><ol><li>Choose two samples: a speaker and a recording (12 synthetic speakers with 3 recordings each) or record your own voice with the “Record into A” and “Record into B” buttons (4 seconds, a microphone and localhost or HTTPS are needed). The “▶ A” and “▶ B” buttons play the recordings.</li><li>“Show steps for A”: the signal, speech detection, the spectrogram, the mel spectrogram, MFCC, the pitch and the voice template.</li><li>“Compare A and B”: the similarity and the MATCH / NO MATCH decision by the threshold. Recordings of one speaker give a high similarity, of different ones a low one.</li><li>In the “Quality assessment” and “Method comparison” cards calculate FAR, FRR and EER and compare the template methods. The noise slider shows how interference spoils recognition.</li></ol><p>All speakers say the same phrase: the voice is compared, not the content of the speech.</p>
+kk> <h3>Дауыс</h3><ol><li>Екі үлгіні таңдаңыз: диктор мен жазба (әрқайсысы 3 жазбадан тұратын 12 синтетикалық диктор) немесе өз дауысыңызды «A-ға жазу» және «B-ға жазу» батырмаларымен жазыңыз (4 секунд, микрофон және localhost немесе HTTPS қажет). «▶ A» және «▶ B» батырмалары жазбаларды ойнатады.</li><li>«A үшін кезеңдерді көрсету»: сигнал, сөйлеуді бөліп алу, спектрограмма, мел-спектрограмма, MFCC, тон биіктігі және дауыс үлгісі.</li><li>«A мен B-ны салыстыру»: ұқсастық және шек бойынша MATCH / NO MATCH шешімі. Бір диктордың жазбалары жоғары ұқсастық береді, әртүрлі дикторларда ұқсастық төмен.</li><li>«Сапаны бағалау» және «Әдістерді салыстыру» карталарында FAR, FRR, EER есептеп, үлгі әдістерін салыстырыңыз. Шу жүгірткісі кедергілердің танылуды қалай бұзатынын көрсетеді.</li></ol><p>Барлық дикторлар бір фразаны айтады: сөйлеудің мазмұны емес, дауыстың өзі салыстырылады.</p>
+
+ru> <p class="leg">Подсказки по каждому методу показаны под списками параметров. Вопросы по терминам можно задать ИИ-наставнику справа.</p>
+en> <p class="leg">Hints for each method are shown under the parameter lists. Questions about terms can be asked to the AI tutor on the right.</p>
+kk> <p class="leg">Әр әдіс бойынша кеңестер параметрлер тізімінің астында көрсетілген. Терминдер туралы сұрақтарды оң жақтағы ЖИ-тәлімгерге қоюға болады.</p>
+
+ru> 1. Выберите образцы A и B
+en> 1. Choose samples A and B
+kk> 1. A және B үлгілерін таңдаңыз
+
+ru> 2. Покажите этапы
+en> 2. Show the steps
+kk> 2. Кезеңдерді көрсетіңіз
+
+ru> 3. Сравните A и B
+en> 3. Compare A and B
+kk> 3. A мен B-ны салыстырыңыз
+
+ru> 4. Оцените качество
+en> 4. Evaluate the quality
+kk> 4. Сапаны бағалаңыз
+
+ru> Образцы выбраны. Нажмите «Показать этапы для A» (или на шаг 2 выше).
+en> The samples are chosen. Press “Show steps for A” (or step 2 above).
+kk> Үлгілер таңдалды. «A үшін кезеңдерді көрсету» батырмасын (немесе жоғарыдағы 2-қадамды) басыңыз.
+
+ru> Теперь сравните два образца, чтобы получить сходство и решение.
+en> Now compare the two samples to get the similarity and the decision.
+kk> Енді ұқсастық пен шешімді алу үшін екі үлгіні салыстырыңыз.
+
+ru> Осталось оценить качество на всём наборе: FAR, FRR и EER.
+en> What remains is to evaluate the quality on the whole set: FAR, FRR and EER.
+kk> Бүкіл жиында сапаны бағалау қалды: FAR, FRR және EER.
+
+ru> Все шаги выполнены. Попробуйте поменять метод или параметр и повторить сравнение: результаты попадают в журнал.
+en> All steps are done. Try changing a method or a parameter and repeat the comparison: the results go to the log.
+kk> Барлық қадам орындалды. Әдісті немесе параметрді өзгертіп, салыстыруды қайталап көріңіз: нәтижелер журналға түседі.
+
+ru> Сеть обучена плохо: точность на новых снимках {0} %. Переобучите её (например, с меньшим learning rate).
+en> The network is poorly trained: accuracy on new shots is {0} %. Retrain it (for example, with a smaller learning rate).
+kk> Желі нашар оқытылған: жаңа суреттердегі дәлдік {0} %. Оны қайта оқытыңыз (мысалы, learning rate кішірек болғанда).
+
+ru> Сеть обучена плохо: точность на новых снимках всего 
+en> The network is poorly trained: accuracy on new shots is only 
+kk> Желі нашар оқытылған: жаңа суреттердегі дәлдік небәрі
+
+ru>  %. Переобучите её на вкладке «Обучение распознаванию».
+en>  %. Retrain it on the “Recognition training” tab.
+kk>  %. Оны «Тануды оқыту» қойындысында қайта оқытыңыз.
+
+ru> Сеть обучена на наборе «{0}», а выбран «{1}». Обучите её на выбранном наборе (вкладка «Обучение распознаванию»).
+en> The network was trained on the set “{0}”, but “{1}” is selected. Train it on the selected set (the “Recognition training” tab).
+kk> Желі «{0}» жиынында оқытылған, ал «{1}» таңдалған. Оны таңдалған жиында оқытыңыз («Тануды оқыту» қойындысы).
+
+ru> Сеть обучена на наборе «{0}»: для выбранного набора её нужно обучить заново.
+en> The network was trained on the set “{0}”: it has to be retrained for the selected set.
+kk> Желі «{0}» жиынында оқытылған: таңдалған жиын үшін оны қайта оқыту керек.
+
+ru> Сеть обучена: {0} эпох, точность на новых снимках {1} %, EER {2} %, порог {3} подставлен.
+en> The network is trained: {0} epochs, accuracy on new shots {1} %, EER {2} %, the threshold {3} is filled in.
+kk> Желі оқытылды: {0} эпоха, жаңа суреттердегі дәлдік {1} %, EER {2} %, {3} шегі қойылды.
+
+ru> Сеть для этих данных ещё не обучена: откройте вкладку «Обучение распознаванию».
+en> The network for this data is not trained yet: open the “Recognition training” tab.
+kk> Бұл деректерге арналған желі әлі оқытылмаған: «Тануды оқыту» қойындысын ашыңыз.
+
+ru> Сеть ещё не обучена: вкладка «Обучение распознаванию», выберите эти же данные.
+en> The network is not trained yet: the “Recognition training” tab, choose the same data.
+kk> Желі әлі оқытылмаған: «Тануды оқыту» қойындысы, дәл осы деректерді таңдаңыз.
+
+ru> <span class="realtag">реальные данные</span>
+en> <span class="realtag">real data</span>
+kk> <span class="realtag">нақты деректер</span>
+
+ru> Показано {0} из {1}: уточните поиск, чтобы найти нужный образец.
+en> Shown {0} of {1}: refine the search to find the right sample.
+kk> {1} ішінен {0} көрсетілген: керекті үлгіні табу үшін іздеуді нақтылаңыз.
+
+ru> Образцов: {0}
+en> Samples: {0}
+kk> Үлгілер: {0}
+
+ru>  - реальные данные
+en>  - real data
+kk>  - нақты деректер
+
+ru> <option value="{0}">{1}{2}</option>
+en> <option value="{0}">{1}{2}</option>
+kk> <option value="{0}">{1}{2}</option>
+
+ru>  (в галерее: людей {0}, фото {1})
+en>  (in the gallery: people {0}, photos {1})
+kk>  (галереяда: адам {0}, фото {1})
+
+ru> ⏸ Остановить показ
+en> ⏸ Stop the playback
+kk> ⏸ Көрсетуді тоқтату
+
+ru> Базовый запуск
+en> Basic run
+kk> Негізгі іске қосу
+
+ru> Настройки по умолчанию: loss быстро падает, сеть хорошо узнаёт новые снимки.
+en> Default settings: the loss falls quickly, the network recognizes new shots well.
+kk> Әдепкі параметрлер: loss тез төмендейді, желі жаңа суреттерді жақсы таниды.
+
+ru> Без аугментации
+en> Without augmentation
+kk> Аугментациясыз
+
+ru> Сеть не видит искажённых копий: на обучающих снимках почти 100 %, а на новых заметно хуже (в наших запусках около 67 % против 92 %). Это переобучение: сеть запомнила образцы.
+en> The network does not see distorted copies: almost 100% on the training shots, and noticeably worse on new ones (in our runs about 67% against 92%). This is overfitting: the network memorized the samples.
+kk> Желі бұрмаланған көшірмелерді көрмейді: оқыту суреттерінде дерлік 100 %, ал жаңаларында айтарлықтай нашар (біздің іске қосуларда шамамен 67 % қарсы 92 %). Бұл қайта үйрену: желі үлгілерді жаттап алды.
+
+ru> Слишком большой шаг
+en> Too large a step
+kk> Тым үлкен қадам
+
+ru> Learning rate 0,05: веса «перепрыгивают» минимум, loss не падает и сеть не обучается (точность на уровне случайной, около 8 % для 12 пальцев).
+en> Learning rate 0.05: the weights “jump over” the minimum, the loss does not fall and the network does not learn (the accuracy is at the random level, about 8% for 12 fingers).
+kk> Learning rate 0,05: салмақтар минимумнан «секіріп өтеді», loss төмендемейді және желі оқымайды (дәлдік кездейсоқ деңгейде, 12 саусақ үшін шамамен 8 %).
+
+ru> Слишком малый шаг
+en> Too small a step
+kk> Тым кіші қадам
+
+ru> Learning rate 0,0005: сеть учится, но медленно; за 20 эпох loss остаётся заметно выше, точность на новых снимках ниже.
+en> Learning rate 0.0005: the network learns, but slowly; in 20 epochs the loss stays noticeably higher, the accuracy on new shots is lower.
+kk> Learning rate 0,0005: желі оқиды, бірақ баяу; 20 эпохада loss айтарлықтай жоғары қалады, жаңа суреттердегі дәлдік төмен.
+
+ru> Большая сеть
+en> Large network
+kk> Үлкен желі
+
+ru> Больше фильтров и параметров (около 80 тысяч вместо 37): дольше считается, но не всегда точнее.
+en> More filters and parameters (about 80 thousand instead of 37): it takes longer to compute but is not always more accurate.
+kk> Көбірек сүзгі мен параметр (37 емес, шамамен 80 мың): ұзағырақ есептеледі, бірақ әрдайым дәлірек емес.
+
+ru> SGD вместо Adam
+en> SGD instead of Adam
+kk> Adam орнына SGD
+
+ru> Простой градиентный спуск с моментом: ему нужен свой шаг (около 0,005), учится чуть иначе, чем Adam.
+en> Plain gradient descent with momentum: it needs its own step (about 0.005) and learns slightly differently from Adam.
+kk> Импульсі бар қарапайым градиенттік түсу: оған өз қадамы қажет (шамамен 0,005), Adam-нан сәл басқаша оқиды.
+
+ru> Проверка на лёгком снимке
+en> Check on an easy shot
+kk> Жеңіл суретте тексеру
+
+ru> Для проверки оставлен снимок 1 (самый лёгкий): точность выше, чем при проверке на сложном снимке 3. Оценка зависит от того, на чём проверяем.
+en> Shot 1 (the easiest) is held out for the check: the accuracy is higher than when checking on the hard shot 3. The estimate depends on what we check on.
+kk> Тексеру үшін 1-сурет (ең жеңілі) қалдырылған: дәлдік қиын 3-суретпен тексергенге қарағанда жоғары. Баға нені тексеретінімізге байланысты.
+
+ru> Малая сеть: около 37 тысяч весов, быстрее всего.
+en> Small network: about 37 thousand weights, the fastest.
+kk> Шағын желі: шамамен 37 мың салмақ, ең жылдамы.
+
+ru> Средняя сеть: около 55 тысяч весов.
+en> Medium network: about 55 thousand weights.
+kk> Орташа желі: шамамен 55 мың салмақ.
+
+ru> Большая сеть: около 80 тысяч весов, считается примерно в 1,5 раза дольше.
+en> Large network: about 80 thousand weights, takes about 1.5 times longer.
+kk> Үлкен желі: шамамен 80 мың салмақ, шамамен 1,5 есе ұзағырақ есептеледі.
+
+ru> Adam подбирает шаг для каждого веса сам: обычно хорошо работает с learning rate 0,003.
+en> Adam picks the step for each weight by itself: it usually works well with a learning rate of 0.003.
+kk> Adam әр салмақ үшін қадамды өзі таңдайды: әдетте learning rate 0,003 болғанда жақсы жұмыс істейді.
+
+ru> SGD с моментом: нужен learning rate около 0,005-0,01 (при 0,02 и больше часто расходится).
+en> SGD with momentum: needs a learning rate of about 0.005-0.01 (at 0.02 and more it often diverges).
+kk> Импульсті SGD: learning rate шамамен 0,005-0,01 қажет (0,02 және одан жоғары болса, жиі ыдырайды).
+
+ru> Снимок 1 самый лёгкий: проверка на нём даёт оптимистичную оценку.
+en> Shot 1 is the easiest: the check on it gives an optimistic estimate.
+kk> 1-сурет ең жеңілі: онда тексеру оптимистік баға береді.
+
+ru> Снимок 2 средней сложности.
+en> Shot 2 is of medium difficulty.
+kk> 2-сурет орташа күрделілікте.
+
+ru> Снимок 3 самый сложный (больше всего искажений): строгая проверка.
+en> Shot 3 is the hardest (the most distortions): a strict check.
+kk> 3-сурет ең қиыны (бұрмалаулар ең көп): қатаң тексеру.
+
+ru>  (максимум набора)
+en>  (the maximum of the set)
+kk>  (жиынның максимумы)
+
+ru> снимок {0}
+en> shot {0}
+kk> {0}-сурет
+
+ru> Для лиц проверочным остаётся последнее фото каждого человека.
+en> For faces the last photo of each person is held out for the check.
+kk> Беттер үшін әр адамның соңғы фотосы тексеруге қалдырылады.
+
+ru> Снимок {0} каждого объекта сеть не видит при обучении, на нём она проверяется (у реальных наборов это просто номер по порядку, «лёгких» и «сложных» снимков нет).
+en> The network does not see shot {0} of each object during training, and it is checked on it (for real datasets this is just a sequence number, there are no “easy” and “hard” shots).
+kk> Желі оқыту кезінде әр объектінің {0}-суретін көрмейді, тексеру сол сурет бойынша жасалады (нақты жиындарда бұл жай ғана реттік нөмір, «жеңіл» және «қиын» суреттер жоқ).
+
+ru> {0} {1} {2} Сеть учится различать только выбранные объекты ({3}), незнакомые она не узнает.
+en> {0} {1} {2} The network learns to distinguish only the selected objects ({3}), it will not recognize unfamiliar ones.
+kk> {0} {1} {2} Желі тек таңдалған объектілерді ({3}) ажыратуды үйренеді, бейтаныстарды танымайды.
+
+ru> отпечатки
+en> fingerprints
+kk> саусақ іздері
+
+ru> лица
+en> faces
+kk> беттер
+
+ru> радужка
+en> iris
+kk> нұрлы қабық
+
+ru> Сеть не обучилась: точность на обучающих образцах {0} близка к случайной. Чаще всего это слишком большой шаг (learning rate): уменьшите его в 3-10 раз.
+en> The network did not learn: the accuracy on the training samples {0} is close to random. Most often the step (learning rate) is too large: reduce it by 3-10 times.
+kk> Желі оқымады: оқыту үлгілеріндегі дәлдік {0} кездейсоққа жақын. Көбіне қадам (learning rate) тым үлкен: оны 3-10 есе азайтыңыз.
+
+ru> Переобучение: на обучающих образцах {0}, на новых {1}. Сеть запомнила образцы. Включите аугментацию (искажения), уменьшите сеть или добавьте данных.
+en> Overfitting: on the training samples {0}, on new ones {1}. The network memorized the samples. Turn on augmentation (distortions), reduce the network or add data.
+kk> Қайта үйрену: оқыту үлгілерінде {0}, жаңаларында {1}. Желі үлгілерді жаттап алды. Аугментацияны (бұрмалауларды) қосыңыз, желіні кішірейтіңіз немесе деректер қосыңыз.
+
+ru> Сеть хорошо обобщает: на образцах, которых она не видела, {0}.
+en> The network generalizes well: on the samples it has not seen, {0}.
+kk> Желі жақсы жалпылайды: көрмеген үлгілерде {0}.
+
+ru> На образцах, которых сеть не видела, {0} (на обучающих {1}).
+en> On the samples the network has not seen, {0} (on the training ones {1}).
+kk> Желі көрмеген үлгілерде {0} (оқыту үлгілерінде {1}).
+
+ru> Loss ещё высокий ({0}), точность на обучении {1}: сеть недообучена. Добавьте эпох или немного увеличьте шаг.
+en> The loss is still high ({0}), the training accuracy is {1}: the network is undertrained. Add epochs or increase the step slightly.
+kk> Loss әлі жоғары ({0}), оқытудағы дәлдік {1}: желі аз оқытылған. Эпохаларды қосыңыз немесе қадамды сәл үлкейтіңіз.
+
+ru> Loss «скачет» вверх на поздних эпохах: шаг, скорее всего, великоват.
+en> The loss “jumps” up in the late epochs: the step is probably a bit too large.
+kk> Loss кейінгі эпохаларда жоғары «секіреді»: қадам, ықтимал, сәл үлкен.
+
+ru> EER {0}: embedding «своих» и «чужих» перекрываются (смотрите гистограмму ниже). Сеть узнаёт, но порог провести трудно.
+en> EER {0}: the embeddings of “genuine” and “impostor” overlap (see the histogram below). The network recognizes, but it is hard to set a threshold.
+kk> EER {0}: «өз» және «бөтен» embedding-дері қиылысады (төмендегі гистограмманы қараңыз). Желі таниды, бірақ шекті қою қиын.
+
+ru> EER {0}: «свои» и «чужие» хорошо разделяются, порог провести легко.
+en> EER {0}: “genuine” and “impostor” are well separated, it is easy to set a threshold.
+kk> EER {0}: «өз» және «бөтен» жақсы бөлінген, шекті қою оңай.
+
+ru> Запуск: {0}, сеть {1}, {2}, learning rate {3}, аугментация {4}, {5} эпох.
+en> Run: {0}, network {1}, {2}, learning rate {3}, augmentation {4}, {5} epochs.
+kk> Іске қосу: {0}, желі {1}, {2}, learning rate {3}, аугментация {4}, {5} эпоха.
+
+ru> <button id="trUseBtn">Открыть вкладку «{0}» с этим методом</button>
+en> <button id="trUseBtn">Open the “{0}” tab with this method</button>
+kk> <button id="trUseBtn">Осы әдіспен «{0}» қойындысын ашу</button>
+
+ru> Выбран метод «Нейросеть, обученная вами». Нажмите «Сравнить A и B» или оцените метод в карточке сравнения.
+en> The method “The network you trained” is selected. Press “Compare A and B” or evaluate the method in the comparison card.
+kk> «Өзіңіз оқытқан желі» әдісі таңдалды. «A мен B-ны салыстыру» батырмасын басыңыз немесе әдісті салыстыру картасында бағалаңыз.
+
+ru> #{0} {1}{2} {3}/{4} lr {5} аугм. {6}
+en> #{0} {1}{2} {3}/{4} lr {5} aug. {6}
+kk> #{0} {1}{2} {3}/{4} lr {5} аугм. {6}
+
+ru> <tr><th></th><th>№</th><th>Время (UTC)</th><th>Данные</th><th>Сеть</th><th>Оптимизатор</th><th>lr</th><th>Аугм.</th><th>Проверка</th><th>Эпох</th><th>Loss</th><th>Обучение</th><th>Новые снимки</th><th>EER</th><th>Секунд</th></tr>
+en> <tr><th></th><th>№</th><th>Time (UTC)</th><th>Data</th><th>Network</th><th>Optimizer</th><th>lr</th><th>Aug.</th><th>Check</th><th>Epochs</th><th>Loss</th><th>Training</th><th>New shots</th><th>EER</th><th>Seconds</th></tr>
+kk> <tr><th></th><th>№</th><th>Уақыты (UTC)</th><th>Деректер</th><th>Желі</th><th>Оңтайландырғыш</th><th>lr</th><th>Аугм.</th><th>Тексеру</th><th>Эпоха</th><th>Loss</th><th>Оқыту</th><th>Жаңа суреттер</th><th>EER</th><th>Секунд</th></tr>
+
+ru>  (стоп)
+en>  (stop)
+kk>  (тоқтатылды)
+
+ru> <tr><td><input type="checkbox" class="trSel" value="{0}"></td><td>{1}</td><td>{2}</td><td>{3}{4}</td><td>{5}</td><td>{6}</td><td>{7}</td><td>{8}</td><td>снимок {9}</td><td>{10}{11}</td><td>{12}</td><td>{13}</td><td><b>{14}</b></td><td>{15}</td><td>{16}</td></tr>
+en> <tr><td><input type="checkbox" class="trSel" value="{0}"></td><td>{1}</td><td>{2}</td><td>{3}{4}</td><td>{5}</td><td>{6}</td><td>{7}</td><td>{8}</td><td>shot {9}</td><td>{10}{11}</td><td>{12}</td><td>{13}</td><td><b>{14}</b></td><td>{15}</td><td>{16}</td></tr>
+kk> <tr><td><input type="checkbox" class="trSel" value="{0}"></td><td>{1}</td><td>{2}</td><td>{3}{4}</td><td>{5}</td><td>{6}</td><td>{7}</td><td>{8}</td><td>{9}-сурет</td><td>{10}{11}</td><td>{12}</td><td>{13}</td><td><b>{14}</b></td><td>{15}</td><td>{16}</td></tr>
+
+ru> <tr><td class="leg">Запусков пока нет. Нажмите «Начать обучение» или один из готовых экспериментов.</td></tr>
+en> <tr><td class="leg">No runs yet. Press “Start training” or one of the ready-made experiments.</td></tr>
+kk> <tr><td class="leg">Әзірге іске қосулар жоқ. «Оқытуды бастау» немесе дайын эксперименттердің біреуін басыңыз.</td></tr>
+
+ru> Отметьте в журнале минимум два запуска.
+en> Mark at least two runs in the log.
+kk> Журналда кемінде екі іске қосуды белгілеңіз.
+
+ru> Точность
+en> Accuracy
+kk> Дәлдік
+
+ru> Журнал пуст.
+en> The log is empty.
+kk> Журнал бос.
+
+ru> Ошибка: 
+en> Error: 
+kk> Қате:
+
+ru> готов к запуску
+en> ready to run
+kk> іске қосуға дайын
+
+ru> подготовка данных...
+en> preparing data...
+kk> деректер дайындалуда...
+
+ru> идёт обучение
+en> training in progress
+kk> оқыту жүруде
+
+ru> обучение завершено
+en> training finished
+kk> оқыту аяқталды
+
+ru> остановлено
+en> stopped
+kk> тоқтатылды
+
+ru> ошибка
+en> error
+kk> қате
+
+ru>  - эпоха {0} из {1}
+en>  - epoch {0} of {1}
+kk>  - {1} ішінен {0}-эпоха
+
+ru> слой 1 (свёртка)
+en> layer 1 (convolution)
+kk> 1-қабат (конволюция)
+
+ru> слой 2 (свёртка)
+en> layer 2 (convolution)
+kk> 2-қабат (конволюция)
+
+ru> слой 3 (свёртка)
+en> layer 3 (convolution)
+kk> 3-қабат (конволюция)
+
+ru> классификатор
+en> classifier
+kk> классификатор
+
+ru> Изменение весов, %
+en> Weight change, %
+kk> Салмақ өзгерісі, %
+
+ru> точность (обучение)
+en> accuracy (training)
+kk> дәлдік (оқыту)
+
+ru> точность (тест)
+en> accuracy (test)
+kk> дәлдік (сынақ)
+
+ru> Вход<br><small>тестовый образец</small>
+en> Input<br><small>test sample</small>
+kk> Кіріс<br><small>сынақ үлгісі</small>
+
+ru> Слой 1<br><small>{0} фильтров</small>
+en> Layer 1<br><small>{0} filters</small>
+kk> 1-қабат<br><small>{0} сүзгі</small>
+
+ru> Слой 2<br><small>{0} фильтров</small>
+en> Layer 2<br><small>{0} filters</small>
+kk> 2-қабат<br><small>{0} сүзгі</small>
+
+ru> Слой 3<br><small>{0} фильтров</small>
+en> Layer 3<br><small>{0} filters</small>
+kk> 3-қабат<br><small>{0} сүзгі</small>
+
+ru> Embedding<br><small>32 числа</small>
+en> Embedding<br><small>32 numbers</small>
+kk> Embedding<br><small>32 сан</small>
+
+ru> Ответ сети<br><small>вероятности</small>
+en> Network answer<br><small>probabilities</small>
+kk> Желі жауабы<br><small>ықтималдықтар</small>
+
+ru> Слой 1 · 
+en> Layer 1 · 
+kk> 1-қабат ·
+
+ru>  фильтров<br><small>веса изменились на 
+en>  filters<br><small>weights changed by 
+kk>  сүзгі<br><small>салмақтар мынаған өзгерді:
+
+ru> Слой 2 · 
+en> Layer 2 · 
+kk> 2-қабат ·
+
+ru> Слой 3 · 
+en> Layer 3 · 
+kk> 3-қабат ·
+
+ru> Embedding · 32 числа<br><small>веса изменились на 
+en> Embedding · 32 numbers<br><small>weights changed by 
+kk> Embedding · 32 сан<br><small>салмақтар мынаған өзгерді:
+
+ru> Ответ сети<br><small>классификатор: 
+en> Network answer<br><small>classifier: 
+kk> Желі жауабы<br><small>классификатор:
+
+ru> верно
+en> correct
+kk> дұрыс
+
+ru> пока ошибка
+en> still wrong
+kk> әзірге қате
+
+ru> - эпоха {0}: на тестовом образце сеть отвечает «{1}» ({2}%), правильный ответ «{3}» - {4}
+en> - epoch {0}: on the test sample the network answers “{1}” ({2}%), the correct answer is “{3}” - {4}
+kk> - {0}-эпоха: сынақ үлгісінде желі «{1}» ({2}%) деп жауап береді, дұрыс жауап «{3}» - {4}
+
+ru> {0}: loss {1}, точность обучения {2}%, на тесте {3}%, EER на проверочных {4}
+en> {0}: loss {1}, training accuracy {2}%, on the test {3}%, EER on the held-out {4}
+kk> {0}: loss {1}, оқытудағы дәлдік {2}%, сынақта {3}%, тексеру үлгілеріндегі EER {4}
+
+ru> Это начальное состояние.
+en> This is the initial state.
+kk> Бұл бастапқы күй.
+
+ru> Первый слой изменился на {0}% от начальных весов (цвета нормированы на самое большое изменение).
+en> The first layer changed by {0}% from the initial weights (colors are normalized to the largest change).
+kk> Бірінші қабат бастапқы салмақтардан {0}% өзгерді (түстер ең үлкен өзгеріске қатысты нормаланған).
+
+ru> главная компонента 1
+en> principal component 1
+kk> бас компонента 1
+
+ru> главная компонента 2
+en> principal component 2
+kk> бас компонента 2
+
+ru> свои (один объект)
+en> genuine (one object)
+kk> өз (бір объект)
+
+ru> чужие (разные объекты)
+en> impostor (different objects)
+kk> бөтен (әртүрлі объектілер)
+
+ru> косинусное сходство
+en> cosine similarity
+kk> косинустық ұқсастық
+
+ru> пар
+en> pairs
+kk> жұптар
+
+ru> EER ≈ {0}%: чем меньше гистограммы «своих» и «чужих» перекрываются, тем он ниже.
+en> EER ≈ {0}%: the less the “genuine” and “impostor” histograms overlap, the lower it is.
+kk> EER ≈ {0}%: «өз» және «бөтен» гистограммалары аз қиылысқан сайын, ол төмен болады.
+
+ru> Редактор Monaco не загрузился (нужен интернет): используется простое поле ввода.
+en> The Monaco editor did not load (the internet is needed): a plain input field is used.
+kk> Monaco редакторы жүктелмеді (интернет қажет): қарапайым енгізу өрісі қолданылады.
+
+ru> Не удалось запустить Monaco: используется простое поле ввода.
+en> Could not start Monaco: a plain input field is used.
+kk> Monaco іске қосылмады: қарапайым енгізу өрісі қолданылады.
+
+ru> Разбор результата
+en> Result analysis
+kk> Нәтижені талдау
+
+ru> Разбор
+en> Analysis
+kk> Талдау
+
+ru> Сначала запустите код или проверьте решение, затем я объясню результат.
+en> First run the code or check the solution, then I will explain the result.
+kk> Алдымен кодты іске қосыңыз немесе шешімді тексеріңіз, содан кейін нәтижені түсіндіремін.
+
+ru> <div class="cdtask{0}" data-id="{1}"><b>{2}</b><div>{3} · {4}</div><div>лучший: {5}/{6} · попыток: {7}</div></div>
+en> <div class="cdtask{0}" data-id="{1}"><b>{2}</b><div>{3} · {4}</div><div>best: {5}/{6} · attempts: {7}</div></div>
+kk> <div class="cdtask{0}" data-id="{1}"><b>{2}</b><div>{3} · {4}</div><div>үздік: {5}/{6} · әрекет: {7}</div></div>
+
+ru>  баллов)
+en>  points)
+kk>  ұпай)
+
+ru> 4 Решение 🔒 (
+en> 4 Solution 🔒 (
+kk> 4 Шешім 🔒 (
+
+ru> <table><tr><th>№</th><th>Балл</th><th>Тесты</th></tr>
+en> <table><tr><th>№</th><th>Score</th><th>Tests</th></tr>
+kk> <table><tr><th>№</th><th>Ұпай</th><th>Тесттер</th></tr>
+
+ru> <span class="leg">Попыток пока нет.</span>
+en> <span class="leg">No attempts yet.</span>
+kk> <span class="leg">Әзірге әрекеттер жоқ.</span>
+
+ru> Загрузка среды Python…
+en> Loading the Python environment…
+kk> Python ортасы жүктелуде…
+
+ru> Загружается среда Python для запуска примеров в браузере (один раз, затем она берётся из кэша).
+en> The Python environment for running examples in the browser is loading (once, then it is taken from the cache).
+kk> Мысалдарды браузерде іске қосуға арналған Python ортасы жүктелуде (бір рет, содан кейін кэштен алынады).
+
+ru> Пример запускается в вашем браузере (Python в Pyodide), а проверка решения и оценка выполняются на сервере.
+en> The example runs in your browser (Python in Pyodide), and the check of the solution and the grading are done on the server.
+kk> Мысал сіздің браузеріңізде (Pyodide-тегі Python) іске қосылады, ал шешімді тексеру мен бағалау серверде орындалады.
+
+ru> Пример запускается на сервере.
+en> The example runs on the server.
+kk> Мысал серверде іске қосылады.
+
+ru> Среда Python в браузере недоступна (
+en> The Python environment in the browser is unavailable (
+kk> Браузердегі Python ортасы қолжетімсіз (
+
+ru> ): пример выполняется на сервере.
+en> ): the example is run on the server.
+kk> ): мысал серверде орындалады.
+
+ru> файлы Pyodide не найдены
+en> Pyodide files not found
+kk> Pyodide файлдары табылмады
+
+ru> загрузка заняла слишком много времени
+en> loading took too long
+kk> жүктеу тым ұзаққа созылды
+
+ru> ошибка воркера
+en> worker error
+kk> воркер қатесі
+
+ru> сбой воркера
+en> worker failure
+kk> воркер ақауы
+
+ru> нет примера
+en> no example
+kk> мысал жоқ
+
+ru> Нужные библиотеки недоступны в браузере: пример выполнен на сервере.
+en> The required libraries are unavailable in the browser: the example was run on the server.
+kk> Қажетті кітапханалар браузерде қолжетімсіз: мысал серверде орындалды.
+
+ru> тест выполнялся дольше 3 с
+en> the test ran for longer than 3 s
+kk> тест 3 с-тан ұзақ орындалды
+
+ru> код выполнялся слишком долго (бесконечный цикл?)
+en> the code ran for too long (an infinite loop?)
+kk> код тым ұзақ орындалды (шексіз цикл?)
+
+ru> Запуск на примере
+en> Run on the example
+kk> Мысалда іске қосу
+
+ru> код запускается без ошибок
+en> the code runs without errors
+kk> код қатесіз іске қосылады
+
+ru> базовые тесты
+en> basic tests
+kk> негізгі тесттер
+
+ru> граничные случаи
+en> edge cases
+kk> шектік жағдайлар
+
+ru> контрольный вопрос
+en> quiz question
+kk> бақылау сұрағы
+
+ru> {0}: <b>{1}</b> из {2}
+en> {0}: <b>{1}</b> out of {2}
+kk> {0}: <b>{1}</b> / {2}
+
+ru> <div class="cdscore"><div><div class="leg">Оценка за попытку {0}</div><div class="big">{1}<span style="font-size:16px;color:var(--mut)"> / {2}</span></div></div>\n      <div class="cdparts">{3}</div></div>
+en> <div class="cdscore"><div><div class="leg">Score for attempt {0}</div><div class="big">{1}<span style="font-size:16px;color:var(--mut)"> / {2}</span></div></div>\n      <div class="cdparts">{3}</div></div>
+kk> <div class="cdscore"><div><div class="leg">{0}-әрекет үшін баға</div><div class="big">{1}<span style="font-size:16px;color:var(--mut)"> / {2}</span></div></div>\n      <div class="cdparts">{3}</div></div>
+
+ru> <table><tr><th>Тест</th><th>Тип</th><th></th><th>Комментарий</th></tr>
+en> <table><tr><th>Test</th><th>Type</th><th></th><th>Comment</th></tr>
+kk> <table><tr><th>Тест</th><th>Түрі</th><th></th><th>Түсініктеме</th></tr>
+
+ru> базовый
+en> basic
+kk> негізгі
+
+ru> граничный
+en> edge
+kk> шектік
+
+ru> <tr><td>{0}</td><td>{1}</td><td class="{2}">{3}</td><td>{4}</td></tr>
+en> <tr><td>{0}</td><td>{1}</td><td class="{2}">{3}</td><td>{4}</td></tr>
+kk> <tr><td>{0}</td><td>{1}</td><td class="{2}">{3}</td><td>{4}</td></tr>
+
+ru> Разбор проверки
+en> Analysis of the check
+kk> Тексеруді талдау
+
+ru> Подсказка {0}: {1}
+en> Hint {0}: {1}
+kk> {0}-кеңес: {1}
+
+ru> <b class="cdok">да</b>
+en> <b class="cdok">yes</b>
+kk> <b class="cdok">иә</b>
+
+ru> <b class="cdbad">нет</b>
+en> <b class="cdbad">no</b>
+kk> <b class="cdbad">жоқ</b>
+
+ru> Детектор
+en> Detector
+kk> Детектор
+
+ru> Найдено
+en> Found
+kk> Табылды
+
+ru> Время, мс
+en> Time, ms
+kk> Уақыты, мс
+
+ru> Рамка (x, y, w, h)
+en> Frame (x, y, w, h)
+kk> Жақтау (x, y, w, h)
+
+ru> Ключевые точки
+en> Key points
+kk> Кілт нүктелері
+
+ru> Размерность
+en> Dimension
+kk> Өлшемі
+
+ru> Сходство A-B
+en> Similarity A-B
+kk> A-B ұқсастығы
+
+ru> «Среднее лицо» галереи вычтено
+en> The gallery “mean face” is subtracted
+kk> Галереяның «орташа бетін» алып тастады
+
+ru> да
+en> yes
+kk> иә
+
+ru> нет
+en> no
+kk> жоқ
+
+ru> <p class="leg">Считаем EER для каждого метода... (может занять до минуты)</p>
+en> <p class="leg">Calculating the EER for each method... (may take up to a minute)</p>
+kk> <p class="leg">Әр әдіс үшін EER есептелуде... (бір минутқа дейін созылуы мүмкін)</p>
+
+ru> <th>Запас</th>
+en> <th>Margin</th>
+kk> <th>Қор</th>
+
+ru> <p style="margin:10px 0 4px"><b>{0}</b> <span class="leg">({1}: {2})</span></p>\n      <table><tr><th>{3}</th><th>EER, %</th><th>Порог при EER</th><th>Среднее сходство «своих»</th><th>«чужих»</th>{4}<th>Пар</th><th>Время, с</th></tr>
+en> <p style="margin:10px 0 4px"><b>{0}</b> <span class="leg">({1}: {2})</span></p>\n      <table><tr><th>{3}</th><th>EER, %</th><th>Threshold at EER</th><th>Mean similarity of “genuine”</th><th>“impostor”</th>{4}<th>Pairs</th><th>Time, s</th></tr>
+kk> <p style="margin:10px 0 4px"><b>{0}</b> <span class="leg">({1}: {2})</span></p>\n      <table><tr><th>{3}</th><th>EER, %</th><th>EER кезіндегі шек</th><th>«Өздердің» орташа ұқсастығы</th><th>«бөтендердікі»</th>{4}<th>Жұптар</th><th>Уақыты, с</th></tr>
+
+ru>  <b class="cdok">лучший</b>
+en>  <b class="cdok">best</b>
+kk>  <b class="cdok">ең жақсы</b>
+
+ru> <tr{0}><td>{1}{2}</td><td><b>{3}</b></td><td>{4}</td><td>{5}</td><td>{6}</td>{7}<td>{8} / {9}</td><td>{10}</td></tr>
+en> <tr{0}><td>{1}{2}</td><td><b>{3}</b></td><td>{4}</td><td>{5}</td><td>{6}</td>{7}<td>{8} / {9}</td><td>{10}</td></tr>
+kk> <tr{0}><td>{1}{2}</td><td><b>{3}</b></td><td>{4}</td><td>{5}</td><td>{6}</td>{7}<td>{8} / {9}</td><td>{10}</td></tr>
+
+ru> Загрузить свою запись (WAV, MP3 и др.) в A / в B
+en> Upload your own recording (WAV, MP3 and others) into A / into B
+kk> Өз жазбаңызды (WAV, MP3 және басқалар) A / B үлгісіне жүктеңіз
+
+ru> <span class="desc">Нажмите «Сравнить A и B».</span>
+en> <span class="desc">Press “Compare A and B”.</span>
+kk> <span class="desc">«A мен B-ны салыстыру» батырмасын басыңыз.</span>
+
+ru> <p class="leg">Найдено minutiae: {0} (окончаний {1}, разветвлений {2})</p>\n     <div style="max-height:160px;overflow:auto"><table><tr><th>#</th><th>X</th><th>Y</th><th>Угол</th><th>Тип</th><th>Качество</th></tr>
+en> <p class="leg">Minutiae found: {0} (endings {1}, bifurcations {2})</p>\n     <div style="max-height:160px;overflow:auto"><table><tr><th>#</th><th>X</th><th>Y</th><th>Angle</th><th>Type</th><th>Quality</th></tr>
+kk> <p class="leg">Табылған минуциялар: {0} (аяқталулар {1}, тарамдалулар {2})</p>\n     <div style="max-height:160px;overflow:auto"><table><tr><th>#</th><th>X</th><th>Y</th><th>Бұрыш</th><th>Түрі</th><th>Сапасы</th></tr>
+
+ru> Ошибки, %
+en> Errors, %
+kk> Қателер, %
+
+ru> При threshold {0}: <b>FAR {1}%</b>, <b>FRR {2}%</b>, Accuracy {3}%. EER ≈ {4}% при threshold {5}.
+en> At threshold {0}: <b>FAR {1}%</b>, <b>FRR {2}%</b>, Accuracy {3}%. EER ≈ {4}% at threshold {5}.
+kk> {0} шегінде: <b>FAR {1}%</b>, <b>FRR {2}%</b>, Accuracy {3}%. EER ≈ {4}%, шегі {5}.
+
+ru> <span class="realtag">реальные данные</span> 
+en> <span class="realtag">real data</span> 
+kk> <span class="realtag">нақты деректер</span>
+
+ru> <br>Данные: {0}{1}.
+en> <br>Data: {0}{1}.
+kk> <br>Деректер: {0}{1}.
+
+ru>  Это не синтетика: метрики хуже, чем на синтетике, и это ожидаемо.
+en>  This is not synthetic: the metrics are worse than on synthetic data, and that is expected.
+kk>  Бұл синтетика емес: метрикалар синтетикадағыдан нашар, және бұл күтілетін жағдай.
+
+ru> Считаем... (первый запуск может занять до ~10 с)
+en> Calculating... (the first run may take up to ~10 s)
+kk> Есептелуде... (бірінші іске қосу ~10 с-қа дейін созылуы мүмкін)
+
+ru> Пар: {0} своих и {1} чужих
+en> Pairs: {0} genuine and {1} impostor
+kk> Жұптар: {0} өз және {1} бөтен
+
+ru> ; фото без найденного лица: {0}
+en> ; photos without a face found: {0}
+kk> ; бет табылмаған фотолар: {0}
+
+ru> Считаем... (до ~20 с)
+en> Calculating... (up to ~20 s)
+kk> Есептелуде... (~20 с-қа дейін)
+
+ru> Людей: {0}, метод: {1}, порог {2}
+en> People: {0}, method: {1}, threshold {2}
+kk> Адамдар: {0}, әдіс: {1}, шек {2}
+
+ru> лёгкий
+en> easy
+kk> жеңіл
+
+ru> средний
+en> medium
+kk> орташа
+
+ru> сильный
+en> strong
+kk> күшті
+
+ru> <table><tr><th>Уровень</th>
+en> <table><tr><th>Level</th>
+kk> <table><tr><th>Деңгей</th>
+
+ru> <th>Среднее</th><th>Узнано при пороге</th></tr>
+en> <th>Mean</th><th>Recognized at the threshold</th></tr>
+kk> <th>Орташа</th><th>Шек кезінде танылды</th></tr>
+
+ru> <p class="leg">Чужие (оригинал против чужих отпечатков): среднее {0}, максимум {1}. Чем ближе «свои» к этим числам, тем труднее узнать палец.</p><p class="leg">{2}</p>
+en> <p class="leg">Impostors (the original against other people's fingerprints): mean {0}, maximum {1}. The closer the “genuine” are to these numbers, the harder it is to recognize the finger.</p><p class="leg">{2}</p>
+kk> <p class="leg">Бөтендер (түпнұсқа басқа адамдардың саусақ іздеріне қарсы): орташа {0}, максимум {1}. «Өз» мәндер осы сандарға жақындаған сайын, саусақты тану қиындай түседі.</p><p class="leg">{2}</p>
+
+ru> <table><tr><th>№</th><th>Тип</th><th>A</th><th>B</th><th>Similarity</th><th>Thr.</th><th>Решение</th></tr>
+en> <table><tr><th>№</th><th>Type</th><th>A</th><th>B</th><th>Similarity</th><th>Thr.</th><th>Decision</th></tr>
+kk> <table><tr><th>№</th><th>Түрі</th><th>A</th><th>B</th><th>Similarity</th><th>Thr.</th><th>Шешім</th></tr>
+
+ru> <div class="msg u"><span class="t">Вы ({0})</span><br>{1}</div>
+en> <div class="msg u"><span class="t">You ({0})</span><br>{1}</div>
+kk> <div class="msg u"><span class="t">Сіз ({0})</span><br>{1}</div>
+
+ru> <div class="msg"><span class="t">Наставник ({0})</span><br>{1}</div>
+en> <div class="msg"><span class="t">Tutor ({0})</span><br>{1}</div>
+kk> <div class="msg"><span class="t">Тәлімгер ({0})</span><br>{1}</div>
+
+ru> <div class="msg">Ошибка: {0}</div>
+en> <div class="msg">Error: {0}</div>
+kk> <div class="msg">Қате: {0}</div>
+
+ru> Браузер не умеет декодировать звук.
+en> The browser cannot decode the audio.
+kk> Браузер дыбысты декодтай алмайды.
+
+ru> Не удалось прочитать звук. Попробуйте файл WAV или запишите голос кнопкой.
+en> Could not read the audio. Try a WAV file or record the voice with the button.
+kk> Дыбысты оқу мүмкін болмады. WAV файлын байқап көріңіз немесе дауысты батырмамен жазыңыз.
+
+ru> Запись голоса работает только на localhost или по HTTPS.
+en> Voice recording works only on localhost or over HTTPS.
+kk> Дауыс жазу тек localhost немесе HTTPS арқылы жұмыс істейді.
+
+ru> Нет доступа к микрофону: разрешите его в браузере.
+en> No access to the microphone: allow it in the browser.
+kk> Микрофонға рұқсат жоқ: браузерде оған рұқсат беріңіз.
+
+ru> Говорите 4 секунды...
+en> Speak for 4 seconds...
+kk> 4 секунд сөйлеңіз...
+
+ru> Запись добавлена в образец 
+en> The recording was added to the sample 
+kk> Жазба үлгіге қосылды
+
+ru> Не удалось воспроизвести звук.
+en> Could not play the audio.
+kk> Дыбысты ойнату мүмкін болмады.
+
+ru> Three.js не загрузился. Нужен интернет или выполните python -m scripts.download_assets.
+en> Three.js did not load. The internet is needed, or run python -m scripts.download_assets.
+kk> Three.js жүктелмеді. Интернет қажет немесе python -m scripts.download_assets орындаңыз.
+
+ru> {0} из {1}
+en> {0} of {1}
+kk> {1} ішінен {0}
+
+ru> Показаны все этапы. Нажмите «Воспроизвести» или двигайте ползунок «Этап».
+en> All steps are shown. Press “Play” or move the “Step” slider.
+kk> Барлық кезең көрсетілген. «Ойнату» батырмасын басыңыз немесе «Кезең» жүгірткісін жылжытыңыз.
+
+ru> °/с
+en> °/s
+kk> °/с
+
+ru> ⏸ Пауза
+en> ⏸ Pause
+kk> ⏸ Кідірту
+
+ru> ⏹ Остановить облёт
+en> ⏹ Stop the fly-around
+kk> ⏹ Айналып ұшуды тоқтату
+
+ru> Круг
+en> Circle
+kk> Шеңбер
+
+ru> Два облака
+en> Two clouds
+kk> Екі бұлт
+
+ru> Спираль
+en> Spiral
+kk> Спираль
+
+ru> Биометрия: свой / чужой
+en> Biometrics: genuine / impostor
+kk> Биометрия: өз / бөтен
+
+ru> X₁ - оценка сходства (similarity), X₂ - качество изображения. Синие - «свои» (genuine), оранжевые - «чужие» (impostor). Граница решения - аналог порога threshold; пересечение классов даёт ошибки FAR и FRR.
+en> X₁ is the similarity score, X₂ is the image quality. Blue are “genuine”, orange are “impostor”. The decision boundary is an analogue of the threshold; the overlap of the classes gives the FAR and FRR errors.
+kk> X₁ - ұқсастық бағасы (similarity), X₂ - сурет сапасы. Көк - «өз» (genuine), қызғылт сары - «бөтен» (impostor). Шешім шекарасы - threshold шегінің аналогы; кластардың қиылысуы FAR және FRR қателерін береді.
+
+ru> Классы разделяются окружностью: линейной модели мало, помогают признаки X₁², X₂² или скрытые слои.
+en> The classes are separated by a circle: a linear model is not enough, the features X₁², X₂² or hidden layers help.
+kk> Кластар шеңбермен бөлінген: сызықтық модель жеткіліксіз, X₁², X₂² белгілері немесе жасырын қабаттар көмектеседі.
+
+ru> Классы чередуются по квадрантам: без скрытых слоёв или признака X₁X₂ сеть не справится.
+en> The classes alternate by quadrants: without hidden layers or the feature X₁X₂ the network will not cope.
+kk> Кластар квадранттар бойынша кезектеседі: жасырын қабаттарсыз немесе X₁X₂ белгісінсіз желі шешпейді.
+
+ru> Два облака: простой случай, хватает одного нейрона без скрытых слоёв.
+en> Two clouds: a simple case, one neuron without hidden layers is enough.
+kk> Екі бұлт: қарапайым жағдай, жасырын қабаттарсыз бір нейрон жеткілікті.
+
+ru> Сложная задача: нужны скрытые слои и признаки sin X₁, sin X₂, обучение идёт долго.
+en> A hard task: hidden layers and the features sin X₁, sin X₂ are needed, training takes long.
+kk> Қиын тапсырма: жасырын қабаттар және sin X₁, sin X₂ белгілері қажет, оқыту ұзақ жүреді.
+
+ru> Обучение разошлось (loss стал бесконечным): уменьшите learning rate и нажмите «Сбросить».
+en> Training diverged (the loss became infinite): reduce the learning rate and press “Reset”.
+kk> Оқыту ыдырады (loss шексіз болды): learning rate азайтып, «Қалпына келтіру» батырмасын басыңыз.
+
+ru> Клик: включить или выключить признак
+en> Click: turn the feature on or off
+kk> Басу: белгіні қосу немесе өшіру
+
+ru> <table><tr><th>№</th><th>Данные</th><th>Признаки</th><th>Слои</th><th>LR</th><th>Активация</th><th>Регуляр.</th><th>Эпох</th><th>Train loss</th><th>Test loss</th><th>Точность</th></tr>
+en> <table><tr><th>№</th><th>Data</th><th>Features</th><th>Layers</th><th>LR</th><th>Activation</th><th>Regul.</th><th>Epochs</th><th>Train loss</th><th>Test loss</th><th>Accuracy</th></tr>
+kk> <table><tr><th>№</th><th>Деректер</th><th>Белгілер</th><th>Қабаттар</th><th>LR</th><th>Активация</th><th>Регул.</th><th>Эпоха</th><th>Train loss</th><th>Test loss</th><th>Дәлдік</th></tr>
+
+ru> Слои
+en> Layers
+kk> Қабаттар
+
+ru> Активация
+en> Activation
+kk> Белсендіру
+
+ru> медленно
+en> slowly
+kk> баяу
+
+ru> обычно
+en> normally
+kk> әдеттегідей
+
+ru> быстро
+en> fast
+kk> жылдам
+
+ru> очень быстро
+en> very fast
+kk> өте жылдам
+
+ru> голос лаборатории: 
+en> laboratory voice: 
+kk> зертхана дауысы:
+
+ru> лучший: 
+en> best: 
+kk> ең жақсысы:
+
+ru> нет русских голосов
+en> no Russian voices
+kk> орыс дауыстары жоқ
+
+ru> <option value="">Автоматически (
+en> <option value="">Automatic (
+kk> <option value="">Автоматты (
+
+ru> <option value="srv:{0}">Голос лаборатории: {1}</option>
+en> <option value="srv:{0}">Laboratory voice: {1}</option>
+kk> <option value="srv:{0}">Зертхана дауысы: {1}</option>
+
+ru>  (онлайн)
+en>  (online)
+kk>  (онлайн)
+
+ru> <option value="{0}">Браузер: {1}{2}</option>
+en> <option value="{0}">Browser: {1}{2}</option>
+kk> <option value="{0}">Браузер: {1}{2}</option>
+
+ru> Голос лаборатории не установлен: в Python, которым запущен сервер (
+en> The laboratory voice is not installed: the Python the server runs on (
+kk> Зертхана дауысы орнатылмаған: сервер жұмыс істейтін Python-да (
+
+ru> ), нет пакета piper-tts. Выполните: "
+en> ) has no piper-tts package. Run: "
+kk> ) piper-tts пакеті жоқ. Орындаңыз: "
+
+ru> " -m pip install -r requirements-tts.txt и перезапустите сервер.
+en> " -m pip install -r requirements-tts.txt and restart the server.
+kk> " -m pip install -r requirements-tts.txt және серверді қайта іске қосыңыз.
+
+ru> Файлы голосов не скачаны: python -m scripts.download_tts
+en> The voice files are not downloaded: python -m scripts.download_tts
+kk> Дауыс файлдары жүктелмеген: python -m scripts.download_tts
+
+ru> Эта кнопка недоступна на текущей вкладке.
+en> This button is not available on the current tab.
+kk> Бұл батырма ағымдағы қойындыда қолжетімсіз.
+
+ru> Результата сравнения пока нет.
+en> There is no comparison result yet.
+kk> Салыстыру нәтижесі әзірге жоқ.
+
+ru> совпадение, MATCH
+en> match, MATCH
+kk> сәйкес, MATCH
+
+ru> не совпадает, NO MATCH
+en> does not match, NO MATCH
+kk> сәйкес емес, NO MATCH
+
+ru> Сходство {0}, порог {1}. Решение: {2}. 
+en> Similarity {0}, threshold {1}. Decision: {2}. 
+kk> Ұқсастық {0}, шек {1}. Шешім: {2}.
+
+ru> Сходство не ниже порога, поэтому система принимает образец.
+en> The similarity is not below the threshold, so the system accepts the sample.
+kk> Ұқсастық шектен төмен емес, сондықтан жүйе үлгіні қабылдайды.
+
+ru> Сходство ниже порога, поэтому система отклоняет образец.
+en> The similarity is below the threshold, so the system rejects the sample.
+kk> Ұқсастық шектен төмен, сондықтан жүйе үлгіні қабылдамайды.
+
+ru> 🧭 Экскурсия: от изображения до решения
+en> 🧭 Tour: from the image to the decision
+kk> 🧭 Экскурсия: суреттен шешімге дейін
+
+ru> Покажу по шагам, как изображение превращается в решение.
+en> I will show step by step how the image turns into a decision.
+kk> Суреттің шешімге қалай айналатынын кезең-кезеңімен көрсетемін.
+
+ru> Этап $1: 
+en> Step $1: 
+kk> $1-кезең:
+
+ru> Итого на образце найдено минуций: {0}.
+en> In total, the number of minutiae found on the sample: {0}.
+kk> Барлығы үлгіден табылған минуциялар саны: {0}.
+
+ru> Теперь сравним образец A с образцом B и примем решение по порогу.
+en> Now we will compare sample A with sample B and make a decision by the threshold.
+kk> Енді A үлгісін B үлгісімен салыстырып, шек бойынша шешім қабылдаймыз.
+
+ru> Чтобы увидеть то же самое в 3D, скажите: покажи 3D-конвейер.
+en> To see the same in 3D, say: show the 3D pipeline.
+kk> Дәл осыны 3D-да көру үшін айтыңыз: 3D конвейерді көрсет.
+
+ru> Вкладка не найдена.
+en> The tab was not found.
+kk> Қойынды табылмады.
+
+ru> Набор «{0}» на этой вкладке недоступен. Подготовьте его (README, раздел «Реальные открытые наборы данных») и перезапустите сервер.
+en> The set “{0}” is not available on this tab. Prepare it (README, the section “Real open datasets”) and restart the server.
+kk> «{0}» жиыны бұл қойындыда қолжетімсіз. Оны дайындаңыз (README, «Нақты ашық деректер жиындары» бөлімі) және серверді қайта іске қосыңыз.
+
+ru> Этот набор недоступен.
+en> This set is not available.
+kk> Бұл жиын қолжетімсіз.
+
+ru> ⚠️ Такого метода нет на этой вкладке.
+en> ⚠️ There is no such method on this tab.
+kk> ⚠️ Бұл қойындыда мұндай әдіс жоқ.
+
+ru> Порог: 
+en> Threshold: 
+kk> Шек:
+
+ru> Это первый этап.
+en> This is the first step.
+kk> Бұл бірінші кезең.
+
+ru> Это последний этап.
+en> This is the last step.
+kk> Бұл соңғы кезең.
+
+ru> ⚠️ Такого задания нет.
+en> ⚠️ There is no such task.
+kk> ⚠️ Мұндай тапсырма жоқ.
+
+ru> Проверить решение? Попытка будет засчитана (после трёх попыток открывается полное решение).
+en> Check the solution? The attempt will be counted (after three attempts the full solution opens).
+kk> Шешімді тексересіз бе? Әрекет есептеледі (үш әрекеттен кейін толық шешім ашылады).
+
+ru> Проверка не запущена.
+en> The check was not started.
+kk> Тексеру іске қосылмады.
+
+ru> Вернуть начальный код? Ваш текущий код будет заменён.
+en> Restore the starter code? Your current code will be replaced.
+kk> Бастапқы кодты қайтару керек пе? Ағымдағы кодыңыз ауыстырылады.
+
+ru> Код не изменён.
+en> The code was not changed.
+kk> Код өзгертілмеді.
+
+ru> Подсказка 
+en> Hint 
+kk> Кеңес
+
+ru>  показана ниже. Прочитайте её и попробуйте исправить код.
+en>  is shown below. Read it and try to fix the code.
+kk>  төменде көрсетілген. Оны оқып, кодты түзетіп көріңіз.
+
+ru> Показаны этапы обработки образца A. Переключайте их по кнопкам над картинкой.
+en> The processing steps of sample A are shown. Switch them with the buttons above the picture.
+kk> A үлгісін өңдеу кезеңдері көрсетілген. Оларды суреттің үстіндегі батырмалармен ауыстырыңыз.
+
+ru> Готово: таблица сравнения методов на выбранной паре. Сравнивайте не само сходство, а решение и время: шкалы у методов разные.
+en> Done: the table of method comparison on the chosen pair. Compare not the similarity itself but the decision and the time: the scales of the methods differ.
+kk> Дайын: таңдалған жұптағы әдістерді салыстыру кестесі. Ұқсастықтың өзін емес, шешім мен уақытты салыстырыңыз: әдістердің шкалалары әртүрлі.
+
+ru> Готово: способы получения признаков на одном образце.
+en> Done: the ways to get features on one sample.
+kk> Дайын: бір үлгіде белгілерді алу тәсілдері.
+
+ru> Готово: таблица методов по EER. Чем ниже EER, тем лучше метод различает своих и чужих.
+en> Done: the table of methods by the EER. The lower the EER, the better the method tells genuine from impostor.
+kk> Дайын: әдістердің EER бойынша кестесі. EER төмен болған сайын, әдіс өз бен бөтенді жақсырақ ажыратады.
+
+ru> EER {0} процента при пороге {1}.
+en> EER {0} percent at the threshold {1}.
+kk> EER {0} пайыз, шегі {1}.
+
+ru>  Это реальные данные, поэтому ошибки выше, чем на синтетике.
+en>  These are real data, so the errors are higher than on synthetic ones.
+kk>  Бұл нақты деректер, сондықтан қателер синтетикадағыдан жоғары.
+
+ru>  Данные синтетические: на них метод почти не ошибается.
+en>  The data are synthetic: the method almost does not make errors on them.
+kk>  Деректер синтетикалық: әдіс оларда дерлік қателеспейді.
+
+ru> 3D-рельеф построен: высота показывает выраженность гребней. Вращайте мышью.
+en> The 3D relief is built: the height shows the ridge strength. Rotate with the mouse.
+kk> 3D бедер құрылды: биіктік жотаның айқындылығын көрсетеді. Тышқанмен айналдырыңыз.
+
+ru> 3D-конвейер построен: каждый слой это результат одного этапа алгоритма. Запускаю воспроизведение.
+en> The 3D pipeline is built: each layer is the result of one algorithm step. I am starting the playback.
+kk> 3D конвейер құрылды: әр қабат - алгоритмнің бір кезеңінің нәтижесі. Ойнатуды бастаймын.
+
+ru> ⚠️ Стресс-тест доступен только для SOCOFing: подготовьте набор (README).
+en> ⚠️ The stress test is available only for SOCOFing: prepare the set (README).
+kk> ⚠️ Стресс-тест тек SOCOFing үшін қолжетімді: жиынды дайындаңыз (README).
+
+ru> Стресс-тест готов: таблица показывает, как падает сходство с ростом искажений.
+en> The stress test is ready: the table shows how the similarity falls as the distortions grow.
+kk> Стресс-тест дайын: кестеде бұрмалаулар өскен сайын ұқсастықтың қалай төмендейтіні көрсетілген.
+
+ru> ⚠️ Для обучения этот набор недоступен.
+en> ⚠️ This set is not available for training.
+kk> ⚠️ Бұл жиын оқыту үшін қолжетімсіз.
+
+ru> Для обучения этот набор недоступен.
+en> This set is not available for training.
+kk> Бұл жиын оқыту үшін қолжетімсіз.
+
+ru> Начать обучение с текущими настройками? Сеть, сохранённая раньше для этой биометрии, будет заменена.
+en> Start training with the current settings? The network saved earlier for this biometric will be replaced.
+kk> Оқытуды ағымдағы параметрлермен бастау керек пе? Осы биометрия үшін бұрын сақталған желі ауыстырылады.
+
+ru> Обучение не запущено.
+en> Training was not started.
+kk> Оқыту іске қосылмады.
+
+ru> Обучение запущено. Следите за кривыми loss и точности.
+en> Training has started. Follow the loss and accuracy curves.
+kk> Оқыту басталды. Loss және дәлдік қисықтарын бақылаңыз.
+
+ru> Останавливаю обучение.
+en> I am stopping the training.
+kk> Оқытуды тоқтатамын.
+
+ru> Сначала выполните сравнение, тогда я смогу объяснить результат.
+en> First run a comparison, then I will be able to explain the result.
+kk> Алдымен салыстыруды орындаңыз, сонда нәтижені түсіндіре аламын.
+
+ru> Образец {0} {1}, снимок {2} в этом наборе не найден. Проверьте номер или выберите другой набор.
+en> Sample {0} {1}, shot {2} was not found in this set. Check the number or choose another set.
+kk> {0} {1} үлгісі, {2}-сурет бұл жиында табылмады. Нөмірді тексеріңіз немесе басқа жиынды таңдаңыз.
+
+ru> Такого образца в этом наборе нет.
+en> There is no such sample in this set.
+kk> Бұл жиында мұндай үлгі жоқ.
+
+ru> Образец 
+en> Sample 
+kk> Үлгі
+
+ru> Остановлено.
+en> Stopped.
+kk> Тоқтатылды.
+
+ru> Подождите: предыдущая команда ещё выполняется. Скажите «стоп» или нажмите Esc.
+en> Wait: the previous command is still running. Say “stop” or press Esc.
+kk> Күте тұрыңыз: алдыңғы команда әлі орындалуда. «Тоқта» деңіз немесе Esc басыңыз.
+
+ru> (понято как: 
+en> (understood as: 
+kk> (былай түсінілді:
+
+ru> Команда не распознана. Попробуйте одну из подсказок.
+en> The command was not recognized. Try one of the hints.
+kk> Команда танылмады. Кеңестердің біреуін байқап көріңіз.
+
+ru> Повторять пока нечего.
+en> There is nothing to repeat yet.
+kk> Қайталайтын ештеңе жоқ.
+
+ru> Распознавание речи этим браузером не поддерживается. Откройте Chrome или введите команду текстом.
+en> Speech recognition is not supported by this browser. Open Chrome or type the command as text.
+kk> Бұл браузер сөйлеуді тануды қолдамайды. Chrome ашыңыз немесе команданы мәтінмен енгізіңіз.
+
+ru> 🎤 Слушаю... (Alt+V - остановить)
+en> 🎤 Listening... (Alt+V - stop)
+kk> 🎤 Тыңдап тұрмын... (Alt+V - тоқтату)
+
+ru> ⚠️ Микрофон: 
+en> ⚠️ Microphone: 
+kk> ⚠️ Микрофон:
+
+ru> нет разрешения на микрофон
+en> no permission for the microphone
+kk> микрофонға рұқсат жоқ
+
+ru> речь не услышана, повторите
+en> no speech heard, repeat
+kk> сөйлеу естілмеді, қайталаңыз
+
+ru> микрофон не найден
+en> microphone not found
+kk> микрофон табылмады
+
+ru> нет связи с сервисом распознавания речи
+en> no connection to the speech recognition service
+kk> сөйлеуді тану қызметімен байланыс жоқ
+
+ru> Помощник лаборатории: команды голосом или текстом
+en> Laboratory assistant: commands by voice or text
+kk> Зертхана көмекшісі: дауыспен немесе мәтінмен командалар
+
+ru> <div class="row"><b>Помощник лаборатории</b><button class="sec" id="as-x" style="margin-left:auto" title="Свернуть">×</button></div>\n    <div class="leg" style="margin:4px 0 8px">Команда голосом или текстом, например: «покажи, как изображение превращается в решение». Скажите «что ты умеешь», чтобы услышать весь список. Клавиши: Alt+V - говорить, Esc - стоп. Слова «повтори» и «стоп» работают голосом.</div>\n    <div class="row"><input type="text" id="as-txt" placeholder="Напишите команду (↑ - прошлые)"><button id="as-send" title="Выполнить">▶</button><button id="as-mic" title="Сказать команду (Chrome)">🎤</button></div>\n    <div class="leg" id="as-live" style="min-height:16px;color:var(--acc)"></div>\n    <div id="as-chips"></div>\n    <div class="row"><button class="sec" id="as-stop" style="display:none">■ Стоп</button><a href="/labplus/voice" style="font-size:12px;margin-left:auto">LAB+: голос, ROC, стандарты</a></div>\n    <div id="as-log" style="margin-top:6px"></div>\n    <details><summary>Озвучка</summary>\n      <label><input type="checkbox" id="as-on"> Озвучивать ответы</label>\n      <label>Голос</label><select id="as-voice"></select><div class="leg" id="as-voicehint" style="color:#b45309"></div>\n      <label>Скорость: <b id="as-ratev"></b></label><input type="range" id="as-rate" min="0.8" max="1.4" step="0.05">\n      <button class="sec" id="as-demo" style="margin-top:6px">▶ Проверить голос</button>\n      <div class="leg">«Голос лаборатории» озвучивает сервер (Piper): он одинаков у всех пользователей и работает без интернета. Если он не установлен, используются голоса браузера: самые естественные в Chrome («Google русский») и Edge («Microsoft … Online (Natural)»).</div></details>
+en> <div class="row"><b>Laboratory assistant</b><button class="sec" id="as-x" style="margin-left:auto" title="Collapse">×</button></div>\n    <div class="leg" style="margin:4px 0 8px">A command by voice or text, for example: “show how the image turns into a decision”. Say “what can you do” to hear the whole list. Keys: Alt+V - speak, Esc - stop. The words “repeat” and “stop” work by voice.</div>\n    <div class="row"><input type="text" id="as-txt" placeholder="Type a command (↑ - previous)"><button id="as-send" title="Run">▶</button><button id="as-mic" title="Say a command (Chrome)">🎤</button></div>\n    <div class="leg" id="as-live" style="min-height:16px;color:var(--acc)"></div>\n    <div id="as-chips"></div>\n    <div class="row"><button class="sec" id="as-stop" style="display:none">■ Stop</button><a href="/labplus/voice" style="font-size:12px;margin-left:auto">LAB+: voice, ROC, standards</a></div>\n    <div id="as-log" style="margin-top:6px"></div>\n    <details><summary>Voice output</summary>\n      <label><input type="checkbox" id="as-on"> Speak the answers</label>\n      <label>Voice</label><select id="as-voice"></select><div class="leg" id="as-voicehint" style="color:#b45309"></div>\n      <label>Speed: <b id="as-ratev"></b></label><input type="range" id="as-rate" min="0.8" max="1.4" step="0.05">\n      <button class="sec" id="as-demo" style="margin-top:6px">▶ Test the voice</button>\n      <div class="leg">The “laboratory voice” is produced by the server (Piper): it is the same for all users and works without the internet. If it is not installed, browser voices are used: the most natural ones are in Chrome (“Google …”) and Edge (“Microsoft … Online (Natural)”).</div></details>
+kk> <div class="row"><b>Зертхана көмекшісі</b><button class="sec" id="as-x" style="margin-left:auto" title="Жию">×</button></div>\n    <div class="leg" style="margin:4px 0 8px">Дауыспен немесе мәтінмен команда, мысалы: «суреттің шешімге қалай айналатынын көрсет». Барлық тізімді есту үшін «сен не істей аласың» деңіз. Пернелер: Alt+V - сөйлеу, Esc - тоқтату. «Қайтала» және «тоқта» сөздері дауыспен жұмыс істейді.</div>\n    <div class="row"><input type="text" id="as-txt" placeholder="Команданы жазыңыз (↑ - алдыңғылары)"><button id="as-send" title="Орындау">▶</button><button id="as-mic" title="Команданы айту (Chrome)">🎤</button></div>\n    <div class="leg" id="as-live" style="min-height:16px;color:var(--acc)"></div>\n    <div id="as-chips"></div>\n    <div class="row"><button class="sec" id="as-stop" style="display:none">■ Тоқта</button><a href="/labplus/voice" style="font-size:12px;margin-left:auto">LAB+: дауыс, ROC, стандарттар</a></div>\n    <div id="as-log" style="margin-top:6px"></div>\n    <details><summary>Дыбыстау</summary>\n      <label><input type="checkbox" id="as-on"> Жауаптарды дыбыстау</label>\n      <label>Дауыс</label><select id="as-voice"></select><div class="leg" id="as-voicehint" style="color:#b45309"></div>\n      <label>Жылдамдық: <b id="as-ratev"></b></label><input type="range" id="as-rate" min="0.8" max="1.4" step="0.05">\n      <button class="sec" id="as-demo" style="margin-top:6px">▶ Дауысты тексеру</button>\n      <div class="leg">«Зертхана дауысын» сервер (Piper) дыбыстайды: ол барлық пайдаланушыда бірдей және интернетсіз жұмыс істейді. Орнатылмаса, браузер дауыстары қолданылады: ең табиғиы Chrome («Google …») және Edge («Microsoft … Online (Natural)») ішінде.</div></details>

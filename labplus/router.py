@@ -6,7 +6,9 @@ from typing import List, Optional
 
 import numpy as np
 from fastapi import APIRouter, File, Form, HTTPException, UploadFile
-from fastapi.responses import FileResponse, JSONResponse, RedirectResponse
+from fastapi.responses import FileResponse, HTMLResponse, JSONResponse, RedirectResponse
+
+from app.core import i18n
 from pydantic import BaseModel, Field
 
 from .core import audio, explain, imaging, intent, metrics, standards
@@ -52,7 +54,8 @@ def static_file(name: str):
 def page(page: str):
     if page not in PAGES:
         raise HTTPException(404)
-    return FileResponse(STATIC / f"{page}.html")
+    html = (STATIC / f"{page}.html").read_text(encoding="utf-8")
+    return HTMLResponse(i18n.inject_page(html), headers={"Cache-Control": "no-cache", "Vary": "Cookie, Accept-Language"})
 
 
 @router.get("/api/labplus/health")

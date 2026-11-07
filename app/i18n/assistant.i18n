@@ -1,0 +1,490 @@
+# Помощник лаборатории: ответы, названия, подсказки и примеры команд (команды на английском и казахском разбирает services/assistant_i18n.py).
+# Казахский перевод выполнен автоматически и требует проверки носителем языка.
+
+ru> Отпечатки пальцев
+en> Fingerprints
+kk> Саусақ іздері
+
+ru> Лицо
+en> Face
+kk> Бет
+
+ru> Радужка
+en> Iris
+kk> Нұрлы қабық
+
+ru> Голос
+en> Voice
+kk> Дауыс
+
+ru> Обучение распознаванию
+en> Recognition training
+kk> Тануды оқыту
+
+ru> Практикум: код
+en> Code practicum
+kk> Практикум: код
+
+ru> Площадка нейросети
+en> Neural network playground
+kk> Нейрондық желі алаңы
+
+ru> отпечатки пальцев
+en> fingerprints
+kk> саусақ іздері
+
+ru> лицо
+en> face
+kk> бет
+
+ru> радужка
+en> iris
+kk> нұрлы қабық
+
+ru> голос
+en> voice
+kk> дауыс
+
+ru> обучение распознаванию
+en> recognition training
+kk> тануды оқыту
+
+ru> практикум: код
+en> code practicum
+kk> практикум: код
+
+ru> площадка нейросети
+en> neural network playground
+kk> нейрондық желі алаңы
+
+ru> синтетика
+en> synthetic data
+kk> синтетика
+
+ru> метрики ROC и DET
+en> ROC and DET metrics
+kk> ROC және DET метрикалары
+
+ru> устойчивость к искажениям
+en> robustness to distortions
+kk> бұрмалауларға төзімділік
+
+ru> стандарты ISO/IEC
+en> ISO/IEC standards
+kk> ISO/IEC стандарттары
+
+ru> бинаризация
+en> binarization
+kk> бинаризация
+
+ru> нормализация
+en> normalization
+kk> нормалау
+
+ru> число пересечений
+en> crossing number
+kk> қиылысу саны
+
+ru> верификация
+en> verification
+kk> верификация
+
+ru> FAR и FRR
+en> FAR and FRR
+kk> FAR және FRR
+
+ru> MFCC с динамикой
+en> MFCC with dynamics
+kk> динамикасы бар MFCC
+
+ru> высота тона
+en> pitch
+kk> тон биіктігі
+
+ru> MFCC и высота тона
+en> MFCC and pitch
+kk> MFCC және тон биіктігі
+
+ru> голосование
+en> voting
+kk> дауыс беру
+
+ru> локальные структуры
+en> local structures
+kk> жергілікті құрылымдар
+
+ru> фазовая корреляция
+en> phase correlation
+kk> фазалық корреляция
+
+ru> обученная вами нейросеть
+en> the neural network you trained
+kk> сіз оқытқан нейрондық желі
+
+ru> Габор
+en> Gabor
+kk> Габор
+
+ru> лог-Габор
+en> log-Gabor
+kk> лог-Габор
+
+ru> вейвлет Хаара
+en> Haar wavelet
+kk> Хаар вейвлеті
+
+ru> пиксели
+en> pixels
+kk> пиксельдер
+
+ru> палец
+en> finger
+kk> саусақ
+
+ru> глаз
+en> eye
+kk> көз
+
+ru> диктор
+en> speaker
+kk> диктор
+
+ru> открываю вкладку «{0}»
+en> opening the tab “{0}”
+kk> «{0}» қойындысын ашамын
+
+ru> выбираю набор {0}
+en> selecting the dataset {0}
+kk> {0} жиынын таңдаймын
+
+ru> обучаю на данных: {0}
+en> training on the data: {0}
+kk> деректерде оқытамын: {0}
+
+ru> набор для обучения {0}
+en> training dataset {0}
+kk> оқыту жиыны {0}
+
+ru> метод: {0}
+en> method: {0}
+kk> әдіс: {0}
+
+ru> порог {0}
+en> threshold {0}
+kk> шек {0}
+
+ru> повышаю порог на {0}
+en> raising the threshold by {0}
+kk> шекті {0}-ге көтеремін
+
+ru> понижаю порог на {0}
+en> lowering the threshold by {0}
+kk> шекті {0}-ге төмендетемін
+
+ru> записываю голос в образец {0} (4 секунды)
+en> recording the voice into sample {0} (4 seconds)
+kk> дауысты {0} үлгісіне жазамын (4 секунд)
+
+ru> проигрываю образец {0}
+en> playing sample {0}
+kk> {0} үлгісін ойнатамын
+
+ru> выбираю образец {0}: {1} {2}, снимок {3}
+en> selecting sample {0}: {1} {2}, shot {3}
+kk> {0} үлгісін таңдаймын: {1} {2}, {3}-сурет
+
+ru> следующий этап
+en> next step
+kk> келесі кезең
+
+ru> предыдущий этап
+en> previous step
+kk> алдыңғы кезең
+
+ru> последний этап
+en> last step
+kk> соңғы кезең
+
+ru> перехожу на этап {0}
+en> going to step {0}
+kk> {0}-кезеңге өтемін
+
+ru> открываю задание «{0}»
+en> opening the task “{0}”
+kk> «{0}» тапсырмасын ашамын
+
+ru> показываю подсказку {0}
+en> showing hint {0}
+kk> {0}-кеңесті көрсетемін
+
+ru> провожу экскурсию от изображения до решения
+en> giving a tour from the image to the decision
+kk> суреттен шешімге дейін экскурсия өткіземін
+
+ru> показываю этапы обработки
+en> showing the processing steps
+kk> өңдеу кезеңдерін көрсетемін
+
+ru> сравниваю образцы A и B
+en> comparing samples A and B
+kk> A және B үлгілерін салыстырамын
+
+ru> сравниваю методы на выбранной паре
+en> comparing the methods on the chosen pair
+kk> әдістерді таңдалған жұпта салыстырамын
+
+ru> сравниваю способы получения признаков
+en> comparing the ways of getting features
+kk> белгілерді алу тәсілдерін салыстырамын
+
+ru> оцениваю методы по EER
+en> evaluating the methods by EER
+kk> әдістерді EER бойынша бағалаймын
+
+ru> считаю FAR, FRR и EER
+en> computing FAR, FRR and EER
+kk> FAR, FRR және EER есептеймін
+
+ru> строю 3D-рельеф
+en> building the 3D relief
+kk> 3D-бедер құрамын
+
+ru> строю 3D-конвейер
+en> building the 3D pipeline
+kk> 3D-конвейер құрамын
+
+ru> включаю облёт камеры
+en> turning on the camera flight
+kk> камераның айналып ұшуын қосамын
+
+ru> запускаю стресс-тест искажений
+en> starting the distortion stress test
+kk> бұрмалау стресс-тестін іске қосамын
+
+ru> готовлю запуск обучения
+en> preparing to start the training
+kk> оқытуды іске қосуға дайындаймын
+
+ru> останавливаю обучение
+en> stopping the training
+kk> оқытуды тоқтатамын
+
+ru> разбираю последний результат
+en> analyzing the last result
+kk> соңғы нәтижені талдаймын
+
+ru> запускаю код на примере
+en> running the code on the example
+kk> кодты мысалда іске қосамын
+
+ru> проверяю решение
+en> checking the solution
+kk> шешімді тексеремін
+
+ru> возвращаю начальный код
+en> restoring the starter code
+kk> бастапқы кодты қайтарамын
+
+ru> объясняю последний результат
+en> explaining the last result
+kk> соңғы нәтижені түсіндіремін
+
+ru> переключаю обучение на площадке
+en> toggling the training on the playground
+kk> алаңдағы оқытуды ауыстырамын
+
+ru> делаю один шаг обучения
+en> making one training step
+kk> оқытудың бір қадамын жасаймын
+
+ru> сбрасываю площадку
+en> resetting the playground
+kk> алаңды бастапқы күйге қайтарамын
+
+ru> повторяю последнюю команду
+en> repeating the last command
+kk> соңғы команданы қайталаймын
+
+ru> Команда пустая. Скажите или напишите, что сделать.
+en> The command is empty. Say or type what to do.
+kk> Команда бос. Не істеу керектігін айтыңыз немесе жазыңыз.
+
+ru> Повторяю последнюю команду.
+en> Repeating the last command.
+kk> Соңғы команданы қайталаймын.
+
+ru> Останавливаю.
+en> Stopping.
+kk> Тоқтатамын.
+
+ru> Открываю страницу LAB+: {0}.
+en> Opening the LAB+ page: {0}.
+kk> LAB+ бетін ашамын: {0}.
+
+ru> Команда не распознана.
+en> The command was not recognized.
+kk> Команда танылмады.
+
+ru> Возможно, вы имели в виду: {0}.
+en> Maybe you meant: {0}.
+kk> Мүмкін, сіз мынаны меңзедіңіз: {0}.
+
+ru> Попробуйте, например: {0}.
+en> Try, for example: {0}.
+kk> Мысалы, мынаны байқап көріңіз: {0}.
+
+ru> Скажите «что ты умеешь», чтобы услышать весь список.
+en> Say “what can you do” to hear the whole list.
+kk> Барлық тізімді есту үшін «сен не істей аласың» деңіз.
+
+ru> Покажи, как изображение превращается в решение
+en> Show how the image turns into a decision
+kk> Суреттің шешімге қалай айналатынын көрсет
+
+ru> Открой отпечатки, набор FVC2004, сравни образцы
+en> Open fingerprints, FVC2004 dataset, compare samples
+kk> Саусақ іздерін аш, FVC2004 жиыны, үлгілерді салыстыр
+
+ru> Оцени качество на FVC2004 DB3
+en> Evaluate the quality on FVC2004 DB3
+kk> FVC2004 DB3 бойынша сапаны бағала
+
+ru> Покажи 3D-конвейер
+en> Show the 3D pipeline
+kk> 3D конвейерді көрсет
+
+ru> Сравни методы
+en> Compare the methods
+kk> Әдістерді салыстыр
+
+ru> Радужка CASIA, покажи этапы
+en> Iris, CASIA dataset, show the stages
+kk> Нұрлы қабық, CASIA, кезеңдерді көрсет
+
+ru> Стресс-тест SOCOFing
+en> Stress test on SOCOFing
+kk> SOCOFing стресс-тесті
+
+ru> Объясни результат
+en> Explain the result
+kk> Нәтижені түсіндір
+
+ru> Покажи кривые ROC
+en> Show the ROC curves
+kk> ROC қисықтарын көрсет
+
+ru> Сравни палец 101 оттиск 1 и палец 102 оттиск 1
+en> Compare finger 101 impression 1 and finger 102 impression 1
+kk> Саусақ 101 таңба 1 және саусақ 102 таңба 1 салыстыр
+
+ru> Выбери палец 103 оттиск 2 как образец B
+en> Select finger 103 impression 2 as sample B
+kk> Саусақ 103 таңба 2 B үлгісі ретінде таңда
+
+ru> Следующий этап
+en> Next step
+kk> Келесі кезең
+
+ru> Предыдущий этап
+en> Previous step
+kk> Алдыңғы кезең
+
+ru> Перейди на этап 4
+en> Go to step 4
+kk> 4 кезеңге өт
+
+ru> Увеличь порог
+en> Increase the threshold
+kk> Шекті арттыр
+
+ru> Уменьши порог на 0,1
+en> Decrease the threshold by 0.1
+kk> Шекті 0,1-ге азайт
+
+ru> Порог ноль пять
+en> Threshold zero point five
+kk> Шек нөл үтір бес
+
+ru> Покажи рельеф
+en> Show the relief
+kk> Рельефті көрсет
+
+ru> Покажи 3D-конвейер и облёт
+en> Show the 3D pipeline and fly around
+kk> 3D конвейерді көрсет және айналып өт
+
+ru> Оцени методы по EER
+en> Evaluate the methods by EER
+kk> Әдістерді EER бойынша бағала
+
+ru> Сравни методом SIFT
+en> Compare using SIFT
+kk> SIFT әдісімен салыстыр
+
+ru> Открой голос и сравни записи
+en> Open voice and compare the recordings
+kk> Дауысты аш және жазбаларды салыстыр
+
+ru> Запиши мой голос в образец А
+en> Record my voice into sample A
+kk> Дауысымды A үлгісіне жаз
+
+ru> Прослушай образец Б
+en> Play sample B
+kk> B үлгісін тыңда
+
+ru> Сравни дикторов методом MFCC
+en> Compare the speakers with MFCC
+kk> Дикторларды MFCC әдісімен салыстыр
+
+ru> Открой практикум
+en> Open the code lab
+kk> Практикумды аш
+
+ru> Задание бинаризация
+en> Task binarization
+kk> Бинаризация тапсырмасы
+
+ru> Запусти код на примере
+en> Run the code on the example
+kk> Кодты мысалда іске қос
+
+ru> Дай подсказку
+en> Give me a hint
+kk> Кеңес бер
+
+ru> Проверь решение
+en> Check the solution
+kk> Шешімді тексер
+
+ru> Начни обучение на CASIA
+en> Start training on CASIA
+kk> CASIA-да оқытуды баста
+
+ru> Останови обучение
+en> Stop the training
+kk> Оқытуды тоқтат
+
+ru> Открой площадку нейросети и запусти обучение
+en> Open the neural network playground and start training
+kk> Нейрондық желі алаңын аш және оқытуды баста
+
+ru> Повтори
+en> Repeat
+kk> Қайтала
+
+ru> Что ты умеешь
+en> What can you do
+kk> Сен не істей аласың
+
+ru> Покажи стандарты ISO
+en> Show the ISO standards
+kk> ISO стандарттарын көрсет
+
+ru> Проверь устойчивость к шуму
+en> Check the robustness to noise
+kk> Шуға төзімділікті тексер
+
+ru> Я управляю лабораторией: открываю вкладки (отпечатки, лицо, радужка, голос, обучение, практикум, площадка), выбираю набор данных (FVC2002, FVC2004, SOCOFing, CASIA, LFW, синтетика), метод, порог и образцы A и B («выбери палец сто один оттиск три», «сравни палец сто один и палец сто два»), показываю этапы и перехожу между ними («следующий этап», «этап четыре»), сравниваю образцы, оцениваю качество (FAR, FRR, EER), сравниваю методы, строю 3D-рельеф и 3D-конвейер, запускаю стресс-тест искажений и обучение сети. Фраза «покажи, как изображение превращается в решение» запускает экскурсию с объяснением каждого этапа. В практикуме: «открой задание бинаризация», «запусти код», «дай подсказку два», «проверь решение». «Повтори» повторяет прошлую команду, «стоп» останавливает. Слова «объясни результат» разберут последнее сравнение. Страницы LAB+: голос, кривые ROC и DET, устойчивость, стандарты.
+en> I control the laboratory: I open the tabs (fingerprints, face, iris, voice, training, practicum, playground), choose the dataset (FVC2002, FVC2004, SOCOFing, CASIA, LFW, synthetic), the method, the threshold and the samples A and B (“select finger one hundred one impression three”, “compare finger one hundred one and finger one hundred two”), show the steps and move between them (“next step”, “step four”), compare samples, evaluate the quality (FAR, FRR, EER), compare methods, build the 3D relief and the 3D pipeline, run the distortion stress test and the network training. The phrase “show how the image turns into a decision” starts a tour with an explanation of each step. In the practicum: “open the task binarization”, “run the code”, “give me hint two”, “check the solution”. “Repeat” repeats the previous command, “stop” stops. The words “explain the result” analyze the last comparison. LAB+ pages: voice, ROC and DET curves, robustness, standards.
+kk> Мен зертхананы басқарамын: қойындыларды ашамын (саусақ іздері, бет, нұрлы қабық, дауыс, оқыту, практикум, алаң), деректер жиынын (FVC2002, FVC2004, SOCOFing, CASIA, LFW, синтетика), әдісті, шекті және A мен B үлгілерін таңдаймын («саусақ 101 таңба 3 таңда», «саусақ 101 мен саусақ 102 салыстыр»), кезеңдерді көрсетіп, олардың арасында ауысамын («келесі кезең», «4 кезең»), үлгілерді салыстырамын, сапаны бағалаймын (FAR, FRR, EER), әдістерді салыстырамын, 3D-бедер мен 3D-конвейер құрамын, бұрмалау стресс-тестін және желіні оқытуды іске қосамын. «Суреттің шешімге қалай айналатынын көрсет» тіркесі әр кезеңді түсіндіре отырып экскурсия бастайды. Практикумда: «бинаризация тапсырмасын аш», «кодты іске қос», «екінші кеңесті бер», «шешімді тексер». «Қайтала» алдыңғы команданы қайталайды, «тоқта» тоқтатады. «Нәтижені түсіндір» сөздері соңғы салыстыруды талдайды. LAB+ беттері: дауыс, ROC және DET қисықтары, төзімділік, стандарттар.

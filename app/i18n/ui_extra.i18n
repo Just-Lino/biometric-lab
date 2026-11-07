@@ -1,0 +1,69 @@
+# Добавочные записи интерфейса (вывод примеров в практикуме, подсказки-команды ассистента).
+
+ru> Вывод print():
+en> Output of print():
+kk> print() шығысы:
+
+ru> Пример:
+en> Example:
+kk> Мысал:
+
+ru> вход:
+en> input:
+kk> кіріс:
+
+ru> ожидается:
+en> expected:
+kk> күтілетіні:
+
+ru> результат:
+en> result:
+kk> нәтиже:
+
+ru> совпадает ✓
+en> matches ✓
+kk> сәйкес келеді ✓
+
+ru> не совпадает ✗
+en> does not match ✗
+kk> сәйкес келмейді ✗
+
+ru> Ошибка
+en> Error
+kk> Қате
+
+ru> строка
+en> line
+kk> жол
+
+ru> Синтаксическая ошибка
+en> Syntax error
+kk> Синтаксистік қате
+
+ru> Здравствуйте! Я помощник виртуальной лаборатории. Скажите, что показать.
+en> Hello! I am the virtual laboratory assistant. Tell me what to show.
+kk> Сәлеметсіз бе! Мен виртуалды зертхананың көмекшісімін. Не көрсету керегін айтыңыз.
+
+ru> Покажи, как изображение превращается в решение
+en> Show how the image turns into a decision
+kk> Суреттің шешімге қалай айналатынын көрсет
+
+ru> Открой радужку, набор CASIA, покажи этапы
+en> Open iris, the CASIA set, show the steps
+kk> Нұрлы қабықты аш, CASIA жиыны, кезеңдерді көрсет
+
+ru> Оцени качество на FVC2004
+en> Evaluate the quality on FVC2004
+kk> FVC2004 бойынша сапаны бағала
+
+ru> Покажи 3D-конвейер
+en> Show the 3D pipeline
+kk> 3D конвейерді көрсет
+
+ru> Сравни методы
+en> Compare the methods
+kk> Әдістерді салыстыр
+
+ru> нет голосов этого языка
+en> no voices for this language
+kk> бұл тілге дауыстар жоқ

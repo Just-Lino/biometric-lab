@@ -40,8 +40,7 @@
 <h3>Рабочие точки (как в отчётах по тестированию)</h3><table id="ops"></table>
 <p class="note" id="warn"></p></div>
 </div>
-<script>
-LAB.nav('metrics');
+<script>LAB.nav('metrics');
 const $=LAB.$, C=()=>LAB.col();
 let A=null,B=null,T=0.5,timer=null;
 const sl=(id,v)=>{$(id).oninput=()=>{$(v).textContent=(+$(id).value).toFixed(2);sched()}};
@@ -58,7 +57,7 @@ function body(preset){
 }
 async function load(){
   try{
-    const p=$('#preset').value; LAB.show($('#msg'),'Считаю…');
+    const p=$('#preset').value; LAB.show($('#msg'),LT('Считаю…'));
     A=await LAB.post('/api/labplus/metrics/analyze',p==='csv'?{mode:'csv',csv:$('#csv').value}:body(p));
     B=$('#cmp').checked?await LAB.post('/api/labplus/metrics/analyze',body($('#presetB').value)):null;
     document.querySelectorAll('.cmpL').forEach(e=>e.style.display=B?'':'none');
@@ -73,25 +72,25 @@ function draw(){
   const fmr=A.fmr[i],fnmr=A.fnmr[i];
   $('#live').innerHTML=`<div><small>FMR (FAR)</small><b>${LAB.pct(fmr)}</b></div><div><small>FNMR (FRR)</small><b>${LAB.pct(fnmr)}</b></div><div><small>GAR</small><b>${LAB.pct(A.gar[i])}</b></div><div><small>Accuracy</small><b>${LAB.pct(A.accuracy[i])}</b></div><div><small>Precision</small><b>${LAB.pct(A.precision[i])}</b></div><div><small>F1</small><b>${A.f1[i].toFixed(3)}</b></div>`;
   const h=A.hist,ym=Math.max(...h.genuine,...h.impostor)*1.1;
-  LAB.plot($('#cHist'),{xmin:A.range[0],xmax:A.range[1],ymin:0,ymax:ym,xlabel:'оценка сходства',ylabel:'доля',bars:[{edges:h.edges,vals:h.genuine,color:c.ok},{edges:h.edges,vals:h.impostor,color:c.bad}],vlines:[{x:T,color:c.ink,label:'порог'}],h:250});
-  LAB.plot($('#cErr'),{xmin:A.range[0],xmax:A.range[1],ymin:0,ymax:1,xlabel:'порог',ylabel:'доля ошибок',series:[{x:A.thresholds,y:A.fmr,color:c.bad},{x:A.thresholds,y:A.fnmr,color:c.acc}],vlines:[{x:T,color:c.ink}],points:[{x:A.eer_threshold,y:A.eer,color:c.ink,label:'EER '+LAB.pct(A.eer)}],h:250});
+  LAB.plot($('#cHist'),{xmin:A.range[0],xmax:A.range[1],ymin:0,ymax:ym,xlabel:LT('оценка сходства'),ylabel:LT('доля'),bars:[{edges:h.edges,vals:h.genuine,color:c.ok},{edges:h.edges,vals:h.impostor,color:c.bad}],vlines:[{x:T,color:c.ink,label:LT('порог')}],h:250});
+  LAB.plot($('#cErr'),{xmin:A.range[0],xmax:A.range[1],ymin:0,ymax:1,xlabel:LT('порог'),ylabel:LT('доля ошибок'),series:[{x:A.thresholds,y:A.fmr,color:c.bad},{x:A.thresholds,y:A.fnmr,color:c.acc}],vlines:[{x:T,color:c.ink}],points:[{x:A.eer_threshold,y:A.eer,color:c.ink,label:'EER '+LAB.pct(A.eer)}],h:250});
   const rocS=[{x:A.fmr,y:A.gar,color:c.acc}];if(B)rocS.push({x:B.fmr,y:B.gar,color:c.b});
   LAB.plot($('#cRoc'),{xmin:0,xmax:1,ymin:0,ymax:1,xlabel:'FMR',ylabel:'GAR',series:rocS.concat([{x:[0,1],y:[0,1],color:c.line,dash:[4,4],w:1}]),points:[{x:fmr,y:A.gar[i],color:c.ink}],h:250});
   const P=[0.1,0.5,1,2,5,10,20,40,70],tk=P.map(p=>[LAB.probit(p/100),p+'%']);
   const detS=[{x:A.det_x,y:A.det_y,color:c.acc}];if(B)detS.push({x:B.det_x,y:B.det_y,color:c.b});
   const cl=A.n_genuine>0?0.5/Math.min(A.n_genuine,A.n_impostor):0.001;
   LAB.plot($('#cDet'),{xmin:LAB.probit(Math.max(0.0005,cl)),xmax:LAB.probit(0.8),ymin:LAB.probit(Math.max(0.0005,cl)),ymax:LAB.probit(0.8),xticks:tk.filter(t=>t[0]>=LAB.probit(Math.max(0.0005,cl))),yticks:tk.filter(t=>t[0]>=LAB.probit(Math.max(0.0005,cl))),xlabel:'FMR',ylabel:'FNMR',series:detS,points:[{x:LAB.probit(Math.max(fmr,cl)),y:LAB.probit(Math.max(fnmr,cl)),color:c.ink}],h:250});
-  const ci=A.eer_ci[0]==null?'':` (95 % ДИ: ${LAB.pct(A.eer_ci[0])} – ${LAB.pct(A.eer_ci[1])})`;
-  $('#sum').innerHTML=`<div><small>EER${ci?'':''}</small><b>${LAB.pct(A.eer)}</b></div><div><small>Порог при EER</small><b>${A.eer_threshold.toFixed(3)}</b></div><div><small>AUC</small><b>${A.auc.toFixed(4)}</b></div><div><small>d′ (разделимость)</small><b>${A.dprime}</b></div><div><small>Своих / чужих пар</small><b>${A.n_genuine} / ${A.n_impostor}</b></div>`+(ci?`<div style="grid-column:1/-1"><small>Доверительный интервал EER (bootstrap)</small><b>${ci.replace(/[()]/g,'')}</b></div>`:'');
-  let t='<tr><th>Цель по FMR</th><th>Порог</th><th>Факт. FMR</th><th>FNMR</th><th>Достоверность</th></tr>';
-  A.ops.forEach(o=>t+=`<tr><td>${LAB.pct(o.target_fmr,1)}</td><td>${o.threshold}</td><td>${LAB.pct(o.fmr,3)}</td><td>${LAB.pct(o.fnmr,2)}</td><td>${o.reliable?'<span class="pill ok">достаточно данных</span>':`<span class="pill warn">мало: нужно ≥ ${o.need_impostors} чужих</span>`}</td></tr>`);
+  const ci=A.eer_ci[0]==null?'':LT(` (95 % ДИ: {0} – {1})`,[LAB.pct(A.eer_ci[0]),LAB.pct(A.eer_ci[1])]);
+  $('#sum').innerHTML=LT(`<div><small>EER{0}</small><b>{1}</b></div><div><small>Порог при EER</small><b>{2}</b></div><div><small>AUC</small><b>{3}</b></div><div><small>d′ (разделимость)</small><b>{4}</b></div><div><small>Своих / чужих пар</small><b>{5} / {6}</b></div>`,[ci?'':'',LAB.pct(A.eer),A.eer_threshold.toFixed(3),A.auc.toFixed(4),A.dprime,A.n_genuine,A.n_impostor])+(ci?LT(`<div style="grid-column:1/-1"><small>Доверительный интервал EER (bootstrap)</small><b>{0}</b></div>`,[ci.replace(/[()]/g,'')]):'');
+  let t=LT('<tr><th>Цель по FMR</th><th>Порог</th><th>Факт. FMR</th><th>FNMR</th><th>Достоверность</th></tr>');
+  A.ops.forEach(o=>t+=`<tr><td>${LAB.pct(o.target_fmr,1)}</td><td>${o.threshold}</td><td>${LAB.pct(o.fmr,3)}</td><td>${LAB.pct(o.fnmr,2)}</td><td>${o.reliable?LT('<span class="pill ok">достаточно данных</span>'):LT(`<span class="pill warn">мало: нужно ≥ {0} чужих</span>`,[o.need_impostors])}</td></tr>`);
   $('#ops').innerHTML=t;
   const bad=A.ops.filter(o=>!o.reliable).length;
-  $('#warn').textContent=bad?'Правило трёх: чтобы утверждать FMR на уровне x, нужно хотя бы 3/x чужих сравнений. Иначе малая ошибка может быть просто нехваткой данных.':'';
+  $('#warn').textContent=bad?LT('Правило трёх: чтобы утверждать FMR на уровне x, нужно хотя бы 3/x чужих сравнений. Иначе малая ошибка может быть просто нехваткой данных.'):'';
   LAB.setLast('metrics',{eer:A.eer,auc:A.auc,dprime:A.dprime,ops:A.ops,at_threshold:{fmr,fnmr}});
 }
 $('#explainBtn').onclick=async()=>{try{const l=LAB.getLast();const r=await LAB.post('/api/labplus/explain',{kind:'metrics',payload:l.payload,level:+$('#lvl').value});LAB.show($('#explainMsg'),r.text)}catch(e){LAB.show($('#explainMsg'),e.message,true)}};
-$('#speakBtn').onclick=()=>LAB.speak($('#explainMsg').textContent||'Сначала нажмите «Объяснить».');
+$('#speakBtn').onclick=()=>LAB.speak($('#explainMsg').textContent||LT('Сначала нажмите «Объяснить».'));
 window.addEventListener('resize',()=>{if(A)draw()});
 load().then(()=>{if(LAB.params.get('autorun')==='1'){$('#explainBtn').click()}});
 </script></body></html>

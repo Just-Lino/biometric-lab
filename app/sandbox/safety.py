@@ -4,6 +4,7 @@
 выполнение в Docker (--network none, --memory, --read-only, пользователь без прав)."""
 import ast
 import builtins
+import sys
 
 ALLOWED_IMPORTS = {"math", "numpy", "cv2", "skimage", "itertools", "functools", "collections", "statistics",
                    "typing", "operator", "random", "fractions", "decimal"}
@@ -20,6 +21,13 @@ BANNED_ATTRS = {"load", "loadtxt", "genfromtxt", "fromfile", "save", "savez", "s
                 # OpenCV и scikit-image: запись и чтение файлов, загрузка моделей
                 "imsave", "imread_collection", "FileStorage", "VideoWriter", "dnn", "CascadeClassifier", "readNet",
                 "readNetFromONNX", "readNetFromCaffe", "readNetFromTensorflow", "readNetFromDarknet", "readNetFromTorch"}
+
+
+# Служебные модули numpy, которые сам numpy подгружает при a.mean(), a.std(), a.var(), a.clip() и т.п. Это C-код: он вызывает
+# __import__ из builtins текущего кода, то есть из ограниченных builtins песочницы. Пока студент не написал такой импорт сам
+# (check_code его запрещает: «_core»/«core» в BANNED_SUBMODULES), пропускаем только уже загруженные модули, новый код не выполняется.
+NUMPY_INTERNAL = {"numpy._core._methods", "numpy._core._internal", "numpy._core._exceptions", "numpy._core._dtype",
+                  "numpy.core._methods", "numpy.core._internal", "numpy.core._exceptions", "numpy.core._dtype"}
 
 
 class SafetyError(Exception):
@@ -74,6 +82,8 @@ def safe_builtins() -> dict:
     b = {n: getattr(builtins, n) for n in names if hasattr(builtins, n)}
 
     def _import(name, globals=None, locals=None, fromlist=(), level=0):
+        if name in NUMPY_INTERNAL and name in sys.modules:
+            return builtins.__import__(name, globals, locals, fromlist, level)
         _check_module(name, None)
         return builtins.__import__(name, globals, locals, fromlist, level)
 

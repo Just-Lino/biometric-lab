@@ -1,0 +1,114 @@
+# Голосовой помощник LAB+ (labplus/core/intent.py): цели, описания работы, фразы-рамки ответов.
+# Казахский перевод выполнен автоматически и требует проверки носителем языка.
+
+ru> распознавание отпечатков пальцев
+en> fingerprint recognition
+kk> саусақ ізін тануды
+
+ru> распознавание лица
+en> face recognition
+kk> бетті тануды
+
+ru> распознавание радужки
+en> iris recognition
+kk> нұрлы қабықты тануды
+
+ru> голосовую биометрию
+en> voice biometrics
+kk> дауыстық биометрияны
+
+ru> метрики и кривые ошибок
+en> metrics and error curves
+kk> метрикалар мен қате қисықтарын
+
+ru> проверку устойчивости к искажениям
+en> the robustness check against distortions
+kk> бұрмалауларға төзімділікті тексеруді
+
+ru> раздел о международных стандартах
+en> the section on international standards
+kk> халықаралық стандарттар бөлімін
+
+ru> по датасету {0}
+en> on dataset {0}
+kk> {0} деректер жиыны бойынша
+
+ru> для {0} человек
+en> for {0} people
+kk> {0} адам үшін
+
+ru> Отпечаток обрабатывается так: улучшение изображения, бинаризация, скелетизация линий, поиск окончаний и разветвлений, затем сопоставление шаблонов и решение по порогу.
+en> A fingerprint is processed like this: image enhancement, binarization, line skeletonization, search for endings and bifurcations, then template matching and a decision by the threshold.
+kk> Саусақ ізі былай өңделеді: суретті жақсарту, бинаризация, сызықтарды скелетизациялау, аяқталулар мен тармақталуларды іздеу, содан кейін шаблондарды салыстыру және шек бойынша шешім.
+
+ru> Лицо обрабатывается так: поиск лица, выравнивание по глазам, получение вектора признаков, сравнение косинусной близостью и решение по порогу.
+en> A face is processed like this: face detection, alignment by the eyes, getting a feature vector, comparison by cosine similarity and a decision by the threshold.
+kk> Бет былай өңделеді: бетті табу, көздер бойынша туралау, белгілер векторын алу, косинустық жақындық бойынша салыстыру және шек бойынша шешім.
+
+ru> Радужка: находим зрачок и границу радужки, разворачиваем кольцо в прямоугольник, фильтры Габора дают код, коды сравниваются расстоянием Хэмминга.
+en> Iris: we find the pupil and the iris boundary, unroll the ring into a rectangle, the Gabor filters give a code, the codes are compared by the Hamming distance.
+kk> Нұрлы қабық: қарашық пен нұрлы қабық шекарасын табамыз, сақинаны тіктөртбұрышқа жаямыз, Габор сүзгілері код береді, кодтар Хэмминг қашықтығымен салыстырылады.
+
+ru> Голос: выделяем речь, считаем мел-кепстральные коэффициенты и высоту тона, строим шаблон по нескольким фразам и сравниваем новую запись с ним.
+en> Voice: we detect the speech, compute the mel-cepstral coefficients and the pitch, build a template from several phrases and compare a new recording with it.
+kk> Дауыс: сөйлеуді бөліп аламыз, мел-кепстрлік коэффициенттер мен тон биіктігін есептейміз, бірнеше фраза бойынша шаблон құрып, жаңа жазбаны онымен салыстырамыз.
+
+ru> Здесь показаны распределения оценок своих и чужих, ошибки FMR и FNMR при разных порогах, кривые ROC и DET и равная ошибка EER.
+en> Here you see the distributions of the genuine and impostor scores, the FMR and FNMR errors at different thresholds, the ROC and DET curves and the equal error rate EER.
+kk> Мұнда өз және бөтен бағалардың таралуы, әртүрлі шектердегі FMR және FNMR қателері, ROC және DET қисықтары және тең қате EER көрсетілген.
+
+ru> Изображение или звук искажаются всё сильнее, и мы смотрим, при каком уровне искажения оценка сходства падает ниже порога.
+en> The image or the sound is distorted more and more, and we look at which distortion level makes the similarity score fall below the threshold.
+kk> Сурет немесе дыбыс барған сайын көбірек бұрмаланады, біз бұрмалаудың қай деңгейінде ұқсастық бағасы шектен төмен түсетінін қараймыз.
+
+ru> В этом разделе собраны международные стандарты по тестированию, качеству, защите шаблонов и атакам на биометрию, с привязкой к функциям лаборатории.
+en> This section collects the international standards on testing, quality, template protection and attacks on biometrics, tied to the functions of the laboratory.
+kk> Бұл бөлімде тестілеу, сапа, шаблондарды қорғау және биометрияға шабуылдар бойынша халықаралық стандарттар зертхана функцияларымен байланыстырылып жиналған.
+
+ru> Да, понял.
+en> Yes, understood.
+kk> Иә, түсіндім.
+
+ru> Запускаю {0}.
+en> Starting {0}.
+kk> Іске қосамын: {0}.
+
+ru> Откройте раздел и нажмите кнопку запуска.
+en> Open the section and press the start button.
+kk> Бөлімді ашып, іске қосу батырмасын басыңыз.
+
+ru> Я поняла: {0}.
+en> I understood: {0}.
+kk> Мен түсіндім: {0}.
+
+ru> Запустить сейчас?
+en> Start now?
+kk> Қазір іске қосайын ба?
+
+ru> Скажите да или нет.
+en> Say yes or no.
+kk> Иә немесе жоқ деңіз.
+
+ru> Объясняю последний результат.
+en> Explaining the last result.
+kk> Соңғы нәтижені түсіндіремін.
+
+ru> Я понимаю команды вроде: покажи распознавание отпечатков пальцев по датасету Ф-1; запусти распознавание лица; покажи кривые ROC; проверь устойчивость к шуму; объясни результат.
+en> I understand commands like: show fingerprint recognition on dataset FVC2004; run face recognition; show the ROC curves; check the robustness to noise; explain the result.
+kk> Мен мынадай командаларды түсінемін: саусақ ізін тануды FVC2004 жиыны бойынша көрсет; бетті тануды іске қос; ROC қисықтарын көрсет; шуға төзімділікті тексер; нәтижені түсіндір.
+
+ru> Скажите, что нужно.
+en> Say what you need.
+kk> Не қажет екенін айтыңыз.
+
+ru> Здравствуйте! Я голосовой помощник лаборатории. Скажите, например: покажи распознавание отпечатков пальцев.
+en> Hello! I am the voice assistant of the laboratory. Say, for example: show fingerprint recognition.
+kk> Сәлеметсіз бе! Мен зертхананың дауыстық көмекшісімін. Мысалы, былай деңіз: саусақ ізін тануды көрсет.
+
+ru> Хорошо, остановилась.
+en> OK, I stopped.
+kk> Жақсы, тоқтадым.
+
+ru> Не поняла команду. Попробуйте: покажи распознавание отпечатков пальцев, или скажите «помощь».
+en> I did not understand the command. Try: show fingerprint recognition, or say “help”.
+kk> Команданы түсінбедім. Мынаны байқап көріңіз: саусақ ізін тануды көрсет, немесе «көмек» деңіз.

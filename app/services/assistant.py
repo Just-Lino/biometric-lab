@@ -9,6 +9,9 @@
 import difflib
 import re
 
+from app.core.i18n import current_lang, translate
+from app.services.assistant_i18n import to_ru
+
 MOD_TITLE = {"fingerprint": "Отпечатки пальцев", "face": "Лицо", "iris": "Радужка", "voice": "Голос", "train": "Обучение распознаванию",
              "code": "Практикум: код", "nn": "Площадка нейросети"}
 SOURCE_TITLE = {"socofing": "SOCOFing", "casia_interval": "CASIA-Iris-Interval", "LFW": "LFW", "synthetic": "синтетика"}
@@ -104,7 +107,7 @@ def _norm(text: str) -> str:
     t = re.sub(r"(3 ?d|3 ?д|три ?д|трех ?мерн\w*|3-d|3-д)", " 3d ", t)  # распознавание речи пишет «3D» по-разному
     t = re.sub(r"[^\w\s.,%+-]", " ", t)
     t = re.sub(r"\s+", " ", t).strip()
-    return _numwords(t)
+    return _numwords(to_ru(t))   # английские и казахские слова команды -> русские опорные слова, дальше правила общие
 
 
 def _has(t: str, pat: str) -> bool:
@@ -272,7 +275,7 @@ def _parse_one(text: str, ctx: dict) -> dict:
     if _has(t, r"объясни|поясни|почему|что (это )?значит|разбери|как понять|что получилось") and not in_code:
         acts.append("explain")
 
-    relative = _has(t, r"(увелич|повыс|подним|больше|выше|уменьш|пониз|опуст|меньше|ниже)\w*.*порог|порог.*(больше|выше|меньше|ниже)")
+    relative = _has(t, r"(увелич|повыс|подним|больше|выше|уменьш|пониз|опуст|меньше|ниже)\w*.*порог|порог.*(больше|выше|меньше|ниже|увелич|повыс|подним|уменьш|пониз|опуст)")   # глагол после «порог» - порядок слов казахского языка
     thr = None if relative else re.search(r"порог\w*\s*(?:равн\w*|на|в|=)?\s*(\d+(?:[.,]\d+)?)", t)
     delta = None
     if not thr and _has(t, r"порог"):
@@ -357,8 +360,11 @@ def parse(text: str, ctx: dict | None = None, alternatives: list[str] | None = N
             best, heard = r, c
     if best is None:
         r = _parse_one(text, ctx)
-        norm = _norm(text)
-        bank = {_norm(p): p for p in PHRASE_BANK}
+        if current_lang() == "ru":
+            norm, bank = _norm(text), {_norm(p): p for p in PHRASE_BANK}
+        else:                                                      # подсказки «возможно, вы имели в виду» - на языке пользователя, сравниваем сырой текст
+            light = lambda s: re.sub(r"\s+", " ", re.sub(r"[^\w\s]", " ", (s or "").lower())).strip()
+            norm, bank = light(text), {light(translate(p)): translate(p) for p in PHRASE_BANK}
         close = [bank[k] for k in difflib.get_close_matches(norm, list(bank), n=3, cutoff=0.4)] if norm else []
         r["reply"] = r["reply"] or ("Команда не распознана. " + (("Возможно, вы имели в виду: " + "; ".join(f"«{c}»" for c in close) + ". ") if close else
                                     ("Попробуйте, например: " + "; ".join(f"«{e}»" for e in EXAMPLES[:3]) + ". ")) + "Скажите «что ты умеешь», чтобы услышать весь список.")
@@ -410,5 +416,5 @@ def _reply(actions: list[dict]) -> str:
                           "explain": "разбираю последний результат", "code_run": "запускаю код на примере", "code_submit": "проверяю решение",
                           "code_reset": "возвращаю начальный код", "code_explain": "объясняю последний результат", "nn_play": "переключаю обучение на площадке",
                           "nn_step": "делаю один шаг обучения", "nn_reset": "сбрасываю площадку", "repeat": "повторяю последнюю команду"}.get(d, d))
-    s = ", ".join(parts)
+    s = ", ".join(translate(p) for p in parts)      # части переводятся по отдельности: порядок слов в других языках свой
     return s[:1].upper() + s[1:] + "."

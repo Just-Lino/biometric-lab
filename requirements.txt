@@ -17,3 +17,5 @@ pytest>=8.0
 httpx>=0.27
 # опционально (ИИ-наставник через OpenAI, когда появится ключ):
 # openai>=1.30
+# опционально (UI-тесты практикума в браузере, tests/test_code_browser_ui.py; нужен установленный Edge или Chrome):
+# playwright>=1.40

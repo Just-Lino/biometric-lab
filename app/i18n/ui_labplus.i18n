@@ -1,0 +1,721 @@
+# Интерфейс: тексты главной страницы и страниц LAB+ (собрано из исходного кода, переводы казахского проверить носителем).
+
+ru> Метрики и ROC/DET
+en> Metrics and ROC/DET
+kk> Метрикалар және ROC/DET
+
+ru> Устойчивость
+en> Robustness
+kk> Тұрақтылық
+
+ru> Стандарты
+en> Standards
+kk> Стандарттар
+
+ru> <a href="{0}" style="margin-left:auto">← в лабораторию</a>
+en> <a href="{0}" style="margin-left:auto">← to the laboratory</a>
+kk> <a href="{0}" style="margin-left:auto">← зертханаға</a>
+
+ru> Нет связи с сервером. Он запущен?
+en> No connection to the server. Is it running?
+kk> Сервермен байланыс жоқ. Ол іске қосылған ба?
+
+ru> Микрофон недоступен: откройте страницу через localhost или HTTPS.
+en> The microphone is unavailable: open the page via localhost or HTTPS.
+kk> Микрофон қолжетімсіз: бетті localhost немесе HTTPS арқылы ашыңыз.
+
+ru> Нет доступа к микрофону. Разрешите его в браузере.
+en> No access to the microphone. Allow it in the browser.
+kk> Микрофонға рұқсат жоқ. Браузерде оған рұқсат беріңіз.
+
+ru> Голосовая команда
+en> Voice command
+kk> Дауыстық команда
+
+ru> <div class="row"><b>Голосовой помощник</b><button id="lp-x" style="margin-left:auto">×</button></div>\n      <label>Режим</label><select id="lp-mode"><option value="auto">Автозапуск: сам запускает</option><option value="hint">Подсказка: объясняет, я нажимаю</option><option value="confirm">Спрашивать подтверждение</option></select>\n      <label><input type="checkbox" id="lp-spk"> Проверять мой голос (профиль: <span id="lp-name">{0}</span>)</label>\n      <label>Голос озвучки</label><select id="lp-voice"></select>\n      <div class="row" style="margin-top:8px"><button class="pri" id="lp-go">🎤 Сказать команду</button></div>\n      <div class="row" style="margin-top:8px"><input type="text" id="lp-txt" placeholder="или напишите команду" style="flex:1"><button id="lp-send">▶</button></div>\n      <div id="lp-log" style="margin-top:8px"></div>\n      <div class="note">Примеры: «покажи распознавание отпечатков пальцев по датасету FVC2004», «покажи кривые ROC», «проверь устойчивость к шуму», «объясни результат», «помощь».</div>
+en> <div class="row"><b>Voice assistant</b><button id="lp-x" style="margin-left:auto">×</button></div>\n      <label>Mode</label><select id="lp-mode"><option value="auto">Autorun: runs by itself</option><option value="hint">Hint: explains, I press</option><option value="confirm">Ask for confirmation</option></select>\n      <label><input type="checkbox" id="lp-spk"> Verify my voice (profile: <span id="lp-name">{0}</span>)</label>\n      <label>Speech voice</label><select id="lp-voice"></select>\n      <div class="row" style="margin-top:8px"><button class="pri" id="lp-go">🎤 Say a command</button></div>\n      <div class="row" style="margin-top:8px"><input type="text" id="lp-txt" placeholder="or type a command" style="flex:1"><button id="lp-send">▶</button></div>\n      <div id="lp-log" style="margin-top:8px"></div>\n      <div class="note">Examples: “show fingerprint recognition on the FVC2004 dataset”, “show the ROC curves”, “check robustness to noise”, “explain the result”, “help”.</div>
+kk> <div class="row"><b>Дауыстық көмекші</b><button id="lp-x" style="margin-left:auto">×</button></div>\n      <label>Режим</label><select id="lp-mode"><option value="auto">Автоіске қосу: өзі іске қосады</option><option value="hint">Кеңес: түсіндіреді, мен басамын</option><option value="confirm">Растауды сұрау</option></select>\n      <label><input type="checkbox" id="lp-spk"> Дауысымды тексеру (профиль: <span id="lp-name">{0}</span>)</label>\n      <label>Дыбыстау дауысы</label><select id="lp-voice"></select>\n      <div class="row" style="margin-top:8px"><button class="pri" id="lp-go">🎤 Команда айту</button></div>\n      <div class="row" style="margin-top:8px"><input type="text" id="lp-txt" placeholder="немесе команданы жазыңыз" style="flex:1"><button id="lp-send">▶</button></div>\n      <div id="lp-log" style="margin-top:8px"></div>\n      <div class="note">Мысалдар: «FVC2004 деректер жиыны бойынша саусақ іздерін тануды көрсет», «ROC қисықтарын көрсет», «шуға төзімділікті тексер», «нәтижені түсіндір», «көмек».</div>
+
+ru> <option value="">Автоматически
+en> <option value="">Automatically
+kk> <option value="">Автоматты
+
+ru>  (голос лаборатории: 
+en>  (laboratory voice: 
+kk>  (зертхана дауысы:
+
+ru> <option value="{0}">Браузер: {1}</option>
+en> <option value="{0}">Browser: {1}</option>
+kk> <option value="{0}">Браузер: {1}</option>
+
+ru> <option value="" disabled>Голос лаборатории не установлен (см. README)</option>
+en> <option value="" disabled>The laboratory voice is not installed (see README)</option>
+kk> <option value="" disabled>Зертхана дауысы орнатылмаған (README қараңыз)</option>
+
+ru> Голос: сходство {0}, {1}
+en> Voice: similarity {0}, {1}
+kk> Дауыс: ұқсастық {0}, {1}
+
+ru> узнан
+en> recognized
+kk> танылды
+
+ru> не узнан
+en> not recognized
+kk> танылмады
+
+ru> ✅ Выполняю
+en> ✅ Running
+kk> ✅ Орындалуда
+
+ru> Хорошо, запускаю.
+en> Okay, starting.
+kk> Жақсы, іске қосамын.
+
+ru> Отменено
+en> Cancelled
+kk> Бас тартылды
+
+ru> Хорошо, не буду.
+en> Okay, I will not.
+kk> Жақсы, істемеймін.
+
+ru> 🎤 Слушаю…
+en> 🎤 Listening…
+kk> 🎤 Тыңдап тұрмын…
+
+ru> Не расслышала.
+en> I did not catch that.
+kk> Анық естімедім.
+
+ru> Не расслышала. Повторите, пожалуйста.
+en> I did not catch that. Please repeat.
+kk> Анық естімедім. Қайталаңызшы.
+
+ru> Пока нет результата для объяснения. Запустите эксперимент и повторите.
+en> There is no result to explain yet. Run an experiment and repeat.
+kk> Түсіндіруге нәтиже әлі жоқ. Эксперимент жүргізіп, қайталаңыз.
+
+ru> Для этого раздела не настроен переход (см. LAB.config.routes).
+en> No navigation is configured for this section (see LAB.config.routes).
+kk> Бұл бөлім үшін өту бапталмаған (LAB.config.routes қараңыз).
+
+ru> LAB+ · Голос
+en> LAB+ · Voice
+kk> LAB+ · Дауыс
+
+ru> Голосовая биометрия
+en> Voice biometrics
+kk> Дауыстық биометрия
+
+ru> Регистрация голоса → проверка «свой/чужой» → голосовые команды лаборатории. В профиле хранится числовой шаблон; записи фраз лежат на сервере отдельными файлами, чтобы их можно было прослушать, и удаляются вместе с профилем.
+en> Voice enrollment → “genuine/impostor” check → laboratory voice commands. The profile stores a numeric template; the phrase recordings lie on the server as separate files so that they can be listened to, and they are deleted together with the profile.
+kk> Дауысты тіркеу → «өз/бөтен» тексеру → зертхананың дауыстық командалары. Профильде сандық үлгі сақталады; фраза жазбалары тыңдауға болатындай серверде бөлек файлдар болып жатады және профильмен бірге жойылады.
+
+ru> Здесь вы регистрируете свой голос и проверяете «свой/чужой». Пошаговый разбор голоса (спектрограмма, MFCC, высота тона), сравнение двух записей и оценку FAR/FRR/EER на дикторах смотрите на вкладке «Голос» основной лаборатории:
+en> Here you enroll your voice and check “genuine/impostor”. The step-by-step analysis of a voice (spectrogram, MFCC, pitch), the comparison of two recordings and the FAR/FRR/EER evaluation on speakers are on the “Voice” tab of the main laboratory:
+kk> Мұнда дауысыңызды тіркеп, «өз/бөтен» тексересіз. Дауысты кезең-кезеңімен талдауды (спектрограмма, MFCC, тон биіктігі), екі жазбаны салыстыруды және дикторлар бойынша FAR/FRR/EER бағалауды негізгі зертхананың «Дауыс» қойындысынан қараңыз:
+
+ru> открыть вкладку «Голос»
+en> open the “Voice” tab
+kk> «Дауыс» қойындысын ашу
+
+ru> 1. Голосовой шаблон
+en> 1. Voice template
+kk> 1. Дауыс үлгісі
+
+ru> Имя профиля (лучше псевдоним, не ФИО)
+en> Profile name (better a nickname, not your full name)
+kk> Профиль аты (аты-жөніңізден гөрі лақап ат жақсы)
+
+ru> например, student-1
+en> for example, student-1
+kk> мысалы, student-1
+
+ru> Существующие профили
+en> Existing profiles
+kk> Бар профильдер
+
+ru> Использовать выбранный
+en> Use the selected one
+kk> Таңдалғанды пайдалану
+
+ru> Удалить профиль
+en> Delete the profile
+kk> Профильді жою
+
+ru> Произнесите разные фразы по 2–5 секунд (нужно минимум 3):
+en> Say different phrases of 2–5 seconds (at least 3 are needed):
+kk> 2–5 секундтық әртүрлі фразаларды айтыңыз (кемінде 3 қажет):
+
+ru> 🎤 Записать фразу
+en> 🎤 Record a phrase
+kk> 🎤 Фразаны жазу
+
+ru> Создать шаблон
+en> Create a template
+kk> Үлгі жасау
+
+ru> Сбросить
+en> Reset
+kk> Қалпына келтіру
+
+ru> 2. Проверка голоса
+en> 2. Voice check
+kk> 2. Дауысты тексеру
+
+ru> Порог принятия:
+en> Acceptance threshold:
+kk> Қабылдау шегі:
+
+ru> 🎤 Записать и проверить
+en> 🎤 Record and check
+kk> 🎤 Жазу және тексеру
+
+ru> Заполнение полосы — оценка сходства, чёрная черта — порог. Передвигайте порог после проверки: решение пересчитывается сразу.
+en> The bar fill is the similarity score, the black line is the threshold. Move the threshold after the check: the decision is recomputed at once.
+kk> Жолақтың толуы - ұқсастық бағасы, қара сызық - шек. Тексеруден кейін шекті жылжытыңыз: шешім бірден қайта есептеледі.
+
+ru> Объяснение
+en> Explanation
+kk> Түсіндірме
+
+ru> Рекомендация
+en> Recommendation
+kk> Ұсыныс
+
+ru> 🤖 Объяснить результат
+en> 🤖 Explain the result
+kk> 🤖 Нәтижені түсіндіру
+
+ru> 🔊 Озвучить
+en> 🔊 Read aloud
+kk> 🔊 Дыбыстау
+
+ru> Что видит система
+en> What the system sees
+kk> Жүйе нені көреді
+
+ru> Волна → лог-мел-спектрограмма (энергия по частотам) → MFCC (компактное описание тембра).
+en> Waveform → log-mel spectrogram (energy by frequency) → MFCC (a compact description of the timbre).
+kk> Толқын → лог-мел-спектрограмма (жиіліктер бойынша энергия) → MFCC (тембрдің ықшам сипаттамасы).
+
+ru> 3. Устойчивость голоса к искажениям
+en> 3. Voice robustness to distortions
+kk> 3. Дауыстың бұрмалауларға тұрақтылығы
+
+ru> Берёт последнюю запись из шага 2 и ухудшает её: шум, телефонный канал, эхо, имитация воспроизведения с динамика. Видно, при каком уровне система перестаёт узнавать вас, и это хорошая иллюстрация атаки повтором.
+en> Takes the last recording from step 2 and degrades it: noise, a telephone channel, echo, an imitation of playback from a speaker. You can see at what level the system stops recognizing you, and this is a good illustration of a replay attack.
+kk> 2-қадамдағы соңғы жазбаны алып, оны нашарлатады: шу, телефон арнасы, жаңғырық, динамиктен ойнатуды елестету. Жүйе сізді қай деңгейде тануды тоқтататыны көрінеді, бұл қайталау шабуылының жақсы көрсетілімі.
+
+ru> Проверить устойчивость
+en> Check robustness
+kk> Тұрақтылықты тексеру
+
+ru> 4. Голосовые команды
+en> 4. Voice commands
+kk> 4. Дауыстық командалар
+
+ru> Нажмите 🎤 в правом нижнем углу. Режимы:
+en> Press 🎤 in the lower right corner. Modes:
+kk> Төменгі оң жақ бұрыштағы 🎤 батырмасын басыңыз. Режимдер:
+
+ru> (система сама открывает раздел и озвучивает ответ),
+en> (the system opens the section itself and speaks the answer),
+kk> (жүйе бөлімді өзі ашып, жауапты дыбыстайды),
+
+ru> (объясняет, а вы нажимаете сами),
+en> (explains, and you press yourself),
+kk> (түсіндіреді, ал басуды өзіңіз жасайсыз),
+
+ru> (спрашивает «запустить?»). Команду можно и напечатать, если браузер не поддерживает распознавание речи (нужен Chrome).
+en> (asks “run it?”). A command can also be typed if the browser does not support speech recognition (Chrome is needed).
+kk> («іске қосайын ба?» деп сұрайды). Браузер сөйлеуді танымаса, команданы жазуға да болады (Chrome қажет).
+
+ru> автозапуск
+en> autorun
+kk> автоіске қосу
+
+ru> подсказка
+en> hint
+kk> кеңес
+
+ru> подтверждение
+en> confirmation
+kk> растау
+
+ru> Если включить «Проверять мой голос», команды от чужого голоса не выполняются. Примеры: «покажи распознавание отпечатков пальцев по датасету FVC2004 для 20 человек», «покажи кривые ROC», «проверь устойчивость к шуму», «объясни результат».
+en> If you turn on “Verify my voice”, commands from someone else's voice are not executed. Examples: “show fingerprint recognition on the FVC2004 dataset for 20 people”, “show the ROC curves”, “check robustness to noise”, “explain the result”.
+kk> «Дауысымды тексеру» қоссаңыз, бөтен дауыстан келген командалар орындалмайды. Мысалдар: «FVC2004 деректер жиыны бойынша 20 адамға саусақ іздерін тануды көрсет», «ROC қисықтарын көрсет», «шуға төзімділікті тексер», «нәтижені түсіндір».
+
+ru> Ограничения: распознавание речи делает сам браузер (звук уходит на сервис браузера, не в лабораторию); смысл команды определяют правила по ключевым словам.
+en> Limitations: speech recognition is done by the browser itself (the sound goes to the browser's service, not to the laboratory); the meaning of a command is determined by keyword rules.
+kk> Шектеулер: сөйлеуді танууды браузердің өзі жасайды (дыбыс лабораторияға емес, браузер қызметіне кетеді); команданың мағынасын кілт сөздер бойынша ережелер анықтайды.
+
+ru> Меня зовут … и я изучаю биометрию
+en> My name is … and I study biometrics
+kk> Менің атым … және мен биометрияны оқимын
+
+ru> Сегодня хорошая погода для лабораторной работы
+en> The weather is nice today for a lab class
+kk> Бүгін зертханалық жұмысқа ауа райы жақсы
+
+ru> Один два три четыре пять шесть семь
+en> One two three four five six seven
+kk> Бір екі үш төрт бес алты жеті
+
+ru> Виртуальная лаборатория распознаёт образы
+en> The virtual laboratory recognizes patterns
+kk> Виртуалды зертхана бейнелерді таниды
+
+ru> Идеи: 
+en> Ideas: 
+kk> Идеялар:
+
+ru> {0} ({1} фраз, {2})
+en> {0} ({1} phrases, {2})
+kk> {0} ({1} фраза, {2})
+
+ru> — профилей пока нет —
+en> — no profiles yet —
+kk> — әзірге профильдер жоқ —
+
+ru> Записи этого профиля не сохранены (профиль создан до добавления прослушивания). Создайте шаблон заново, чтобы их можно было слушать.
+en> The recordings of this profile are not saved (the profile was created before listening was added). Create the template again so that they can be listened to.
+kk> Бұл профильдің жазбалары сақталмаған (профиль тыңдау мүмкіндігі қосылғанға дейін жасалған). Оларды тыңдауға болуы үшін үлгіні қайта жасаңыз.
+
+ru> Записи профиля: 
+en> Profile recordings: 
+kk> Профиль жазбалары:
+
+ru> ▶ Фраза 
+en> ▶ Phrase 
+kk> ▶ Фраза
+
+ru> Не удалось воспроизвести запись.
+en> Could not play the recording.
+kk> Жазбаны ойнату мүмкін болмады.
+
+ru> ⏹ Стоп
+en> ⏹ Stop
+kk> ⏹ Тоқтату
+
+ru> Записано фраз: {0} 
+en> Phrases recorded: {0} 
+kk> Жазылған фразалар: {0}
+
+ru>  Стабильность голоса между фразами: {0}.
+en>  Voice stability between phrases: {0}.
+kk>  Фразалар арасындағы дауыс тұрақтылығы: {0}.
+
+ru> Шаблон «{0}» создан: {1} фразы, {2} признаков.{3} Записи фраз сохранены, их можно прослушать ниже.
+en> The template “{0}” is created: {1} phrases, {2} features.{3} The phrase recordings are saved, you can listen to them below.
+kk> «{0}» үлгісі жасалды: {1} фраза, {2} белгі.{3} Фраза жазбалары сақталды, оларды төменде тыңдауға болады.
+
+ru> Активный профиль: {0}
+en> Active profile: {0}
+kk> Белсенді профиль: {0}
+
+ru> Удалить профиль «
+en> Delete the profile “
+kk> Профильді жою «
+
+ru> Профиль удалён.
+en> The profile is deleted.
+kk> Профиль жойылды.
+
+ru> <span class="pill {0}">{1}</span> сходство <b>{2}</b>, порог {3}
+en> <span class="pill {0}">{1}</span> similarity <b>{2}</b>, threshold {3}
+kk> <span class="pill {0}">{1}</span> ұқсастық <b>{2}</b>, шек {3}
+
+ru> MATCH · голос принят
+en> MATCH · voice accepted
+kk> MATCH · дауыс қабылданды
+
+ru> NO MATCH · голос не принят
+en> NO MATCH · voice rejected
+kk> NO MATCH · дауыс қабылданбады
+
+ru> Сначала создайте или выберите профиль.
+en> First create or choose a profile.
+kk> Алдымен профиль жасаңыз немесе таңдаңыз.
+
+ru> <div><small>Расстояние до шаблона</small><b>{0}</b></div><div><small>Речь, с</small><b>{1}</b></div><div><small>Тон F0, Гц</small><b>{2}</b></div><div><small>Доля звонких</small><b>{3}</b></div>
+en> <div><small>Distance to the template</small><b>{0}</b></div><div><small>Speech, s</small><b>{1}</b></div><div><small>Pitch F0, Hz</small><b>{2}</b></div><div><small>Voiced share</small><b>{3}</b></div>
+kk> <div><small>Үлгіге дейінгі қашықтық</small><b>{0}</b></div><div><small>Сөйлеу, с</small><b>{1}</b></div><div><small>F0 тоны, Гц</small><b>{2}</b></div><div><small>Үнді дыбыстар үлесі</small><b>{3}</b></div>
+
+ru> Считаю…
+en> Calculating…
+kk> Есептелуде…
+
+ru> <p class="note">Исходная оценка: <b>{0}</b>, порог {1}. Зелёное — принято, красное — не принято; «отклонено» — после искажения в записи не нашлось достаточно речи.</p><table class="heat"><tr><th>Искажение</th><th colspan="5">Оценки от слабого к сильному</th><th>Ломается на</th></tr>
+en> <p class="note">The initial score: <b>{0}</b>, threshold {1}. Green - accepted, red - rejected; “rejected” - after the distortion the recording did not contain enough speech.</p><table class="heat"><tr><th>Distortion</th><th colspan="5">Scores from weak to strong</th><th>Breaks at</th></tr>
+kk> <p class="note">Бастапқы баға: <b>{0}</b>, шек {1}. Жасыл - қабылданды, қызыл - қабылданбады; «қабылданбады» - бұрмалаудан кейін жазбадан жеткілікті сөйлеу табылмады.</p><table class="heat"><tr><th>Бұрмалау</th><th colspan="5">Әлсізден күштіге дейінгі бағалар</th><th>Бұзылатын деңгей</th></tr>
+
+ru> отклонено
+en> rejected
+kk> қабылданбады
+
+ru> не ломается
+en> does not break
+kk> бұзылмайды
+
+ru> LAB+ · Метрики
+en> LAB+ · Metrics
+kk> LAB+ · Метрикалар
+
+ru> Метрики биометрической системы: ROC, DET, EER
+en> Biometric system metrics: ROC, DET, EER
+kk> Биометриялық жүйе метрикалары: ROC, DET, EER
+
+ru> Двигайте порог и смотрите, как меняются ложные совпадения (FMR/FAR) и ложные несовпадения (FNMR/FRR). Терминология по ISO/IEC 19795-1.
+en> Move the threshold and watch how false matches (FMR/FAR) and false non-matches (FNMR/FRR) change. The terminology follows ISO/IEC 19795-1.
+kk> Шекті жылжытып, жалған сәйкестіктер (FMR/FAR) мен жалған сәйкессіздіктердің (FNMR/FRR) қалай өзгеретінін қараңыз. Терминология ISO/IEC 19795-1 бойынша.
+
+ru> Система A (набор оценок)
+en> System A (a set of scores)
+kk> A жүйесі (бағалар жиыны)
+
+ru> Хорошая
+en> Good
+kk> Жақсы
+
+ru> Средняя
+en> Medium
+kk> Орташа
+
+ru> Слабая
+en> Weak
+kk> Әлсіз
+
+ru> Свои параметры
+en> Own parameters
+kk> Өз параметрлері
+
+ru> Загрузить оценки (CSV)
+en> Load scores (CSV)
+kk> Бағаларды жүктеу (CSV)
+
+ru> Своих пар (genuine)
+en> Genuine pairs
+kk> Өз жұптар (genuine)
+
+ru> Чужих пар (impostor)
+en> Impostor pairs
+kk> Бөтен жұптар (impostor)
+
+ru> Среднее своих:
+en> Genuine mean:
+kk> Өздердің орташасы:
+
+ru> Разброс своих:
+en> Genuine spread:
+kk> Өздердің шашырауы:
+
+ru> Среднее чужих:
+en> Impostor mean:
+kk> Бөтендердің орташасы:
+
+ru> Разброс чужих:
+en> Impostor spread:
+kk> Бөтендердің шашырауы:
+
+ru> Строки «метка,оценка», метки: genuine/impostor (или свой/чужой)
+en> Lines “label,score”, labels: genuine/impostor (or own/other)
+kk> «белгі,баға» жолдары, белгілер: genuine/impostor (немесе өз/бөтен)
+
+ru> Применить
+en> Apply
+kk> Қолдану
+
+ru> Сравнить с системой B
+en> Compare with system B
+kk> B жүйесімен салыстыру
+
+ru> B: хорошая
+en> B: good
+kk> B: жақсы
+
+ru> B: средняя
+en> B: medium
+kk> B: орташа
+
+ru> B: слабая
+en> B: weak
+kk> B: әлсіз
+
+ru> Построить
+en> Build
+kk> Құру
+
+ru> Порог принятия решения
+en> Decision threshold
+kk> Шешім шегі
+
+ru> (по умолчанию в точке EER)
+en> (by default at the EER point)
+kk> (әдепкі бойынша EER нүктесінде)
+
+ru> 🤖 Объяснить
+en> 🤖 Explain
+kk> 🤖 Түсіндіру
+
+ru> Распределения оценок
+en> Score distributions
+kk> Бағалар таралуы
+
+ru> свои (genuine)
+en> genuine
+kk> өз (genuine)
+
+ru> чужие (impostor)
+en> impostor
+kk> бөтен (impostor)
+
+ru> ⋮ порог
+en> ⋮ threshold
+kk> ⋮ шек
+
+ru> Чем меньше перекрытие, тем лучше система различает людей.
+en> The smaller the overlap, the better the system tells people apart.
+kk> Қиылысу аз болған сайын, жүйе адамдарды жақсырақ ажыратады.
+
+ru> FMR и FNMR от порога
+en> FMR and FNMR versus the threshold
+kk> Шекке байланысты FMR және FNMR
+
+ru> Порог вверх: ложных допусков меньше, ложных отказов больше.
+en> Threshold up: fewer false accepts, more false rejects.
+kk> Шек жоғары: жалған қабылдау аз, жалған бас тарту көп.
+
+ru> ROC-кривая
+en> ROC curve
+kk> ROC қисығы
+
+ru> ● рабочая точка
+en> ● working point
+kk> ● жұмыс нүктесі
+
+ru> По осям FMR и GAR = 1 − FNMR. Лучше — ближе к левому верхнему углу.
+en> The axes are FMR and GAR = 1 − FNMR. The closer to the upper left corner, the better.
+kk> Осьтер - FMR және GAR = 1 − FNMR. Сол жақ жоғарғы бұрышқа жақын болған сайын жақсы.
+
+ru> DET-кривая
+en> DET curve
+kk> DET қисығы
+
+ru> Шкала нормального отклонения: хорошая система даёт почти прямую линию, ближе к левому нижнему углу.
+en> A normal deviate scale: a good system gives an almost straight line, closer to the lower left corner.
+kk> Қалыпты ауытқу шкаласы: жақсы жүйе дерлік түзу сызық береді, сол жақ төменгі бұрышқа жақын.
+
+ru> Сводка
+en> Summary
+kk> Жиынтық
+
+ru> Рабочие точки (как в отчётах по тестированию)
+en> Working points (as in testing reports)
+kk> Жұмыс нүктелері (сынақ есептеріндегідей)
+
+ru> оценка сходства
+en> similarity score
+kk> ұқсастық бағасы
+
+ru> доля
+en> share
+kk> үлесі
+
+ru> порог
+en> threshold
+kk> шек
+
+ru> доля ошибок
+en> error rate
+kk> қателер үлесі
+
+ru>  (95 % ДИ: {0} – {1})
+en>  (95 % CI: {0} – {1})
+kk>  (95 % СИ: {0} – {1})
+
+ru> <div><small>EER{0}</small><b>{1}</b></div><div><small>Порог при EER</small><b>{2}</b></div><div><small>AUC</small><b>{3}</b></div><div><small>d′ (разделимость)</small><b>{4}</b></div><div><small>Своих / чужих пар</small><b>{5} / {6}</b></div>
+en> <div><small>EER{0}</small><b>{1}</b></div><div><small>Threshold at EER</small><b>{2}</b></div><div><small>AUC</small><b>{3}</b></div><div><small>d′ (separability)</small><b>{4}</b></div><div><small>Genuine / impostor pairs</small><b>{5} / {6}</b></div>
+kk> <div><small>EER{0}</small><b>{1}</b></div><div><small>EER кезіндегі шек</small><b>{2}</b></div><div><small>AUC</small><b>{3}</b></div><div><small>d′ (бөлінгіштік)</small><b>{4}</b></div><div><small>Өз / бөтен жұптар</small><b>{5} / {6}</b></div>
+
+ru> <div style="grid-column:1/-1"><small>Доверительный интервал EER (bootstrap)</small><b>{0}</b></div>
+en> <div style="grid-column:1/-1"><small>EER confidence interval (bootstrap)</small><b>{0}</b></div>
+kk> <div style="grid-column:1/-1"><small>EER сенім интервалы (bootstrap)</small><b>{0}</b></div>
+
+ru> <tr><th>Цель по FMR</th><th>Порог</th><th>Факт. FMR</th><th>FNMR</th><th>Достоверность</th></tr>
+en> <tr><th>FMR target</th><th>Threshold</th><th>Actual FMR</th><th>FNMR</th><th>Reliability</th></tr>
+kk> <tr><th>FMR мақсаты</th><th>Шек</th><th>Нақты FMR</th><th>FNMR</th><th>Сенімділік</th></tr>
+
+ru> <span class="pill ok">достаточно данных</span>
+en> <span class="pill ok">enough data</span>
+kk> <span class="pill ok">деректер жеткілікті</span>
+
+ru> <span class="pill warn">мало: нужно ≥ {0} чужих</span>
+en> <span class="pill warn">few: at least {0} impostors needed</span>
+kk> <span class="pill warn">аз: кемінде {0} бөтен қажет</span>
+
+ru> Правило трёх: чтобы утверждать FMR на уровне x, нужно хотя бы 3/x чужих сравнений. Иначе малая ошибка может быть просто нехваткой данных.
+en> The rule of three: to claim an FMR at level x, at least 3/x impostor comparisons are needed. Otherwise a small error may simply be a lack of data.
+kk> Үш ереже: FMR-ді x деңгейінде растау үшін кемінде 3/x бөтен салыстыру қажет. Әйтпесе аз қате жай деректердің жетіспеуі болуы мүмкін.
+
+ru> Сначала нажмите «Объяснить».
+en> First press “Explain”.
+kk> Алдымен «Түсіндіру» батырмасын басыңыз.
+
+ru> LAB+ · Устойчивость
+en> LAB+ · Robustness
+kk> LAB+ · Тұрақтылық
+
+ru> Атаки и устойчивость
+en> Attacks and robustness
+kk> Шабуылдар және тұрақтылық
+
+ru> Изображение портится всё сильнее: шум, размытие, поворот, потеря контраста, закрытая область, сжатие, низкое разрешение. Смотрим, при каком уровне сопоставитель перестаёт узнавать тот же образ.
+en> The image degrades more and more: noise, blur, rotation, loss of contrast, an occluded area, compression, low resolution. We see at what level the matcher stops recognizing the same image.
+kk> Сурет барған сайын нашарлайды: шу, бұлыңғырлау, бұру, контрастты жоғалту, жабылған аймақ, сығу, төмен ажыратымдылық. Салыстырғыш бір бейнені қай деңгейде тануды тоқтататынын көреміз.
+
+ru> Эксперимент
+en> Experiment
+kk> Эксперимент
+
+ru> Изображение (необязательно)
+en> Image (optional)
+kk> Сурет (міндетті емес)
+
+ru> Без файла берётся учебный синтетический отпечаток.
+en> Without a file a training synthetic fingerprint is used.
+kk> Файлсыз оқу синтетикалық саусақ ізі алынады.
+
+ru> Сопоставитель
+en> Matcher
+kk> Салыстырғыш
+
+ru> Свой алгоритм подключается через register_matcher (см. README).
+en> Your own algorithm is connected through register_matcher (see README).
+kk> Өз алгоритміңіз register_matcher арқылы қосылады (README қараңыз).
+
+ru> Искажение
+en> Distortion
+kk> Бұрмалау
+
+ru> Номер синтетического образца (seed)
+en> Number of the synthetic sample (seed)
+kk> Синтетикалық үлгі нөмірі (seed)
+
+ru> ▶ Запустить
+en> ▶ Run
+kk> ▶ Іске қосу
+
+ru> Как читать результат
+en> How to read the result
+kk> Нәтижені қалай оқу керек
+
+ru> Оценка 1.0 — полное совпадение с оригиналом. «Уровень пола» — оценка для заведомо чужого содержимого (те же пиксели, перемешанные плитки): всё выше него система считает похожим, ниже порога — отвергает. Если график ниже порога, система потеряла образ.
+en> A score of 1.0 is a full match with the original. The “floor level” is the score for a deliberately different content (the same pixels, shuffled tiles): everything above it the system considers similar, below the threshold it rejects. If the graph is below the threshold, the system has lost the image.
+kk> 1,0 бағасы - түпнұсқамен толық сәйкестік. «Еден деңгейі» - әдейі бөтен мазмұн үшін баға (сол пиксельдер, араластырылған плиткалар): одан жоғарының бәрін жүйе ұқсас деп санайды, шектен төменін қабылдамайды. График шектен төмен болса, жүйе бейнені жоғалтты.
+
+ru> Оценка сходства по уровням искажения
+en> Similarity score by distortion level
+kk> Бұрмалау деңгейлері бойынша ұқсастық бағасы
+
+ru> Таблица (зелёное — принято, красное — отклонено)
+en> Table (green - accepted, red - rejected)
+kk> Кесте (жасыл - қабылданды, қызыл - қабылданбады)
+
+ru> Как выглядит искажённое изображение
+en> What the distorted image looks like
+kk> Бұрмаланған сурет қандай болады
+
+ru> <option value="all">Все искажения</option>
+en> <option value="all">All distortions</option>
+kk> <option value="all">Барлық бұрмалау</option>
+
+ru> Ваше изображение (в лабораторию не сохраняется).
+en> Your image (it is not saved in the laboratory).
+kk> Сіздің суретіңіз (зертханада сақталмайды).
+
+ru> Синтетический учебный образец.
+en> A synthetic training sample.
+kk> Синтетикалық оқу үлгісі.
+
+ru> ур. 
+en> lvl. 
+kk> дең.
+
+ru> уровень искажения (0 — без искажения)
+en> distortion level (0 - no distortion)
+kk> бұрмалау деңгейі (0 - бұрмалаусыз)
+
+ru> уровень «чужого»
+en> “impostor” level
+kk> «бөтен» деңгейі
+
+ru> <tr><th style="text-align:left">Искажение</th>{0}<th>Ломается на</th></tr>
+en> <tr><th style="text-align:left">Distortion</th>{0}<th>Breaks at</th></tr>
+kk> <tr><th style="text-align:left">Бұрмалау</th>{0}<th>Бұзылатын деңгей</th></tr>
+
+ru> <th>ур. {0}</th>
+en> <th>lvl. {0}</th>
+kk> <th>дең. {0}</th>
+
+ru> LAB+ · Стандарты
+en> LAB+ · Standards
+kk> LAB+ · Стандарттар
+
+ru> Международные стандарты и методики
+en> International standards and methodologies
+kk> Халықаралық стандарттар мен әдістемелер
+
+ru> Какие стандарты относятся к каждой функции лаборатории и что в проекте уже сделано.
+en> Which standards relate to each laboratory function and what has already been done in the project.
+kk> Зертхананың әр функциясына қандай стандарттар қатысты және жобада не жасалып қойған.
+
+ru> Каталог
+en> Catalog
+kk> Каталог
+
+ru> Функция лаборатории → стандарты
+en> Laboratory function → standards
+kk> Зертхана функциясы → стандарттар
+
+ru> Терминология
+en> Terminology
+kk> Терминология
+
+ru> Соответствие практикам стандартов
+en> Compliance with the practices of the standards
+kk> Стандарттар тәжірибелеріне сәйкестік
+
+ru> сделано
+en> done
+kk> орындалды
+
+ru> в планах
+en> planned
+kk> жоспарда
+
+ru> не заявляется
+en> not claimed
+kk> мәлімделмейді
+
+ru> Все
+en> All
+kk> Барлығы
+
+ru> <div class="note">В лаборатории: {0}</div>
+en> <div class="note">In the laboratory: {0}</div>
+kk> <div class="note">Зертханада: {0}</div>
+
+ru> <tr><th>Функция</th><th>Стандарты</th></tr>
+en> <tr><th>Function</th><th>Standards</th></tr>
+kk> <tr><th>Функция</th><th>Стандарттар</th></tr>
+
+ru> <tr><th>Термин</th><th>Значение</th><th>Примечание</th></tr>
+en> <tr><th>Term</th><th>Meaning</th><th>Note</th></tr>
+kk> <tr><th>Термин</th><th>Мағынасы</th><th>Ескертпе</th></tr>
+
+ru> <tr><th>Практика</th><th>Где</th><th>Статус</th></tr>
+en> <tr><th>Practice</th><th>Where</th><th>Status</th></tr>
+kk> <tr><th>Тәжірибе</th><th>Қайда</th><th>Мәртебесі</th></tr>

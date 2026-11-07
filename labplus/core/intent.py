@@ -4,14 +4,17 @@ from __future__ import annotations
 
 import re
 
+from app.core.i18n import translate
+
+# К русским основам добавлены английские и казахские: команды на этих языках разбираются теми же правилами
 TARGETS = {
-    "fingerprint": ["отпеч", "палец", "пальц", "минуци", "fingerprint"],
-    "face": ["лиц", "face", "эмбеддинг"],
-    "iris": ["радуж", "ирис", "iris", "глаз"],
-    "voice": ["голос", "речь", "диктор"],
-    "metrics": ["roc", "рок", "det", "eer", "far", "frr", "кривую", "кривые", "метрик", "порог", "ошибок"],
-    "robustness": ["атак", "устойчив", "шум", "искажен", "помех", "робаст"],
-    "standards": ["стандарт", "iso", "исо", "нормат", "нист", "nist"],
+    "fingerprint": ["отпеч", "палец", "пальц", "минуци", "fingerprint", "finger", "саусақ"],
+    "face": ["лиц", "face", "эмбеддинг", "embedding", "бет", "бетті", "бетін", "бетке"],
+    "iris": ["радуж", "ирис", "iris", "глаз", "eye", "нұрлы", "көз"],
+    "voice": ["голос", "речь", "диктор", "voice", "speech", "speaker", "дауыс", "сөйлеу"],
+    "metrics": ["roc", "рок", "det", "eer", "far", "frr", "кривую", "кривые", "метрик", "порог", "ошибок", "curve", "metric", "threshold", "error rate", "қисық", "шек", "қате"],
+    "robustness": ["атак", "устойчив", "шум", "искажен", "помех", "робаст", "attack", "robust", "noise", "distort", "interference", "шабуыл", "төзімділік", "бұрмалау", "шу", "шуға"],
+    "standards": ["стандарт", "iso", "исо", "нормат", "нист", "nist", "standard", "regulation"],
 }
 TARGET_RU = {
     "fingerprint": "распознавание отпечатков пальцев", "face": "распознавание лица",
@@ -29,18 +32,25 @@ HOW_IT_WORKS = {
     "standards": "В этом разделе собраны международные стандарты по тестированию, качеству, защите шаблонов и атакам на биометрию, с привязкой к функциям лаборатории.",
 }
 ACTIONS = {
-    "run": ["покаж", "запуст", "начн", "выполн", "сравн", "распозна", "провер", "открой", "включ", "постро", "сдела", "проведи", "зайд"],
-    "explain": ["объясн", "поясн", "почему", "что получилос", "что вышло", "как работает", "расскаж", "что значит", "что это"],
-    "help": ["помощ", "что ты умеешь", "что можешь", "какие команды", "справк"],
-    "stop": ["стоп", "отмена", "хватит", "остановись"],
-    "yes": ["да", "давай", "запускай", "согласен", "конечно"],
-    "no": ["нет", "не надо", "не нужно"],
-    "greet": ["привет", "здравствуй", "добрый день", "добрый вечер", "доброе утро"],
+    "run": ["покаж", "запуст", "начн", "выполн", "сравн", "распозна", "провер", "открой", "включ", "постро", "сдела", "проведи", "зайд",
+            "show", "start", "run", "launch", "open", "compar", "recogni", "check", "build", "go to",
+            "көрсет", "іске қос", "баста", "орында", "салыстыр", "тексер", "аш", "ашыңыз", "құр"],
+    "explain": ["объясн", "поясн", "почему", "что получилос", "что вышло", "как работает", "расскаж", "что значит", "что это",
+                "explain", "why", "how does", "how it works", "what does", "what is", "tell me", "what happened",
+                "түсіндір", "неге", "қалай жұмыс", "не болды", "не білдіреді", "айтып бер"],
+    "help": ["помощ", "что ты умеешь", "что можешь", "какие команды", "справк",
+             "help", "what can you do", "what do you do", "commands", "көмек", "не істей алас", "қандай команда"],
+    "stop": ["стоп", "отмена", "хватит", "остановись", "stop", "cancel", "enough", "abort", "тоқта", "болдырма", "жеткілікті"],
+    "yes": ["да", "давай", "запускай", "согласен", "конечно", "yes", "yeah", "ok", "okay", "go ahead", "sure", "of course", "иә", "ия", "жарайды", "әрине"],
+    "no": ["нет", "не надо", "не нужно", "no", "nope", "not needed", "жоқ", "керек емес", "болмайды"],
+    "greet": ["привет", "здравствуй", "добрый день", "добрый вечер", "доброе утро", "hello", "hi", "good morning", "good afternoon", "good evening",
+              "сәлем", "қайырлы"],
 }
 
-WHOLE_WORD = {"roc", "рок", "det", "eer", "far", "frr", "iso", "исо", "да", "нет"}
-_DS = re.compile(r"(?:датасет\w*|набор\w*(?:\s+данных)?|баз\w+)\s+([\w\-\.]+)", re.I)
-_PEOPLE = re.compile(r"(\d+)\s*(?:человек\w*|люд\w*|субъект\w*|пальц\w*|пар\w*)", re.I)
+WHOLE_WORD = {"roc", "рок", "det", "eer", "far", "frr", "iso", "исо", "да", "нет", "yes", "yeah", "ok", "okay", "no", "nope", "hi", "иә", "ия", "жоқ",
+              "бет", "бетті", "бетін", "бетке", "шу", "шуға", "аш", "ашыңыз", "eye", "көз"}
+_DS = re.compile(r"(?:датасет\w*|набор\w*(?:\s+данных)?|баз\w+|dataset|data set|database|деректер жиыны)\s+([\w\-\.]+)|([\w\-\.]+)\s+(?:жиыны\w*|базасы\w*)", re.I)
+_PEOPLE = re.compile(r"(\d+)\s*(?:человек\w*|люд\w*|субъект\w*|пальц\w*|пар\w*|people|persons|subjects|fingers|pairs|адам\w*|саусақ\w*|жұп\w*)", re.I)
 
 
 def normalize(text: str) -> str:
@@ -78,7 +88,7 @@ def parse(text: str) -> dict:
     pe = _PEOPLE.search(t)
     slots = {}
     if ds:
-        slots["dataset"] = ds.group(1)
+        slots["dataset"] = ds.group(1) or ds.group(2)
     if pe:
         slots["people"] = int(pe.group(1))
 
@@ -99,15 +109,17 @@ def parse(text: str) -> dict:
 def _slot_phrase(slots: dict) -> str:
     bits = []
     if "dataset" in slots:
-        bits.append(f"по датасету {slots['dataset']}")
+        bits.append(translate(f"по датасету {slots['dataset']}"))      # части переводятся отдельно (на русском translate ничего не меняет)
     if "people" in slots:
-        bits.append(f"для {slots['people']} человек")
+        bits.append(translate(f"для {slots['people']} человек"))
     return (" " + ", ".join(bits)) if bits else ""
 
 
 def _replies(intent: str, target: str | None, slots: dict) -> dict:
-    tr = TARGET_RU.get(target or "", "")
-    how = HOW_IT_WORKS.get(target or "", "")
+    """Ответы собираются из русских фраз-рамок («Да, понял.», «Запускаю {0}.»); вставки (цель, описание) уже на языке пользователя,
+    а рамки переводит каталог по предложениям (app/i18n/intent.i18n)."""
+    tr = translate(TARGET_RU.get(target or "", ""))
+    how = translate(HOW_IT_WORKS.get(target or "", ""))
     sp = _slot_phrase(slots)
     if intent == "run":
         return {"reply_run": f"Да, понял. Запускаю {tr}{sp}. {how}",

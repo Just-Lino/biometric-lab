@@ -1,0 +1,35 @@
+{
+  "id": "rank1",
+  "order": 11,
+  "title": "Точность идентификации Rank-1",
+  "topic": "Метрики",
+  "difficulty": "средний",
+  "spec": "rank1",
+  "function": "rank1_accuracy",
+  "theory": "При идентификации система сравнивает пробу со всей галереей и выбирает самую похожую запись. Rank-1 - доля проб, у которых самая похожая запись галереи принадлежит нужному человеку.",
+  "description": "Реализуйте функцию rank1_accuracy(scores, true_idx).\n\n• scores - таблица сходства: строка - проба, столбец - запись галереи (список списков или массив);\n• true_idx - список номеров правильных записей галереи для каждой пробы.\n\nДля каждой пробы выберите столбец с наибольшим сходством (при равенстве - первый). Верните долю проб, у которых он совпал с true_idx (число от 0 до 1). Если проб нет, верните 0.0.",
+  "starter_code": "import numpy as np\n\n\ndef rank1_accuracy(scores, true_idx):\n    # TODO: верните долю верно найденных проб\n    pass\n",
+  "hints": [
+    "Для каждой строки таблицы нужен номер столбца с наибольшим значением - это то, что выбрала система.",
+    "np.argmax(таблица, axis=1) возвращает такие номера сразу для всех строк (при равенстве - первый). Сравните их с true_idx и посчитайте долю совпадений.",
+    "Сначала приведите scores к массиву чисел: np.asarray(scores, dtype=float). Если проб нет (в массиве 0 строк), верните 0.0 до вычисления среднего.",
+    "Полное решение:\n\nimport numpy as np\n\n\ndef rank1_accuracy(scores, true_idx):\n    s = np.asarray(scores, dtype=float)\n    if s.shape[0] == 0:\n        return 0.0\n    predicted = np.argmax(s, axis=1)\n    return float(np.mean(predicted == np.asarray(true_idx)))"
+  ],
+  "solution": "import numpy as np\n\n\ndef rank1_accuracy(scores, true_idx):\n    s = np.asarray(scores, dtype=float)\n    if s.shape[0] == 0:\n        return 0.0\n    predicted = np.argmax(s, axis=1)\n    return float(np.mean(predicted == np.asarray(true_idx)))\n",
+  "question": {
+    "text": "Чем идентификация (1:N) отличается от верификации (1:1)?",
+    "options": [
+      "При идентификации пробу сравнивают со всей галереей, при верификации - с одной заявленной записью",
+      "Идентификация всегда точнее верификации",
+      "Верификация не использует порог",
+      "Различий нет"
+    ],
+    "correct": 0
+  },
+  "rubric": {
+    "run": 2,
+    "basic": 4,
+    "edge": 3,
+    "question": 1
+  }
+}

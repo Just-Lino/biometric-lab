@@ -1,0 +1,149 @@
+# Сообщения сервера: ответы API, шаги конвейеров, подсказки наставника (собрано из кода; казахский проверить носителем).
+
+ru> Код слишком длинный (максимум 20000 символов).
+en> The code is too long (maximum 20000 characters).
+kk> Код тым ұзын (ең көбі 20000 таңба).
+
+ru> функция вернула None (забыт return?)
+en> the function returned None (forgot return?)
+kk> функция None қайтарды (return ұмытылды ма?)
+
+ru> результат не является массивом: {0}
+en> the result is not an array: {0}
+kk> нәтиже массив емес: {0}
+
+ru> неверная форма результата: ожидалась {0}, получена {1}
+en> wrong shape of the result: expected {0}, got {1}
+kk> нәтиженің пішіні қате: {0} күтілді, {1} алынды
+
+ru> неверный тип данных: ожидался {0}, получен {1}
+en> wrong data type: expected {0}, got {1}
+kk> деректер түрі қате: {0} күтілді, {1} алынды
+
+ru> значения не совпадают: ожидалось {0}, получено {1}
+en> the values do not match: expected {0}, got {1}
+kk> мәндер сәйкес келмейді: {0} күтілді, {1} алынды
+
+ru> результат не число: {0}
+en> the result is not a number: {0}
+kk> нәтиже сан емес: {0}
+
+ru> ожидалось {0}, получено {1}
+en> expected {0}, got {1}
+kk> {0} күтілді, {1} алынды
+
+ru> нужен кортеж (score, decision), получено {0}
+en> a tuple (score, decision) is needed, got {0}
+kk> (score, decision) кортежі қажет, {0} алынды
+
+ru> ожидалось ({0}, '{1}'), получено {2}
+en> expected ({0}, '{1}'), got {2}
+kk> ({0}, '{1}') күтілді, {2} алынды
+
+ru> нужен кортеж (far, frr), получено {0}
+en> a tuple (far, frr) is needed, got {0}
+kk> (far, frr) кортежі қажет, {0} алынды
+
+ru> ожидалось ({0}, {1}), получено {2}
+en> expected ({0}, {1}), got {2}
+kk> ({0}, {1}) күтілді, {2} алынды
+
+ru> нужен кортеж (eer, порог), получено {0}
+en> a tuple (eer, threshold) is needed, got {0}
+kk> (eer, шек) кортежі қажет, {0} алынды
+
+ru> угол должен лежать в диапазоне [0, π), получено {0}
+en> the angle must lie in the range [0, π), got {0}
+kk> бұрыш [0, π) диапазонында болуы керек, {0} алынды
+
+ru> ожидалось {0} рад, получено {1}
+en> expected {0} rad, got {1}
+kk> {0} рад күтілді, {1} алынды
+
+ru> тест выполнялся дольше {0} с
+en> the test ran longer than {0} s
+kk> тест {0} с-тан ұзақ орындалды
+
+ru> пропущен: ранее превышено время выполнения
+en> skipped: the execution time was exceeded earlier
+kk> өткізіп жіберілді: бұрын орындау уақыты асып кеткен
+
+ru> код выполнялся слишком долго (бесконечный цикл?)
+en> the code ran too long (an infinite loop?)
+kk> код тым ұзақ орындалды (шексіз цикл бе?)
+
+ru> результат не совпал с эталоном для этого случая
+en> the result did not match the reference for this case
+kk> нәтиже осы жағдай үшін эталонмен сәйкес келмеді
+
+ru> Не найдена функция {0}
+en> The function {0} was not found
+kk> {0} функциясы табылмады
+
+ru> Относительные импорты запрещены.
+en> Relative imports are forbidden.
+kk> Салыстырмалы импорттарға тыйым салынған.
+
+ru> Импорт «{0}» запрещён (доступ к файлам и системе).
+en> The import of “{0}” is forbidden (access to files and the system).
+kk> «{0}» импортына тыйым салынған (файлдар мен жүйеге қолжетімділік).
+
+ru> Использование «{0}» запрещено в учебной песочнице.
+en> The use of “{0}” is forbidden in the training sandbox.
+kk> «{0}» қолдануға оқу құмсалғышында тыйым салынған.
+
+ru> Обращение к служебным атрибутам (__...__) запрещено.
+en> Access to service attributes (__...__) is forbidden.
+kk> Қызметтік атрибуттарға (__...__) қол жеткізуге тыйым салынған.
+
+ru> Атрибут «{0}» запрещён (доступ к файлам и системе).
+en> The attribute “{0}” is forbidden (access to files and the system).
+kk> «{0}» атрибутына тыйым салынған (файлдар мен жүйеге қолжетімділік).
+
+ru> Строки с двойным подчёркиванием (__) запрещены.
+en> Strings with a double underscore (__) are forbidden.
+kk> Қос асты сызығы (__) бар жолдарға тыйым салынған.
+
+ru> Импорт модуля «{0}» запрещён. Разрешены: {1}.
+en> The import of the module “{0}” is forbidden. Allowed: {1}.
+kk> «{0}» модулін импорттауға тыйым салынған. Рұқсат етілген: {1}.
+
+ru> Импорт «{0}» запрещён.
+en> The import of “{0}” is forbidden.
+kk> «{0}» импортына тыйым салынған.
+
+ru> Неизвестный формат значения
+en> Unknown value format
+kk> Мәннің белгісіз форматы
+
+ru> Неизвестный способ сравнения: {0}
+en> Unknown comparison way: {0}
+kk> Салыстырудың белгісіз тәсілі: {0}
+
+ru> Функция вернула None (забыт return?)
+en> The function returned None (forgot return?)
+kk> Функция None қайтарды (return ұмытылды ма?)
+
+ru> Результат не является массивом: {0}
+en> The result is not an array: {0}
+kk> Нәтиже массив емес: {0}
+
+ru> Неверная форма результата: ожидалась {0}, получена {1}
+en> Wrong shape of the result: expected {0}, got {1}
+kk> Нәтиженің пішіні қате: {0} күтілді, {1} алынды
+
+ru> Неверный тип данных: ожидался {0}, получен {1}
+en> Wrong data type: expected {0}, got {1}
+kk> Деректер түрі қате: {0} күтілді, {1} алынды
+
+ru> Значения не совпадают: ожидалось {0}, получено {1}
+en> The values do not match: expected {0}, got {1}
+kk> Мәндер сәйкес келмейді: {0} күтілді, {1} алынды
+
+ru> Результат не число: {0}
+en> The result is not a number: {0}
+kk> Нәтиже сан емес: {0}
+
+ru> Ожидалось {0}, получено {1}
+en> Expected {0}, got {1}
+kk> {0} күтілді, {1} алынды

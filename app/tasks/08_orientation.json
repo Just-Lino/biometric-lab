@@ -1,0 +1,35 @@
+{
+  "id": "orientation",
+  "order": 8,
+  "title": "Направление гребней в блоке",
+  "topic": "Отпечатки пальцев",
+  "difficulty": "сложный",
+  "spec": "orientation",
+  "function": "ridge_orientation",
+  "theory": "Направление гребней оценивают по градиентам яркости. Градиент направлен поперёк гребня, поэтому усреднять сами углы нельзя: угол θ и угол θ + 180° задают одно направление. Используют усреднение «удвоенных» углов: по блоку суммируют gx², gy² и gx·gy, а угол градиента равен 0.5 · atan2(2 · Σgx·gy, Σgx² − Σgy²). Гребень перпендикулярен градиенту.",
+  "description": "Реализуйте функцию ridge_orientation(gray).\n\n• gray - двумерный массив numpy (блок изображения, не меньше 2×2).\n\nГрадиенты считайте через np.gradient: gy, gx = np.gradient(gray.astype(float)). Угол градиента = 0.5 · arctan2(2 · Σ(gx·gy), Σ(gx²) − Σ(gy²)). Направление гребня = угол градиента + π/2, приведённое к диапазону [0, π) операцией % np.pi. Углы в радианах, ось X направлена вправо, ось Y вниз. Если градиентов нет (Σgx² + Σgy² равна нулю), верните 0.0.",
+  "starter_code": "import numpy as np\n\n\ndef ridge_orientation(gray):\n    # TODO: верните угол гребня в радианах из диапазона [0, pi)\n    pass\n",
+  "hints": [
+    "np.gradient возвращает два массива: производную по строкам (gy) и по столбцам (gx). Из них нужны три суммы: Σgx², Σgy² и Σgx·gy.",
+    "Угол градиента: theta = 0.5 * np.arctan2(2 * Sxy, Sxx - Syy). Гребень перпендикулярен градиенту, поэтому к theta нужно прибавить π/2.",
+    "Не забудьте привести результат к диапазону [0, π): (theta + np.pi / 2) % np.pi. Для постоянного блока (все суммы нулевые) верните 0.0 до вычисления угла.",
+    "Полное решение:\n\nimport numpy as np\n\n\ndef ridge_orientation(gray):\n    gy, gx = np.gradient(gray.astype(float))\n    sxx = float((gx * gx).sum())\n    syy = float((gy * gy).sum())\n    sxy = float((gx * gy).sum())\n    if sxx + syy == 0:\n        return 0.0\n    theta = 0.5 * np.arctan2(2 * sxy, sxx - syy)\n    return float((theta + np.pi / 2) % np.pi)"
+  ],
+  "solution": "import numpy as np\n\n\ndef ridge_orientation(gray):\n    gy, gx = np.gradient(gray.astype(float))\n    sxx = float((gx * gx).sum())\n    syy = float((gy * gy).sum())\n    sxy = float((gx * gy).sum())\n    if sxx + syy == 0:\n        return 0.0\n    theta = 0.5 * np.arctan2(2 * sxy, sxx - syy)\n    return float((theta + np.pi / 2) % np.pi)\n",
+  "question": {
+    "text": "Почему при оценке направления нельзя просто усреднять углы градиентов в блоке?",
+    "options": [
+      "Угол θ и θ + 180° задают одно направление, и обычное среднее даёт неверный результат",
+      "Углы нельзя складывать в numpy",
+      "Градиент всегда равен нулю",
+      "Углы в numpy задаются только в градусах"
+    ],
+    "correct": 0
+  },
+  "rubric": {
+    "run": 2,
+    "basic": 4,
+    "edge": 3,
+    "question": 1
+  }
+}

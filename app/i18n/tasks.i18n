@@ -1,0 +1,585 @@
+# Сообщения сервера: ответы API, шаги конвейеров, подсказки наставника (собрано из кода; казахский проверить носителем).
+
+ru> Бинаризация изображения отпечатка
+en> Binarization of a fingerprint image
+kk> Саусақ ізі суретін бинаризациялау
+
+ru> Предобработка
+en> Preprocessing
+kk> Алдын ала өңдеу
+
+ru> базовый
+en> basic
+kk> базалық
+
+ru> Бинаризация превращает полутоновое изображение в чёрно-белое. На отпечатках гребни тёмные, поэтому пиксели темнее порога считаем гребнем (значение 0), остальные фоном (255).
+en> Binarization turns a grayscale image into a black-and-white one. On fingerprints the ridges are dark, so the pixels darker than the threshold are counted as ridge (value 0) and the rest as background (255).
+kk> Бинаризация сұр реңкті суретті қара-ақ суретке айналдырады. Саусақ іздерінде жоталар қара, сондықтан шектен қараңғы пиксельдер жота (мәні 0), қалғандары фон (255) болып саналады.
+
+ru> Реализуйте функцию binarize(gray, threshold).\n\n• gray - двумерный массив numpy типа uint8 (оттенки серого);\n• threshold - число (порог).\n\nВерните массив той же формы типа uint8: 0, если пиксель строго меньше порога (гребень), иначе 255 (фон). Циклы по пикселям не нужны.
+en> Implement the function binarize(gray, threshold).\n\n• gray - a two-dimensional numpy array of type uint8 (shades of gray);\n• threshold - a number (the threshold).\n\nReturn an array of the same shape of type uint8: 0 if the pixel is strictly less than the threshold (ridge), otherwise 255 (background). Loops over pixels are not needed.
+kk> binarize(gray, threshold) функциясын жүзеге асырыңыз.\n\n• gray - uint8 типті екі өлшемді numpy массиві (сұр реңктер);\n• threshold - сан (шек).\n\nДәл сондай пішінді uint8 типті массив қайтарыңыз: пиксель шектен қатаң түрде кіші болса 0 (жота), әйтпесе 255 (фон). Пиксельдер бойынша циклдер қажет емес.
+
+ru> Сравнение массива с числом (gray < threshold) работает сразу для всех пикселей. Что должно получиться для пикселя, который в точности равен порогу?
+en> Comparing an array with a number (gray < threshold) works for all pixels at once. What should come out for a pixel that is exactly equal to the threshold?
+kk> Массивті санмен салыстыру (gray < threshold) барлық пиксельдер үшін бірден жұмыс істейді. Шекке дәл тең пиксель үшін не шығуы керек?
+
+ru> Результат сравнения - булев массив. Нужно превратить True в 0 (гребень), а False в 255 (фон) и привести тип данных к uint8.
+en> The result of the comparison is a boolean array. You need to turn True into 0 (ridge) and False into 255 (background) and cast the data type to uint8.
+kk> Салыстыру нәтижесі - булев массиві. True-ны 0-ге (жота), False-ты 255-ке (фон) айналдырып, деректер типін uint8-ге келтіру керек.
+
+ru> Посмотрите на np.where(условие, значение_если_True, значение_если_False). В конце не забудьте .astype(np.uint8).
+en> Look at np.where(condition, value_if_True, value_if_False). Do not forget .astype(np.uint8) at the end.
+kk> np.where(шарт, True_болса_мән, False_болса_мән) функциясына қараңыз. Соңында .astype(np.uint8) ұмытпаңыз.
+
+ru> Какой подход лучше при очень неравномерном освещении снимка?
+en> Which approach is better when the lighting of the shot is very uneven?
+kk> Сурет жарықтандырылуы өте біркелкі емес болғанда қай тәсіл жақсырақ?
+
+ru> Один глобальный порог для всего изображения
+en> One global threshold for the whole image
+kk> Бүкіл сурет үшін бір жаһандық шек
+
+ru> Адаптивный (локальный) порог по окрестности пикселя
+en> An adaptive (local) threshold over the neighborhood of the pixel
+kk> Пиксель аймағы бойынша адаптивті (жергілікті) шек
+
+ru> Порог, равный 255
+en> A threshold equal to 255
+kk> 255-ке тең шек
+
+ru> Порог, равный 0
+en> A threshold equal to 0
+kk> 0-ге тең шек
+
+ru> # TODO: верните массив uint8 из значений 0 и 255
+en> # TODO: return a uint8 array of the values 0 and 255
+kk> # TODO: 0 және 255 мәндерінен тұратын uint8 массивін қайтарыңыз
+
+ru> Полное решение:
+en> Full solution:
+kk> Толық шешім:
+
+ru> Нормализация яркости и контраста
+en> Normalization of brightness and contrast
+kk> Жарықтық пен контрастты нормалау
+
+ru> Нормализация выравнивает яркость и контраст разных снимков, чтобы дальнейшие алгоритмы работали с похожими данными.
+en> Normalization equalizes the brightness and contrast of different shots so that the following algorithms work with similar data.
+kk> Нормалау әртүрлі суреттердің жарықтығы мен контрастын теңестіреді, сонда келесі алгоритмдер ұқсас деректермен жұмыс істейді.
+
+ru> Реализуйте функцию normalize(gray, m0=128.0, s0=50.0).\n\nПриведите изображение к среднему m0 и стандартному отклонению s0:\n    (gray - mean) / std * s0 + m0\n\nВерните массив float без округления и обрезки значений. Если std равно 0 (все пиксели одинаковы), верните массив той же формы, целиком заполненный значением m0.
+en> Implement the function normalize(gray, m0=128.0, s0=50.0).\n\nBring the image to the mean m0 and the standard deviation s0:\n    (gray - mean) / std * s0 + m0\n\nReturn a float array without rounding and clipping the values. If std is 0 (all the pixels are equal), return an array of the same shape completely filled with the value m0.
+kk> normalize(gray, m0=128.0, s0=50.0) функциясын жүзеге асырыңыз.\n\nСуретті m0 орташасына және s0 стандартты ауытқуына келтіріңіз:\n    (gray - mean) / std * s0 + m0\n\nМәндерді дөңгелектемей және қимай, float массивін қайтарыңыз. Егер std 0-ге тең болса (барлық пиксельдер бірдей), дәл сондай пішінді, толығымен m0 мәнімен толтырылған массив қайтарыңыз.
+
+ru> Какие две статистики изображения вам нужны? И что произойдёт при делении, если все пиксели одинаковы?
+en> Which two statistics of the image do you need? And what will happen in the division if all the pixels are equal?
+kk> Суреттің қандай екі статистикасы қажет? Ал барлық пиксельдер бірдей болса, бөлу кезінде не болады?
+
+ru> Сначала вычтите среднее, затем поделите на стандартное отклонение (получится среднее 0 и std 1), потом умножьте на s0 и прибавьте m0. Деление на ноль обработайте отдельно.
+en> First subtract the mean, then divide by the standard deviation (you get mean 0 and std 1), then multiply by s0 and add m0. Handle the division by zero separately.
+kk> Алдымен орташаны алыңыз, содан кейін стандартты ауытқуға бөліңіз (орташа 0 және std 1 шығады), одан кейін s0-ге көбейтіп, m0 қосыңыз. Нөлге бөлуді бөлек өңдеңіз.
+
+ru> Используйте gray.mean() и gray.std() (лучше после astype(float)). Проверьте условие std == 0 до деления и верните np.full(...).
+en> Use gray.mean() and gray.std() (better after astype(float)). Check the condition std == 0 before the division and return np.full(...).
+kk> gray.mean() және gray.std() қолданыңыз (astype(float) кейін жақсырақ). Бөлер алдында std == 0 шартын тексеріп, np.full(...) қайтарыңыз.
+
+ru> Зачем нормализовать изображение перед выделением признаков?
+en> Why normalize the image before feature extraction?
+kk> Белгілерді бөліп алудан бұрын суретті не үшін нормалау керек?
+
+ru> Чтобы уменьшить влияние освещения и контраста
+en> To reduce the influence of lighting and contrast
+kk> Жарықтандыру мен контрастың әсерін азайту үшін
+
+ru> Чтобы увеличить размер изображения
+en> To increase the image size
+kk> Сурет өлшемін үлкейту үшін
+
+ru> Чтобы удалить фон
+en> To remove the background
+kk> Фонды жою үшін
+
+ru> Чтобы изменить цветовую модель
+en> To change the color model
+kk> Түс моделін өзгерту үшін
+
+ru> # TODO: верните нормализованный массив float
+en> # TODO: return the normalized float array
+kk> # TODO: нормаланған float массивін қайтарыңыз
+
+ru> Минуции: число пересечений (crossing number)
+en> Minutiae: the crossing number
+kk> Минуциялар: қиылысу саны (crossing number)
+
+ru> Отпечатки пальцев
+en> Fingerprints
+kk> Саусақ іздері
+
+ru> средний
+en> medium
+kk> орташа
+
+ru> Минуции на скелете (линии толщиной 1 пиксель) находят по числу пересечений: CN = 0,5 · Σ |P(i) − P(i+1)| по 8 соседям, обходимым по кругу. CN = 1 - окончание линии, CN = 3 - разветвление.
+en> Minutiae on a skeleton (lines 1 pixel thick) are found by the crossing number: CN = 0.5 · Σ |P(i) − P(i+1)| over the 8 neighbors traversed in a circle. CN = 1 - a line ending, CN = 3 - a bifurcation.
+kk> Қаңқадағы (қалыңдығы 1 пиксель сызықтар) минуцияларды қиылысу саны бойынша табады: CN = 0,5 · Σ |P(i) − P(i+1)|, 8 көршіні шеңбер бойымен аралағанда. CN = 1 - сызық аяқталуы, CN = 3 - тармақталу.
+
+ru> Реализуйте функцию crossing_number(skel, y, x).\n\n• skel - двумерный массив из 0 и 1 (скелет);\n• (y, x) - строка и столбец пикселя.\n\nОбойдите 8 соседей по кругу в порядке смещений (dy, dx):\n(-1,-1), (-1,0), (-1,1), (0,1), (1,1), (1,0), (1,-1), (0,-1).\nСоседи за границей массива считаются нулями (отрицательные индексы Python здесь не подходят!).\n\nВерните целое CN = сумма |P[i] - P[(i+1) % 8]| по i от 0 до 7, делённая на 2.
+en> Implement the function crossing_number(skel, y, x).\n\n• skel - a two-dimensional array of 0 and 1 (the skeleton);\n• (y, x) - the row and the column of the pixel.\n\nTraverse the 8 neighbors in a circle in the order of the offsets (dy, dx):\n(-1,-1), (-1,0), (-1,1), (0,1), (1,1), (1,0), (1,-1), (0,-1).\nThe neighbors outside the array count as zeros (negative Python indices do not fit here!).\n\nReturn the integer CN = the sum of |P[i] - P[(i+1) % 8]| over i from 0 to 7, divided by 2.
+kk> crossing_number(skel, y, x) функциясын жүзеге асырыңыз.\n\n• skel - 0 мен 1-ден тұратын екі өлшемді массив (қаңқа);\n• (y, x) - пикселдің жолы мен бағаны.\n\n8 көршіні (dy, dx) жылжулары ретімен шеңбер бойымен аралаңыз:\n(-1,-1), (-1,0), (-1,1), (0,1), (1,1), (1,0), (1,-1), (0,-1).\nМассивтен тыс көршілер нөл болып саналады (Python-ның теріс индекстері бұл жерде жарамайды!).\n\nБүтін CN қайтарыңыз = i бойынша 0-ден 7-ге дейінгі |P[i] - P[(i+1) % 8]| қосындысы, 2-ге бөлінген.
+
+ru> Выпишите значения восьми соседей в список в заданном порядке. Что делать с соседями за границей массива?
+en> Write the values of the eight neighbors into a list in the given order. What should be done with the neighbors outside the array?
+kk> Сегіз көршінің мәндерін берілген ретпен тізімге жазыңыз. Массивтен тыс көршілермен не істеу керек?
+
+ru> Нужно пройти по кругу и посчитать, сколько раз значение меняется между соседними элементами списка (последний сравнивается с первым). Делим пополам, потому что каждая «граница» посчитана дважды.
+en> You need to go around the circle and count how many times the value changes between neighboring elements of the list (the last one is compared with the first). We divide by two because each “border” is counted twice.
+kk> Шеңбер бойымен өтіп, тізімнің көрші элементтері арасында мән неше рет өзгеретінін санау керек (соңғысы біріншімен салыстырылады). Екіге бөлеміз, өйткені әр «шекара» екі рет есептелген.
+
+ru> Для каждого смещения проверьте 0 <= yy < h и 0 <= xx < w, иначе берите 0. Затем sum(abs(p[i] - p[(i + 1) % 8]) for i in range(8)) // 2.
+en> For each offset check 0 <= yy < h and 0 <= xx < w, otherwise take 0. Then sum(abs(p[i] - p[(i + 1) % 8]) for i in range(8)) // 2.
+kk> Әр жылжу үшін 0 <= yy < h және 0 <= xx < w тексеріңіз, әйтпесе 0 алыңыз. Содан кейін sum(abs(p[i] - p[(i + 1) % 8]) for i in range(8)) // 2.
+
+ru> Чему равно CN у пикселя, где скелетная линия заканчивается?
+en> What is the CN of a pixel where the skeleton line ends?
+kk> Қаңқа сызығы аяқталатын пикселдің CN мәні неге тең?
+
+ru> # TODO: соберите значения 8 соседей и посчитайте CN
+en> # TODO: collect the values of the 8 neighbors and compute the CN
+kk> # TODO: 8 көршінің мәндерін жинап, CN есептеңіз
+
+ru> Сравнение шаблонов: косинусное сходство и порог
+en> Template comparison: cosine similarity and threshold
+kk> Шаблондарды салыстыру: косинустық ұқсастық және шек
+
+ru> Сравнение и решение
+en> Comparison and decision
+kk> Салыстыру және шешім
+
+ru> Лица и другие образы сравнивают по embedding-векторам. Косинусное сходство cos = (a·b) / (|a|·|b|) показывает, насколько совпадают направления векторов. Решение принимается по порогу threshold.
+en> Faces and other images are compared by embedding vectors. The cosine similarity cos = (a·b) / (|a|·|b|) shows how much the directions of the vectors coincide. The decision is made by the threshold.
+kk> Беттер мен басқа бейнелер embedding-векторлар бойынша салыстырылады. Косинустық ұқсастық cos = (a·b) / (|a|·|b|) векторлар бағыттарының қаншалықты сәйкес келетінін көрсетеді. Шешім threshold шегі бойынша қабылданады.
+
+ru> Реализуйте функцию verify(a, b, threshold).\n\n• a, b - числовые векторы (списки или массивы);\n• threshold - порог.\n\nВерните кортеж (score, decision): score - косинусное сходство, decision - строка 'MATCH', если score >= threshold, иначе 'NO MATCH'. Если длина хотя бы одного вектора равна нулю, score = 0.0.
+en> Implement the function verify(a, b, threshold).\n\n• a, b - numeric vectors (lists or arrays);\n• threshold - the threshold.\n\nReturn a tuple (score, decision): score is the cosine similarity, decision is the string 'MATCH' if score >= threshold, otherwise 'NO MATCH'. If the length of at least one vector is zero, score = 0.0.
+kk> verify(a, b, threshold) функциясын жүзеге асырыңыз.\n\n• a, b - сандық векторлар (тізімдер немесе массивтер);\n• threshold - шек.\n\n(score, decision) кортежін қайтарыңыз: score - косинустық ұқсастық, decision - score >= threshold болса 'MATCH' жолы, әйтпесе 'NO MATCH'. Кемінде бір вектордың ұзындығы нөлге тең болса, score = 0.0.
+
+ru> Что означает косинус угла между векторами и как его выразить через скалярное произведение и длины? А что, если длина вектора равна нулю?
+en> What does the cosine of the angle between vectors mean and how can it be expressed through the dot product and the lengths? And what if the vector length is zero?
+kk> Векторлар арасындағы бұрыш косинусы нені білдіреді және оны скалярлық көбейтінді мен ұзындықтар арқылы қалай өрнектеуге болады? Ал вектор ұзындығы нөлге тең болса?
+
+ru> score = (a · b) / (|a| · |b|). Длину вектора даёт np.linalg.norm. Деление на ноль нужно предотвратить: при нулевой длине score равен 0.0.
+en> score = (a · b) / (|a| · |b|). The vector length is given by np.linalg.norm. The division by zero must be prevented: for a zero length score is 0.0.
+kk> score = (a · b) / (|a| · |b|). Вектор ұзындығын np.linalg.norm береді. Нөлге бөлудің алдын алу керек: нөлдік ұзындықта score 0.0 болады.
+
+ru> Приведите входы к массивам: np.asarray(a, dtype=float). Затем na, nb = нормы; score = 0.0 if na == 0 or nb == 0 else float(a @ b / (na * nb)). Решение: 'MATCH' if score >= threshold else 'NO MATCH'.
+en> Cast the inputs to arrays: np.asarray(a, dtype=float). Then na, nb = the norms; score = 0.0 if na == 0 or nb == 0 else float(a @ b / (na * nb)). The decision: 'MATCH' if score >= threshold else 'NO MATCH'.
+kk> Кірістерді массивтерге келтіріңіз: np.asarray(a, dtype=float). Содан кейін na, nb = нормалар; score = 0.0 if na == 0 or nb == 0 else float(a @ b / (na * nb)). Шешім: 'MATCH' if score >= threshold else 'NO MATCH'.
+
+ru> Что произойдёт с FAR и FRR при повышении порога threshold?
+en> What happens to FAR and FRR when the threshold is raised?
+kk> threshold шегін көтергенде FAR және FRR-ға не болады?
+
+ru> FAR растёт, FRR падает
+en> FAR grows, FRR falls
+kk> FAR өседі, FRR төмендейді
+
+ru> FAR падает, FRR растёт
+en> FAR falls, FRR grows
+kk> FAR төмендейді, FRR өседі
+
+ru> Оба падают
+en> Both fall
+kk> Екеуі де төмендейді
+
+ru> Оба растут
+en> Both grow
+kk> Екеуі де өседі
+
+ru> # TODO: верните (score, decision)
+en> # TODO: return (score, decision)
+kk> # TODO: (score, decision) қайтарыңыз
+
+ru> Метрики: FAR и FRR при заданном пороге
+en> Metrics: FAR and FRR at a given threshold
+kk> Метрикалар: берілген шектегі FAR және FRR
+
+ru> FAR (False Acceptance Rate) - доля пар разных людей, ошибочно принятых как совпадение. FRR (False Rejection Rate) - доля пар одного человека, ошибочно отвергнутых.
+en> FAR (False Acceptance Rate) is the fraction of pairs of different people wrongly accepted as a match. FRR (False Rejection Rate) is the fraction of pairs of the same person wrongly rejected.
+kk> FAR (False Acceptance Rate) - әртүрлі адамдар жұптарының сәйкес деп қате қабылданған үлесі. FRR (False Rejection Rate) - бір адам жұптарының қате қабылданбаған үлесі.
+
+ru> Реализуйте функцию far_frr(genuine, impostor, threshold).\n\n• genuine - список оценок сходства пар одного человека («свои»);\n• impostor - список оценок сходства пар разных людей («чужие»);\n• threshold - порог.\n\nВерните кортеж (far, frr):\n• far - доля оценок из impostor, которые >= threshold;\n• frr - доля оценок из genuine, которые < threshold.\nЕсли соответствующий список пуст, его доля равна 0.0.
+en> Implement the function far_frr(genuine, impostor, threshold).\n\n• genuine - a list of similarity scores of pairs of the same person (“genuine”);\n• impostor - a list of similarity scores of pairs of different people (“impostor”);\n• threshold - the threshold.\n\nReturn a tuple (far, frr):\n• far - the fraction of the scores from impostor that are >= threshold;\n• frr - the fraction of the scores from genuine that are < threshold.\nIf the corresponding list is empty, its fraction is 0.0.
+kk> far_frr(genuine, impostor, threshold) функциясын жүзеге асырыңыз.\n\n• genuine - бір адам жұптарының ұқсастық бағаларының тізімі («өз»);\n• impostor - әртүрлі адамдар жұптарының ұқсастық бағаларының тізімі («бөтен»);\n• threshold - шек.\n\n(far, frr) кортежін қайтарыңыз:\n• far - impostor ішіндегі >= threshold бағалардың үлесі;\n• frr - genuine ішіндегі < threshold бағалардың үлесі.\nТиісті тізім бос болса, оның үлесі 0.0.
+
+ru> Какие оценки считаются «ошибочным допуском», а какие «ошибочным отказом»? Для какого списка нужно знак >=, а для какого <?
+en> Which scores count as a “false accept” and which as a “false reject”? For which list do you need the sign >= and for which <?
+kk> Қандай бағалар «қате қабылдау», қандайлары «қате бас тарту» болып саналады? Қай тізім үшін >= таңбасы, қайсысы үшін < қажет?
+
+ru> FAR считается по списку impostor: сколько оценок не ниже порога, делённое на длину списка. FRR - по списку genuine: сколько оценок ниже порога, делённое на длину списка.
+en> FAR is computed over the impostor list: how many scores are not below the threshold, divided by the list length. FRR is over the genuine list: how many scores are below the threshold, divided by the list length.
+kk> FAR impostor тізімі бойынша есептеледі: шектен төмен емес бағалар саны тізім ұзындығына бөлінеді. FRR - genuine тізімі бойынша: шектен төмен бағалар саны тізім ұзындығына бөлінеді.
+
+ru> Подсчитать можно так: sum(s >= threshold for s in impostor). Делить нужно только если список не пуст: ... / len(impostor) if len(impostor) else 0.0.
+en> You can count like this: sum(s >= threshold for s in impostor). Divide only if the list is not empty: ... / len(impostor) if len(impostor) else 0.0.
+kk> Былай санауға болады: sum(s >= threshold for s in impostor). Тізім бос болмаса ғана бөліңіз: ... / len(impostor) if len(impostor) else 0.0.
+
+ru> Что такое EER?
+en> What is the EER?
+kk> EER дегеніміз не?
+
+ru> Порог, при котором точность максимальна
+en> The threshold at which the accuracy is maximal
+kk> Дәлдік максималды болатын шек
+
+ru> Значение ошибки, при котором FAR равен FRR
+en> The error value at which FAR equals FRR
+kk> FAR мен FRR тең болатын қате мәні
+
+ru> Доля ошибочных допусков
+en> The fraction of false accepts
+kk> Жалған қабылдаулар үлесі
+
+ru> Число эпох обучения
+en> The number of training epochs
+kk> Оқыту дәуірлерінің саны
+
+ru> # TODO: верните (far, frr)
+en> # TODO: return (far, frr)
+kk> # TODO: (far, frr) қайтарыңыз
+
+ru> Расстояние Хэмминга для кода радужки (с масками)
+en> Hamming distance for an iris code (with masks)
+kk> Нұрлы қабық коды үшін Хэмминг қашықтығы (маскалармен)
+
+ru> Радужка
+en> Iris
+kk> Нұрлы қабық
+
+ru> Код радужки - бинарный шаблон. Два кода сравнивают по доле несовпавших бит (нормированное расстояние Хэмминга). Маска показывает надёжные биты (1) и закрытые веками или бликами (0): в сравнении участвуют только биты, надёжные в обоих кодах. Чем меньше расстояние, тем вероятнее, что это одна радужка.
+en> An iris code is a binary template. Two codes are compared by the fraction of mismatched bits (the normalized Hamming distance). The mask shows the reliable bits (1) and the bits covered by eyelids or glare (0): only the bits reliable in both codes take part in the comparison. The smaller the distance, the more likely it is the same iris.
+kk> Нұрлы қабық коды - бинарлы шаблон. Екі код сәйкес келмеген биттер үлесі бойынша салыстырылады (нормаланған Хэмминг қашықтығы). Маска сенімді биттерді (1) және қабақтармен немесе жарқылмен жабылғандарды (0) көрсетеді: салыстыруға тек екі кодта да сенімді биттер қатысады. Қашықтық аз болған сайын, бұл бір нұрлы қабық болу ықтималдығы жоғары.
+
+ru> Реализуйте функцию hamming_distance(code_a, code_b, mask_a, mask_b).\n\n• code_a, code_b - массивы numpy из 0 и 1 одинаковой формы;\n• mask_a, mask_b - массивы той же формы: 1 - бит надёжен, 0 - бит нужно игнорировать.\n\nВерните долю несовпавших бит среди битов, надёжных в ОБОИХ кодах (число от 0 до 1). Если таких битов нет, верните 1.0.
+en> Implement the function hamming_distance(code_a, code_b, mask_a, mask_b).\n\n• code_a, code_b - numpy arrays of 0 and 1 of the same shape;\n• mask_a, mask_b - arrays of the same shape: 1 - the bit is reliable, 0 - the bit must be ignored.\n\nReturn the fraction of mismatched bits among the bits reliable in BOTH codes (a number from 0 to 1). If there are no such bits, return 1.0.
+kk> hamming_distance(code_a, code_b, mask_a, mask_b) функциясын жүзеге асырыңыз.\n\n• code_a, code_b - пішіні бірдей 0 мен 1-ден тұратын numpy массивтері;\n• mask_a, mask_b - сол пішінді массивтер: 1 - бит сенімді, 0 - битті елемеу керек.\n\nЕКІ кодта да сенімді биттер арасындағы сәйкес келмеген биттер үлесін қайтарыңыз (0-ден 1-ге дейінгі сан). Мұндай биттер болмаса, 1.0 қайтарыңыз.
+
+ru> Сначала найдите биты, которые надёжны в обоих кодах: это пересечение двух масок. Затем среди них посчитайте, сколько бит различаются.
+en> First find the bits that are reliable in both codes: this is the intersection of the two masks. Then count how many of them differ.
+kk> Алдымен екі кодта да сенімді биттерді табыңыз: бұл екі маскалардың қиылысуы. Содан кейін солардың ішінен қаншасы ерекшеленетінін санаңыз.
+
+ru> Различающиеся биты - это code_a != code_b. Нужны только те позиции, где обе маски равны 1. Результат - число таких позиций, делённое на число надёжных позиций.
+en> The differing bits are code_a != code_b. You only need the positions where both masks are 1. The result is the number of such positions divided by the number of reliable positions.
+kk> Ерекшеленетін биттер - code_a != code_b. Тек екі маска да 1 болатын орындар керек. Нәтиже - осындай орындар санының сенімді орындар санына қатынасы.
+
+ru> valid = (mask_a == 1) & (mask_b == 1); n = valid.sum(). Не забудьте случай n == 0: делить на ноль нельзя, по условию верните 1.0.
+en> valid = (mask_a == 1) & (mask_b == 1); n = valid.sum(). Do not forget the case n == 0: you cannot divide by zero, by the condition return 1.0.
+kk> valid = (mask_a == 1) & (mask_b == 1); n = valid.sum(). n == 0 жағдайын ұмытпаңыз: нөлге бөлуге болмайды, шарт бойынша 1.0 қайтарыңыз.
+
+ru> Чему примерно равно расстояние Хэмминга для кодов двух разных радужек?
+en> What is the Hamming distance approximately for the codes of two different irises?
+kk> Екі түрлі нұрлы қабық кодтары үшін Хэмминг қашықтығы шамамен неге тең?
+
+ru> Около 0.5
+en> About 0.5
+kk> Шамамен 0.5
+
+ru> Около 1
+en> About 1
+kk> Шамамен 1
+
+ru> Оно всегда отрицательное
+en> It is always negative
+kk> Ол әрқашан теріс
+
+ru> # TODO: верните долю несовпавших надёжных бит
+en> # TODO: return the fraction of mismatched reliable bits
+kk> # TODO: сәйкес келмеген сенімді биттер үлесін қайтарыңыз
+
+ru> Порог равных ошибок (EER)
+en> Equal error rate threshold (EER)
+kk> Тең қате шегі (EER)
+
+ru> Метрики
+en> Metrics
+kk> Метрикалар
+
+ru> сложный
+en> hard
+kk> күрделі
+
+ru> EER - точка, где доля ложных допусков FAR равна доле ложных отказов FRR. Чтобы найти её, перебирают пороги по всем встречающимся оценкам: для каждого считают FAR (чужие с оценкой не ниже порога) и FRR (свои с оценкой ниже порога) и выбирают порог с минимальным |FAR - FRR|. EER принимают равным (FAR + FRR) / 2 в этой точке.
+en> The EER is the point where the fraction of false accepts FAR equals the fraction of false rejects FRR. To find it, the thresholds are scanned over all the encountered scores: for each one FAR (impostors with a score not below the threshold) and FRR (genuine with a score below the threshold) are computed, and the threshold with the minimum |FAR - FRR| is chosen. The EER is taken as (FAR + FRR) / 2 at this point.
+kk> EER - жалған қабылдаулар үлесі FAR жалған бас тартулар үлесі FRR-ға тең болатын нүкте. Оны табу үшін шектерді кездесетін барлық бағалар бойынша іріктейді: әрқайсысы үшін FAR (бағасы шектен төмен емес бөтендер) және FRR (бағасы шектен төмен өздер) есептеліп, |FAR - FRR| ең аз шек таңдалады. EER осы нүктеде (FAR + FRR) / 2 деп алынады.
+
+ru> Реализуйте функцию eer_threshold(genuine, impostor).\n\n• genuine - оценки сходства «своих» пар (список чисел);\n• impostor - оценки «чужих» пар.\n\nКандидаты в пороги - все различные значения из обоих списков. Для порога t: FAR - доля чужих с оценкой >= t, FRR - доля своих с оценкой < t (если список пуст, его доля равна 0.0). Выберите порог с наименьшим |FAR - FRR|; если отклонения равны (с точностью 1e-12), берите меньший порог. Верните кортеж (eer, порог), где eer = (FAR + FRR) / 2. Если оба списка пусты, верните (0.0, 0.0).
+en> Implement the function eer_threshold(genuine, impostor).\n\n• genuine - the similarity scores of “genuine” pairs (a list of numbers);\n• impostor - the scores of “impostor” pairs.\n\nThe threshold candidates are all the distinct values from both lists. For a threshold t: FAR is the fraction of impostors with a score >= t, FRR is the fraction of genuine with a score < t (if the list is empty, its fraction is 0.0). Choose the threshold with the smallest |FAR - FRR|; if the deviations are equal (to within 1e-12), take the smaller threshold. Return a tuple (eer, threshold), where eer = (FAR + FRR) / 2. If both lists are empty, return (0.0, 0.0).
+kk> eer_threshold(genuine, impostor) функциясын жүзеге асырыңыз.\n\n• genuine - «өз» жұптардың ұқсастық бағалары (сандар тізімі);\n• impostor - «бөтен» жұптардың бағалары.\n\nШектің үміткерлері - екі тізімдегі барлық әртүрлі мәндер. t шегі үшін: FAR - бағасы >= t бөтендер үлесі, FRR - бағасы < t өздер үлесі (тізім бос болса, оның үлесі 0.0). |FAR - FRR| ең аз шекті таңдаңыз; ауытқулар тең болса (1e-12 дәлдікпен), кішірек шекті алыңыз. (eer, шек) кортежін қайтарыңыз, мұнда eer = (FAR + FRR) / 2. Екі тізім де бос болса, (0.0, 0.0) қайтарыңыз.
+
+ru> Переберите кандидатов в пороги в порядке возрастания. Для каждого посчитайте FAR и FRR так же, как в задании про FAR и FRR.
+en> Go through the threshold candidates in ascending order. For each one compute FAR and FRR the same way as in the task about FAR and FRR.
+kk> Шек үміткерлерін өсу ретімен қарап шығыңыз. Әрқайсысы үшін FAR және FRR-ды FAR және FRR туралы тапсырмадағыдай есептеңіз.
+
+ru> Для каждого порога t нужно число |FAR - FRR|. Запоминайте лучший порог: тот, где это число меньше всего. Чтобы при равенстве остался меньший порог, заменяйте лучший вариант только при строгом улучшении (с запасом 1e-12).
+en> For each threshold t you need the number |FAR - FRR|. Remember the best threshold: the one where this number is the smallest. So that the smaller threshold stays on a tie, replace the best variant only on a strict improvement (with a margin of 1e-12).
+kk> Әр t шегі үшін |FAR - FRR| саны керек. Ең жақсы шекті есте сақтаңыз: бұл сан ең аз болатыны. Теңдік болғанда кішірек шек қалуы үшін, ең жақсы нұсқаны тек қатаң жақсарғанда ғана ауыстырыңыз (1e-12 қормен).
+
+ru> Кандидаты: sorted(set(genuine) | set(impostor)). Для пустых списков доли равны 0.0, а если пусты оба списка, кандидатов нет - верните (0.0, 0.0).
+en> The candidates: sorted(set(genuine) | set(impostor)). For empty lists the fractions are 0.0, and if both lists are empty, there are no candidates - return (0.0, 0.0).
+kk> Үміткерлер: sorted(set(genuine) | set(impostor)). Бос тізімдер үшін үлестер 0.0, ал екі тізім де бос болса, үміткерлер жоқ - (0.0, 0.0) қайтарыңыз.
+
+ru> Что произойдёт с EER, если оценки «своих» и «чужих» пар сильнее перекрываются?
+en> What happens to the EER if the scores of “genuine” and “impostor” pairs overlap more?
+kk> «Өз» және «бөтен» жұптардың бағалары көбірек қабаттасса, EER-ге не болады?
+
+ru> EER вырастет
+en> The EER will grow
+kk> EER өседі
+
+ru> EER уменьшится
+en> The EER will decrease
+kk> EER азаяды
+
+ru> EER не изменится
+en> The EER will not change
+kk> EER өзгермейді
+
+ru> EER станет отрицательным
+en> The EER will become negative
+kk> EER теріс болады
+
+ru> # TODO: верните кортеж (eer, порог)
+en> # TODO: return the tuple (eer, threshold)
+kk> # TODO: (eer, шек) кортежін қайтарыңыз
+
+ru> Направление гребней в блоке
+en> Ridge direction in a block
+kk> Блоктағы жоталардың бағыты
+
+ru> Направление гребней оценивают по градиентам яркости. Градиент направлен поперёк гребня, поэтому усреднять сами углы нельзя: угол θ и угол θ + 180° задают одно направление. Используют усреднение «удвоенных» углов: по блоку суммируют gx², gy² и gx·gy, а угол градиента равен 0.5 · atan2(2 · Σgx·gy, Σgx² − Σgy²). Гребень перпендикулярен градиенту.
+en> The ridge direction is estimated by the brightness gradients. The gradient is directed across the ridge, so the angles themselves cannot be averaged: the angle θ and the angle θ + 180° define the same direction. The averaging of “doubled” angles is used: over the block gx², gy² and gx·gy are summed, and the gradient angle equals 0.5 · atan2(2 · Σgx·gy, Σgx² − Σgy²). The ridge is perpendicular to the gradient.
+kk> Жоталар бағыты жарықтық градиенттері бойынша бағаланады. Градиент жотаның көлденеңінен бағытталған, сондықтан бұрыштардың өздерін орташалауға болмайды: θ бұрышы мен θ + 180° бұрышы бір бағытты анықтайды. «Екі еселенген» бұрыштарды орташалау қолданылады: блок бойынша gx², gy² және gx·gy қосылады, ал градиент бұрышы 0.5 · atan2(2 · Σgx·gy, Σgx² − Σgy²) тең. Жота градиентке перпендикуляр.
+
+ru> Реализуйте функцию ridge_orientation(gray).\n\n• gray - двумерный массив numpy (блок изображения, не меньше 2×2).\n\nГрадиенты считайте через np.gradient: gy, gx = np.gradient(gray.astype(float)). Угол градиента = 0.5 · arctan2(2 · Σ(gx·gy), Σ(gx²) − Σ(gy²)). Направление гребня = угол градиента + π/2, приведённое к диапазону [0, π) операцией % np.pi. Углы в радианах, ось X направлена вправо, ось Y вниз. Если градиентов нет (Σgx² + Σgy² равна нулю), верните 0.0.
+en> Implement the function ridge_orientation(gray).\n\n• gray - a two-dimensional numpy array (an image block, at least 2×2).\n\nCompute the gradients with np.gradient: gy, gx = np.gradient(gray.astype(float)). The gradient angle = 0.5 · arctan2(2 · Σ(gx·gy), Σ(gx²) − Σ(gy²)). The ridge direction = the gradient angle + π/2, reduced to the range [0, π) by the operation % np.pi. The angles are in radians, the X axis points right, the Y axis points down. If there are no gradients (Σgx² + Σgy² is zero), return 0.0.
+kk> ridge_orientation(gray) функциясын жүзеге асырыңыз.\n\n• gray - екі өлшемді numpy массиві (сурет блогы, кемінде 2×2).\n\nГрадиенттерді np.gradient арқылы есептеңіз: gy, gx = np.gradient(gray.astype(float)). Градиент бұрышы = 0.5 · arctan2(2 · Σ(gx·gy), Σ(gx²) − Σ(gy²)). Жота бағыты = градиент бұрышы + π/2, % np.pi операциясымен [0, π) диапазонына келтірілген. Бұрыштар радианмен, X осі оңға, Y осі төмен бағытталған. Градиенттер болмаса (Σgx² + Σgy² нөлге тең), 0.0 қайтарыңыз.
+
+ru> np.gradient возвращает два массива: производную по строкам (gy) и по столбцам (gx). Из них нужны три суммы: Σgx², Σgy² и Σgx·gy.
+en> np.gradient returns two arrays: the derivative over rows (gy) and over columns (gx). From them you need three sums: Σgx², Σgy² and Σgx·gy.
+kk> np.gradient екі массив қайтарады: жолдар бойынша (gy) және бағандар бойынша (gx) туынды. Олардан үш қосынды қажет: Σgx², Σgy² және Σgx·gy.
+
+ru> Угол градиента: theta = 0.5 * np.arctan2(2 * Sxy, Sxx - Syy). Гребень перпендикулярен градиенту, поэтому к theta нужно прибавить π/2.
+en> The gradient angle: theta = 0.5 * np.arctan2(2 * Sxy, Sxx - Syy). The ridge is perpendicular to the gradient, so π/2 must be added to theta.
+kk> Градиент бұрышы: theta = 0.5 * np.arctan2(2 * Sxy, Sxx - Syy). Жота градиентке перпендикуляр, сондықтан theta-ға π/2 қосу керек.
+
+ru> Не забудьте привести результат к диапазону [0, π): (theta + np.pi / 2) % np.pi. Для постоянного блока (все суммы нулевые) верните 0.0 до вычисления угла.
+en> Do not forget to bring the result to the range [0, π): (theta + np.pi / 2) % np.pi. For a constant block (all the sums are zero) return 0.0 before computing the angle.
+kk> Нәтижені [0, π) диапазонына келтіруді ұмытпаңыз: (theta + np.pi / 2) % np.pi. Тұрақты блок үшін (барлық қосындылар нөл) бұрышты есептеуден бұрын 0.0 қайтарыңыз.
+
+ru> Почему при оценке направления нельзя просто усреднять углы градиентов в блоке?
+en> Why can't you simply average the gradient angles in a block when estimating the direction?
+kk> Бағытты бағалағанда блоктағы градиент бұрыштарын неге жай орташалауға болмайды?
+
+ru> Угол θ и θ + 180° задают одно направление, и обычное среднее даёт неверный результат
+en> The angle θ and θ + 180° define the same direction, and an ordinary average gives a wrong result
+kk> θ бұрышы мен θ + 180° бір бағытты анықтайды, ал қарапайым орташа қате нәтиже береді
+
+ru> Углы нельзя складывать в numpy
+en> Angles cannot be added in numpy
+kk> numpy-да бұрыштарды қосуға болмайды
+
+ru> Градиент всегда равен нулю
+en> The gradient is always zero
+kk> Градиент әрқашан нөлге тең
+
+ru> Углы в numpy задаются только в градусах
+en> Angles in numpy are given only in degrees
+kk> numpy-да бұрыштар тек градуспен беріледі
+
+ru> # TODO: верните угол гребня в радианах из диапазона [0, pi)
+en> # TODO: return the ridge angle in radians from the range [0, pi)
+kk> # TODO: жота бұрышын [0, pi) диапазонынан радианмен қайтарыңыз
+
+ru> Код LBP для центрального пикселя
+en> The LBP code for the central pixel
+kk> Орталық пиксель үшін LBP коды
+
+ru> Лицо
+en> Face
+kk> Бет
+
+ru> LBP (локальные бинарные шаблоны) описывают текстуру: центральный пиксель сравнивают с восемью соседями; сосед не темнее центра даёт бит 1, иначе 0. Из восьми бит получается число от 0 до 255. Гистограммы таких кодов по блокам лица используются как признаки лица.
+en> LBP (local binary patterns) describe the texture: the central pixel is compared with its eight neighbors; a neighbor that is not darker than the center gives the bit 1, otherwise 0. The eight bits make a number from 0 to 255. The histograms of such codes over the face blocks are used as face features.
+kk> LBP (жергілікті бинарлы үлгілер) текстураны сипаттайды: орталық пиксель сегіз көршімен салыстырылады; орталықтан қараңғы емес көрші 1 бит береді, әйтпесе 0. Сегіз биттен 0-ден 255-ке дейінгі сан шығады. Бет блоктары бойынша мұндай кодтардың гистограммалары бет белгілері ретінде қолданылады.
+
+ru> Реализуйте функцию lbp_code(patch).\n\n• patch - массив numpy 3×3.\n\nСоседей обходите по часовой стрелке, начиная с верхнего левого: (0,0), (0,1), (0,2), (1,2), (2,2), (2,1), (2,0), (1,0). Для i-го соседа (i = 0..7) бит равен 1, если сосед >= центрального пикселя patch[1, 1]. Код = сумма бит, умноженных на 2**i. Верните целое число от 0 до 255.
+en> Implement the function lbp_code(patch).\n\n• patch - a 3×3 numpy array.\n\nTraverse the neighbors clockwise starting from the top left: (0,0), (0,1), (0,2), (1,2), (2,2), (2,1), (2,0), (1,0). For the i-th neighbor (i = 0..7) the bit is 1 if the neighbor >= the central pixel patch[1, 1]. The code = the sum of the bits multiplied by 2**i. Return an integer from 0 to 255.
+kk> lbp_code(patch) функциясын жүзеге асырыңыз.\n\n• patch - 3×3 numpy массиві.\n\nКөршілерді сол жақ жоғарғы бұрыштан бастап сағат тілі бойымен аралаңыз: (0,0), (0,1), (0,2), (1,2), (2,2), (2,1), (2,0), (1,0). i-ші көрші үшін (i = 0..7) көрші >= орталық пиксель patch[1, 1] болса, бит 1-ге тең. Код = биттердің 2**i көбейтілген қосындысы. 0-ден 255-ке дейінгі бүтін сан қайтарыңыз.
+
+ru> Центральный пиксель - patch[1, 1]. Нужно обойти восемь соседей в заданном порядке и для каждого получить 0 или 1.
+en> The central pixel is patch[1, 1]. You need to go around the eight neighbors in the given order and get 0 or 1 for each.
+kk> Орталық пиксель - patch[1, 1]. Сегіз көршіні берілген ретпен аралап, әрқайсысы үшін 0 немесе 1 алу керек.
+
+ru> Заведите список координат соседей в нужном порядке и пройдите по нему с enumerate: номер i - это степень двойки для бита этого соседа.
+en> Make a list of the neighbors' coordinates in the needed order and go through it with enumerate: the number i is the power of two for the bit of this neighbor.
+kk> Көршілер координаттарының қажетті ретпен тізімін жасап, оны enumerate арқылы аралаңыз: i нөмірі осы көршінің биті үшін екінің дәрежесі болады.
+
+ru> Условие бита: patch[y, x] >= centre (именно «не меньше»). Код накапливайте суммой: code += 2 ** i. Верните обычное целое число.
+en> The bit condition: patch[y, x] >= centre (exactly “not less”). Accumulate the code as a sum: code += 2 ** i. Return an ordinary integer.
+kk> Бит шарты: patch[y, x] >= centre (дәл «кем емес»). Кодты қосынды ретінде жинаңыз: code += 2 ** i. Қарапайым бүтін сан қайтарыңыз.
+
+ru> Какое значение даст LBP, если все восемь соседей темнее центрального пикселя?
+en> What value will LBP give if all eight neighbors are darker than the central pixel?
+kk> Сегіз көршінің бәрі орталық пикселден қараңғы болса, LBP қандай мән береді?
+
+ru> # TODO: верните целое число от 0 до 255
+en> # TODO: return an integer from 0 to 255
+kk> # TODO: 0-ден 255-ке дейінгі бүтін сан қайтарыңыз
+
+ru> Точки мел-шкалы для голоса
+en> Mel scale points for the voice
+kk> Дауыс үшін мел шкаласының нүктелері
+
+ru> Голос
+en> Voice
+kk> Дауыс
+
+ru> Слух человека различает низкие частоты точнее высоких, поэтому в распознавании речи частоты переводят в мел-шкалу: mel = 2595 · log10(1 + f / 700). Края фильтров для MFCC берут равномерно по мелам, а затем возвращают в герцы: f = 700 · (10^(mel / 2595) − 1).
+en> Human hearing tells low frequencies apart more accurately than high ones, so in speech recognition the frequencies are converted to the mel scale: mel = 2595 · log10(1 + f / 700). The edges of the MFCC filters are taken uniformly in mels and then converted back to hertz: f = 700 · (10^(mel / 2595) − 1).
+kk> Адам құлағы төмен жиіліктерді жоғарыларға қарағанда дәлірек ажыратады, сондықтан сөйлеуді танғанда жиіліктер мел шкаласына ауыстырылады: mel = 2595 · log10(1 + f / 700). MFCC сүзгілерінің шеттері мелдер бойынша бірқалыпты алынып, содан кейін герцке қайтарылады: f = 700 · (10^(mel / 2595) − 1).
+
+ru> Реализуйте функцию mel_points(f_min, f_max, n).\n\n• f_min, f_max - границы диапазона в герцах;\n• n - число фильтров.\n\nВерните массив numpy из n + 2 частот в герцах, равномерно расположенных между f_min и f_max на мел-шкале (первая точка равна f_min, последняя - f_max).
+en> Implement the function mel_points(f_min, f_max, n).\n\n• f_min, f_max - the range borders in hertz;\n• n - the number of filters.\n\nReturn a numpy array of n + 2 frequencies in hertz, uniformly spaced between f_min and f_max on the mel scale (the first point equals f_min, the last one f_max).
+kk> mel_points(f_min, f_max, n) функциясын жүзеге асырыңыз.\n\n• f_min, f_max - диапазон шекаралары герцпен;\n• n - сүзгілер саны.\n\nМел шкаласында f_min мен f_max арасында бірқалыпты орналасқан n + 2 жиіліктен (герцпен) тұратын numpy массивін қайтарыңыз (бірінші нүкте f_min, соңғысы f_max-қа тең).
+
+ru> Работайте в три шага: перевести f_min и f_max в мелы, равномерно разбить отрезок между ними, перевести точки обратно в герцы.
+en> Work in three steps: convert f_min and f_max to mels, split the segment between them uniformly, convert the points back to hertz.
+kk> Үш қадаммен жұмыс істеңіз: f_min мен f_max-ты мелге ауыстырыңыз, олардың арасындағы кесіндіні бірқалыпты бөліңіз, нүктелерді герцке қайта ауыстырыңыз.
+
+ru> Равномерно разбить отрезок поможет np.linspace(mel_min, mel_max, n + 2). Формулы перевода записаны в теории.
+en> np.linspace(mel_min, mel_max, n + 2) will help to split the segment uniformly. The conversion formulas are written in the theory.
+kk> Кесіндіні бірқалыпты бөлуге np.linspace(mel_min, mel_max, n + 2) көмектеседі. Ауыстыру формулалары теорияда жазылған.
+
+ru> Формулы удобно оформить как две маленькие функции: to_mel(f) = 2595 * np.log10(1 + f / 700) и to_hz(m) = 700 * (10 ** (m / 2595) - 1).
+en> It is convenient to write the formulas as two small functions: to_mel(f) = 2595 * np.log10(1 + f / 700) and to_hz(m) = 700 * (10 ** (m / 2595) - 1).
+kk> Формулаларды екі шағын функция ретінде жазған ыңғайлы: to_mel(f) = 2595 * np.log10(1 + f / 700) және to_hz(m) = 700 * (10 ** (m / 2595) - 1).
+
+ru> Почему для речи используют мел-шкалу?
+en> Why is the mel scale used for speech?
+kk> Сөйлеу үшін мел шкаласы неге қолданылады?
+
+ru> Она приближает восприятие высоты звука человеком: низкие частоты различаются тоньше высоких
+en> It approximates how a person perceives pitch: low frequencies are told apart more finely than high ones
+kk> Ол адамның тон биіктігін қабылдауын жуықтайды: төмен жиіліктер жоғарыларға қарағанда нәзірек ажыратылады
+
+ru> Она ускоряет запись звука
+en> It speeds up the sound recording
+kk> Ол дыбыс жазуды жылдамдатады
+
+ru> Она убирает шум из записи
+en> It removes noise from the recording
+kk> Ол жазбадан шуды жояды
+
+ru> Она повышает частоту дискретизации
+en> It increases the sampling rate
+kk> Ол дискреттеу жиілігін арттырады
+
+ru> # TODO: верните массив из n + 2 частот в герцах
+en> # TODO: return an array of n + 2 frequencies in hertz
+kk> # TODO: n + 2 жиіліктен (герцпен) тұратын массив қайтарыңыз
+
+ru> Точность идентификации Rank-1
+en> Rank-1 identification accuracy
+kk> Rank-1 сәйкестендіру дәлдігі
+
+ru> При идентификации система сравнивает пробу со всей галереей и выбирает самую похожую запись. Rank-1 - доля проб, у которых самая похожая запись галереи принадлежит нужному человеку.
+en> In identification the system compares a probe with the whole gallery and chooses the most similar record. Rank-1 is the fraction of probes for which the most similar gallery record belongs to the right person.
+kk> Сәйкестендіру кезінде жүйе сынаманы бүкіл галереямен салыстырып, ең ұқсас жазбаны таңдайды. Rank-1 - ең ұқсас галерея жазбасы дұрыс адамға тиесілі сынамалар үлесі.
+
+ru> Реализуйте функцию rank1_accuracy(scores, true_idx).\n\n• scores - таблица сходства: строка - проба, столбец - запись галереи (список списков или массив);\n• true_idx - список номеров правильных записей галереи для каждой пробы.\n\nДля каждой пробы выберите столбец с наибольшим сходством (при равенстве - первый). Верните долю проб, у которых он совпал с true_idx (число от 0 до 1). Если проб нет, верните 0.0.
+en> Implement the function rank1_accuracy(scores, true_idx).\n\n• scores - a similarity table: a row is a probe, a column is a gallery record (a list of lists or an array);\n• true_idx - a list of the numbers of the right gallery records for each probe.\n\nFor each probe choose the column with the largest similarity (the first one on a tie). Return the fraction of probes for which it coincided with true_idx (a number from 0 to 1). If there are no probes, return 0.0.
+kk> rank1_accuracy(scores, true_idx) функциясын жүзеге асырыңыз.\n\n• scores - ұқсастық кестесі: жол - сынама, баған - галерея жазбасы (тізімдер тізімі немесе массив);\n• true_idx - әр сынама үшін галереяның дұрыс жазбаларының нөмірлері тізімі.\n\nӘр сынама үшін ұқсастығы ең үлкен бағанды таңдаңыз (тең болса - біріншісін). Ол true_idx-пен сәйкес келген сынамалар үлесін қайтарыңыз (0-ден 1-ге дейінгі сан). Сынамалар болмаса, 0.0 қайтарыңыз.
+
+ru> Для каждой строки таблицы нужен номер столбца с наибольшим значением - это то, что выбрала система.
+en> For each row of the table you need the number of the column with the largest value - this is what the system chose.
+kk> Кестенің әр жолы үшін ең үлкен мәні бар баған нөмірі керек - жүйе соны таңдады.
+
+ru> np.argmax(таблица, axis=1) возвращает такие номера сразу для всех строк (при равенстве - первый). Сравните их с true_idx и посчитайте долю совпадений.
+en> np.argmax(table, axis=1) returns such numbers for all rows at once (the first one on a tie). Compare them with true_idx and count the fraction of matches.
+kk> np.argmax(кесте, axis=1) мұндай нөмірлерді барлық жолдар үшін бірден қайтарады (тең болса - біріншісі). Оларды true_idx-пен салыстырып, сәйкестіктер үлесін санаңыз.
+
+ru> Сначала приведите scores к массиву чисел: np.asarray(scores, dtype=float). Если проб нет (в массиве 0 строк), верните 0.0 до вычисления среднего.
+en> First cast scores to an array of numbers: np.asarray(scores, dtype=float). If there are no probes (0 rows in the array), return 0.0 before computing the mean.
+kk> Алдымен scores-ты сандар массивіне келтіріңіз: np.asarray(scores, dtype=float). Сынамалар болмаса (массивте 0 жол), орташаны есептеуден бұрын 0.0 қайтарыңыз.
+
+ru> Чем идентификация (1:N) отличается от верификации (1:1)?
+en> How does identification (1:N) differ from verification (1:1)?
+kk> Сәйкестендіру (1:N) верификациядан (1:1) немен ерекшеленеді?
+
+ru> При идентификации пробу сравнивают со всей галереей, при верификации - с одной заявленной записью
+en> In identification a probe is compared with the whole gallery, in verification with one claimed record
+kk> Сәйкестендіруде сынама бүкіл галереямен, верификацияда бір мәлімделген жазбамен салыстырылады
+
+ru> Идентификация всегда точнее верификации
+en> Identification is always more accurate than verification
+kk> Сәйкестендіру әрқашан верификациядан дәлірек
+
+ru> Верификация не использует порог
+en> Verification does not use a threshold
+kk> Верификация шекті қолданбайды
+
+ru> Различий нет
+en> There is no difference
+kk> Айырмашылық жоқ
+
+ru> # TODO: верните долю верно найденных проб
+en> # TODO: return the fraction of correctly found probes
+kk> # TODO: дұрыс табылған сынамалар үлесін қайтарыңыз
+
+ru> Совпавшие точки двух наборов минуций
+en> Matched points of two sets of minutiae
+kk> Минуциялардың екі жиынының сәйкес нүктелері
+
+ru> Алгоритмы сопоставления отпечатков ищут минуции, которые лежат рядом после выравнивания. Простейшая мера схожести - число точек первого набора, рядом с которыми есть точка второго набора (расстояние не больше допуска).
+en> Fingerprint matching algorithms look for minutiae that lie close after alignment. The simplest similarity measure is the number of points of the first set near which there is a point of the second set (the distance is not larger than the tolerance).
+kk> Саусақ ізін салыстыру алгоритмдері туралаудан кейін жақын орналасқан минуцияларды іздейді. Ұқсастықтың қарапайым өлшемі - бірінші жиынның қасында екінші жиынның нүктесі бар нүктелер саны (қашықтық рұқсаттан артық емес).
+
+ru> Реализуйте функцию count_matched(points_a, points_b, radius).\n\n• points_a, points_b - списки точек (x, y);\n• radius - допуск в пикселях.\n\nВерните число точек из points_a, у которых есть хотя бы одна точка из points_b на евклидовом расстоянии не больше radius (расстояние ровно radius считается совпадением). Каждая точка из points_a учитывается не более одного раза.
+en> Implement the function count_matched(points_a, points_b, radius).\n\n• points_a, points_b - lists of points (x, y);\n• radius - the tolerance in pixels.\n\nReturn the number of points from points_a that have at least one point from points_b at a Euclidean distance not larger than radius (a distance exactly equal to radius counts as a match). Each point from points_a is counted at most once.
+kk> count_matched(points_a, points_b, radius) функциясын жүзеге асырыңыз.\n\n• points_a, points_b - нүктелер тізімдері (x, y);\n• radius - пикселмен рұқсат.\n\npoints_a ішінен points_b-ның кемінде бір нүктесі евклидтік қашықтығы radius-тан артық емес болатын нүктелер санын қайтарыңыз (дәл radius-қа тең қашықтық сәйкестік болып саналады). points_a-ның әр нүктесі ең көбі бір рет ескеріледі.
+
+ru> Для каждой точки из points_a нужно ответить на вопрос: есть ли среди points_b хотя бы одна близкая точка. Если есть - добавьте единицу к счётчику.
+en> For each point from points_a you need to answer the question: is there at least one close point among points_b. If there is, add one to the counter.
+kk> points_a-ның әр нүктесі үшін сұраққа жауап беру керек: points_b ішінде кемінде бір жақын нүкте бар ма. Бар болса, санауышқа бірді қосыңыз.
+
+ru> Достаточно сравнивать квадраты: (ax - bx) ** 2 + (ay - by) ** 2 <= radius ** 2. Корень извлекать не нужно.
+en> It is enough to compare the squares: (ax - bx) ** 2 + (ay - by) ** 2 <= radius ** 2. There is no need to take the root.
+kk> Квадраттарды салыстыру жеткілікті: (ax - bx) ** 2 + (ay - by) ** 2 <= radius ** 2. Түбір алу қажет емес.
+
+ru> Используйте any(...) по points_b, чтобы остановиться на первой близкой точке: тогда одна точка A не будет посчитана дважды, даже если рядом несколько точек B.
+en> Use any(...) over points_b to stop at the first close point: then one point A will not be counted twice even if there are several points B nearby.
+kk> Бірінші жақын нүктеде тоқтау үшін points_b бойынша any(...) қолданыңыз: сонда жанында B-ның бірнеше нүктесі болса да, бір A нүктесі екі рет есептелмейді.
+
+ru> Зачем сравнивать минуции с допуском, а не требовать точного совпадения координат?
+en> Why compare minutiae with a tolerance instead of requiring exact coincidence of the coordinates?
+kk> Минуцияларды координаттардың дәл сәйкестігін талап етудің орнына неге рұқсатпен салыстырады?
+
+ru> Положение минуций определяется с погрешностью и немного меняется от снимка к снимку
+en> The position of minutiae is determined with an error and changes a little from shot to shot
+kk> Минуциялар орны қатемен анықталады және суреттен суретке аздап өзгереді
+
+ru> Чтобы код работал быстрее
+en> So that the code works faster
+kk> Код жылдамырақ жұмыс істеуі үшін
+
+ru> Потому что координаты минуций всегда целые
+en> Because the coordinates of minutiae are always integers
+kk> Өйткені минуциялар координаттары әрқашан бүтін
+
+ru> Допуск не нужен
+en> No tolerance is needed
+kk> Рұқсат қажет емес
+
+ru> # TODO: верните число совпавших точек из points_a
+en> # TODO: return the number of matched points from points_a
+kk> # TODO: points_a ішіндегі сәйкес нүктелер санын қайтарыңыз

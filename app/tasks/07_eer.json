@@ -1,0 +1,35 @@
+{
+  "id": "eer",
+  "order": 7,
+  "title": "Порог равных ошибок (EER)",
+  "topic": "Метрики",
+  "difficulty": "сложный",
+  "spec": "eer",
+  "function": "eer_threshold",
+  "theory": "EER - точка, где доля ложных допусков FAR равна доле ложных отказов FRR. Чтобы найти её, перебирают пороги по всем встречающимся оценкам: для каждого считают FAR (чужие с оценкой не ниже порога) и FRR (свои с оценкой ниже порога) и выбирают порог с минимальным |FAR - FRR|. EER принимают равным (FAR + FRR) / 2 в этой точке.",
+  "description": "Реализуйте функцию eer_threshold(genuine, impostor).\n\n• genuine - оценки сходства «своих» пар (список чисел);\n• impostor - оценки «чужих» пар.\n\nКандидаты в пороги - все различные значения из обоих списков. Для порога t: FAR - доля чужих с оценкой >= t, FRR - доля своих с оценкой < t (если список пуст, его доля равна 0.0). Выберите порог с наименьшим |FAR - FRR|; если отклонения равны (с точностью 1e-12), берите меньший порог. Верните кортеж (eer, порог), где eer = (FAR + FRR) / 2. Если оба списка пусты, верните (0.0, 0.0).",
+  "starter_code": "def eer_threshold(genuine, impostor):\n    # TODO: верните кортеж (eer, порог)\n    pass\n",
+  "hints": [
+    "Переберите кандидатов в пороги в порядке возрастания. Для каждого посчитайте FAR и FRR так же, как в задании про FAR и FRR.",
+    "Для каждого порога t нужно число |FAR - FRR|. Запоминайте лучший порог: тот, где это число меньше всего. Чтобы при равенстве остался меньший порог, заменяйте лучший вариант только при строгом улучшении (с запасом 1e-12).",
+    "Кандидаты: sorted(set(genuine) | set(impostor)). Для пустых списков доли равны 0.0, а если пусты оба списка, кандидатов нет - верните (0.0, 0.0).",
+    "Полное решение:\n\ndef eer_threshold(genuine, impostor):\n    candidates = sorted(set(genuine) | set(impostor))\n    if not candidates:\n        return 0.0, 0.0\n    best = None\n    for t in candidates:\n        far = sum(s >= t for s in impostor) / len(impostor) if len(impostor) else 0.0\n        frr = sum(s < t for s in genuine) / len(genuine) if len(genuine) else 0.0\n        d = abs(far - frr)\n        if best is None or d < best[0] - 1e-12:\n            best = (d, (far + frr) / 2, t)\n    return best[1], best[2]"
+  ],
+  "solution": "def eer_threshold(genuine, impostor):\n    candidates = sorted(set(genuine) | set(impostor))\n    if not candidates:\n        return 0.0, 0.0\n    best = None\n    for t in candidates:\n        far = sum(s >= t for s in impostor) / len(impostor) if len(impostor) else 0.0\n        frr = sum(s < t for s in genuine) / len(genuine) if len(genuine) else 0.0\n        d = abs(far - frr)\n        if best is None or d < best[0] - 1e-12:\n            best = (d, (far + frr) / 2, t)\n    return best[1], best[2]\n",
+  "question": {
+    "text": "Что произойдёт с EER, если оценки «своих» и «чужих» пар сильнее перекрываются?",
+    "options": [
+      "EER вырастет",
+      "EER уменьшится",
+      "EER не изменится",
+      "EER станет отрицательным"
+    ],
+    "correct": 0
+  },
+  "rubric": {
+    "run": 2,
+    "basic": 4,
+    "edge": 3,
+    "question": 1
+  }
+}

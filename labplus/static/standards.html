@@ -10,22 +10,21 @@
 <div class="card"><h2>Терминология</h2><table id="terms"></table></div>
 <div class="card"><h2>Соответствие практикам стандартов</h2><table id="check"></table></div>
 </div>
-<script>
-LAB.nav('standards');const $=LAB.$;const FN={voice:['Голос','/labplus/voice'],metrics:['Метрики и ROC/DET','/labplus/metrics'],robustness:['Устойчивость','/labplus/robustness'],fingerprint:['Отпечатки пальцев',null],face:['Лицо',null],iris:['Радужка',null]};
-const ST={done:['ok','сделано'],planned:['warn','в планах'],not_claimed:['mute','не заявляется']};
+<script>LAB.nav('standards');const $=LAB.$;const FN={voice:[LT('Голос'),'/labplus/voice'],metrics:[LT('Метрики и ROC/DET'),'/labplus/metrics'],robustness:[LT('Устойчивость'),'/labplus/robustness'],fingerprint:[LT('Отпечатки пальцев'),null],face:[LT('Лицо'),null],iris:[LT('Радужка'),null]};
+const ST={done:['ok',LT('сделано')],planned:['warn',LT('в планах')],not_claimed:['mute',LT('не заявляется')]};
 const VC={web:'ok',project:'mute',check:'warn'};
-let D,area='Все';
+let D,area=LT('Все');
 const esc=s=>String(s).replace(/[&<>]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]));
 function render(){
- const areas=['Все',...new Set(D.catalog.map(x=>x.area))];
+ const areas=[LT('Все'),...new Set(D.catalog.map(x=>x.area))];
  $('#chips').innerHTML=areas.map(a=>`<button class="${a===area?'on':''}" data-a="${a}">${a}</button>`).join('');
  $('#chips').querySelectorAll('button').forEach(b=>b.onclick=()=>{area=b.dataset.a;render()});
- $('#list').innerHTML=D.catalog.filter(x=>area==='Все'||x.area===area).map(x=>`<div style="padding:10px 0;border-bottom:1px solid var(--line)"><div class="row"><b>${esc(x.code)}</b><span class="pill ${VC[x.verified]}">${D.verified_labels[x.verified]}</span><span class="pill mute">${esc(x.area)}</span></div><div>${esc(x.title)}</div><div class="note">${esc(x.what)}</div>${x.lab.length?`<div class="note">В лаборатории: ${x.lab.map(k=>FN[k][1]?`<a href="${FN[k][1]}">${FN[k][0]}</a>`:FN[k][0]).join(', ')}</div>`:''}${x.note?`<div class="note"><i>${esc(x.note)}</i></div>`:''}</div>`).join('');
+ $('#list').innerHTML=D.catalog.filter(x=>area==='Все'||x.area===area).map(x=>`<div style="padding:10px 0;border-bottom:1px solid var(--line)"><div class="row"><b>${esc(x.code)}</b><span class="pill ${VC[x.verified]}">${D.verified_labels[x.verified]}</span><span class="pill mute">${esc(x.area)}</span></div><div>${esc(x.title)}</div><div class="note">${esc(x.what)}</div>${x.lab.length?LT(`<div class="note">В лаборатории: {0}</div>`,[x.lab.map(k=>FN[k][1]?`<a href="${FN[k][1]}">${FN[k][0]}</a>`:FN[k][0]).join(', ')]):''}${x.note?`<div class="note"><i>${esc(x.note)}</i></div>`:''}</div>`).join('');
 }
 (async()=>{try{D=await LAB.api('/api/labplus/standards');$('#disc').textContent=D.disclaimer;render();
  const m={};D.catalog.forEach(x=>x.lab.forEach(k=>(m[k]=m[k]||[]).push(x.code)));
- $('#map').innerHTML='<tr><th>Функция</th><th>Стандарты</th></tr>'+Object.entries(m).map(([k,v])=>`<tr><td>${FN[k][1]?`<a href="${FN[k][1]}">${FN[k][0]}</a>`:FN[k][0]}</td><td>${v.map(esc).join('<br>')}</td></tr>`).join('');
- $('#terms').innerHTML='<tr><th>Термин</th><th>Значение</th><th>Примечание</th></tr>'+D.terms.map(t=>`<tr><td><b>${esc(t.term)}</b></td><td>${esc(t.ru)}</td><td class="note">${esc(t.note)}</td></tr>`).join('');
- $('#check').innerHTML='<tr><th>Практика</th><th>Где</th><th>Статус</th></tr>'+D.checklist.map(c=>`<tr><td>${esc(c.item)}</td><td>${esc(c.where)}</td><td><span class="pill ${ST[c.status][0]}">${ST[c.status][1]}</span></td></tr>`).join('');
+ $('#map').innerHTML=LT('<tr><th>Функция</th><th>Стандарты</th></tr>')+Object.entries(m).map(([k,v])=>`<tr><td>${FN[k][1]?`<a href="${FN[k][1]}">${FN[k][0]}</a>`:FN[k][0]}</td><td>${v.map(esc).join('<br>')}</td></tr>`).join('');
+ $('#terms').innerHTML=LT('<tr><th>Термин</th><th>Значение</th><th>Примечание</th></tr>')+D.terms.map(t=>`<tr><td><b>${esc(t.term)}</b></td><td>${esc(t.ru)}</td><td class="note">${esc(t.note)}</td></tr>`).join('');
+ $('#check').innerHTML=LT('<tr><th>Практика</th><th>Где</th><th>Статус</th></tr>')+D.checklist.map(c=>`<tr><td>${esc(c.item)}</td><td>${esc(c.where)}</td><td><span class="pill ${ST[c.status][0]}">${ST[c.status][1]}</span></td></tr>`).join('');
 }catch(e){LAB.show($('#disc'),e.message,true)}})();
 </script></body></html>

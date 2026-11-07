@@ -53,16 +53,15 @@
  <p class="note">Ограничения: распознавание речи делает сам браузер (звук уходит на сервис браузера, не в лабораторию); смысл команды определяют правила по ключевым словам.</p>
 </div>
 </div>
-<script>
-LAB.nav('voice');
-const $=LAB.$, PHRASES=['Меня зовут … и я изучаю биометрию','Сегодня хорошая погода для лабораторной работы','Один два три четыре пять шесть семь','Виртуальная лаборатория распознаёт образы'];
+<script>LAB.nav('voice');
+const $=LAB.$, PHRASES=[LT('Меня зовут … и я изучаю биометрию'),LT('Сегодня хорошая погода для лабораторной работы'),LT('Один два три четыре пять шесть семь'),LT('Виртуальная лаборатория распознаёт образы')];
 let phrases=[], recorder=null, lastWav=null, lastRes=null;
-$('#phraseHint').textContent='Идеи: '+PHRASES.join(' · ');
+$('#phraseHint').textContent=LT('Идеи: ')+PHRASES.join(' · ');
 
 async function refreshProfiles(){
   const d=await LAB.api('/api/labplus/voice/profiles'); const s=$('#profiles'); s.innerHTML='';
-  d.profiles.forEach(p=>{const o=document.createElement('option');o.value=p.name;o.textContent=`${p.name} (${p.n_phrases} фраз, ${p.created})`;s.append(o)});
-  if(!d.profiles.length){const o=document.createElement('option');o.textContent='— профилей пока нет —';o.value='';s.append(o)}
+  d.profiles.forEach(p=>{const o=document.createElement('option');o.value=p.name;o.textContent=LT(`{0} ({1} фраз, {2})`,[p.name,p.n_phrases,p.created]);s.append(o)});
+  if(!d.profiles.length){const o=document.createElement('option');o.textContent=LT('— профилей пока нет —');o.value='';s.append(o)}
   const cur=LAB.store.get('voiceName',''); if(cur&&d.profiles.some(p=>p.name===cur)) s.value=cur;
   $('#name').value=$('#name').value||cur;
   window._profData=d;renderProfAudio(d);
@@ -71,60 +70,60 @@ $('#profiles').onchange=()=>renderProfAudio(window._profData);
 function renderProfAudio(d){
   const box=$('#profAudio'),n=$('#profiles').value;box.innerHTML='';
   const p=d&&d.profiles.find(x=>x.name===n); if(!p){return}
-  if(!p.n_audio){box.textContent='Записи этого профиля не сохранены (профиль создан до добавления прослушивания). Создайте шаблон заново, чтобы их можно было слушать.';return}
-  box.append('Записи профиля: ');
-  for(let i=0;i<p.n_audio;i++){const b=document.createElement('button');b.textContent='▶ Фраза '+(i+1);
-    b.onclick=()=>{if(window._pa){window._pa.pause()}window._pa=new Audio('/api/labplus/voice/profiles/'+encodeURIComponent(n)+'/phrase/'+i+'.wav');window._pa.play().catch(()=>LAB.show($('#enrollMsg'),'Не удалось воспроизвести запись.',true))};box.append(b,' ')}
+  if(!p.n_audio){box.textContent=LT('Записи этого профиля не сохранены (профиль создан до добавления прослушивания). Создайте шаблон заново, чтобы их можно было слушать.');return}
+  box.append(LT('Записи профиля: '));
+  for(let i=0;i<p.n_audio;i++){const b=document.createElement('button');b.textContent=LT('▶ Фраза ')+(i+1);
+    b.onclick=()=>{if(window._pa){window._pa.pause()}window._pa=new Audio('/api/labplus/voice/profiles/'+encodeURIComponent(n)+'/phrase/'+i+'.wav');window._pa.play().catch(()=>LAB.show($('#enrollMsg'),LT('Не удалось воспроизвести запись.'),true))};box.append(b,' ')}
 }
-function setActive(name){LAB.store.set('voiceName',name);const n=document.getElementById('lp-name');if(n)n.textContent=name||'нет';const c=document.getElementById('lp-spk');if(c){c.disabled=!name}}
+function setActive(name){LAB.store.set('voiceName',name);const n=document.getElementById('lp-name');if(n)n.textContent=name||LT('нет');const c=document.getElementById('lp-spk');if(c){c.disabled=!name}}
 
 /* запись по кнопке: нажали — пишем, нажали ещё раз — стоп (авто-стоп через 7 с) */
 async function toggleRecord(btn,lvlEl,onDone){
   if(recorder){const r=recorder;recorder=null;btn.classList.remove('rec');btn.textContent=btn.dataset.t;const blob=await r.stop();lvlEl.style.width='0';return onDone(blob)}
   recorder=new LAB.Recorder();btn.dataset.t=btn.textContent;
   try{await recorder.start(v=>{lvlEl.style.width=Math.min(100,v*400)+'%'})}catch(e){recorder=null;throw e}
-  btn.classList.add('rec');btn.textContent='⏹ Стоп';
+  btn.classList.add('rec');btn.textContent=LT('⏹ Стоп');
   setTimeout(()=>{if(recorder&&btn.classList.contains('rec'))btn.click()},7000);
 }
 const guard=(el,fn)=>async()=>{try{await fn()}catch(e){LAB.show(el,e.message,true)}};
 
 $('#recPhrase').onclick=guard($('#enrollMsg'),()=>toggleRecord($('#recPhrase'),$('#lvl1'),blob=>{phrases.push(blob);renderPhrases()}));
-function renderPhrases(){const pl=$('#phraseList');pl.textContent=phrases.length?`Записано фраз: ${phrases.length} `:'';phrases.forEach((b,i)=>{const x=document.createElement('button');x.textContent='▶ '+(i+1);x.onclick=()=>new Audio(URL.createObjectURL(b)).play();pl.append(x,' ')});$('#enroll').disabled=phrases.length<3}
+function renderPhrases(){const pl=$('#phraseList');pl.textContent=phrases.length?LT(`Записано фраз: {0} `,[phrases.length]):'';phrases.forEach((b,i)=>{const x=document.createElement('button');x.textContent='▶ '+(i+1);x.onclick=()=>new Audio(URL.createObjectURL(b)).play();pl.append(x,' ')});$('#enroll').disabled=phrases.length<3}
 $('#clearPhrases').onclick=()=>{phrases=[];renderPhrases()};
 $('#enroll').onclick=guard($('#enrollMsg'),async()=>{
   const fd=new FormData();fd.append('name',$('#name').value);phrases.forEach((b,i)=>fd.append('files',b,`p${i}.wav`));
   const r=await LAB.api('/api/labplus/voice/enroll',{method:'POST',body:fd});
-  const sc=r.self_consistency==null?'':` Стабильность голоса между фразами: ${r.self_consistency.toFixed(2)}.`;
-  LAB.show($('#enrollMsg'),`Шаблон «${r.name}» создан: ${r.n_phrases} фразы, ${r.dim} признаков.${sc} Записи фраз сохранены, их можно прослушать ниже.`);
+  const sc=r.self_consistency==null?'':LT(` Стабильность голоса между фразами: {0}.`,[r.self_consistency.toFixed(2)]);
+  LAB.show($('#enrollMsg'),LT(`Шаблон «{0}» создан: {1} фразы, {2} признаков.{3} Записи фраз сохранены, их можно прослушать ниже.`,[r.name,r.n_phrases,r.dim,sc]));
   setActive(r.name);phrases=[];renderPhrases();await refreshProfiles();$('#profiles').value=r.name;
 });
-$('#useProfile').onclick=()=>{const n=$('#profiles').value;if(n){setActive(n);$('#name').value=n;LAB.show($('#enrollMsg'),`Активный профиль: ${n}`)}};
-$('#delProfile').onclick=guard($('#enrollMsg'),async()=>{const n=$('#profiles').value;if(!n)return;if(!confirm('Удалить профиль «'+n+'»?'))return;
-  await LAB.api('/api/labplus/voice/profiles/'+encodeURIComponent(n),{method:'DELETE'});if(LAB.store.get('voiceName','')===n)setActive('');LAB.show($('#enrollMsg'),'Профиль удалён.');refreshProfiles()});
+$('#useProfile').onclick=()=>{const n=$('#profiles').value;if(n){setActive(n);$('#name').value=n;LAB.show($('#enrollMsg'),LT(`Активный профиль: {0}`,[n]))}};
+$('#delProfile').onclick=guard($('#enrollMsg'),async()=>{const n=$('#profiles').value;if(!n)return;if(!confirm(LT('Удалить профиль «')+n+'»?'))return;
+  await LAB.api('/api/labplus/voice/profiles/'+encodeURIComponent(n),{method:'DELETE'});if(LAB.store.get('voiceName','')===n)setActive('');LAB.show($('#enrollMsg'),LT('Профиль удалён.'));refreshProfiles()});
 
 function th(){return +$('#th').value}
 $('#th').oninput=()=>{$('#thv').textContent=th().toFixed(2);LAB.store.set('voiceThreshold',th());render()};
 function render(){
   if(!lastRes)return; const s=lastRes.score, ok=s>=th();
-  $('#verdict').innerHTML=`<span class="pill ${ok?'ok':'bad'}">${ok?'MATCH · голос принят':'NO MATCH · голос не принят'}</span> сходство <b>${s.toFixed(3)}</b>, порог ${th().toFixed(2)}`;
+  $('#verdict').innerHTML=LT(`<span class="pill {0}">{1}</span> сходство <b>{2}</b>, порог {3}`,[ok?'ok':'bad',ok?LT('MATCH · голос принят'):LT('NO MATCH · голос не принят'),s.toFixed(3),th().toFixed(2)]);
   $('#scoreBar').style.width=(s*100)+'%';$('#thMark').style.left=(th()*100)+'%';
   lastRes.threshold=th();lastRes.decision=ok?'MATCH':'NO MATCH';LAB.setLast('voice',lastRes);
 }
 $('#recVerify').onclick=guard($('#verifyMsg'),()=>toggleRecord($('#recVerify'),$('#lvl2'),async blob=>{
-  const name=LAB.store.get('voiceName','')||$('#profiles').value; if(!name) throw new Error('Сначала создайте или выберите профиль.');
+  const name=LAB.store.get('voiceName','')||$('#profiles').value; if(!name) throw new Error(LT('Сначала создайте или выберите профиль.'));
   lastWav=blob;const fd=new FormData();fd.append('name',name);fd.append('threshold',th());fd.append('file',blob,'v.wav');
   lastRes=await LAB.api('/api/labplus/voice/verify',{method:'POST',body:fd});LAB.show($('#verifyMsg'),'');
   const v=lastRes.viz;LAB.waveform($('#cWave'),v.waveform);LAB.heat($('#cMel'),v.mel,110);LAB.heat($('#cMfcc'),v.mfcc,80);
-  $('#kpi').innerHTML=`<div><small>Расстояние до шаблона</small><b>${lastRes.distance}</b></div><div><small>Речь, с</small><b>${v.speech_sec}</b></div><div><small>Тон F0, Гц</small><b>${v.f0_hz??'—'}</b></div><div><small>Доля звонких</small><b>${v.voiced_ratio}</b></div>`;
+  $('#kpi').innerHTML=LT(`<div><small>Расстояние до шаблона</small><b>{0}</b></div><div><small>Речь, с</small><b>{1}</b></div><div><small>Тон F0, Гц</small><b>{2}</b></div><div><small>Доля звонких</small><b>{3}</b></div>`,[lastRes.distance,v.speech_sec,v.f0_hz??'—',v.voiced_ratio]);
   $('#explainBtn').disabled=false;$('#speakBtn').disabled=false;$('#robBtn').disabled=false;render();
 }));
 $('#explainBtn').onclick=guard($('#explainMsg'),async()=>{if(!lastRes)return;const r=await LAB.post('/api/labplus/explain',{kind:'voice',payload:lastRes,level:+$('#lvl').value});LAB.show($('#explainMsg'),r.text)});
 $('#speakBtn').onclick=()=>LAB.speak($('#explainMsg').textContent||$('#verdict').textContent);
 $('#robBtn').onclick=guard($('#robMsg'),async()=>{
   const name=LAB.store.get('voiceName','')||$('#profiles').value;const fd=new FormData();fd.append('name',name);fd.append('threshold',th());fd.append('file',lastWav,'v.wav');
-  LAB.show($('#robMsg'),'Считаю…');const r=await LAB.api('/api/labplus/voice/robustness',{method:'POST',body:fd});LAB.show($('#robMsg'),'');
-  let h=`<p class="note">Исходная оценка: <b>${r.reference_score}</b>, порог ${r.threshold}. Зелёное — принято, красное — не принято; «отклонено» — после искажения в записи не нашлось достаточно речи.</p><table class="heat"><tr><th>Искажение</th><th colspan="5">Оценки от слабого к сильному</th><th>Ломается на</th></tr>`;
-  r.results.forEach(x=>{h+=`<tr><td style="text-align:left">${x.title}<br><span class="note">${x.unit}</span></td>`+x.points.map(p=>`<td class="${p.pass?'ok':'bad'}">${p.rejected?'отклонено':p.score.toFixed(2)}<br><span class="note">${p.value}</span></td>`).join('')+'<td></td>'.repeat(5-x.points.length)+`<td>${x.breakpoint===null?'не ломается':x.breakpoint+' '+x.unit}</td></tr>`});
+  LAB.show($('#robMsg'),LT('Считаю…'));const r=await LAB.api('/api/labplus/voice/robustness',{method:'POST',body:fd});LAB.show($('#robMsg'),'');
+  let h=LT(`<p class="note">Исходная оценка: <b>{0}</b>, порог {1}. Зелёное — принято, красное — не принято; «отклонено» — после искажения в записи не нашлось достаточно речи.</p><table class="heat"><tr><th>Искажение</th><th colspan="5">Оценки от слабого к сильному</th><th>Ломается на</th></tr>`,[r.reference_score,r.threshold]);
+  r.results.forEach(x=>{h+=`<tr><td style="text-align:left">${x.title}<br><span class="note">${x.unit}</span></td>`+x.points.map(p=>`<td class="${p.pass?'ok':'bad'}">${p.rejected?LT('отклонено'):p.score.toFixed(2)}<br><span class="note">${p.value}</span></td>`).join('')+'<td></td>'.repeat(5-x.points.length)+`<td>${x.breakpoint===null?LT('не ломается'):x.breakpoint+' '+x.unit}</td></tr>`});
   $('#robOut').innerHTML=h+'</table>';
 });
 refreshProfiles().catch(e=>LAB.show($('#enrollMsg'),e.message,true));

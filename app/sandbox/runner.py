@@ -23,6 +23,22 @@ MARK = "@@RESULT@@"
 CASE_SECONDS = 3
 
 
+def _warm_numpy():
+    """numpy подгружает numpy._core._methods лениво при первом a.mean(), a.std(), a.var(), a.clip() ... Если это случится внутри кода
+    студента, ограниченный __import__ песочницы блокирует служебный импорт («Импорт numpy._core._methods запрещён»).
+    Поэтому такие модули загружаются заранее, до запуска кода студента."""
+    import importlib
+    for name in ("numpy._core._methods", "numpy._core._internal", "numpy._core._exceptions", "numpy._core._dtype",
+                 "numpy.core._methods", "numpy.core._internal", "numpy.core._exceptions", "numpy.core._dtype"):
+        try:
+            importlib.import_module(name)
+        except Exception:
+            pass
+
+
+_warm_numpy()
+
+
 class _Timeout(BaseException):
     pass
 

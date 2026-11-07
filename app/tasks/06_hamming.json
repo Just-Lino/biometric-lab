@@ -1,0 +1,35 @@
+{
+  "id": "hamming",
+  "order": 6,
+  "title": "Расстояние Хэмминга для кода радужки (с масками)",
+  "topic": "Радужка",
+  "difficulty": "базовый",
+  "spec": "hamming",
+  "function": "hamming_distance",
+  "theory": "Код радужки - бинарный шаблон. Два кода сравнивают по доле несовпавших бит (нормированное расстояние Хэмминга). Маска показывает надёжные биты (1) и закрытые веками или бликами (0): в сравнении участвуют только биты, надёжные в обоих кодах. Чем меньше расстояние, тем вероятнее, что это одна радужка.",
+  "description": "Реализуйте функцию hamming_distance(code_a, code_b, mask_a, mask_b).\n\n• code_a, code_b - массивы numpy из 0 и 1 одинаковой формы;\n• mask_a, mask_b - массивы той же формы: 1 - бит надёжен, 0 - бит нужно игнорировать.\n\nВерните долю несовпавших бит среди битов, надёжных в ОБОИХ кодах (число от 0 до 1). Если таких битов нет, верните 1.0.",
+  "starter_code": "import numpy as np\n\n\ndef hamming_distance(code_a, code_b, mask_a, mask_b):\n    # TODO: верните долю несовпавших надёжных бит\n    pass\n",
+  "hints": [
+    "Сначала найдите биты, которые надёжны в обоих кодах: это пересечение двух масок. Затем среди них посчитайте, сколько бит различаются.",
+    "Различающиеся биты - это code_a != code_b. Нужны только те позиции, где обе маски равны 1. Результат - число таких позиций, делённое на число надёжных позиций.",
+    "valid = (mask_a == 1) & (mask_b == 1); n = valid.sum(). Не забудьте случай n == 0: делить на ноль нельзя, по условию верните 1.0.",
+    "Полное решение:\n\nimport numpy as np\n\n\ndef hamming_distance(code_a, code_b, mask_a, mask_b):\n    valid = (mask_a == 1) & (mask_b == 1)\n    n = int(valid.sum())\n    if n == 0:\n        return 1.0\n    return float(((code_a != code_b) & valid).sum()) / n"
+  ],
+  "solution": "import numpy as np\n\n\ndef hamming_distance(code_a, code_b, mask_a, mask_b):\n    valid = (mask_a == 1) & (mask_b == 1)\n    n = int(valid.sum())\n    if n == 0:\n        return 1.0\n    return float(((code_a != code_b) & valid).sum()) / n\n",
+  "question": {
+    "text": "Чему примерно равно расстояние Хэмминга для кодов двух разных радужек?",
+    "options": [
+      "0",
+      "Около 0.5",
+      "Около 1",
+      "Оно всегда отрицательное"
+    ],
+    "correct": 1
+  },
+  "rubric": {
+    "run": 2,
+    "basic": 4,
+    "edge": 3,
+    "question": 1
+  }
+}
