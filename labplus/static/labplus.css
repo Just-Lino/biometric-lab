@@ -5,9 +5,12 @@ body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,-app
 a{color:var(--acc)}
 .nav{display:flex;gap:6px;flex-wrap:wrap;align-items:center;padding:10px 16px;background:var(--card);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20}
 .nav b{margin-right:8px}
-.nav a{padding:6px 12px;border-radius:999px;text-decoration:none;color:var(--ink);border:1px solid transparent}
-.nav a:hover{border-color:var(--line)}
-.nav a.on{background:var(--acc);color:#fff}
+.nav a{padding:6px 12px;border-radius:999px;text-decoration:none;color:var(--ink);border:1px solid var(--line);background:var(--bg);cursor:pointer}
+.nav a:hover{border-color:var(--acc);color:var(--acc)}
+.nav a.on{background:var(--acc);color:#fff;border-color:var(--acc)}
+body .nav .langsw button{background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:999px;padding:6px 12px;font-size:14px}
+body .nav .langsw button:hover{border-color:var(--acc);color:var(--acc)}
+body .nav .langsw button.on{background:var(--acc);color:#fff;border-color:var(--acc);font-weight:600}
 .wrap{max-width:1120px;margin:0 auto;padding:18px 16px 90px}
 h1{font-size:24px;margin:6px 0 4px}h2{font-size:18px;margin:0 0 10px}h3{font-size:15px;margin:14px 0 6px}
 .sub{color:var(--mute);margin:0 0 16px}

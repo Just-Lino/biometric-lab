@@ -19,3 +19,6 @@ datasets/faces/*
 update_*.zip
 # профили голоса LAB+ (числа шаблона)
 labplus_data/
+
+# собранный архив дополнения S1 (генерируется supplement_S1/build_package.py)
+supplement_S1/dist/
